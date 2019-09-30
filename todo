@@ -12,7 +12,8 @@ Doc :
 
 state machine (for lexer+parser):
 https://yakking.branchable.com/posts/state-machines-in-c/
-    TIPS DE OUUUUUF : https://gcc.gnu.org/onlinedocs/gcc-4.2.1/gcc/Designated-Inits.html
+	et ca aussi : http://www.programmingnotes.org/?p=4699
+	TIPS DE OUUUUUF : https://gcc.gnu.org/onlinedocs/gcc-4.2.1/gcc/Designated-Inits.html
 
 Dragon book :
 http://www.informatik.uni-bremen.de/agbkb/lehre/ccfl/Material/ALSUdragonbook.pdf
