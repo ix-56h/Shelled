@@ -1,0 +1,25 @@
+cur_token = begin_new_word(*str);
+while *str
+	if *(str - 1) == OPERATOR && NOT quoted && can_form_operator(*(str - 1), *str)
+		str += tokenize_double_char_operator(*str - 1, *str)
+	if *(str - 1) == OPERATOR && NOT quoted && !can_form_operator(*(str - 1), *str)
+		str += tokenize_operator(*(str - 1))
+	if (*str == '\' || *str == '"' || *str == ''') && NOT quoted
+		//quoting rules
+	if (*str == '$' || *str == '`') && NOT quoted
+		//parameter expansion rules
+		//command substitutions rules
+		//arithmetic expansion rules
+	if NOT quoted && can_be_operator(*str)
+		if cur_token
+			delimite
+		str += tokenize_operator(*str)
+	if *str == <blank> && NOT quoted
+		any token containing the previous character is delimited and the current character shall be discarded.
+	if part_of_word(*(str - 1))
+		str += append_char_to_word
+	if *str == '#'
+		str += ignore_comment(str)
+	register_token(cur_token);
+	cur_token = begin_new_word(*str);
+	str++;

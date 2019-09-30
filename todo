@@ -1,0 +1,84 @@
+Mots clefs sur lesquels se documenter :
+
+- analyse lexi-cale
+- lexer
+- analyse syntaxique
+- parser
+- analyse sémantique
+- interpreter
+- abstract syntaxtree
+
+Doc :
+
+state machine (for lexer+parser):
+https://yakking.branchable.com/posts/state-machines-in-c/
+    TIPS DE OUUUUUF : https://gcc.gnu.org/onlinedocs/gcc-4.2.1/gcc/Designated-Inits.html
+
+Dragon book :
+http://www.informatik.uni-bremen.de/agbkb/lehre/ccfl/Material/ALSUdragonbook.pdf
+
+chap 4 :
+https://www.cl.cam.ac.uk/teaching/1011/CompConstr/notes10_cc.pdf
+
+#parsing-shell :
+http://www.oilshell.org/blog/tags.html?tag=parsing-shell#parsing-shell
+
+Bash :
+https://www.aosabook.org/en/bash.html
+
+Shell :
+http://igm.univ-mlv.fr/~masson/Teaching/PIM-INF3/shell.pdf
+
+Dynamic array :
+https://stackoverflow.com/questions/3536153/c-dynamically-growing-array
+
+Hash table :
+https://www.cprogramming.com/tutorial/computersciencetheory/hash-table.html
+https://wiki-prog.infoprepa.epita.fr/index.php/2015:04:07:HashTables
+https://fr.qwerty.wiki/wiki/Hash_table
+
+Pipes (use dynamic array):
+https://stackoverflow.com/questions/33912024/shell-program-with-pipes-in-c
+
+The Linux Programming Interface : 
+https://moodle2.units.it/pluginfile.php/115306/mod_resource/content/1/The%20Linux%20Programming%20Interface-Michael%20Kerrisk.pdf
+* Chapter 4: File I/O: The Universal I/O Model
+* Chapter 5: File I/O: Further Details
+* Chapter 6: Processes
+* Chapter 20: Signals: Fundamental Concepts
+* Chapter 21: Signals: Signal Handlers
+* Chapter 22: Signals: Advanced Features
+* Chapter 24: Process Creation
+* Chapter 25: Process Termination
+* Chapter 26: Monitoring Child Processes
+* Chapter 27: Program Execution
+* Chapter 28: Process Creation and Program Execution in More Detail
+* Chapter 34: Process Groups, Sessions, and Job Control
+* Chapter 44: Pipes and FIFOs
+* Chapter 62: Terminals
+* Chapter 63: Alternative I/O Models
+* Chapter 64: Pseudoterminals
+
+
+-	Full documentation about all implementations of a shell with POSIX norme
+		https://pubs.opengroup.org/onlinepubs/9699919799/
+		(go to "Topic" and "Full table of content")
+        
+-	Documentation about the Shell Language
+		https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
+
+-	Lexer
+		https://www.univ-orleans.fr/lifo/Members/Mirian.Halfeld/Cours/TLComp/l3-0708-LexA.pdf
+        http://www.programmingnotes.org/?p=4699
+        
+-	Analyse syntaxique
+		https://fr.wikipedia.org/wiki/Analyse_syntaxique
+
+-	Unix pipe & redirections
+		http://web.cse.ohio-state.edu/~mamrak.1/CIS762/pipes_lab_notes.html
+		http://www.cs.loyola.edu/~jglenn/702/S2005/Examples/dup2.html
+		https://stackoverflow.com/questions/7292642/grabbing-output-from-exec
+
+-	Misc
+		https://codes-sources.commentcamarche.net/forum/affich-10047436-developper-un-shell-de-base
+
