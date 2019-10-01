@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:54:25 by niguinti          #+#    #+#             */
-/*   Updated: 2019/09/30 04:08:28 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/01 04:10:44 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 #include <string.h>
 
 enum	e_states{
-	S_SHELL,	
-	S_SQUOTES,
+	S_DEFAULT,
+	S_PIPE,
+	S_REDIRECTION,
 	S_DQUOTES,
-	S_SUBSHELL
+	S_SQUOTES
 };
 /*
 **	Operators tokens
@@ -41,29 +42,40 @@ enum	e_tokens {
 	Lbracet, Rbracet, Bang,
 	In
 };
-typedef enum e_states	(*event_handler)(enum e_states, enum e_tokens);
+
+typedef enum e_states	(*rules)(enum e_states, enum e_tokens);
 
 enum e_states word_process(enum e_states state, enum e_tokens token) {
-	printf("Hello World!\n");
+	printf("{\"S_DEFAULT\", WORD}\n");
 	return S_WORD;
 }
 
 enum e_states double_quotes_process(enum e_states state, enum e_tokens token) {
-	printf("Hello World!\n");
+	printf("{\"S_DQUOTES\", WORD}\n");
 	return S_DQUOTES;
 }
 
 enum e_states single_quotes_process(enum e_states state, enum e_tokens token) {
-	printf("Hello World!\n");
+	printf("{\"S_SQUOTES\", WORD}\n");
 	return S_SQUOTES;
 }
 
+enum e_states redirection_process(enum e_states state, enum e_tokens token) {
+	printf("{\"S_REDIRECTION\", WORD}\n");
+	return S_SQUOTES;
+}
 
-event_handler		transition_table[S_SUBSHELL + 1][In + 1] = {
-	[S_SHELL] = { [WORD] = word_process, },
-	[S_SQUOTES] = { [WORD] = single_quotes_process, },
+enum e_states pipeprocess(enum e_states state, enum e_tokens token) {
+	printf("{\"S_PIPE\", WORD}!\n");
+	return S_SQUOTES;
+}
+
+event_handler		states[S_SUBSHELL + 1][In + 1] = {
+	[S_DEFAULT] = { [WORD] = word_process, },
+	[S_PIPE] = { [WORD] = pipe_process, },
+	[S_REDIRECTIONS] = { [WORD] = redirection_process, },
 	[S_DQUOTES] = { [WORD] = double_quotes_process, },
-	[S_SUBSHELL] = { [WORD] = word_process, },
+	[S_SQUOTES] = { [WORD] = single_quotes_process, },
 };
 
 typedef	struct		s_token{
