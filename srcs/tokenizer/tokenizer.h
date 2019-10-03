@@ -68,8 +68,11 @@ t_chr_class		get_chr_class[256] = {
 };
 
 t_toktype	token_chr_rules[TOK_PIPE + 1][CHR_REDIRECTION + 1] = {
-	[TOK_SP] = {[CHR_SP] = 0,},
-	[TOK_WORD] = {[CHR_WORD] = 1, [CHR_DIGIT] = 1},
+	[TOK_SP] = {[CHR_SP] = 0},
+	[TOK_WORD] = {
+		[CHR_WORD] = 1,
+		[CHR_DIGIT] = 1
+	},
 	[TOK_SQUOTE] = {
 		[CHR_WORD] = 1,
 		[CHR_SP] = 1,
@@ -92,12 +95,14 @@ t_toktype	token_chr_rules[TOK_PIPE + 1][CHR_REDIRECTION + 1] = {
 		[CHR_OPERATOR] = 1,
 		[CHR_DIGIT] = 1
 	},
-	[TOK_OPERATOR] = {[CHR_OPERATOR] = 1}
+	[TOK_OPERATOR] = {[CHR_OPERATOR] = 1},
+	[TOK_REDIRECTION] = {[CHR_REDIRECTION] = 1}
 };
 
 t_toktype	get_tok_type[CHR_REDIRECTION + 1] = {
 	[CHR_SP] = TOK_SP,
 	[CHR_WORD] = TOK_WORD,
+	[CHR_DIGIT] = TOK_WORD,//not really word, but why not
 	[CHR_VALIDATOR] = TOK_VALIDATOR,
 	[CHR_ESCAPE] = TOK_ESCAPE,
 	[CHR_REDIRECTION] = TOK_REDIRECTION,
