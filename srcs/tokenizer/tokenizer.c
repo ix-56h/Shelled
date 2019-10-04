@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:06 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/02 06:46:03 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/04 05:32:41 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,9 @@ t_tokens	*get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class ori
 	t_chr_class		prev_class = 0;
 	int				anchor = 0;
 
-	while (s[*i] && ((chr_class = get_chr_class[s[*i]]) != origin_class || prev_class == CHR_ESCAPE))
+	while (s[*i] && ((chr_class = get_chr_class[s[*i]]) != origin_class || (prev_class == CHR_ESCAPE && toktype == TOK_DQUOTE)))
 	{
 		prev_class = chr_class;
-		(chr_class == CHR_ESCAPE) ? (*i)++ : 0;
 		//printf("[%s, '%c', %d]\n", DEBUG_CHR[chr_class], s[*i], anchor);
 		anchor++;
 		(*i)++;
@@ -76,7 +75,6 @@ t_tokens	*get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 	while (s[*i] &&
 		  (token_chr_rules[toktype][(chr_class = get_chr_class[(unsigned char)s[*i]])] || prev_class == CHR_ESCAPE))
 	{
-		(chr_class == CHR_ESCAPE) ? (*i)++ : 0;
 		prev_class = chr_class;
 		//printf("[%s, '%c', %d]\n", DEBUG_CHR[chr_class], s[*i], anchor);
 		anchor++;

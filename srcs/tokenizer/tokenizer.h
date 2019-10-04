@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:16 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/02 05:34:38 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/04 05:36:01 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,32 +71,19 @@ t_toktype	token_chr_rules[TOK_PIPE + 1][CHR_REDIRECTION + 1] = {
 	[TOK_SP] = {[CHR_SP] = 0},
 	[TOK_WORD] = {
 		[CHR_WORD] = 1,
-		[CHR_DIGIT] = 1
+		[CHR_DIGIT] = 1,
+		[CHR_ESCAPE] = 1
 	},
 	[TOK_SQUOTE] = {
-		[CHR_WORD] = 1,
-		[CHR_SP] = 1,
-		[CHR_DQUOTE] = 1,
-		[CHR_VALIDATOR] = 1,
-		[CHR_ESCAPE] = 1,
-		[CHR_REDIRECTION] = 1,
-		[CHR_PIPE] = 1,
-		[CHR_OPERATOR] = 1,
-		[CHR_DIGIT] = 1
+		[0 ... CHR_REDIRECTION] = 1,
 	},
 	[TOK_DQUOTE] = {
-		[CHR_WORD] = 1,
-		[CHR_SP] = 1,
-		[CHR_SQUOTE] = 1,
-		[CHR_VALIDATOR] = 1,
-		[CHR_ESCAPE] = 1,
-		[CHR_REDIRECTION] = 1,
-		[CHR_PIPE] = 1,
-		[CHR_OPERATOR] = 1,
-		[CHR_DIGIT] = 1
+		[0 ... CHR_REDIRECTION] = 1,
 	},
 	[TOK_OPERATOR] = {[CHR_OPERATOR] = 1},
-	[TOK_REDIRECTION] = {[CHR_REDIRECTION] = 1}
+	[TOK_REDIRECTION] = {[CHR_REDIRECTION] = 1},
+	[TOK_PIPE] = {[CHR_PIPE] = 1},
+	[TOK_VALIDATOR] = {[CHR_VALIDATOR] = 1}
 };
 
 t_toktype	get_tok_type[CHR_REDIRECTION + 1] = {
@@ -104,7 +91,7 @@ t_toktype	get_tok_type[CHR_REDIRECTION + 1] = {
 	[CHR_WORD] = TOK_WORD,
 	[CHR_DIGIT] = TOK_WORD,//not really word, but why not
 	[CHR_VALIDATOR] = TOK_VALIDATOR,
-	[CHR_ESCAPE] = TOK_ESCAPE,
+	[CHR_ESCAPE] = TOK_WORD,
 	[CHR_REDIRECTION] = TOK_REDIRECTION,
 	[CHR_PIPE] = TOK_PIPE,
 	[CHR_SQUOTE] = TOK_SQUOTE,
@@ -119,7 +106,7 @@ const char	DEBUG_TOKEN[TOK_PIPE + 1][30] = {
 	[TOK_OPERATOR] = "TOK_OPERATOR",
 	[TOK_NEWLINE] = "TOK_NEWLINE",
 	[TOK_REDIRECTION] = "TOK_REDIRECTION",
-	[TOK_ESCAPE] = "TOK_ESCAPE",
+	[TOK_ESCAPE] = "TOK_WORD",
 	[TOK_SQUOTE] = "TOK_SQUOTE",
 	[TOK_DQUOTE] = "TOK_DQUOTE",
 	[TOK_PIPE] = "TOK_PIPE"
