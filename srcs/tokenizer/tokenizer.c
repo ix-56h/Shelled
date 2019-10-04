@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:06 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/04 05:32:41 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/04 22:34:42 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int			is_opening_class(t_chr_class chr_class)
 {
-	if (chr_class == CHR_SQUOTE)
+	if (chr_class == CHR_SQUOTE || chr_class == CHR_DQUOTE)
 		return (1);
 	return (0);
 }
@@ -57,7 +57,7 @@ t_tokens	*get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class ori
 		anchor++;
 		(*i)++;
 	}
-	if (chr_class != origin_class)
+	if (!s[*i] || chr_class != origin_class)
 	{
 		printf("ERROR : Need to close sequence\n");
 		exit (0);
