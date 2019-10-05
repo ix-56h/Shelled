@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:06 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/04 22:34:42 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/05 02:45:57 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,13 @@ void	tokenizer(char *s)
 	
 	while (s[i])
 	{
-		chr_class = get_chr_class[(unsigned char)s[i]];
+		if (!(chr_class = get_chr_class[(unsigned char)s[i]]))
+		{
+			printf("{CHR ERROR: The token '%c' not recognized}\n", s[i]);
+			//exit(1);
+			i++;
+			continue ;
+		}
 		if (chr_class == CHR_SP)
 		{
 			ignore_chr_class(s, &i, CHR_SP);

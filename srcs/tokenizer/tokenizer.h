@@ -6,13 +6,14 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:16 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/04 05:36:01 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/05 02:43:47 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 
 typedef enum	e_toktype {
+	TOK_ERROR,
 	TOK_SP,
 	TOK_WORD,
 	TOK_VALIDATOR,
@@ -26,6 +27,7 @@ typedef enum	e_toktype {
 } t_toktype;
 
 typedef enum	e_chr_class {
+	CHR_ERROR,
 	CHR_SP,
 	CHR_WORD,
 	CHR_DIGIT,
