@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:16 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/05 02:43:47 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/05 04:33:47 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef enum	e_chr_class {
 	CHR_PIPE,
 	CHR_SQUOTE,
 	CHR_DQUOTE,
+	CHR_COMMENT,
 	CHR_REDIRECTION
 } t_chr_class;
 
@@ -52,9 +53,13 @@ t_chr_class		get_chr_class[256] = {
 	[';'] = CHR_VALIDATOR,
 	['\n'] = CHR_VALIDATOR,
 
+	['#'] = CHR_COMMENT,
+
 	['A' ... 'Z'] = CHR_WORD,
 	['a' ... 'z'] = CHR_WORD,
 	['0' ... '9'] = CHR_DIGIT,
+	
+	['-'] = CHR_WORD,
 
 	['\\'] = CHR_ESCAPE,
 	
@@ -123,5 +128,6 @@ const char	DEBUG_CHR[CHR_REDIRECTION + 1][30] = {
 	[CHR_PIPE] = "CHR_PIPE",
 	[CHR_SQUOTE] = "CHR_SQUOTE",
 	[CHR_DQUOTE] = "CHR_DQUOTE",
+	[CHR_COMMENT] = "CHR_COMMENT",
 	[CHR_REDIRECTION] = "CHR_REDIRECTION"
 };
