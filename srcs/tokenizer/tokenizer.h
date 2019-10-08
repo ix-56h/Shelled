@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:16 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/05 04:33:47 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/08 05:17:41 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ typedef enum	e_toktype {
 	TOK_ESCAPE,
 	TOK_SQUOTE,
 	TOK_DQUOTE,
+	TOK_SUBSHELL,
+	TOK_SUBSTITUTION,
+	TOK_EXP,
 	TOK_PIPE
-} t_toktype;
+}				t_toktype;
 
 typedef enum	e_chr_class {
 	CHR_ERROR,
@@ -38,8 +41,13 @@ typedef enum	e_chr_class {
 	CHR_SQUOTE,
 	CHR_DQUOTE,
 	CHR_COMMENT,
+	CHR_EXP,
+	CHR_RBRACE,
+	CHR_LBRACE,
+	CHR_RSUB,
+	CHR_LSUB,
 	CHR_REDIRECTION
-} t_chr_class;
+}				t_chr_class;
 
 typedef struct	s_tokens {
 	t_toktype		token;
@@ -54,6 +62,22 @@ t_chr_class		get_chr_class[256] = {
 	['\n'] = CHR_VALIDATOR,
 
 	['#'] = CHR_COMMENT,
+	['_'] = CHR_WORD,
+	[':'] = CHR_WORD,
+	['~'] = CHR_WORD,
+	['/'] = CHR_WORD,
+	['.'] = CHR_WORD,
+	['['] = CHR_WORD,
+	[']'] = CHR_WORD,
+	['@'] = CHR_WORD,
+	[','] = CHR_WORD,
+	['{'] = CHR_RBRACE,
+	['}'] = CHR_LBRACE,
+	['$'] = CHR_EXP,
+	['('] = CHR_RSUB,
+	[')'] = CHR_LSUB,
+
+	['*'] = CHR_WORD,
 
 	['A' ... 'Z'] = CHR_WORD,
 	['a' ... 'z'] = CHR_WORD,
@@ -71,7 +95,8 @@ t_chr_class		get_chr_class[256] = {
 	['\''] = CHR_SQUOTE,
 	['"'] = CHR_DQUOTE,
 	
-	['='] = CHR_OPERATOR
+	['='] = CHR_OPERATOR,
+	['&'] = CHR_OPERATOR
 };
 
 t_toktype	token_chr_rules[TOK_PIPE + 1][CHR_REDIRECTION + 1] = {
@@ -90,7 +115,28 @@ t_toktype	token_chr_rules[TOK_PIPE + 1][CHR_REDIRECTION + 1] = {
 	[TOK_OPERATOR] = {[CHR_OPERATOR] = 1},
 	[TOK_REDIRECTION] = {[CHR_REDIRECTION] = 1},
 	[TOK_PIPE] = {[CHR_PIPE] = 1},
-	[TOK_VALIDATOR] = {[CHR_VALIDATOR] = 1}
+	[TOK_VALIDATOR] = {[CHR_VALIDATOR] = 1},
+	[TOK_EXP] = {
+		[CHR_EXP] = 1,
+		[CHR_SP] = 1,
+		[CHR_RBRACE] = 1,
+		[CHR_LBRACE] = 1,
+		[CHR_RSUB] = 1,
+		[CHR_LSUB] = 1,
+		[CHR_WORD] = 1,
+		[CHR_DIGIT] = 1
+	},
+	[TOK_SUBSTITUTION] = {
+		[CHR_EXP] = 1,
+		[CHR_SP] = 1,
+		[CHR_RBRACE] = 1,
+		[CHR_LBRACE] = 1,
+		[CHR_RSUB] = 1,
+		[CHR_LSUB] = 1,
+		[CHR_WORD] = 1,
+		[CHR_DIGIT] = 1
+	},
+	[TOK_SUBSHELL] = {[0 ... CHR_REDIRECTION] = 1}
 };
 
 t_toktype	get_tok_type[CHR_REDIRECTION + 1] = {
@@ -103,6 +149,11 @@ t_toktype	get_tok_type[CHR_REDIRECTION + 1] = {
 	[CHR_PIPE] = TOK_PIPE,
 	[CHR_SQUOTE] = TOK_SQUOTE,
 	[CHR_DQUOTE] = TOK_DQUOTE,
+	[CHR_EXP] = TOK_EXP,
+	[CHR_RBRACE] = TOK_SUBSTITUTION,
+	[CHR_LBRACE] = 0,
+	[CHR_RSUB] = TOK_SUBSHELL,
+	[CHR_LSUB] = 0,
 	[CHR_OPERATOR] = TOK_OPERATOR
 };
 
@@ -116,6 +167,9 @@ const char	DEBUG_TOKEN[TOK_PIPE + 1][30] = {
 	[TOK_ESCAPE] = "TOK_WORD",
 	[TOK_SQUOTE] = "TOK_SQUOTE",
 	[TOK_DQUOTE] = "TOK_DQUOTE",
+	[TOK_SUBSHELL] = "TOK_SUBSHELL",
+	[TOK_SUBSTITUTION] = "TOK_SUBSTITUTION",
+	[TOK_EXP] = "TOK_EXPANSION",
 	[TOK_PIPE] = "TOK_PIPE"
 };
 

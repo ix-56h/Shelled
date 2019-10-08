@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:06 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/05 04:36:18 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/08 05:11:12 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,6 @@ int			is_opening_class(t_chr_class chr_class)
 	if (chr_class == CHR_SQUOTE || chr_class == CHR_DQUOTE)
 		return (1);
 	return (0);
-}
-
-void		ignore_comment(char *s, int *i)
-{
-	while (s[*i] && s[*i] != '\n')
-		(*i)++;
 }
 
 t_tokens	*save_token(char *s, int anchor, t_toktype toktype)
@@ -44,8 +38,16 @@ t_tokens	*save_token(char *s, int anchor, t_toktype toktype)
 
 void	ignore_chr_class(char *s, int *i, t_chr_class chr_class)
 {
-	while (s[*i] && get_chr_class[(unsigned char)s[*i]] == chr_class)
-		(*i)++;
+	if (chr_class == CHR_COMMENT)
+	{
+		while (s[*i] && s[*i] != '\n')
+			(*i)++;
+	}
+	else
+	{
+		while (s[*i] && get_chr_class[(unsigned char)s[*i]] == chr_class)
+			(*i)++;
+	}
 }
 
 t_tokens	*get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class origin_class)
@@ -90,36 +92,31 @@ t_tokens	*get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 
 void	tokenizer(char *s)
 {
-	int i = 0;
-	t_chr_class chr_class = 0;
-	
+	int			i = 0;
+	t_chr_class	chr_class = 0;
+	t_tokens	*begin = save_token(NULL, 0, 0);
+	t_tokens	*current = begin;
+
 	while (s[i])
 	{
 		if (!(chr_class = get_chr_class[(unsigned char)s[i]]))
 		{
-			printf("{CHR ERROR: The token '%c' not recognized}\n", s[i]);
-			//exit(1);
-			i++;
-			continue ;
+			printf("Error : %c\n", s[i]);
+			exit(0);
 		}
-		if (chr_class == CHR_SP)
+		if (chr_class == CHR_SP || chr_class == CHR_COMMENT)
 		{
-			ignore_chr_class(s, &i, CHR_SP);
-			continue ;
-		}
-		else if (chr_class == CHR_COMMENT)
-		{
-			ignore_comment(s, &i);
+			ignore_chr_class(s, &i, chr_class);
 			continue ;
 		}
 		if (is_opening_class(chr_class))
 		{
 			i++;
-			if (!get_sequence_token(s, &i, get_tok_type[chr_class], chr_class))
+			if (!(current = get_sequence_token(s, &i, get_tok_type[chr_class], chr_class)))
 				exit (0);
 			i++;
 		}
-		else if (!get_token(s, &i, get_tok_type[chr_class], chr_class))
+		else if (!(current = get_token(s, &i, get_tok_type[chr_class], chr_class)))
 			exit (0);
 	}
 }
