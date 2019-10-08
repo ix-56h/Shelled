@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:06 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/08 05:11:12 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/08 08:27:55 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,18 @@ t_tokens	*save_token(char *s, int anchor, t_toktype toktype)
 {
 	t_tokens	*new;
 
-	if (!(new = malloc(sizeof(t_tokens)))
-		|| !(new->token_literal = malloc(sizeof(char) * (anchor + 1))))
+	if (!(new = malloc(sizeof(t_tokens))))
 		return (NULL);
-	new->token = toktype;
-	//a remplacer par ft_strncpy
-	strncpy(s, new->token_literal, anchor);
-	new->token_literal[anchor] = 0;
+	if (anchor > 0)
+	{
+		if (!(new->tok_literal = malloc(sizeof(char) * (anchor + 1))))
+			return (NULL);
+		//a remplacer par ft_strncpy
+		strncpy(new->tok_literal, s, anchor);
+	}
+	else
+		new->tok_literal = NULL;
+	new->tok = toktype;
 	new->next = NULL;
 	return (new);
 }
@@ -68,7 +73,7 @@ t_tokens	*get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class ori
 		printf("ERROR : Need to close sequence\n");
 		exit (0);
 	}
-	printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
+	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
 	return (save_token(s + (*i - anchor), anchor, toktype));
 }
 
@@ -86,11 +91,11 @@ t_tokens	*get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 		anchor++;
 		(*i)++;
 	}
-	printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
+	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
 	return (save_token(s + (*i - anchor), anchor, toktype));
 }
 
-void	tokenizer(char *s)
+t_tokens	*tokenizer(char *s)
 {
 	int			i = 0;
 	t_chr_class	chr_class = 0;
@@ -100,10 +105,7 @@ void	tokenizer(char *s)
 	while (s[i])
 	{
 		if (!(chr_class = get_chr_class[(unsigned char)s[i]]))
-		{
-			printf("Error : %c\n", s[i]);
 			exit(0);
-		}
 		if (chr_class == CHR_SP || chr_class == CHR_COMMENT)
 		{
 			ignore_chr_class(s, &i, chr_class);
@@ -112,18 +114,33 @@ void	tokenizer(char *s)
 		if (is_opening_class(chr_class))
 		{
 			i++;
-			if (!(current = get_sequence_token(s, &i, get_tok_type[chr_class], chr_class)))
+			if (!(current->next = get_sequence_token(s, &i, get_tok_type[chr_class], chr_class)))
 				exit (0);
 			i++;
 		}
-		else if (!(current = get_token(s, &i, get_tok_type[chr_class], chr_class)))
+		else if (!(current->next = get_token(s, &i, get_tok_type[chr_class], chr_class)))
 			exit (0);
+		current = current->next;
 	}
+	current = begin->next;
+	free(begin);
+	return (current);
 }
 
 int	main(int ac, char **av)
 {
-	tokenizer(av[1]);
+	t_tokens	*tok_list = NULL;
+	if (!(tok_list = tokenizer(av[1])))
+	{
+		printf("Error: Cant tokenize the string.\n");
+		return (0);
+	}
+
+	while (tok_list)
+	{
+		printf("{%s, \"%s\"}\n", DEBUG_TOKEN[tok_list->tok], tok_list->tok_literal);
+		tok_list = tok_list->next;
+	}
 
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:16 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/08 05:17:41 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/08 08:24:10 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef enum	e_chr_class {
 }				t_chr_class;
 
 typedef struct	s_tokens {
-	t_toktype		token;
-	char			*token_literal;
+	t_toktype		tok;
+	char			*tok_literal;
 	struct s_tokens	*next;
 }				t_tokens;
 
@@ -71,11 +71,16 @@ t_chr_class		get_chr_class[256] = {
 	[']'] = CHR_WORD,
 	['@'] = CHR_WORD,
 	[','] = CHR_WORD,
-	['{'] = CHR_RBRACE,
-	['}'] = CHR_LBRACE,
-	['$'] = CHR_EXP,
-	['('] = CHR_RSUB,
-	[')'] = CHR_LSUB,
+	//['{'] = CHR_RBRACE,
+	['{'] = CHR_WORD,
+	//['}'] = CHR_LBRACE,
+	['}'] = CHR_WORD,
+	//['$'] = CHR_EXP,
+	['$'] = CHR_WORD,
+	//['('] = CHR_RSUB,
+	['('] = CHR_WORD,
+	//[')'] = CHR_LSUB,
+	[')'] = CHR_WORD,
 
 	['*'] = CHR_WORD,
 
@@ -116,27 +121,9 @@ t_toktype	token_chr_rules[TOK_PIPE + 1][CHR_REDIRECTION + 1] = {
 	[TOK_REDIRECTION] = {[CHR_REDIRECTION] = 1},
 	[TOK_PIPE] = {[CHR_PIPE] = 1},
 	[TOK_VALIDATOR] = {[CHR_VALIDATOR] = 1},
-	[TOK_EXP] = {
-		[CHR_EXP] = 1,
-		[CHR_SP] = 1,
-		[CHR_RBRACE] = 1,
-		[CHR_LBRACE] = 1,
-		[CHR_RSUB] = 1,
-		[CHR_LSUB] = 1,
-		[CHR_WORD] = 1,
-		[CHR_DIGIT] = 1
-	},
-	[TOK_SUBSTITUTION] = {
-		[CHR_EXP] = 1,
-		[CHR_SP] = 1,
-		[CHR_RBRACE] = 1,
-		[CHR_LBRACE] = 1,
-		[CHR_RSUB] = 1,
-		[CHR_LSUB] = 1,
-		[CHR_WORD] = 1,
-		[CHR_DIGIT] = 1
-	},
-	[TOK_SUBSHELL] = {[0 ... CHR_REDIRECTION] = 1}
+	//[TOK_EXP] = {},
+	//[TOK_SUBSTITUTION] = {},
+	//[TOK_SUBSHELL] = {}
 };
 
 t_toktype	get_tok_type[CHR_REDIRECTION + 1] = {
@@ -150,9 +137,9 @@ t_toktype	get_tok_type[CHR_REDIRECTION + 1] = {
 	[CHR_SQUOTE] = TOK_SQUOTE,
 	[CHR_DQUOTE] = TOK_DQUOTE,
 	[CHR_EXP] = TOK_EXP,
-	[CHR_RBRACE] = TOK_SUBSTITUTION,
+	//[CHR_RBRACE] = TOK_SUBSTITUTION,
 	[CHR_LBRACE] = 0,
-	[CHR_RSUB] = TOK_SUBSHELL,
+	//[CHR_RSUB] = TOK_SUBSHELL,
 	[CHR_LSUB] = 0,
 	[CHR_OPERATOR] = TOK_OPERATOR
 };
