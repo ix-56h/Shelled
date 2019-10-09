@@ -6,13 +6,13 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 03:35:54 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/09 04:06:16 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/09 12:16:06 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_TOK_RULES_H
 # define FT_TOK_RULES_H
-t_chr_class		get_chr_class[256] = {
+t_chr_class		get_chr_class[255] = {
 	[' '] = CHR_SP,
 	['\t'] = CHR_SP,
 	[';'] = CHR_VALIDATOR,
@@ -61,8 +61,8 @@ t_chr_class		get_chr_class[256] = {
 	['&'] = CHR_OPERATOR
 };
 
-t_toktype	token_chr_rules[TOK_PIPE + 1][CHR_REDIRECTION + 1] = {
-	[TOK_SP] = {[CHR_SP] = 0},
+t_toktype	token_chr_rules[TOK_MAX][CHR_MAX] = {
+	[TOK_SP] = {[CHR_SP] = 0,},
 	[TOK_WORD] = {
 		[CHR_WORD] = 1,
 		[CHR_DIGIT] = 1,
@@ -83,7 +83,7 @@ t_toktype	token_chr_rules[TOK_PIPE + 1][CHR_REDIRECTION + 1] = {
 	//[TOK_SUBSHELL] = {}
 };
 
-t_toktype	get_tok_type[CHR_REDIRECTION + 1] = {
+t_toktype	get_tok_type[CHR_MAX] = {
 	[CHR_SP] = TOK_SP,
 	[CHR_WORD] = TOK_WORD,
 	[CHR_DIGIT] = TOK_WORD,//not really word, but why not
@@ -101,12 +101,11 @@ t_toktype	get_tok_type[CHR_REDIRECTION + 1] = {
 	[CHR_OPERATOR] = TOK_OPERATOR
 };
 
-const char	DEBUG_TOKEN[TOK_PIPE + 1][30] = {
+const char	DEBUG_TOKEN[TOK_MAX][30] = {
 	[TOK_SP] = "TOK_SP",
 	[TOK_WORD] = "TOK_WORD",
 	[TOK_VALIDATOR] = "TOK_VALIDATOR",
 	[TOK_OPERATOR] = "TOK_OPERATOR",
-	[TOK_NEWLINE] = "TOK_NEWLINE",
 	[TOK_REDIRECTION] = "TOK_REDIRECTION",
 	[TOK_ESCAPE] = "TOK_WORD",
 	[TOK_SQUOTE] = "TOK_SQUOTE",
@@ -117,7 +116,7 @@ const char	DEBUG_TOKEN[TOK_PIPE + 1][30] = {
 	[TOK_PIPE] = "TOK_PIPE"
 };
 
-const char	DEBUG_CHR[CHR_REDIRECTION + 1][30] = {
+const char	DEBUG_CHR[CHR_MAX][30] = {
 	[CHR_SP] = "CHR_SP",
 	[CHR_WORD] = "CHR_WORD",
 	[CHR_VALIDATOR] = "CHR_VALIDATOR",

@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:16 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/09 04:06:31 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/09 12:16:09 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ typedef enum	e_toktype {
 	TOK_WORD,
 	TOK_VALIDATOR,
 	TOK_OPERATOR,
-	TOK_NEWLINE,
 	TOK_REDIRECTION,
 	TOK_ESCAPE,
 	TOK_SQUOTE,
@@ -26,7 +25,8 @@ typedef enum	e_toktype {
 	TOK_SUBSHELL,
 	TOK_SUBSTITUTION,
 	TOK_EXP,
-	TOK_PIPE
+	TOK_PIPE,
+	TOK_MAX
 }				t_toktype;
 
 typedef enum	e_chr_class {
@@ -46,14 +46,15 @@ typedef enum	e_chr_class {
 	CHR_LBRACE,
 	CHR_RSUB,
 	CHR_LSUB,
-	CHR_REDIRECTION
+	CHR_REDIRECTION,
+	CHR_MAX
 }				t_chr_class;
 
-typedef struct	s_tokens {
+typedef struct		s_tokens {
 	t_toktype		tok;
 	char			*tok_literal;
 	struct s_tokens	*next;
-}				t_tokens;
+}					t_tokens;
 
 t_tokens	*get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class origin_class);
 t_tokens	*get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class);
