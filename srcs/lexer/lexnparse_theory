@@ -1,3 +1,0 @@
-Faire en sorte que le tokenizer, une fois un token identifie, passe celui ci a la state machine qui verifiera si il n'y a pas d'erreur
-1  > error : afficher l'erreur et exit
-2  > good : ajouter a l'AST, changer l'etat si necessaire, continuer le lexing

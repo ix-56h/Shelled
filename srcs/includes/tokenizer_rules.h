@@ -1,60 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*   tokenizer_rules.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/01 05:04:16 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/08 08:24:10 by niguinti         ###   ########.fr       */
+/*   Created: 2019/10/09 03:35:54 by niguinti          #+#    #+#             */
+/*   Updated: 2019/10/09 04:06:16 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
-typedef enum	e_toktype {
-	TOK_ERROR,
-	TOK_SP,
-	TOK_WORD,
-	TOK_VALIDATOR,
-	TOK_OPERATOR,
-	TOK_NEWLINE,
-	TOK_REDIRECTION,
-	TOK_ESCAPE,
-	TOK_SQUOTE,
-	TOK_DQUOTE,
-	TOK_SUBSHELL,
-	TOK_SUBSTITUTION,
-	TOK_EXP,
-	TOK_PIPE
-}				t_toktype;
-
-typedef enum	e_chr_class {
-	CHR_ERROR,
-	CHR_SP,
-	CHR_WORD,
-	CHR_DIGIT,
-	CHR_VALIDATOR,
-	CHR_ESCAPE,
-	CHR_OPERATOR,
-	CHR_PIPE,
-	CHR_SQUOTE,
-	CHR_DQUOTE,
-	CHR_COMMENT,
-	CHR_EXP,
-	CHR_RBRACE,
-	CHR_LBRACE,
-	CHR_RSUB,
-	CHR_LSUB,
-	CHR_REDIRECTION
-}				t_chr_class;
-
-typedef struct	s_tokens {
-	t_toktype		tok;
-	char			*tok_literal;
-	struct s_tokens	*next;
-}				t_tokens;
-
+#ifndef FT_TOK_RULES_H
+# define FT_TOK_RULES_H
 t_chr_class		get_chr_class[256] = {
 	[' '] = CHR_SP,
 	['\t'] = CHR_SP,
@@ -172,3 +129,4 @@ const char	DEBUG_CHR[CHR_REDIRECTION + 1][30] = {
 	[CHR_COMMENT] = "CHR_COMMENT",
 	[CHR_REDIRECTION] = "CHR_REDIRECTION"
 };
+#endif

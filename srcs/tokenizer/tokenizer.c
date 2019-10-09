@@ -6,13 +6,16 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:06 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/08 08:27:55 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/09 04:03:41 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
+#include "../includes/tokenizer.h"
+#include "../includes/tokenizer_rules.h"
+#include "../includes/lexer.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 int			is_opening_class(t_chr_class chr_class)
 {
@@ -130,12 +133,13 @@ t_tokens	*tokenizer(char *s)
 int	main(int ac, char **av)
 {
 	t_tokens	*tok_list = NULL;
+	t_ast		*ast = NULL;
 	if (!(tok_list = tokenizer(av[1])))
 	{
 		printf("Error: Cant tokenize the string.\n");
 		return (0);
 	}
-
+	ast = lex_tokens(tok_list);
 	while (tok_list)
 	{
 		printf("{%s, \"%s\"}\n", DEBUG_TOKEN[tok_list->tok], tok_list->tok_literal);
