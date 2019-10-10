@@ -58,6 +58,8 @@ size_t	tokenize_operator(char *s)
 		printf("{'OPERATOR', '>&', GREATAND}\n");
 	else if(strncmp("<>", s, 2) == 0 && (ret = 2))
 		printf("{'OPERATOR', '<>', LESSGREAT}\n");
+	else
+		printf("{'SYNTAX ERROR'}\n");
 	return (ret);
 }
 
