@@ -12,7 +12,6 @@
 
 #include "../includes/tokenizer.h"
 #include "../includes/tokenizer_rules.h"
-#include "../includes/lexer.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -130,21 +129,3 @@ t_tokens	*tokenizer(char *s)
 	return (current);
 }
 
-int	main(int ac, char **av)
-{
-	t_tokens	*tok_list = NULL;
-	t_ast		*ast = NULL;
-	if (!(tok_list = tokenizer(av[1])))
-	{
-		printf("Error: Cant tokenize the string.\n");
-		return (0);
-	}
-	ast = lex_tokens(tok_list);
-	while (tok_list)
-	{
-		printf("{%s, \"%s\"}\n", DEBUG_TOKEN[tok_list->tok], tok_list->tok_literal);
-		tok_list = tok_list->next;
-	}
-
-	return (0);
-}
