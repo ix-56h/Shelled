@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:54:25 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/09 04:06:29 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/11 14:59:40 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct			s_ast
 {
 	t_toktype			tok;
 	char				*literal;
-	struct t_toktype	*left;
-	struct t_toktype	*right;
+	struct t_toktype	*l;
+	struct t_toktype	*r;
 }						t_ast;
 
 t_ast	*lex_tokens(t_tokens *tok_list);

@@ -10,8 +10,8 @@
 /*																			  */
 /* ************************************************************************** */
 
-#include "../includes/tokenizer.h"
-#include "../includes/lexer.h"
+#include "tokenizer.h"
+#include "lexer.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
