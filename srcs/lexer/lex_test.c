@@ -25,7 +25,7 @@ t_astnode	*lex_tokens(t_tokens *tok_list)
 	t_astnode	*node;
 	t_astnode	*new_node;
 	begin = tok_list;
-	while (current_state = GET_STATE[tok_list->tok])
+	while ((current_state = GET_STATE[tok_list->tok]))
 	{
 		if (new_node)
 		{
@@ -50,10 +50,5 @@ int	main(int ac, char **av)
 		return (0);
 	}
 	ast = lex_tokens(tok_list);
-	while (ast)
-	{
-		printf("%s, LEFT = %s, RIGHT = %s}\n", ast->literal, ast->l, ast->r);
-		ast = ast->l;
-	}
 	return (0);
 }
