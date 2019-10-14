@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:16 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/09 12:16:09 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/14 16:47:24 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,14 @@ typedef enum	e_toktype {
 	TOK_WORD,
 	TOK_VALIDATOR,
 	TOK_OPERATOR,
+	TOK_AND_IF,
+	TOK_OR_IF,
+	TOK_AND,
+	TOK_ASSIGN,
+	TOK_EQUAL,
 	TOK_REDIRECTION,
+	TOK_LREDI,
+	TOK_RREDI,
 	TOK_ESCAPE,
 	TOK_SQUOTE,
 	TOK_DQUOTE,

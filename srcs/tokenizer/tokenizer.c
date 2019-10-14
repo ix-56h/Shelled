@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:06 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/09 12:16:03 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/14 17:12:37 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,36 @@ void	ignore_chr_class(char *s, int *i, t_chr_class chr_class)
 	}
 }
 
+t_toktype	get_true_toktype(char *s, t_toktype toktype)
+{
+	if (toktype == TOK_OPERATOR)
+	{
+		if (!strncmp(s, "&&", 2))
+			return (TOK_AND_IF);
+		if (!strncmp(s, "&&", 2))
+			return (TOK_AND_IF);
+		if (!strncmp(s, "==", 2))
+			return (TOK_EQUAL);
+		if (*s == '=')
+			return (TOK_ASSIGN);
+		if (*s == '&')
+			return (TOK_AND);
+	}
+	else if (toktype == TOK_PIPE)
+	{
+		if (!strncmp(s, "||", 2))
+			return (TOK_OR_IF);
+	}
+	else if (toktype == TOK_REDIRECTION)
+	{
+		if (!strncmp(s, "<<", 2))
+			return (TOK_LREDI);
+		if (!strncmp(s, ">>", 2))
+			return (TOK_RREDI);
+	}
+	return (0);
+}
+
 t_tokens	*get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class origin_class)
 {
 	t_chr_class		chr_class = 0;
@@ -75,6 +105,8 @@ t_tokens	*get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class ori
 		printf("ERROR : Need to close sequence\n");
 		exit (0);
 	}
+	if (ABSTRACT_TOKEN[toktype] && !(toktype = get_true_toktype(s + (*i - anchor), toktype)))
+		return (NULL);
 	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
 	return (save_token(s + (*i - anchor), anchor, toktype));
 }
@@ -86,7 +118,8 @@ t_tokens	*get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 	
 	chr_class = get_chr_class[(unsigned char)s[*i]];
 	while (s[*i] &&
-		  (token_chr_rules[toktype][(chr_class = get_chr_class[(unsigned char)s[*i]])] || prev_class == CHR_ESCAPE))
+			(token_chr_rules[toktype][(chr_class = get_chr_class[(unsigned char)s[*i]])]
+				|| prev_class == CHR_ESCAPE))
 	{
 		prev_class = chr_class;
 		//printf("[%s, '%c', %d]\n", DEBUG_CHR[chr_class], s[*i], anchor);
@@ -97,35 +130,25 @@ t_tokens	*get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 	return (save_token(s + (*i - anchor), anchor, toktype));
 }
 
-t_tokens	*tokenizer(char *s)
+t_tokens	*get_next_token(char *s)
 {
-	int			i = 0;
-	t_chr_class	chr_class = 0;
-	t_tokens	*begin = save_token(NULL, 0, 0);
-	t_tokens	*current = begin;
+	t_chr_class		chr_class = 0;
+	t_toktype		toktype = 0;
+	t_tokens		*token = NULL;
+	static	int		i = 0;
 
-	while (s[i])
+	if (!(chr_class = get_chr_class[s[i]]))
+		return (NULL);
+	if (!(toktype = get_tok_type[chr_class]))
+		return (NULL);
+	if (is_opening_class(chr_class))
 	{
-		if (!(chr_class = get_chr_class[(unsigned char)s[i]]))
-			exit(0);
-		if (chr_class == CHR_SP || chr_class == CHR_COMMENT)
-		{
-			ignore_chr_class(s, &i, chr_class);
-			continue ;
-		}
-		if (is_opening_class(chr_class))
-		{
-			i++;
-			if (!(current->next = get_sequence_token(s, &i, get_tok_type[chr_class], chr_class)))
-				exit (0);
-			i++;
-		}
-		else if (!(current->next = get_token(s, &i, get_tok_type[chr_class], chr_class)))
-			exit (0);
-		current = current->next;
+		i++;
+		token = get_sequence_token(s, &i,  toktype, chr_class);
+		i++;
 	}
-	current = begin->next;
-	free(begin);
-	return (current);
-}
+	else
+		token = get_token(s, &i, toktype, chr_class);
 
+	return (token);
+}

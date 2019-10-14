@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 03:35:54 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/09 12:16:06 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/14 16:23:03 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ t_chr_class		get_chr_class[255] = {
 	
 	['='] = CHR_OPERATOR,
 	['&'] = CHR_OPERATOR
+};
+
+int		ABSTRACT_TOKEN[TOK_MAX] = {
+	[TOK_REDIRECTION] = 1, // >> <<
+	[TOK_PIPE] = 1, // | ||
+	[TOK_OPERATOR] = 1 // = == &&
 };
 
 t_toktype	token_chr_rules[TOK_MAX][CHR_MAX] = {
