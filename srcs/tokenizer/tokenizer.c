@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:06 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/14 17:12:37 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/15 17:42:55 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ t_tokens	*save_token(char *s, int anchor, t_toktype toktype)
 		return (NULL);
 	if (anchor > 0)
 	{
-		if (!(new->tok_literal = malloc(sizeof(char) * (anchor + 1))))
+		if (!(new->data = malloc(sizeof(char) * (anchor + 1))))
 			return (NULL);
 		//a remplacer par ft_strncpy
-		strncpy(new->tok_literal, s, anchor);
+		strncpy(new->data, s, anchor);
 	}
 	else
-		new->tok_literal = NULL;
+		new->data = NULL;
 	new->tok = toktype;
 	new->next = NULL;
 	return (new);
@@ -61,27 +61,31 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype)
 {
 	if (toktype == TOK_OPERATOR)
 	{
-		if (!strncmp(s, "&&", 2))
+		if (!strcmp(s, "&&"))
 			return (TOK_AND_IF);
-		if (!strncmp(s, "&&", 2))
-			return (TOK_AND_IF);
-		if (!strncmp(s, "==", 2))
+		if (!strcmp(s, "=="))
 			return (TOK_EQUAL);
-		if (*s == '=')
+		if (!strcmp(s, "="))
 			return (TOK_ASSIGN);
-		if (*s == '&')
+		if (!strcmp(s, "&"))
 			return (TOK_AND);
 	}
 	else if (toktype == TOK_PIPE)
 	{
 		if (!strncmp(s, "||", 2))
 			return (TOK_OR_IF);
+		if (!strcmp(s, "|"))
+			return (TOK_PIPE);
 	}
 	else if (toktype == TOK_REDIRECTION)
 	{
-		if (!strncmp(s, "<<", 2))
+		if (!strcmp(s, "<<"))
+			return (TOK_DLESS);
+		if (!strcmp(s, ">>"))
+			return (TOK_DGREAT);
+		if (!strcmp(s, "<"))
 			return (TOK_LREDI);
-		if (!strncmp(s, ">>", 2))
+		if (!strcmp(s, ">"))
 			return (TOK_RREDI);
 	}
 	return (0);
@@ -105,8 +109,6 @@ t_tokens	*get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class ori
 		printf("ERROR : Need to close sequence\n");
 		exit (0);
 	}
-	if (ABSTRACT_TOKEN[toktype] && !(toktype = get_true_toktype(s + (*i - anchor), toktype)))
-		return (NULL);
 	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
 	return (save_token(s + (*i - anchor), anchor, toktype));
 }
@@ -137,8 +139,15 @@ t_tokens	*get_next_token(char *s)
 	t_tokens		*token = NULL;
 	static	int		i = 0;
 
+	if (s[i] == '\0')
+		return (save_token(NULL, 0, TOK_EOF));
 	if (!(chr_class = get_chr_class[s[i]]))
 		return (NULL);
+	if (chr_class == CHR_COMMENT || chr_class == CHR_SP)
+	{
+		ignore_chr_class(s, &i, chr_class);
+		return (get_next_token(s));
+	}
 	if (!(toktype = get_tok_type[chr_class]))
 		return (NULL);
 	if (is_opening_class(chr_class))
@@ -149,6 +158,22 @@ t_tokens	*get_next_token(char *s)
 	}
 	else
 		token = get_token(s, &i, toktype, chr_class);
-
+	if (ABSTRACT_TOKEN[token->tok] && !(token->tok = get_true_toktype(token->data, token->tok)))
+		return (NULL);
 	return (token);
+}
+
+int main(int argc, char *argv[])
+{
+	t_tokens	*tok;
+
+	tok = get_next_token(argv[1]);
+	while (tok && tok->tok != TOK_EOF)
+	{
+		printf("{%s, \"%s\"}\n", DEBUG_TOKEN[tok->tok], tok->data);
+		tok = get_next_token(argv[1]);
+	}
+	if (!tok)
+		printf("Syntax error : \n");
+	return 0;
 }
