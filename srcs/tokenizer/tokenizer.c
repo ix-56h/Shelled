@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:06 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/15 17:42:55 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/15 18:40:13 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ t_tokens	*save_token(char *s, int anchor, t_toktype toktype)
 {
 	t_tokens	*new;
 
-	if (!(new = malloc(sizeof(t_tokens))))
+	new = NULL;
+	if (!(new = malloc(sizeof(t_tokens*))))
 		return (NULL);
 	if (anchor > 0)
 	{
@@ -39,7 +40,6 @@ t_tokens	*save_token(char *s, int anchor, t_toktype toktype)
 	else
 		new->data = NULL;
 	new->tok = toktype;
-	new->next = NULL;
 	return (new);
 }
 
@@ -97,7 +97,8 @@ t_tokens	*get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class ori
 	t_chr_class		prev_class = 0;
 	int				anchor = 0;
 
-	while (s[*i] && ((chr_class = get_chr_class[s[*i]]) != origin_class || (prev_class == CHR_ESCAPE && toktype == TOK_DQUOTE)))
+	while (s[*i] && ((chr_class = get_chr_class[(unsigned char)s[*i]]) != origin_class
+				|| (prev_class == CHR_ESCAPE && toktype == TOK_DQUOTE)))
 	{
 		prev_class = chr_class;
 		//printf("[%s, '%c', %d]\n", DEBUG_CHR[chr_class], s[*i], anchor);
@@ -141,7 +142,7 @@ t_tokens	*get_next_token(char *s)
 
 	if (s[i] == '\0')
 		return (save_token(NULL, 0, TOK_EOF));
-	if (!(chr_class = get_chr_class[s[i]]))
+	if (!(chr_class = get_chr_class[(unsigned char)s[i]]))
 		return (NULL);
 	if (chr_class == CHR_COMMENT || chr_class == CHR_SP)
 	{
@@ -166,7 +167,8 @@ t_tokens	*get_next_token(char *s)
 int main(int argc, char *argv[])
 {
 	t_tokens	*tok;
-
+	
+	(void)argc;
 	tok = get_next_token(argv[1]);
 	while (tok && tok->tok != TOK_EOF)
 	{
@@ -174,6 +176,6 @@ int main(int argc, char *argv[])
 		tok = get_next_token(argv[1]);
 	}
 	if (!tok)
-		printf("Syntax error : \n");
+		printf("Syntax error\n");
 	return 0;
 }
