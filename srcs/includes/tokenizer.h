@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 05:04:16 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/14 16:47:24 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/15 18:38:17 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,13 @@ typedef enum	e_toktype {
 	TOK_ERROR,
 	TOK_SP,
 	TOK_WORD,
-	TOK_VALIDATOR,
-	TOK_OPERATOR,
 	TOK_AND_IF,
 	TOK_OR_IF,
 	TOK_AND,
 	TOK_ASSIGN,
 	TOK_EQUAL,
-	TOK_REDIRECTION,
+	TOK_DLESS,
+	TOK_DGREAT,
 	TOK_LREDI,
 	TOK_RREDI,
 	TOK_ESCAPE,
@@ -32,6 +31,13 @@ typedef enum	e_toktype {
 	TOK_SUBSHELL,
 	TOK_SUBSTITUTION,
 	TOK_EXP,
+	TOK_EOF,
+	/*
+	**	Abstract token
+	*/
+	TOK_VALIDATOR,
+	TOK_OPERATOR,
+	TOK_REDIRECTION,
 	TOK_PIPE,
 	TOK_MAX
 }				t_toktype;
@@ -59,8 +65,7 @@ typedef enum	e_chr_class {
 
 typedef struct		s_tokens {
 	t_toktype		tok;
-	char			*tok_literal;
-	struct s_tokens	*next;
+	char			*data;
 }					t_tokens;
 
 t_tokens	*get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class origin_class);

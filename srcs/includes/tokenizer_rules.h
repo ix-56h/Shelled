@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 03:35:54 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/14 16:23:03 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/10/15 18:06:10 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,14 @@ const char	DEBUG_TOKEN[TOK_MAX][30] = {
 	[TOK_WORD] = "TOK_WORD",
 	[TOK_VALIDATOR] = "TOK_VALIDATOR",
 	[TOK_OPERATOR] = "TOK_OPERATOR",
+	[TOK_AND_IF] = "TOK_AND_IF",
+	[TOK_AND] = "TOK_AND",
+	[TOK_OR_IF] = "TOK_OR_IF",
 	[TOK_REDIRECTION] = "TOK_REDIRECTION",
+	[TOK_LREDI] = "TOK_LREDI",
+	[TOK_RREDI] = "TOK_RREDI",
+	[TOK_DLESS] = "TOK_DLESS",
+	[TOK_DGREAT] = "TOK_DGREAT",
 	[TOK_ESCAPE] = "TOK_WORD",
 	[TOK_SQUOTE] = "TOK_SQUOTE",
 	[TOK_DQUOTE] = "TOK_DQUOTE",
