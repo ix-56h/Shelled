@@ -10,6 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parser.h"
+
+t_flags		f;
+
 void	parse_program(void)
 {
 	//if (parse_linebreak())
@@ -60,4 +64,31 @@ void	parse_newline_list(void)
 	//if (token == NEWLINE)
 	//	success
 	//error;
+}
+
+int main(int ac, char **av)
+{
+	char		*input = av[1];
+	t_tokens	tok;
+	t_node		*node = NULL;
+
+	if (ac < 2)
+	{
+		printf("Usage: ./rdp \"ls -la > output.txt\" [-debug=all] [-ast=draw]\n");
+		return (0);
+	}
+	f = check_param(av + 2);
+	if (f.debug_all)
+		printf("f.d = %u\nf.a = %u\n", f.debug_all, f.ast_draw);
+	tok = get_next_token(input);
+	//run the parser
+	//node = expr(input, &tok);
+	if (f.ast_draw)
+	{
+		FILE *stream = fopen("tree.dot", "w");
+		if (!stream)
+			exit(0);
+		bst_print_dot(node, stream);
+	}
+	return 0;
 }

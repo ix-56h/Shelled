@@ -68,10 +68,11 @@ typedef struct		s_tokens {
 	char			*data;
 }					t_tokens;
 
-t_tokens	*get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class origin_class);
-t_tokens	*get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class);
+t_tokens	get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class origin_class);
+t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class);
 void		ignore_chr_class(char *s, int *i, t_chr_class chr_class);
 int			is_opening_class(t_chr_class chr_class);
-t_tokens	*save_token(char *s, int anchor, t_toktype toktype);
-t_tokens	*tokenizer(char *s);
+t_tokens	save_token(char *s, int anchor, t_toktype toktype);
+t_tokens	get_next_token(char *s);
+//void		eat(int anchor);
 #endif

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/tokenizer.h"
-#include "../includes/tokenizer_rules.h"
+#include "tokenizer.h"
+#include "tokenizer_rules.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -23,23 +23,29 @@ int			is_opening_class(t_chr_class chr_class)
 	return (0);
 }
 
-t_tokens	*save_token(char *s, int anchor, t_toktype toktype)
+t_tokens	token_error(void)
 {
-	t_tokens	*new;
+	t_tokens new;
 
-	new = NULL;
-	if (!(new = malloc(sizeof(t_tokens*))))
-		return (NULL);
+	new.data = NULL;
+	new.tok = TOK_ERROR;
+	return (new);
+}
+
+t_tokens	save_token(char *s, int anchor, t_toktype toktype)
+{
+	t_tokens	new;
+
 	if (anchor > 0)
 	{
-		if (!(new->data = malloc(sizeof(char) * (anchor + 1))))
-			return (NULL);
+		if (!(new.data = malloc(sizeof(char) * (anchor + 1))))
+			exit(1);
 		//a remplacer par ft_strncpy
-		strncpy(new->data, s, anchor);
+		strncpy(new.data, s, anchor);
 	}
 	else
-		new->data = NULL;
-	new->tok = toktype;
+		new.data = NULL;
+	new.tok = toktype;
 	return (new);
 }
 
@@ -88,10 +94,10 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype)
 		if (!strcmp(s, ">"))
 			return (TOK_RREDI);
 	}
-	return (0);
+	return (TOK_ERROR);
 }
 
-t_tokens	*get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class origin_class)
+t_tokens	get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class origin_class)
 {
 	t_chr_class		chr_class = 0;
 	t_chr_class		prev_class = 0;
@@ -114,7 +120,7 @@ t_tokens	*get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class ori
 	return (save_token(s + (*i - anchor), anchor, toktype));
 }
 
-t_tokens	*get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
+t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 {
 	t_chr_class chr_class = 0;
 	int anchor = 0;
@@ -133,24 +139,24 @@ t_tokens	*get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 	return (save_token(s + (*i - anchor), anchor, toktype));
 }
 
-t_tokens	*get_next_token(char *s)
+t_tokens	get_next_token(char *s)
 {
 	t_chr_class		chr_class = 0;
 	t_toktype		toktype = 0;
-	t_tokens		*token = NULL;
-	static	int		i = 0;
+	t_tokens		token;
+	static int		i = 0;
 
 	if (s[i] == '\0')
 		return (save_token(NULL, 0, TOK_EOF));
 	if (!(chr_class = get_chr_class[(unsigned char)s[i]]))
-		return (NULL);
+		return (token_error());
 	if (chr_class == CHR_COMMENT || chr_class == CHR_SP)
 	{
 		ignore_chr_class(s, &i, chr_class);
 		return (get_next_token(s));
 	}
 	if (!(toktype = get_tok_type[chr_class]))
-		return (NULL);
+		return (token_error());
 	if (is_opening_class(chr_class))
 	{
 		i++;
@@ -159,23 +165,25 @@ t_tokens	*get_next_token(char *s)
 	}
 	else
 		token = get_token(s, &i, toktype, chr_class);
-	if (ABSTRACT_TOKEN[token->tok] && !(token->tok = get_true_toktype(token->data, token->tok)))
-		return (NULL);
+	if (ABSTRACT_TOKEN[token.tok] && !(token.tok = get_true_toktype(token.data, token.tok)))
+		return (token_error());
 	return (token);
 }
 
+/*
 int main(int argc, char *argv[])
 {
-	t_tokens	*tok;
+	t_tokens	tok;
 	
 	(void)argc;
 	tok = get_next_token(argv[1]);
-	while (tok && tok->tok != TOK_EOF)
+	while (tok.tok != TOK_ERROR && tok.tok != TOK_EOF)
 	{
-		printf("{%s, \"%s\"}\n", DEBUG_TOKEN[tok->tok], tok->data);
+		printf("{%s, \"%s\"}\n", DEBUG_TOKEN[tok.tok], tok.data);
 		tok = get_next_token(argv[1]);
 	}
-	if (!tok)
+	if (tok.tok == TOK_ERROR)
 		printf("Syntax error\n");
 	return 0;
 }
+*/
