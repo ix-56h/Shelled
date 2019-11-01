@@ -67,13 +67,17 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype)
 {
 	if (toktype == TOK_OPERATOR)
 	{
-		if (!strcmp(s, "&&"))
+		if (!strncmp(s, "&&", 2))
 			return (TOK_AND_IF);
-		if (!strcmp(s, "=="))
+		if (!strncmp(s, "==", 2))
 			return (TOK_EQUAL);
-		if (!strcmp(s, "="))
+		if (!strncmp(s, ";;", 2))
+			return (TOK_DSEMI);
+		if (!strncmp(s, ";", 1))
+			return (TOK_DSEMI);
+		if (!strncmp(s, "=", 1))
 			return (TOK_ASSIGN);
-		if (!strcmp(s, "&"))
+		if (!strncmp(s, "&", 1))
 			return (TOK_AND);
 	}
 	else if (toktype == TOK_PIPE)
@@ -85,13 +89,23 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype)
 	}
 	else if (toktype == TOK_REDIRECTION)
 	{
-		if (!strcmp(s, "<<"))
+		if (!strncmp(s, "<<-", 3))
+			return (TOK_DLESSDASH);
+		if (!strncmp(s, "<<", 2))
 			return (TOK_DLESS);
-		if (!strcmp(s, ">>"))
+		if (!strncmp(s, ">>", 2))
 			return (TOK_DGREAT);
-		if (!strcmp(s, "<"))
+		if (!strncmp(s, "<&", 2))
+			return (TOK_LESSAND);
+		if (!strncmp(s, ">&", 2))
+			return (TOK_GREATAND);
+		if (!strncmp(s, "<>", 2))
+			return (TOK_LESSGREAT);
+		if (!strncmp(s, ">|", 2))
+			return (TOK_CLOBBER);
+		if (!strcmp(s, "<", 1))
 			return (TOK_LREDI);
-		if (!strcmp(s, ">"))
+		if (!strncmp(s, ">", 1))
 			return (TOK_RREDI);
 	}
 	return (TOK_ERROR);

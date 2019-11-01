@@ -14,6 +14,17 @@
 # define FT_TOK_H
 typedef enum	e_toktype {
 	TOK_ERROR,
+	TOK_NAME,
+	TOK_IO_NUMBER,
+	TOK_LESSAND,
+	TOK_GREATAND,
+	TOK_CLOBBER,
+	TOK_LESSGREAT,
+	TOK_DSEMI,
+	TOK_SEMI,
+	TOK_DLESSDASH,
+	TOK_CLOBBER,
+	TOK_IN,
 	TOK_SP,
 	TOK_WORD,
 	TOK_AND_IF,
@@ -30,6 +41,7 @@ typedef enum	e_toktype {
 	TOK_DQUOTE,
 	TOK_SUBSHELL,
 	TOK_SUBSTITUTION,
+	TOK_BANG,
 	TOK_EXP,
 	TOK_EOF,
 	/*
@@ -45,11 +57,14 @@ typedef enum	e_toktype {
 typedef enum	e_chr_class {
 	CHR_ERROR,
 	CHR_SP,
+	CHR_BANG,
+	CHR_AND,
+	CHR_EQUAL,
+	CHR_SEMI,
 	CHR_WORD,
 	CHR_DIGIT,
 	CHR_VALIDATOR,
 	CHR_ESCAPE,
-	CHR_OPERATOR,
 	CHR_PIPE,
 	CHR_SQUOTE,
 	CHR_DQUOTE,
@@ -57,9 +72,10 @@ typedef enum	e_chr_class {
 	CHR_EXP,
 	CHR_RBRACE,
 	CHR_LBRACE,
+	CHR_RREDI,
+	CHR_LREDI,
 	CHR_RSUB,
 	CHR_LSUB,
-	CHR_REDIRECTION,
 	CHR_MAX
 }				t_chr_class;
 

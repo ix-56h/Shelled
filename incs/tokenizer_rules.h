@@ -15,7 +15,7 @@
 t_chr_class		get_chr_class[255] = {
 	[' '] = CHR_SP,
 	['\t'] = CHR_SP,
-	[';'] = CHR_VALIDATOR,
+	[';'] = CHR_SEMI,
 	['\n'] = CHR_VALIDATOR,
 
 	['#'] = CHR_COMMENT,
@@ -28,16 +28,11 @@ t_chr_class		get_chr_class[255] = {
 	[']'] = CHR_WORD,
 	['@'] = CHR_WORD,
 	[','] = CHR_WORD,
-	//['{'] = CHR_RBRACE,
-	['{'] = CHR_WORD,
-	//['}'] = CHR_LBRACE,
-	['}'] = CHR_WORD,
+	['{'] = CHR_RBRACE,
+	['}'] = CHR_LBRACE,
 	//['$'] = CHR_EXP,
-	['$'] = CHR_WORD,
-	//['('] = CHR_RSUB,
-	['('] = CHR_WORD,
-	//[')'] = CHR_LSUB,
-	[')'] = CHR_WORD,
+	['('] = CHR_RSUB,
+	[')'] = CHR_LSUB,
 
 	['*'] = CHR_WORD,
 
@@ -45,20 +40,20 @@ t_chr_class		get_chr_class[255] = {
 	['a' ... 'z'] = CHR_WORD,
 	['0' ... '9'] = CHR_DIGIT,
 	
-	['-'] = CHR_WORD,
+	['-'] = CHR_DASH,
 
 	['\\'] = CHR_ESCAPE,
 	
-	['<'] = CHR_REDIRECTION,
-	['>'] = CHR_REDIRECTION,
+	['<'] = CHR_LREDI,
+	['>'] = CHR_RREDI,
 
 	['|'] = CHR_PIPE,
-
+	['!'] = CHR_BANG,
 	['\''] = CHR_SQUOTE,
 	['"'] = CHR_DQUOTE,
 	
-	['='] = CHR_OPERATOR,
-	['&'] = CHR_OPERATOR
+	['='] = CHR_EQUAL,
+	['&'] = CHR_AND
 };
 
 int		ABSTRACT_TOKEN[TOK_MAX] = {
@@ -72,16 +67,18 @@ t_toktype	token_chr_rules[TOK_MAX][CHR_MAX] = {
 	[TOK_WORD] = {
 		[CHR_WORD] = 1,
 		[CHR_DIGIT] = 1,
-		[CHR_ESCAPE] = 1
+		[CHR_ESCAPE] = 1,
+		[CHR_DASH] = 1
 	},
+	[TOK_BANG] = {[CHR_BANG] = 1,}
 	[TOK_SQUOTE] = {
-		[0 ... CHR_REDIRECTION] = 1,
+		[CHR_NAME ... CHR_AND] = 1,
 	},
 	[TOK_DQUOTE] = {
-		[0 ... CHR_REDIRECTION] = 1,
+		[CHR_NAME ... CHR_AND] = 1,
 	},
-	[TOK_OPERATOR] = {[CHR_OPERATOR] = 1},
-	[TOK_REDIRECTION] = {[CHR_REDIRECTION] = 1},
+	[TOK_OPERATOR] = {[CHR_EQUAL] = 1, [CHR_AND] = 1, [CHR_SEMI] = 1},
+	[TOK_REDIRECTION] = {[CHR_LREDI ... CHR_RREDI] = 1, [CHR_PIPE] = 1, [CHR_DASH] = 1, [CHR_AND] = 1},
 	[TOK_PIPE] = {[CHR_PIPE] = 1},
 	[TOK_VALIDATOR] = {[CHR_VALIDATOR] = 1},
 	//[TOK_EXP] = {},
@@ -92,10 +89,12 @@ t_toktype	token_chr_rules[TOK_MAX][CHR_MAX] = {
 t_toktype	get_tok_type[CHR_MAX] = {
 	[CHR_SP] = TOK_SP,
 	[CHR_WORD] = TOK_WORD,
-	[CHR_DIGIT] = TOK_WORD,//not really word, but why not
-	[CHR_VALIDATOR] = TOK_VALIDATOR,
 	[CHR_ESCAPE] = TOK_WORD,
-	[CHR_REDIRECTION] = TOK_REDIRECTION,
+	[CHR_DIGIT] = TOK_WORD,//not really word, but why not
+	[CHR_BANG] = TOK_BANG,
+	[CHR_VALIDATOR] = TOK_VALIDATOR,
+	[CHR_LREDI] = TOK_REDIRECTION,
+	[CHR_RREDI] = TOK_REDIRECTION,
 	[CHR_PIPE] = TOK_PIPE,
 	[CHR_SQUOTE] = TOK_SQUOTE,
 	[CHR_DQUOTE] = TOK_DQUOTE,
@@ -104,7 +103,9 @@ t_toktype	get_tok_type[CHR_MAX] = {
 	[CHR_LBRACE] = 0,
 	//[CHR_RSUB] = TOK_SUBSHELL,
 	[CHR_LSUB] = 0,
-	[CHR_OPERATOR] = TOK_OPERATOR
+	[CHR_AND] = TOK_OPERATOR,
+	[CHR_EQUAL] = TOK_OPERATOR,
+	[CHR_SEMI] = TOK_OPERATOR
 };
 
 const char	DEBUG_TOKEN[TOK_MAX][30] = {
