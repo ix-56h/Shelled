@@ -150,10 +150,12 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 		(*i)++;
 	}
 	ignore_chr_class(s, i, CHR_SP);
+	if (toktype == TOK_WORD && s[*i] == '=')
+		toktype = TOK_NAME;
+	else if (toktype == TOK_WORD && s[*i - anchor] == '=')
+		toktype = TOK_ASSIGNEMENT_WORD;
 	if (toktype == TOK_IO_NUMBER && !(s[*i] == '>' || s[*i] == '<'))
 		toktype = TOK_WORD;
-	if (toktype == TOK_WORD && !(s[*i] == '='))
-		toktype = TOK_NAME;
 	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
 	return (save_token(s + (*i - anchor), anchor, toktype));
 }

@@ -324,10 +324,10 @@ void	parse_cmd_prefix(void)
 	//	success
 	//else if (parse_cmd_prefix() && parse_io_redirect())
 	//	success
-	//else if (token == TOK_ASSIGN)
+	//else if (token == TOK_ASSIGNEMENT_WORD)
 	//	eat()
 	//	success
-	//else if (parse_cmd_prefix() && token == TOK_ASSIGN)
+	//else if (parse_cmd_prefix() && token == TOK_ASSIGNEMENT_WORD)
 	//	eat()
 	//	success
 	//error
