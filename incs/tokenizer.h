@@ -18,7 +18,6 @@ typedef enum	e_toktype {
 	TOK_IO_NUMBER,
 	TOK_LESSAND,
 	TOK_GREATAND,
-	TOK_CLOBBER,
 	TOK_LESSGREAT,
 	TOK_DSEMI,
 	TOK_SEMI,
@@ -57,6 +56,7 @@ typedef enum	e_toktype {
 typedef enum	e_chr_class {
 	CHR_ERROR,
 	CHR_SP,
+	CHR_DASH,
 	CHR_BANG,
 	CHR_AND,
 	CHR_EQUAL,

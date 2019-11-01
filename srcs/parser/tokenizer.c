@@ -84,7 +84,7 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype)
 	{
 		if (!strncmp(s, "||", 2))
 			return (TOK_OR_IF);
-		if (!strcmp(s, "|"))
+		if (!strncmp(s, "|", 1))
 			return (TOK_PIPE);
 	}
 	else if (toktype == TOK_REDIRECTION)
@@ -103,7 +103,7 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype)
 			return (TOK_LESSGREAT);
 		if (!strncmp(s, ">|", 2))
 			return (TOK_CLOBBER);
-		if (!strcmp(s, "<", 1))
+		if (!strncmp(s, "<", 1))
 			return (TOK_LREDI);
 		if (!strncmp(s, ">", 1))
 			return (TOK_RREDI);
@@ -152,6 +152,8 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 	ignore_chr_class(s, i, CHR_SP);
 	if (toktype == TOK_IO_NUMBER && !(s[*i] == '>' || s[*i] == '<'))
 		toktype = TOK_WORD;
+	if (toktype == TOK_WORD && !(s[*i] == '='))
+		toktype = TOK_NAME;
 	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
 	return (save_token(s + (*i - anchor), anchor, toktype));
 }
