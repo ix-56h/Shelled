@@ -14,8 +14,11 @@
 
 t_flags		f;
 
-void	parse_program(void)
+void	parse_program(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
+
 	//if (parse_linebreak())
 	//	if (parse_complete_command())
 	//		if (parse_linebreak())
@@ -24,8 +27,10 @@ void	parse_program(void)
 	//	success
 }
 
-void	parse_complete_commands(void)
+void	parse_complete_commands(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_complete_commands())
 	//	if (parse_newline_list())
 	//		if (parse_complete_command())
@@ -35,8 +40,10 @@ void	parse_complete_commands(void)
 	//error;
 }
 
-void	parse_complete_command(void)
+void	parse_complete_command(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_list())
 	//	if (parse_separator_op())
 	//		success;
@@ -44,8 +51,10 @@ void	parse_complete_command(void)
 	//error;
 }
 
-void	parse_list(void)
+void	parse_list(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_list())
 	//	if (parse_separator_op())
 	//		if (parse_and_or())
@@ -54,8 +63,10 @@ void	parse_list(void)
 	//	success
 }
 
-void	parse_and_or(void)
+void	parse_and_or(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_pipeline())
 	//	success 
 	//else if (parse_and_or())
@@ -66,15 +77,19 @@ void	parse_and_or(void)
 	//	error
 }
 
-void	parse_pipeline(void)
+void	parse_pipeline(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_pipe_sequence())
 	//	success
 	//else if (token == TOK_BANG)
 }
 
-void	parse_pipe_sequence(void)
+void	parse_pipe_sequence(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_command())
 	//	success
 	//else if (parse_pipe_sequence())
@@ -86,8 +101,10 @@ void	parse_pipe_sequence(void)
 	//error
 }
 
-void	parse_command(void)
+void	parse_command(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_simple_command())
 	//	success
 	//else if (parse_compound_command())
@@ -99,8 +116,10 @@ void	parse_command(void)
 	//error
 }
 
-void	parse_compound_command(void)
+void	parse_compound_command(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_brace_group())
 	//	success
 	//else if (parse_subshell())
@@ -118,8 +137,10 @@ void	parse_compound_command(void)
 	//error
 }
 
-void	parse_subshell(void)
+void	parse_subshell(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (token == TOK_LPAREN)
 	//	eat()
 	//	if (parse_compound_list() && token == TOK_RPAREN)
@@ -129,8 +150,10 @@ void	parse_subshell(void)
 	//error
 }
 
-void	parse_compound_list(void)
+void	parse_compound_list(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_linebreak() && parse_term())
 	//	if (parse_separator())
 	//		success
@@ -138,8 +161,10 @@ void	parse_compound_list(void)
 	//error
 }
 
-void	parse_term(void)
+void	parse_term(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//	term	:	term seperator and_or
 	//			|					and_or
 	
@@ -150,26 +175,32 @@ void	parse_term(void)
 	//error
 }
 
-void	parse_for_clause(void);
+void	parse_for_clause(char *s, t_tokens *cur);
 
-void	parse_name(void)
+void	parse_name(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (token == TOK_NAME)
 	//	success
 	//	applie rule 5
 	//error
 }
 
-void	parse_in(void)
+void	parse_in(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (token == TOK_IN)
 	//	success
 	//	applie rule 6
 	//error
 }
 
-void	parse_word_list(void)
+void	parse_word_list(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_wordlist())
 	//	if (token == TOK_WORD)
 	//		eat()
@@ -180,10 +211,12 @@ void	parse_word_list(void)
 	//error
 }
 
-void	parse_case_clause(void);
+void	parse_case_clause(char *s, t_tokens *cur);
 
-void	parse_case_list_ns(void)
+void	parse_case_list_ns(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_case_list())
 	//	if (parse_case_item_ns())
 	//		success
@@ -192,8 +225,10 @@ void	parse_case_list_ns(void)
 	//error
 }
 
-void	parse_case_list(void)
+void	parse_case_list(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_case_list())
 	//	if (parse_case_item())
 	//		success
@@ -202,8 +237,10 @@ void	parse_case_list(void)
 	//error
 }
 
-void	parse_case_item_ns(void)
+void	parse_case_item_ns(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_pattern() && token == TOK_RPAREN)
 	//	eat()
 	//	if (parse_linebreak() || parse_compound_list())
@@ -217,8 +254,10 @@ void	parse_case_item_ns(void)
 	//	error
 }
 
-void	parse_case_item(void)
+void	parse_case_item(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_pattern() && token == TOK_RPAREN)
 	//	eat()
 	//	if ((parse_linebreak() || parse_compound_list()) && token == TOK_DSEMI)
@@ -237,8 +276,10 @@ void	parse_case_item(void)
 
 }
 
-void	parse_pattern(void)
+void	parse_pattern(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (token == TOK_WORD)
 	//	eat()
 	//	success
@@ -252,20 +293,22 @@ void	parse_pattern(void)
 	//error
 }
 
-void	parse_if_clause(void);
+void	parse_if_clause(char *s, t_tokens *cur);
 
-void	parse_else_part(void);
+void	parse_else_part(char *s, t_tokens *cur);
 
-void	parse_while_clause(void);
+void	parse_while_clause(char *s, t_tokens *cur);
 
-void	parse_until_clause(void);
+void	parse_until_clause(char *s, t_tokens *cur);
 
-void	parse_function_definition(void);
+void	parse_function_definition(char *s, t_tokens *cur);
 
-void	parse_function_body(void);
+void	parse_function_body(char *s, t_tokens *cur);
 
-void	parse_fname(void)
+void	parse_fname(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (token == TOK_NAME)
 	//	eat()
 	//	success
@@ -273,8 +316,10 @@ void	parse_fname(void)
 	//error
 }
 
-void	parse_brace_group(void)
+void	parse_brace_group(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (token == TOK_LBRACE)
 	//	eat()
 	//	if (parse_compound_list() && token == TOK_RBRACE)
@@ -283,10 +328,12 @@ void	parse_brace_group(void)
 	//error
 }
 
-void	parse_do_group(void);
+void	parse_do_group(char *s, t_tokens *cur);
 
-void	parse_simple_command(void)
+void	parse_simple_command(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_cmd_prefix())
 	//	if (parse_cmd_word())
 	//		if (parse_cmd_suffix())
@@ -300,8 +347,10 @@ void	parse_simple_command(void)
 	//error
 }
 
-void	parse_cmd_name(void)
+void	parse_cmd_name(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (token == TOK_WORD)
 	//	eat()
 	//	success
@@ -309,8 +358,10 @@ void	parse_cmd_name(void)
 	//error
 }
 
-void	parse_cmd_word(void)
+void	parse_cmd_word(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (token == TOK_WORD)
 	//	eat()
 	//	success
@@ -318,8 +369,10 @@ void	parse_cmd_word(void)
 	//error
 }
 
-void	parse_cmd_prefix(void)
+void	parse_cmd_prefix(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_io_redirect())
 	//	success
 	//else if (parse_cmd_prefix() && parse_io_redirect())
@@ -333,8 +386,10 @@ void	parse_cmd_prefix(void)
 	//error
 }
 
-void	parse_cmd_suffix(void)
+void	parse_cmd_suffix(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_io_redirect())
 	//	success
 	//else if (parse_cmd_suffix() && parse_io_redirect())
@@ -348,8 +403,10 @@ void	parse_cmd_suffix(void)
 	//error
 }
 
-void	parse_redirect_list(void)
+void	parse_redirect_list(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_io_redirect())
 	//	success
 	//else if (parse_redirect_list() && parse_io_redirect())
@@ -357,8 +414,10 @@ void	parse_redirect_list(void)
 	//error
 }
 
-void	parse_io_redirect(void)
+void	parse_io_redirect(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_io_file())
 	//	success
 	//else if (token == TOK_IO_NUMBER)
@@ -374,8 +433,10 @@ void	parse_io_redirect(void)
 	//error
 }
 
-void	parse_io_file(void)
+void	parse_io_file(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (token == TOK_LREDI || token == TOK_LESSAND || token == TOK_RREDI
 	//	|| token == TOK_GREATAND || token == TOK_DGREAT || token == TOK_LESSGREAT
 	//	|| token == TOK_CLOBBER)
@@ -385,16 +446,20 @@ void	parse_io_file(void)
 	//error
 }
 
-void	parse_filename(void)
+void	parse_filename(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (token == TOK_WORD)
 	//	eat()
 	//	success
 	//error
 }
 
-void	parse_io_here(void)
+void	parse_io_here(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (token == TOK_DLESS || token == TOK_DLESSDASH)
 	//	eat()
 	//	if (parse_here_end())
@@ -402,16 +467,20 @@ void	parse_io_here(void)
 	//error
 }
 
-void	parse_here_end(void)
+void	parse_here_end(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (token == TOK_WORD)
 	//	eat()
 	//	success
 	//error
 }
 
-void	parse_newline_list(void)
+void	parse_newline_list(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (newline_list())
 	//	success
 	//if (token == NEWLINE)
@@ -419,8 +488,10 @@ void	parse_newline_list(void)
 	//error;
 }
 
-void	parse_linebreak(void)
+void	parse_linebreak(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_newline_list())
 	//	success;
 	//else if (empty)
@@ -428,16 +499,20 @@ void	parse_linebreak(void)
 	//error;
 }
 
-void	parse_separator_op(void)
+void	parse_separator_op(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (token == TOK_AND || token == TOK_SEMI)
 	//	eat()
 	//	success
 	//error
 }
 
-void	parse_separator(void)
+void	parse_separator(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (parse_separator_op() && parse_linebreak())
 	//	success
 	//else if (parse_newline_list())
@@ -445,8 +520,10 @@ void	parse_separator(void)
 	//error
 }
 
-void	parse_sequential_sep(void)
+void	parse_sequential_sep(char *s, t_tokens *cur)
 {
+	t_node		*node;
+	t_tokens	tok;
 	//if (token == TOK_SEMI)
 	//	eat()
 	//	if (parse_linebreak())
