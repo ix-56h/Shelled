@@ -31,7 +31,6 @@ typedef enum	e_toktype {
 	TOK_OR_IF,
 	TOK_AND,
 	TOK_ASSIGN,
-	TOK_EQUAL,
 	TOK_DLESS,
 	TOK_DGREAT,
 	TOK_LREDI,
@@ -42,7 +41,6 @@ typedef enum	e_toktype {
 	TOK_SUBSHELL,
 	TOK_SUBSTITUTION,
 	TOK_BANG,
-	TOK_EXP,
 	TOK_EOF,
 	/*
 	**	Abstract token
@@ -60,7 +58,6 @@ typedef enum	e_chr_class {
 	CHR_DASH,
 	CHR_BANG,
 	CHR_AND,
-	CHR_EQUAL,
 	CHR_SEMI,
 	CHR_WORD,
 	CHR_DIGIT,

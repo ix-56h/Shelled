@@ -19,15 +19,24 @@ t_chr_class		get_chr_class[255] = {
 	['\n'] = CHR_VALIDATOR,
 
 	['#'] = CHR_COMMENT,
+	['A' ... 'Z'] = CHR_WORD,
+	['a' ... 'z'] = CHR_WORD,
+	['0' ... '9'] = CHR_DIGIT,
 	['_'] = CHR_WORD,
+	['='] = CHR_WORD,
 	[':'] = CHR_WORD,
+
 	['~'] = CHR_WORD,
+
 	['/'] = CHR_WORD,
+
 	['.'] = CHR_WORD,
+
 	['['] = CHR_WORD,
 	[']'] = CHR_WORD,
 	['@'] = CHR_WORD,
 	[','] = CHR_WORD,
+	
 	['{'] = CHR_RBRACE,
 	['}'] = CHR_LBRACE,
 	//['$'] = CHR_EXP,
@@ -36,10 +45,7 @@ t_chr_class		get_chr_class[255] = {
 
 	['*'] = CHR_WORD,
 
-	['A' ... 'Z'] = CHR_WORD,
-	['a' ... 'z'] = CHR_WORD,
-	['0' ... '9'] = CHR_DIGIT,
-	
+
 	['-'] = CHR_DASH,
 
 	['\\'] = CHR_ESCAPE,
@@ -52,7 +58,6 @@ t_chr_class		get_chr_class[255] = {
 	['\''] = CHR_SQUOTE,
 	['"'] = CHR_DQUOTE,
 	
-	['='] = CHR_EQUAL,
 	['&'] = CHR_AND
 };
 
@@ -78,7 +83,7 @@ t_toktype	token_chr_rules[TOK_MAX][CHR_MAX] = {
 	[TOK_DQUOTE] = {
 		[CHR_SP ... CHR_AND] = 1,
 	},
-	[TOK_OPERATOR] = {[CHR_EQUAL] = 1, [CHR_AND] = 1, [CHR_SEMI] = 1},
+	[TOK_OPERATOR] = {[CHR_AND] = 1, [CHR_SEMI] = 1},
 	[TOK_REDIRECTION] = {[CHR_RREDI ... CHR_LREDI] = 1, [CHR_PIPE] = 1, [CHR_DASH] = 1, [CHR_AND] = 1},
 	[TOK_PIPE] = {[CHR_PIPE] = 1},
 	[TOK_VALIDATOR] = {[CHR_VALIDATOR] = 1},
@@ -105,7 +110,6 @@ t_toktype	get_tok_type[CHR_MAX] = {
 	//[CHR_RSUB] = TOK_SUBSHELL,
 	[CHR_LSUB] = 0,
 	[CHR_AND] = TOK_OPERATOR,
-	[CHR_EQUAL] = TOK_OPERATOR,
 	[CHR_SEMI] = TOK_OPERATOR
 };
 

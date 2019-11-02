@@ -12,7 +12,7 @@
 
 # Executable's name (Can be changed)
 
-NAME		= rdp
+NAME		= 21sh
 
 # All the directories needed to know where files should be (Can be changed)
 

@@ -67,45 +67,43 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype)
 {
 	if (toktype == TOK_OPERATOR)
 	{
-		if (!strncmp(s, "&&", 2))
+		if (s[1] && !strncmp(s, "&&", 2))
 			return (TOK_AND_IF);
-		if (!strncmp(s, "==", 2))
-			return (TOK_EQUAL);
-		if (!strncmp(s, ";;", 2))
+		if (s[1] && !strncmp(s, ";;", 2))
 			return (TOK_DSEMI);
-		if (!strncmp(s, ";", 1))
-			return (TOK_DSEMI);
-		if (!strncmp(s, "=", 1))
+		if (!s[1] && !strncmp(s, ";", 1))
+			return (TOK_VALIDATOR);
+		if (!s[1] && !strncmp(s, "=", 1))
 			return (TOK_ASSIGN);
-		if (!strncmp(s, "&", 1))
+		if (!s[1] && !strncmp(s, "&", 1))
 			return (TOK_AND);
 	}
 	else if (toktype == TOK_PIPE)
 	{
-		if (!strncmp(s, "||", 2))
+		if (s[1] && !strncmp(s, "||", 2))
 			return (TOK_OR_IF);
-		if (!strncmp(s, "|", 1))
+		if (!s[1] && !strncmp(s, "|", 1))
 			return (TOK_PIPE);
 	}
 	else if (toktype == TOK_REDIRECTION)
 	{
-		if (!strncmp(s, "<<-", 3))
+		if (s[2] && !strncmp(s, "<<-", 3))
 			return (TOK_DLESSDASH);
-		if (!strncmp(s, "<<", 2))
+		if (s[1] && !strncmp(s, "<<", 2))
 			return (TOK_DLESS);
-		if (!strncmp(s, ">>", 2))
+		if (s[1] && !strncmp(s, ">>", 2))
 			return (TOK_DGREAT);
-		if (!strncmp(s, "<&", 2))
+		if (s[1] && !strncmp(s, "<&", 2))
 			return (TOK_LESSAND);
-		if (!strncmp(s, ">&", 2))
+		if (s[1] && !strncmp(s, ">&", 2))
 			return (TOK_GREATAND);
-		if (!strncmp(s, "<>", 2))
+		if (s[1] && !strncmp(s, "<>", 2))
 			return (TOK_LESSGREAT);
-		if (!strncmp(s, ">|", 2))
+		if (s[1] && !strncmp(s, ">|", 2))
 			return (TOK_CLOBBER);
-		if (!strncmp(s, "<", 1))
+		if (!s[1] && !strncmp(s, "<", 1))
 			return (TOK_LREDI);
-		if (!strncmp(s, ">", 1))
+		if (!s[1] && !strncmp(s, ">", 1))
 			return (TOK_RREDI);
 	}
 	return (TOK_ERROR);
@@ -150,10 +148,6 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 		(*i)++;
 	}
 	ignore_chr_class(s, i, CHR_SP);
-	if (toktype == TOK_WORD && s[*i] == '=')
-		toktype = TOK_NAME;
-	else if (toktype == TOK_WORD && s[*i - anchor] == '=')
-		toktype = TOK_ASSIGNEMENT_WORD;
 	if (toktype == TOK_IO_NUMBER && !(s[*i] == '>' || s[*i] == '<'))
 		toktype = TOK_WORD;
 	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
