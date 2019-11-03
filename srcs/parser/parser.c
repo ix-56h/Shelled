@@ -14,7 +14,7 @@
 
 t_flags		f;
 
-void	parse_program(char *s, t_tokens *cur)
+t_node	*parse_program(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -27,7 +27,7 @@ void	parse_program(char *s, t_tokens *cur)
 	//	success
 }
 
-void	parse_complete_commands(char *s, t_tokens *cur)
+t_node	*parse_complete_commands(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -40,7 +40,7 @@ void	parse_complete_commands(char *s, t_tokens *cur)
 	//error;
 }
 
-void	parse_complete_command(char *s, t_tokens *cur)
+t_node	*parse_complete_command(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -51,7 +51,7 @@ void	parse_complete_command(char *s, t_tokens *cur)
 	//error;
 }
 
-void	parse_list(char *s, t_tokens *cur)
+t_node	*parse_list(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -63,7 +63,7 @@ void	parse_list(char *s, t_tokens *cur)
 	//	success
 }
 
-void	parse_and_or(char *s, t_tokens *cur)
+t_node	*parse_and_or(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -77,7 +77,7 @@ void	parse_and_or(char *s, t_tokens *cur)
 	//	error
 }
 
-void	parse_pipeline(char *s, t_tokens *cur)
+t_node	*parse_pipeline(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -86,7 +86,7 @@ void	parse_pipeline(char *s, t_tokens *cur)
 	//else if (token == TOK_BANG)
 }
 
-void	parse_pipe_sequence(char *s, t_tokens *cur)
+t_node	*parse_pipe_sequence(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -101,7 +101,7 @@ void	parse_pipe_sequence(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_command(char *s, t_tokens *cur)
+t_node	*parse_command(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -116,7 +116,7 @@ void	parse_command(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_compound_command(char *s, t_tokens *cur)
+t_node	*parse_compound_command(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -137,7 +137,7 @@ void	parse_compound_command(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_subshell(char *s, t_tokens *cur)
+t_node	*parse_subshell(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -150,7 +150,7 @@ void	parse_subshell(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_compound_list(char *s, t_tokens *cur)
+t_node	*parse_compound_list(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -161,7 +161,7 @@ void	parse_compound_list(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_term(char *s, t_tokens *cur)
+t_node	*parse_term(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -175,9 +175,9 @@ void	parse_term(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_for_clause(char *s, t_tokens *cur);
+t_node	*parse_for_clause(char *s, t_tokens *cur);
 
-void	parse_name(char *s, t_tokens *cur)
+t_node	*parse_name(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -187,7 +187,7 @@ void	parse_name(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_in(char *s, t_tokens *cur)
+t_node	*parse_in(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -197,7 +197,7 @@ void	parse_in(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_word_list(char *s, t_tokens *cur)
+t_node	*parse_word_list(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -211,9 +211,9 @@ void	parse_word_list(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_case_clause(char *s, t_tokens *cur);
+t_node	*parse_case_clause(char *s, t_tokens *cur);
 
-void	parse_case_list_ns(char *s, t_tokens *cur)
+t_node	*parse_case_list_ns(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -225,7 +225,7 @@ void	parse_case_list_ns(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_case_list(char *s, t_tokens *cur)
+t_node	*parse_case_list(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -237,7 +237,7 @@ void	parse_case_list(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_case_item_ns(char *s, t_tokens *cur)
+t_node	*parse_case_item_ns(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -254,7 +254,7 @@ void	parse_case_item_ns(char *s, t_tokens *cur)
 	//	error
 }
 
-void	parse_case_item(char *s, t_tokens *cur)
+t_node	*parse_case_item(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -276,7 +276,7 @@ void	parse_case_item(char *s, t_tokens *cur)
 
 }
 
-void	parse_pattern(char *s, t_tokens *cur)
+t_node	*parse_pattern(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -293,19 +293,19 @@ void	parse_pattern(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_if_clause(char *s, t_tokens *cur);
+t_node	*parse_if_clause(char *s, t_tokens *cur);
 
-void	parse_else_part(char *s, t_tokens *cur);
+t_node	*parse_else_part(char *s, t_tokens *cur);
 
-void	parse_while_clause(char *s, t_tokens *cur);
+t_node	*parse_while_clause(char *s, t_tokens *cur);
 
-void	parse_until_clause(char *s, t_tokens *cur);
+t_node	*parse_until_clause(char *s, t_tokens *cur);
 
-void	parse_function_definition(char *s, t_tokens *cur);
+t_node	*parse_function_definition(char *s, t_tokens *cur);
 
-void	parse_function_body(char *s, t_tokens *cur);
+t_node	*parse_function_body(char *s, t_tokens *cur);
 
-void	parse_fname(char *s, t_tokens *cur)
+t_node	*parse_fname(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -316,7 +316,7 @@ void	parse_fname(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_brace_group(char *s, t_tokens *cur)
+t_node	*parse_brace_group(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -328,9 +328,9 @@ void	parse_brace_group(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_do_group(char *s, t_tokens *cur);
+t_node	*parse_do_group(char *s, t_tokens *cur);
 
-void	parse_simple_command(char *s, t_tokens *cur)
+t_node	*parse_simple_command(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -347,7 +347,7 @@ void	parse_simple_command(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_cmd_name(char *s, t_tokens *cur)
+t_node	*parse_cmd_name(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -358,7 +358,7 @@ void	parse_cmd_name(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_cmd_word(char *s, t_tokens *cur)
+t_node	*parse_cmd_word(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -369,7 +369,7 @@ void	parse_cmd_word(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_cmd_prefix(char *s, t_tokens *cur)
+t_node	*parse_cmd_prefix(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -386,7 +386,7 @@ void	parse_cmd_prefix(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_cmd_suffix(char *s, t_tokens *cur)
+t_node	*parse_cmd_suffix(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -403,7 +403,7 @@ void	parse_cmd_suffix(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_redirect_list(char *s, t_tokens *cur)
+t_node	*parse_redirect_list(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -414,7 +414,7 @@ void	parse_redirect_list(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_io_redirect(char *s, t_tokens *cur)
+t_node	*parse_io_redirect(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -433,7 +433,7 @@ void	parse_io_redirect(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_io_file(char *s, t_tokens *cur)
+t_node	*parse_io_file(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -446,7 +446,7 @@ void	parse_io_file(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_filename(char *s, t_tokens *cur)
+t_node	*parse_filename(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -456,7 +456,7 @@ void	parse_filename(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_io_here(char *s, t_tokens *cur)
+t_node	*parse_io_here(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -467,7 +467,7 @@ void	parse_io_here(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_here_end(char *s, t_tokens *cur)
+t_node	*parse_here_end(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -477,7 +477,7 @@ void	parse_here_end(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_newline_list(char *s, t_tokens *cur)
+t_node	*parse_newline_list(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -488,7 +488,7 @@ void	parse_newline_list(char *s, t_tokens *cur)
 	//error;
 }
 
-void	parse_linebreak(char *s, t_tokens *cur)
+t_node	*parse_linebreak(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -499,7 +499,7 @@ void	parse_linebreak(char *s, t_tokens *cur)
 	//error;
 }
 
-void	parse_separator_op(char *s, t_tokens *cur)
+t_node	*parse_separator_op(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -509,7 +509,7 @@ void	parse_separator_op(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_separator(char *s, t_tokens *cur)
+t_node	*parse_separator(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
@@ -520,7 +520,7 @@ void	parse_separator(char *s, t_tokens *cur)
 	//error
 }
 
-void	parse_sequential_sep(char *s, t_tokens *cur)
+t_node	*parse_sequential_sep(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
