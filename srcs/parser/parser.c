@@ -19,24 +19,24 @@ t_node	*parse_program(char *s, t_tokens *cur)
 	t_node		*node;
 	t_tokens	tok;
 
-	//if (parse_linebreak())
-	//	if (parse_complete_command())
-	//		if (parse_linebreak())
-	//			success
-	//		error
-	//	success
+	//if (node = parse_linebreak(s, cur))
+	//	if (node = parse_complete_command(s, cur))
+	//		if (parse_linebreak(s, cur))
+	//			return (node);
+	//		return (NULL);
+	//	return (node);
+	//return (NULL);
 }
 
 t_node	*parse_complete_commands(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
-	//if (parse_complete_commands())
+	//if (node = parse_complete_commands())
 	//	if (parse_newline_list())
-	//		if (parse_complete_command())
-	//			success;
-	//else if (parse_complete_command())
-	//	success;
+	//		if (node = binode(node, tok, parse_complete_command()))
+	//			return (node);
+	//
 	//error;
 }
 
