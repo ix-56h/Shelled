@@ -19,48 +19,72 @@ t_node	*parse_program(char *s, t_tokens *cur)
 	t_node		*node;
 	t_tokens	tok;
 
-	//if (node = parse_linebreak(s, cur))
-	//	if (node = parse_complete_command(s, cur))
-	//		if (parse_linebreak(s, cur))
-	//			return (node);
-	//		return (NULL);
-	//	return (node);
-	//return (NULL);
+	if (parse_linebreak(s, cur))
+	{
+		if (node = parse_complete_command(s, cur))
+		{
+			if (parse_linebreak(s, cur))
+				return (node);
+		}
+	}
+	return (NULL);
 }
 
 t_node	*parse_complete_commands(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
-	//if (node = parse_complete_commands())
-	//	if (parse_newline_list())
-	//		if (node = binode(node, tok, parse_complete_command()))
-	//			return (node);
-	//
-	//error;
+	
+	if (node = parse_complete_commands(s, cur))
+	{
+		tok = *cur;
+		if (node = binnodes(node, tok, parse_newline_list(s, cur)))
+		{
+			tok = *cur;
+			if (node = binodes(node, tok, parse_complete_command(s, cur)))
+				return (node);
+		}
+	}
+	else if (node = parse_complete_command(s, cur))
+		return (node);
+	return (NULL);
 }
 
 t_node	*parse_complete_command(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
-	//if (parse_list())
-	//	if (parse_separator_op())
-	//		success;
-	//	success;
-	//error;
+	
+	tok = *cur;
+	if (node = parse_list(s, cur))
+	{
+		tok = *cur;
+		if (node = binnode(node, tok, parse_separator_op(s, cur)))
+			return (node);
+	}
+	printf("Error when parsing complete_command\n");
+	return (NULL);
 }
 
 t_node	*parse_list(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
-	//if (parse_list())
-	//	if (parse_separator_op())
-	//		if (parse_and_or())
-	//			success
-	//		error
-	//	success
+
+	tok = *cur;
+	if (node = parse_list(s, cur))
+	{
+		tok = *cur;
+		if (node = binnode(node, tok, parse_separator_op(s, cur)))
+		{
+			if (node = binnode(node, tok, parse_and_or(s, cur)))
+				return (node);
+		}
+	}
+	else if (node = parse_and_or(s, cur))
+		return (node);
+	printf("Error when parsing list\n");
+	return (NULL);
 }
 
 t_node	*parse_and_or(char *s, t_tokens *cur)
