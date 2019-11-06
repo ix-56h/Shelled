@@ -33,15 +33,12 @@ t_node	*parse_program(char *s, t_tokens *cur)
 t_node	*parse_complete_commands(char *s, t_tokens *cur)
 {
 	t_node		*node;
-	t_tokens	tok;
 	
 	if (node = parse_complete_commands(s, cur))
 	{
-		tok = *cur;
-		if (node = binnodes(node, tok, parse_newline_list(s, cur)))
+		if (parse_newline_list(s, cur))
 		{
-			tok = *cur;
-			if (node = binodes(node, tok, parse_complete_command(s, cur)))
+			if (node = binnode(node, parse_complete_command(s, cur), NULL))
 				return (node);
 		}
 	}
@@ -53,13 +50,10 @@ t_node	*parse_complete_commands(char *s, t_tokens *cur)
 t_node	*parse_complete_command(char *s, t_tokens *cur)
 {
 	t_node		*node;
-	t_tokens	tok;
 	
-	tok = *cur;
 	if (node = parse_list(s, cur))
 	{
-		tok = *cur;
-		if (node = binnode(node, tok, parse_separator_op(s, cur)))
+		if (node = binnode(node, parse_separator_op(s, cur), NULL))
 			return (node);
 	}
 	printf("Error when parsing complete_command\n");
@@ -69,15 +63,12 @@ t_node	*parse_complete_command(char *s, t_tokens *cur)
 t_node	*parse_list(char *s, t_tokens *cur)
 {
 	t_node		*node;
-	t_tokens	tok;
 
-	tok = *cur;
 	if (node = parse_list(s, cur))
 	{
-		tok = *cur;
-		if (node = binnode(node, tok, parse_separator_op(s, cur)))
+		if (node = binnode(node, parse_separator_op(s, cur), NULL))
 		{
-			if (node = binnode(node, tok, parse_and_or(s, cur)))
+			if (node = binnode(node, parse_and_or(s, cur), NULL))
 				return (node);
 		}
 	}
@@ -91,6 +82,7 @@ t_node	*parse_and_or(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
+
 	if (node = parse_pipeline(s, cur))
 		return (node);
 	else if (node = parse_and_or(s, cur))
@@ -100,8 +92,7 @@ t_node	*parse_and_or(char *s, t_tokens *cur)
 			get_next_token(s);
 		if (node = binnode(node, tok, parse_linebreak(s, cur)))
 		{
-			tok = *cur;
-			if (node = binnode(node, tok, parse_pipeline(s, cur)))
+			if (node = binnode(node, parse_pipeline(s, cur), NULL))
 				return (node);
 		}
 	}
@@ -118,7 +109,7 @@ t_node	*parse_pipeline(char *s, t_tokens *cur)
 	if (tok.tok == TOK_BANG)
 		get_next_token(s);
 	// a verifier pour le bang, je sais pas a quoi il sert
-	if (node = parse_pipe_sequence(s, cur))
+	if (node = binnode(save_node(tok), parse_pipe_sequence(s, cur), NULL)
 		return (node);
 	printf("Error when parsing pipeline\n");
 	return (NULL);
@@ -151,14 +142,12 @@ t_node	*parse_pipe_sequence(char *s, t_tokens *cur)
 t_node	*parse_command(char *s, t_tokens *cur)
 {
 	t_node		*node;
-	t_tokens	tok;
 
 	if (node = parse_simple_command(s, cur))
 		return (node);
 	else if (node = parse_compound_command(s, cur))
 	{
-		tok = *cur;
-		if (node = binnode(node, tok, parse_redirect_list(s, cur))
+		if (node = binnode(node, parse_redirect_list(s, cur), NULL)
 			return (node);
 	}
 	else if (node = parse_function_definition(s, cur))
@@ -170,7 +159,6 @@ t_node	*parse_command(char *s, t_tokens *cur)
 t_node	*parse_compound_command(char *s, t_tokens *cur)
 {
 	t_node		*node;
-	t_tokens	tok;
 
 	if (node = parse_brace_group(s, cur))
 		return (node);
@@ -218,14 +206,11 @@ t_node	*parse_subshell(char *s, t_tokens *cur)
 t_node	*parse_compound_list(char *s, t_tokens *cur)
 {
 	t_node		*node;
-	t_tokens	tok;
 	
 	if (node = parse_linebreak(s, cur))
 	{
-		tok = *cur;
-		if (node = binnode(node, tok, parse_term(s, cur))
-			if (parse_separator(s, cur))
-				return (node);
+		if (node = binnode(node, parse_term(s, cur), parse_separator(s, cur)))
+			return (node);
 	}
 	printf("Error parsing compound_list\n");
 	return (NULL);
@@ -234,15 +219,16 @@ t_node	*parse_compound_list(char *s, t_tokens *cur)
 t_node	*parse_term(char *s, t_tokens *cur)
 {
 	t_node		*node;
-	t_tokens	tok;
-	//	term	:	term seperator and_or
-	//			|					and_or
 	
-	//if (parse_term() && parse_separator())
-	//	success but not return 
-	//if (parse_and_or())
-	//	success return etc
-	//error
+	if (node = parse_term(s, cur))
+	{
+		if (node = binnode(node, parse_separator(s, cur), parse_and_or(s, cur)))
+			return (node);
+	}
+	else if (node = parse_and_or(s, cur))
+		return (node);
+	printf("Error parsing term\n");
+	return (NULL);
 }
 
 t_node	*parse_for_clause(char *s, t_tokens *cur);
@@ -251,34 +237,58 @@ t_node	*parse_name(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
-	//if (token == TOK_NAME)
-	//	success
-	//	applie rule 5
-	//error
+	
+	tok = *cur;
+	if (tok.tok == TOK_NAME)
+	{
+		//	applie rule 5
+		get_next_token(s);
+		return (save_node(tok));
+	}
+	printf("Error parsing name\n");
+	return (NULL);
 }
 
 t_node	*parse_in(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
-	//if (token == TOK_IN)
-	//	success
-	//	applie rule 6
-	//error
+
+	tok = *cur;
+	if (tok.tok == TOK_IN)
+	{
+		//	applie rule 6
+		get_next_token(s);
+		return (save_node(tok));
+	}
+	printf("Error parsing name\n");
+	return (NULL);
 }
 
 t_node	*parse_word_list(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
-	//if (parse_wordlist())
-	//	if (token == TOK_WORD)
-	//		eat()
-	//		success
-	//else if (token == TOK_WORD)
-	//	eat()
-	//	success
-	//error
+	
+	tok = *cur;
+	if (node = parse_wordlist(s, cur))
+	{
+		tok = *cur;
+		if (tok.tok == TOK_WORD)
+		{
+			get_next_token(s);
+			node = binnode(node, save_node(tok), NULL);	
+			return (node);
+		}
+	}
+	else if (tok.tok == TOK_WORD)
+	{
+		get_next_token(s);
+		node = binnode(NULL, save_node(tok), NULL);	
+		return (node);
+	}
+	printf("Error parsing word list\n");
+	return (NULL);
 }
 
 t_node	*parse_case_clause(char *s, t_tokens *cur);
