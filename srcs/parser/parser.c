@@ -91,98 +91,144 @@ t_node	*parse_and_or(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
-	//if (parse_pipeline())
-	//	success 
-	//else if (parse_and_or())
-	//	if (token == TOK_AND_IF || token == TOK_OR_IF)
-	//		eat();
-	//		if (parse_linebreak() && parse_pipeline())
-	//			success
-	//	error
+	if (node = parse_pipeline(s, cur))
+		return (node);
+	else if (node = parse_and_or(s, cur))
+	{
+		tok = *cur;
+		if (tok.tok == TOK_AND_IF || tok.tok == TOK_OR_IF)
+			get_next_token(s);
+		if (node = binnode(node, tok, parse_linebreak(s, cur)))
+		{
+			tok = *cur;
+			if (node = binnode(node, tok, parse_pipeline(s, cur)))
+				return (node);
+		}
+	}
+	printf("Error when parsing AND_OR\n");
+	return (NULL);
 }
 
 t_node	*parse_pipeline(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
-	//if (parse_pipe_sequence())
-	//	success
-	//else if (token == TOK_BANG)
+
+	tok = *cur;
+	if (tok.tok == TOK_BANG)
+		get_next_token(s);
+	// a verifier pour le bang, je sais pas a quoi il sert
+	if (node = parse_pipe_sequence(s, cur))
+		return (node);
+	printf("Error when parsing pipeline\n");
+	return (NULL);
 }
 
 t_node	*parse_pipe_sequence(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
-	//if (parse_command())
-	//	success
-	//else if (parse_pipe_sequence())
-	//	if (token == TOK_PIPE)
-	//		eat()
-	//		if (parse_linebreak() && parse_command())
-	//			success
-	//	error
-	//error
+	
+	if (node = parse_command(s, cur))
+		return (node);
+	else if (node = parse_pipe_sequence(s, cur))
+	{
+		tok = *cur;
+		if (tok.tok == TOK_PIPE)
+			get_next_token(s);
+		else
+		{
+			printf("Error when parsing pipe_sequence\n");
+			return (NULL);
+		}
+		if (node = binnode(parse_linebreak(s, cur), tok, parse_command(s, cur))
+			return (node);
+	}
+	printf("Error when parsing pipe_sequence\n");
+	return (NULL);
 }
 
 t_node	*parse_command(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
-	//if (parse_simple_command())
-	//	success
-	//else if (parse_compound_command())
-	//	if (parse_redirect_list())
-	//		success
-	//	success
-	//else if (parse_function_definition())
-	//	success
-	//error
+
+	if (node = parse_simple_command(s, cur))
+		return (node);
+	else if (node = parse_compound_command(s, cur))
+	{
+		tok = *cur;
+		if (node = binnode(node, tok, parse_redirect_list(s, cur))
+			return (node);
+	}
+	else if (node = parse_function_definition(s, cur))
+		return (node);
+	printf("Error when parsing command\n");
+	return (NULL);
 }
 
 t_node	*parse_compound_command(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
-	//if (parse_brace_group())
-	//	success
-	//else if (parse_subshell())
-	//	success
-	//else if (parse_for_clause())
-	//	success
-	//else if (parse_case_clause())
-	//	success
-	//else if (parse_if_clause())
-	//	success
-	//else if (parse_while_clause())
-	//	success
-	//else if (parse_until_clause())
-	//	success
-	//error
+
+	if (node = parse_brace_group(s, cur))
+		return (node);
+	else if (node = parse_subshell(s, cur))
+		return (node);
+	else if (node = parse_for_clause(s, cur))
+		return (node);
+	else if (node = parse_case_clause())
+		return (node);
+	else if (node = parse_if_clause(s, cur))
+		return (node);
+	else if (node = parse_while_clause(s, cur))
+		return (node);
+	else if (node = parse_until_clause(s, cur))
+		return (node);
+	printf("Error when parsing compound_command\n");
+	return (NULL);
 }
 
 t_node	*parse_subshell(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
-	//if (token == TOK_LPAREN)
-	//	eat()
-	//	if (parse_compound_list() && token == TOK_RPAREN)
-	//		eat()
-	//		success
-	//	error
-	//error
+
+	tok = *cur;
+	if (tok.tok == TOK_LPAREN)
+	{
+		get_next_token(s);
+		if (node = parse_compound_list(s, cur))
+		{
+			tok = *cur;
+			if (tok.tok == TOK_RPAREN)
+			{
+				get_next_token(s);
+				return (node);
+			}
+			else
+				print("Error, rparen expected\n");
+		}
+	}
+	print("Error, lparen expected\n");
+	return (node);
 }
 
 t_node	*parse_compound_list(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
-	//if (parse_linebreak() && parse_term())
-	//	if (parse_separator())
-	//		success
-	//	success
-	//error
+	
+	if (node = parse_linebreak(s, cur))
+	{
+		tok = *cur;
+		if (node = binnode(node, tok, parse_term(s, cur))
+			if (parse_separator(s, cur))
+				return (node);
+	}
+	printf("Error parsing compound_list\n");
+	return (NULL);
 }
 
 t_node	*parse_term(char *s, t_tokens *cur)
