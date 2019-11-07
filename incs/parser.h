@@ -14,7 +14,7 @@ typedef	struct	s_flags
 typedef	struct		s_node
 {
 	struct s_node	*left;
-	enum			id (ARGS);
+	enum			id (DEFAULT, ARGS, SUBSH);
 	char			**args;
 	t_toktype		tok;
 	char			*data;
