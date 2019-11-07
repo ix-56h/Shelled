@@ -16,6 +16,35 @@ t_flags	check_param(char **av)
 	return (f);
 }
 
+t_node	*save_node(t_node *left, t_tokens tok, t_node *right, int identifier)
+{
+	t_node	*node = NULL;
+
+	if (!(node = malloc(sizeof(t_node))))
+		exit(1);
+	node->left = left;
+	node->right = right;
+	node->id = identifier;
+	node->tok = tok.tok;
+	node->data = tok.data;
+	return (node);
+}
+
+t_node	*save_args(t_node *left, char **avs, t_node *right)
+{
+	t_node	*node = NULL;
+
+	if (!(node = malloc(sizeof(t_node))))
+		exit(1);
+	node->left = left;
+	node->right = right;
+	node->id = ARGS;
+	node->args = avs;
+	node->tok = tok.tok;
+	node->data = tok.data;
+	return (node);
+}
+
 void bst_print_dot_null(char *data, int key, int nullcount, FILE* stream)
 {
     fprintf(stream, "    null%d [shape=point];\n", nullcount);
