@@ -41,6 +41,9 @@ typedef enum	e_toktype {
 	TOK_SUBSHELL,
 	TOK_SUBSTITUTION,
 	TOK_BANG,
+	TOK_RPAREN,
+	TOK_LPAREN,
+	TOK_NEWLINE,
 	TOK_EOF,
 	/*
 	**	Abstract token
@@ -72,8 +75,9 @@ typedef enum	e_chr_class {
 	CHR_LBRACE,
 	CHR_RREDI,
 	CHR_LREDI,
-	CHR_RSUB,
-	CHR_LSUB,
+	CHR_RPAREN,
+	CHR_LPAREN,
+	CHR_NEWLINE,
 	CHR_MAX
 }				t_chr_class;
 

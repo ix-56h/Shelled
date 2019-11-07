@@ -35,7 +35,8 @@ INCLUDES	= $(foreach include, $(INCDIR), -I$(include))
 
 CC			= gcc
 OBJ			= $(SRC:.c=.o)
-CFLAGS		= $(INCLUDES) -Wall -Wextra -Werror
+CFLAGS		= $(INCLUDES) -g3 
+#CFLAGS		= $(INCLUDES) -Wall -Wextra -Werror
 #CFLAGS		= $(INCLUDES) -Wall -Wextra -Werror -g3
 #CFLAGS		= $(INCLUDES) -Wall -Wextra -Werror -g3 -fsanitize=address
 
