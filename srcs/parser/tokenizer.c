@@ -41,6 +41,7 @@ t_tokens	save_token(char *s, int anchor, t_toktype toktype)
 		if (!(new.data = malloc(sizeof(char) * (anchor + 1))))
 			exit(1);
 		//a remplacer par ft_strncpy
+		//printf("s = %s\nsize = %d\n",s , anchor);
 		strncpy(new.data, s, anchor);
 	}
 	else
@@ -147,7 +148,6 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 		anchor++;
 		(*i)++;
 	}
-	ignore_chr_class(s, i, CHR_SP);
 	if (toktype == TOK_IO_NUMBER && !(s[*i] == '>' || s[*i] == '<'))
 		toktype = TOK_WORD;
 	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
@@ -185,8 +185,7 @@ t_tokens	get_next_token(char *s)
 	return (token);
 }
 
-/*
-int main(int argc, char *argv[])
+/*int main(int argc, char *argv[])
 {
 	t_tokens	tok;
 	
@@ -200,5 +199,4 @@ int main(int argc, char *argv[])
 	if (tok.tok == TOK_ERROR)
 		printf("Syntax error\n");
 	return 0;
-}
-*/
+}*/

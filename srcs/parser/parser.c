@@ -387,7 +387,7 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 		if ((nod2 = parse_cmd_word(s, cur)))
 			node = binnode(node, nod2, NULL);
 		if (nod2 && (nod2 = parse_cmd_suffix(s, cur)))
-			node->right = nod2;
+			node = binnode(node, nod2, NULL);
 	}
 	else if ((node = parse_cmd_name(s, cur)))
 	{
@@ -530,6 +530,7 @@ t_node	*parse_filename(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
+	// rule 2
 	//if (tok.tok == TOK_WORD)
 	//	eat()
 	//	success
@@ -553,6 +554,7 @@ t_node	*parse_here_end(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
+	// rule 3
 	//if (tok.tok == TOK_WORD)
 	//	eat()
 	//	success
