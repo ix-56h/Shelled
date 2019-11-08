@@ -27,6 +27,8 @@ void		bst_print_dot(t_node* tree, FILE* stream);
 
 t_node		*binnode(t_node *left, t_node *mom, t_node *right);
 t_node		*save_node(t_node *left, t_tokens tok, t_node *right, int identifier);
+t_node		*applie_7b(t_tokens *cur, char *s);
+
 /*
 **	Parser function of BNF from opengroup POSIX SHELL documentation
 */

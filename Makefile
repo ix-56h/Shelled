@@ -18,6 +18,7 @@ NAME		= 21sh
 
 OBJDIR		= objects/
 SRCDIR		= srcs/parser/
+LFTDIR		= libft/
 INCDIR		= incs/
 
 # Source files (Can be changed)
@@ -35,6 +36,7 @@ INCLUDES	= $(foreach include, $(INCDIR), -I$(include))
 
 CC			= gcc
 OBJ			= $(SRC:.c=.o)
+LIBS		= -L$(LFTDIR) -lft
 CFLAGS		= $(INCLUDES) -g3 
 #CFLAGS		= $(INCLUDES) -Wall -Wextra -Werror
 #CFLAGS		= $(INCLUDES) -Wall -Wextra -Werror -g3
@@ -52,7 +54,7 @@ all: $(NAME)
 
 $(NAME): $(OBJDIR) $(COBJ)
 	@echo "$(YELLOW)\n      - Building $(RESET)$(NAME) $(YELLOW)...\n$(RESET)"
-	@$(CC) $(CFLAGS) -o $(NAME) $(COBJ) $(LIBS)
+	@$(CC) $(CFLAGS) $(LIBS) -o $(NAME) $(COBJ) $(LIBS)
 	@echo "$(GREEN)***   Project $(NAME) successfully compiled   ***\n$(RESET)"
 
 $(OBJDIR):

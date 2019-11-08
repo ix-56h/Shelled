@@ -185,7 +185,7 @@ t_tokens	get_next_token(char *s)
 	return (token);
 }
 
-/*int main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	t_tokens	tok;
 	
@@ -199,4 +199,4 @@ t_tokens	get_next_token(char *s)
 	if (tok.tok == TOK_ERROR)
 		printf("Syntax error\n");
 	return 0;
-}*/
+}

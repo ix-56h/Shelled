@@ -16,18 +16,15 @@
 
 # include <string.h>
 
-typedef struct	s_list
+typedef struct	s_tab
 {
-	void			*content;
-	size_t			content_size;
-	struct s_list	*next;
-}				t_list;
+	char			**tab;
+	size_t			used;
+	size_t			initial;
+}				t_tab;
 
 char			**ft_split_n_trim(char *s, char c);
-int				get_next_line(const int fd, char **line);
-char			**ft_split_whitespaces(char *str);
 void			ft_sort_tab(char **tab, int (*f)());
-int				ft_is_blank(char c);
 int				ft_atoi(const char *str);
 char			*ft_ftoa(long double f, short prec);
 char			*ft_strrev(char *str);
@@ -88,18 +85,6 @@ char			*ft_strtrim(const char *s);
 char			*ft_strtrimf(char *s);
 int				ft_tolower(int c);
 int				ft_toupper(int c);
-int				ft_count_words(const char*s, char c);
-size_t			ft_size_digit(long n);
-t_list			*ft_lstnew(void const *content, size_t content_size);
-void			ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
-void			ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-void			ft_lstadd(t_list **alst, t_list *new);
-void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
-t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-t_list			*ft_list_find(t_list *alst, void *data_ref, int (*cmp)());
-t_list			*ft_list_last(t_list *alst);
-void			ft_list_reverse(t_list **alst);
-size_t			ft_list_size(t_list *alst);
 char			*ft_itoa_base(int value, int base, int caps);
 int				ft_nbrlen_base(long long n, int base);
 #endif

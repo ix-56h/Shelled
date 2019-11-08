@@ -1,40 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_size_digit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 15:54:10 by niguinti          #+#    #+#             */
-/*   Updated: 2018/11/21 14:22:55 by niguinti         ###   ########.fr       */
+/*   Created: 2018/11/18 17:57:04 by niguinti          #+#    #+#             */
+/*   Updated: 2019/03/07 15:23:54 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <string.h>
 
-t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
+size_t	ft_size_digit(long long n)
 {
-	t_list *newlst;
-	t_list *newfirst;
-	t_list *current;
+	size_t i;
 
-	if (!lst || !*f)
-		return (NULL);
-	newfirst = NULL;
-	while (lst)
+	i = 0;
+	i = (n <= 0 ? 1 : 0);
+	while (n != 0)
 	{
-		newlst = (f)(lst);
-		if (newfirst)
-		{
-			current->next = newlst;
-			current = current->next;
-		}
-		else
-		{
-			newfirst = newlst;
-			current = newfirst;
-		}
-		lst = lst->next;
+		n = n / 10;
+		i++;
 	}
-	return (newfirst);
+	return (i);
 }

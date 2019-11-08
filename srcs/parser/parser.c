@@ -25,7 +25,7 @@ t_node	*parse_program(char *s, t_tokens *cur)
 	{
 		if ((nod2 = parse_linebreak(s, cur)))
 			free(nod2);
-		else
+		else if (cur->tok != TOK_EOF)
 			node = NULL;
 	}
 	return (node);
@@ -156,14 +156,10 @@ t_node	*parse_pipe_sequence(char *s, t_tokens *cur)
 		if (tok.tok == TOK_PIPE)
 		{
 			*cur = get_next_token(s);
-			if ((nod2 = parse_linebreak(s, cur)))
-			{
-				free(nod2);
-				if ((nod2 = parse_command(s, cur)))
-					node = save_node(node, tok, nod2, 3);
-				else
-					node = NULL;
-			}
+			if ((nod2 = parse_command(s, cur)))
+				node = save_node(node, tok, nod2, 3);
+			else
+				node = NULL;
 		}
 	}
 	return (node);
@@ -400,25 +396,38 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 t_node	*parse_cmd_name(char *s, t_tokens *cur)
 {
 	t_node		*node;
-	t_tokens	tok;
-	//if (tok.tok == TOK_WORD)
-	//	eat()
-	//	success
-	//	applie rule 7.a
-	//error
-	return(NULL);
+	char		*s2;
+
+	s2 = cur->data;
+	node = NULL;
+	if (cur->tok == TOK_WORD)
+	{
+		if (!strchr(s2, '='))
+		{
+			//applie rule 1 (chekc reserved word associated, if not a reserved word, is word token so return him)
+			node = save_node(NULL, *cur, NULL, DEFAULT);
+			*cur = get_next_token(s);
+		}
+		else
+		{
+			node = applie_7b(cur, s2);
+		}
+	}
+	return(node);
 }
 
 t_node	*parse_cmd_word(char *s, t_tokens *cur)
 {
 	t_node		*node;
-	t_tokens	tok;
-	//if (tok.tok == TOK_WORD)
-	//	eat()
-	//	success
-	//	applie rule 7.b
-	//error
-	return(NULL);
+	char		*s2;
+
+	s2 = cur->data;
+	node = NULL;
+	if (cur->tok == TOK_WORD)
+	{
+		node = applie_7b(cur, s2);
+	}
+	return(node);
 }
 
 t_node	*parse_cmd_prefix(char *s, t_tokens *cur)
@@ -431,9 +440,9 @@ t_node	*parse_cmd_prefix(char *s, t_tokens *cur)
 	node = NULL;
 	nod2 = NULL;
 	tok = *cur;
-	if (tok.tok == TOK_ASSIGNEMENT_WORD)
+	if (tok.tok == TOK_ASSIGNMENT_WORD)
 	{
-		while (tok.tok == TOK_ASSIGNEMENT_WORD)
+		while (tok.tok == TOK_ASSIGNMENT_WORD)
 		{
 			*cur = get_next_token(s);
 			//ici faire un array et push a chaque word, un suffix correspond a un argv d'un cmd_name qui lui correspond a une commande (builtin/programme)
@@ -521,7 +530,7 @@ t_node	*parse_io_file(char *s, t_tokens *cur)
 	{
 		*cur = get_next_token(s);
 		if ((node = parse_filename(s, cur)))
-			node = save_node(NULL, tok, node, 0);
+			node = save_node(node, tok, NULL, 0);
 	}
 	return (node);
 }
@@ -529,37 +538,48 @@ t_node	*parse_io_file(char *s, t_tokens *cur)
 t_node	*parse_filename(char *s, t_tokens *cur)
 {
 	t_node		*node;
-	t_tokens	tok;
+	
+	node = NULL;
 	// rule 2
-	//if (tok.tok == TOK_WORD)
-	//	eat()
-	//	success
-	//error
-	return(NULL);
+	if (cur->tok == TOK_WORD)
+	{
+		node = save_node(NULL, *cur, NULL, DEFAULT);
+		*cur = get_next_token(s);
+	}
+	return(node);
 }
 
 t_node	*parse_io_here(char *s, t_tokens *cur)
 {
 	t_node		*node;
+	t_node		*nod2;
 	t_tokens	tok;
-	//if (tok.tok == TOK_DLESS || tok.tok == TOK_DLESSDASH)
-	//	eat()
-	//	if (parse_here_end())
-	//		success
-	//error
-	return(NULL);
+	
+	node = NULL;
+	nod2 = NULL;
+	if (cur->tok == TOK_DLESS || cur->tok == TOK_DLESSDASH)
+	{
+		node = save_node(NULL, *cur, NULL, DEFAULT);
+		*cur = get_next_token(s);
+		if ((nod2 = parse_here_end(s, cur)))
+			node = binnode(nod2, node, NULL);
+	}
+	return(node);
 }
 
 t_node	*parse_here_end(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_tokens	tok;
+	
+	node = NULL;
 	// rule 3
-	//if (tok.tok == TOK_WORD)
-	//	eat()
-	//	success
-	//error
-	return(NULL);
+	if (cur->tok == TOK_WORD)
+	{
+		node = save_node(NULL, *cur, node, DEFAULT);
+		*cur = get_next_token(s);
+	}
+	return(node);
 }
 
 t_node	*parse_newline_list(char *s, t_tokens *cur)

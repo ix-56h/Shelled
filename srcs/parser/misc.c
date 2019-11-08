@@ -1,3 +1,4 @@
+#include "../libft/includes/libft.h"
 #include "../../incs/parser.h"
 
 t_flags	check_param(char **av)
@@ -37,6 +38,25 @@ t_node	*save_node(t_node *left, t_tokens tok, t_node *right, int identifier)
 	return (node);
 }
 
+t_node		*applie_7b(t_tokens *cur, char *s)
+{
+	if (s[0] == '=')
+	{
+		//applie rule 1
+		return (save_node(NULL, *cur, NULL, DEFAULT));
+	}
+	else
+	{
+		//check if word before = form a valid name, if yes, ASSIGMENT_WORD are the toktype
+		if (!ft_isdigit(*s))
+			cur->tok = TOK_ASSIGNMENT_WORD;
+		//else
+		//applie rule 1
+		return (save_node(NULL, *cur, NULL, DEFAULT));
+	}
+	return (NULL);
+}
+
 /*t_node	*save_args(t_node *left, char **avs, t_node *right)
 {
 	t_node	*node = NULL;
@@ -72,7 +92,7 @@ void bst_print_dot_aux(t_node* node, FILE* stream)
 
     if (node->right)
     {
-        fprintf(stream, "    \"%s_%p\" -> \"%s_%p\";\n", node->data, node, node->left->data, node->left);
+        fprintf(stream, "    \"%s_%p\" -> \"%s_%p\";\n", node->data, node, node->right->data, node->right);
         bst_print_dot_aux(node->right, stream);
     }
     else
