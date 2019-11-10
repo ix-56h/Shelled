@@ -151,7 +151,7 @@ t_node	*parse_pipe_sequence(char *s, t_tokens *cur)
 	if ((node = parse_command(s, cur)))
 	{
 		while ((nod2 = parse_command(s, cur)))
-			node = binnode(node, nod2, NULL);
+			node = binnode(nod2, node, NULL);
 		tok = *cur;
 		if (tok.tok == TOK_PIPE)
 		{
@@ -397,9 +397,11 @@ t_node	*parse_cmd_name(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	char		*s2;
+	t_tokens	tok;
 
 	s2 = cur->data;
 	node = NULL;
+	tok = *cur;
 	if (cur->tok == TOK_WORD)
 	{
 		if (!strchr(s2, '='))
@@ -407,6 +409,17 @@ t_node	*parse_cmd_name(char *s, t_tokens *cur)
 			//applie rule 1 (chekc reserved word associated, if not a reserved word, is word token so return him)
 			node = save_node(NULL, *cur, NULL, DEFAULT);
 			*cur = get_next_token(s);
+			tok = *cur;
+			if (tok.tok == TOK_WORD)
+			{
+				while (tok.tok == TOK_WORD)
+				{
+					*cur = get_next_token(s);
+					//ici faire un array et push a chaque word, un suffix correspond a un argv d'un cmd_name qui lui correspond a une commande (builtin/programme)
+					node = binnode(save_node(NULL, tok, NULL, 0), node, NULL);
+					tok = *cur;
+				}
+			}
 		}
 		else
 		{
@@ -465,16 +478,16 @@ t_node	*parse_cmd_suffix(char *s, t_tokens *cur)
 	node = NULL;
 	nod2 = NULL;
 	tok = *cur;
-	if (tok.tok == TOK_WORD)
-	{
-		while (tok.tok == TOK_WORD)
-		{
-			*cur = get_next_token(s);
+//	if (tok.tok == TOK_WORD)
+//	{
+//		while (tok.tok == TOK_WORD)
+//		{
+//			*cur = get_next_token(s);
 			//ici faire un array et push a chaque word, un suffix correspond a un argv d'un cmd_name qui lui correspond a une commande (builtin/programme)
-			node = save_node(NULL, tok, NULL, 0);
-			tok = *cur;
-		}
-	}
+//			node = save_node(NULL, tok, NULL, 0);
+//			tok = *cur;
+//		}
+//	}
 	if ((nod2 = parse_io_redirect(s, cur)))
 		node = binnode(node, nod2, NULL);
 	return (node);
@@ -490,7 +503,7 @@ t_node	*parse_redirect_list(char *s, t_tokens *cur)
 	if ((node = parse_io_redirect(s, cur)))
 	{
 		while ((nod2 = parse_io_redirect(s, cur)))
-			node = binnode(nod2, node, NULL);
+			node = binnode(node, nod2, NULL);
 	}
 	return (node);
 }
@@ -512,7 +525,6 @@ t_node	*parse_io_redirect(char *s, t_tokens *cur)
 			|| (node = parse_io_here(s, cur)))
 	{
 		return (node);
-		
 	}
 	return (node);
 }
@@ -530,7 +542,7 @@ t_node	*parse_io_file(char *s, t_tokens *cur)
 	{
 		*cur = get_next_token(s);
 		if ((node = parse_filename(s, cur)))
-			node = save_node(node, tok, NULL, 0);
+			node = save_node(NULL, tok, node, 0);
 	}
 	return (node);
 }

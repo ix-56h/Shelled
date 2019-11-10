@@ -185,18 +185,18 @@ t_tokens	get_next_token(char *s)
 	return (token);
 }
 
-int main(int argc, char *argv[])
-{
-	t_tokens	tok;
-	
-	(void)argc;
-	tok = get_next_token(argv[1]);
-	while (tok.tok != TOK_ERROR && tok.tok != TOK_EOF)
-	{
-		printf("{%s, \"%s\"}\n", DEBUG_TOKEN[tok.tok], tok.data);
-		tok = get_next_token(argv[1]);
-	}
-	if (tok.tok == TOK_ERROR)
-		printf("Syntax error\n");
-	return 0;
-}
+//int main(int argc, char *argv[])
+//{
+//	t_tokens	tok;
+//	
+//	(void)argc;
+//	tok = get_next_token(argv[1]);
+//	while (tok.tok != TOK_ERROR && tok.tok != TOK_EOF)
+//	{
+//		printf("{%s, \"%s\"}\n", DEBUG_TOKEN[tok.tok], tok.data);
+//		tok = get_next_token(argv[1]);
+//	}
+//	if (tok.tok == TOK_ERROR)
+//		printf("Syntax error\n");
+//	return 0;
+//}

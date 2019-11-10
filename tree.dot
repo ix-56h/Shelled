@@ -1,16 +1,13 @@
 digraph BST {
     node [fontname="Arial"];
-    "|_0x7f7f9d402850" -> "-lr_0x7f7f9d4027f0";
-    "-lr_0x7f7f9d4027f0" -> "ls_0x7f7f9d4027c0";
+    ">>_0x7facb5c02bd0" -> "ls_0x7facb5c02b10";
+    "ls_0x7facb5c02b10" -> "-r_0x7facb5c02b60";
     null0 [shape=point];
-    "ls_0x7f7f9d4027c0" -> null0;
+    "-r_0x7facb5c02b60" -> null0;
     null1 [shape=point];
-    "ls_0x7f7f9d4027c0" -> null1;
+    "-r_0x7facb5c02b60" -> null1;
     null2 [shape=point];
-    "-lr_0x7f7f9d4027f0" -> null2;
-    "|_0x7f7f9d402850" -> "grep_0x7f7f9d402820";
+    "ls_0x7facb5c02b10" -> null2;
     null3 [shape=point];
-    "grep_0x7f7f9d402820" -> null3;
-    null4 [shape=point];
-    "grep_0x7f7f9d402820" -> null4;
+    ">>_0x7facb5c02bd0" -> null3;
 }
