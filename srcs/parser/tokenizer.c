@@ -73,7 +73,7 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype)
 		if (s[1] && !strncmp(s, ";;", 2))
 			return (TOK_DSEMI);
 		if (!s[1] && !strncmp(s, ";", 1))
-			return (TOK_VALIDATOR);
+			return (TOK_SEMI);
 		if (!s[1] && !strncmp(s, "=", 1))
 			return (TOK_ASSIGN);
 		if (!s[1] && !strncmp(s, "&", 1))

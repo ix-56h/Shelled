@@ -82,7 +82,7 @@ t_node	*parse_list(char *s, t_tokens *cur)
 	{
 		while ((nod2 = parse_and_or(s, cur)))
 			node = binnode(node, nod2, NULL);
-		if ((nod2 = parse_separator_op(s, cur)))
+		while ((nod2 = parse_separator_op(s, cur)))
 		{
 			if ((nod3 = parse_and_or(s, cur)))
 				node = binnode(node, nod2, nod3);
@@ -615,10 +615,10 @@ t_node	*parse_linebreak(char *s, t_tokens *cur)
 	t_tokens	tok;
 	
 	node = NULL;
-	if ((node = parse_newline_list(s, cur)))
-		return (node);
-	//else if (empty)
-	//	success;
+	if (cur->tok == TOK_NEWLINE)
+		node = parse_newline_list(s, cur);
+	else if (cur->tok == TOK_EOF)
+		node = save_node(NULL, *cur, NULL, 0);
 	return (node);
 }
 
