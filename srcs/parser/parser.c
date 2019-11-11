@@ -150,16 +150,15 @@ t_node	*parse_pipe_sequence(char *s, t_tokens *cur)
 	nod2 = NULL;
 	if ((node = parse_command(s, cur)))
 	{
-		while ((nod2 = parse_command(s, cur)))
-			node = binnode(nod2, node, NULL);
 		tok = *cur;
-		if (tok.tok == TOK_PIPE)
+		while (tok.tok == TOK_PIPE)
 		{
 			*cur = get_next_token(s);
 			if ((nod2 = parse_command(s, cur)))
 				node = save_node(node, tok, nod2, 3);
 			else
 				node = NULL;
+			tok = *cur;
 		}
 	}
 	return (node);
@@ -381,14 +380,14 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 	if ((node = parse_cmd_prefix(s, cur)))
 	{
 		if ((nod2 = parse_cmd_word(s, cur)))
-			node = binnode(node, nod2, NULL);
+			node = binnode(node, nod2, nod2->right);
 		if (nod2 && (nod2 = parse_cmd_suffix(s, cur)))
-			node = binnode(node, nod2, NULL);
+			node = binnode(node, nod2, nod2->right);
 	}
 	else if ((node = parse_cmd_name(s, cur)))
 	{
 		if ((nod2 = parse_cmd_suffix(s, cur)))
-			node = binnode(node, nod2, NULL);
+			node = binnode(node, nod2, nod2->right);
 	}
 	return (node);
 }
@@ -464,7 +463,7 @@ t_node	*parse_cmd_prefix(char *s, t_tokens *cur)
 		}
 	}
 	if ((nod2 = parse_io_redirect(s, cur)))
-		node = binnode(node, nod2, NULL);
+		node = binnode(node, nod2, nod2->right);
 	return (node);
 }
 
@@ -489,7 +488,8 @@ t_node	*parse_cmd_suffix(char *s, t_tokens *cur)
 //		}
 //	}
 	if ((nod2 = parse_io_redirect(s, cur)))
-		node = binnode(node, nod2, NULL);
+		node = nod2;
+	//	node = binnode(node, nod2, NULL);
 	return (node);
 }
 
@@ -503,7 +503,7 @@ t_node	*parse_redirect_list(char *s, t_tokens *cur)
 	if ((node = parse_io_redirect(s, cur)))
 	{
 		while ((nod2 = parse_io_redirect(s, cur)))
-			node = binnode(node, nod2, NULL);
+			node = binnode(node, nod2, nod2->right);
 	}
 	return (node);
 }
