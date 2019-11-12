@@ -5,6 +5,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define ARGS_ARR_SIZE = 4
+
 enum			id {DEFAULT, ARGS, SUBSH, PIPESEQ, PIPE, ANDOR};
 typedef	struct	s_flags
 {
@@ -17,6 +19,11 @@ typedef	struct		s_node
 	struct s_node	*left;
 	int				id; 
 	char			**args;
+	//voir si on remplacerai pas ca par une struct
+	int				ini_size;
+	int				cur_size;
+	int				cur_i;
+
 	t_toktype		tok;
 	char			*data;
 	struct s_node	*right;
@@ -24,6 +31,8 @@ typedef	struct		s_node
 
 t_flags		check_param(char **av);
 void		bst_print_dot(t_node* tree, FILE* stream);
+
+char		*push_args(t_node *node, char *s);
 
 t_node		*binnode(t_node *left, t_node *mom, t_node *right);
 t_node		*save_node(t_node *left, t_tokens tok, t_node *right, int identifier);

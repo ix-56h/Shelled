@@ -394,7 +394,6 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 t_node	*parse_cmd_name(char *s, t_tokens *cur)
 {
 	t_node		*node;
-	t_node		*nod2;
 	t_node		*f;
 	t_tokens	tok;
 
@@ -411,9 +410,14 @@ t_node	*parse_cmd_name(char *s, t_tokens *cur)
 			while ((tok = *cur).tok == TOK_WORD)
 			{
 				//ici faire un array et push a chaque word, un suffix correspond a un argv d'un cmd_name qui lui correspond a une commande (builtin/programme)
-				nod2 = save_node(NULL, tok, NULL, 0);
-				node = binnode(nod2, node, NULL);
-				node = nod2;
+				if (!push_args(node, tok.data))
+				{
+					printf("ntm\n");
+					exit(0);	
+				}
+				//nod2 = save_node(NULL, tok, NULL, 0);
+				//node = binnode(nod2, node, NULL);
+				//node = nod2;
 				*cur = get_next_token(s);
 			}
 			node = f;
