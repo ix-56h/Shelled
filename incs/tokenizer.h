@@ -12,6 +12,7 @@
 
 #ifndef FT_TOK_H
 # define FT_TOK_H
+#include "libft.h"
 typedef enum	e_toktype {
 	TOK_ERROR,
 	TOK_NAME,

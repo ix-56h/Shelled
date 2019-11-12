@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/parser.h"
+#include "parser.h"
 
 t_flags		f;
 
@@ -394,33 +394,24 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 t_node	*parse_cmd_name(char *s, t_tokens *cur)
 {
 	t_node		*node;
-	t_node		*f;
 	t_tokens	tok;
 
 	node = NULL;
-	f = NULL;
 	if (cur->tok == TOK_WORD)
 	{
 		if (!strchr(cur->data, '='))
 		{
 			//applie rule 1 (chekc reserved word associated, if not a reserved word, is word token so return him)
-			node = save_node(NULL, *cur, NULL, DEFAULT);
-			f = node;
+			node = save_node(NULL, *cur, NULL, ARGS);
 			*cur = get_next_token(s);
 			while ((tok = *cur).tok == TOK_WORD)
 			{
-				//ici faire un array et push a chaque word, un suffix correspond a un argv d'un cmd_name qui lui correspond a une commande (builtin/programme)
 				if (!push_args(node, tok.data))
-				{
-					printf("ntm\n");
-					exit(0);	
-				}
-				//nod2 = save_node(NULL, tok, NULL, 0);
-				//node = binnode(nod2, node, NULL);
-				//node = nod2;
+					exit(0);
+				free(tok.data);
+				tok.data = NULL;
 				*cur = get_next_token(s);
 			}
-			node = f;
 		}
 		else
 		{

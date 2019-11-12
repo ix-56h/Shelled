@@ -1,5 +1,4 @@
-#include "../libft/includes/libft.h"
-#include "../../incs/parser.h"
+#include "parser.h"
 
 t_flags	check_param(char **av)
 {
@@ -24,15 +23,22 @@ t_node	*binnode(t_node *left, t_node *mom, t_node *right)
 	return (mom);
 }
 
-t_node	*save_node(t_node *left, t_tokens tok, t_node *right, int identifier)
+t_node	*save_node(t_node *left, t_tokens tok, t_node *right, int id)
 {
 	t_node	*node = NULL;
 
 	if (!(node = malloc(sizeof(t_node))))
 		exit(1);
+	node->cur_size = 0;
+	if ((id == ARGS)
+		&& !(node->args = ft_memalloc(sizeof(char *) * ARGS_ARR_SIZE)))
+		exit(1);
+	node->cur_size = (id == ARGS ? ARGS_ARR_SIZE : 0);
+	node->capacity = (id == ARGS ? ARGS_ARR_SIZE - 1 : 0);
+	node->cur_i = 0;
 	node->left = left;
 	node->right = right;
-	node->id = identifier;
+	node->id = id;
 	node->tok = tok.tok;
 	node->data = tok.data;
 	return (node);

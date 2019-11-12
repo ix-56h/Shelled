@@ -18,7 +18,7 @@ NAME		= libft.a
 
 OBJDIR		= objects/
 SRCDIR		= sources/
-INCDIR		= ./includes/
+INCDIR		= ./incs/
 
 # Source files (Can be changed)
 
@@ -38,7 +38,7 @@ CHECKDIR	= $(shell if [ ! -d "$(OBJDIR)" ]; then	mkdir $(OBJDIR); fi)
 # How files should be compiled with set flags (Can be changed)
 
 OBJ			= $(SRC:.c=.o)
-CFLAGS		= -I$(INCDIR) -Wall -Wextra -Werror
+CFLAGS		= -I$(INCDIR) -Wall -Wextra -Werror -g3
 #CFLAGS		= -I$(INCDIR) -Wall -Wextra -Werror -g3
 #CFLAGS		= -I$(INCDIR) -Wall -Wextra -Werror -g3 -fsanatize=address
 CC			= gcc

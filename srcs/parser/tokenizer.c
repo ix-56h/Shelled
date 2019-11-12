@@ -38,11 +38,9 @@ t_tokens	save_token(char *s, int anchor, t_toktype toktype)
 
 	if (anchor > 0)
 	{
-		if (!(new.data = malloc(sizeof(char) * (anchor + 1))))
+		if (!(new.data = ft_memalloc(sizeof(char) * (anchor + 1))))
 			exit(1);
-		//a remplacer par ft_strncpy
-		//printf("s = %s\nsize = %d\n",s , anchor);
-		strncpy(new.data, s, anchor);
+		ft_strncpy(new.data, s, anchor);
 	}
 	else
 		new.data = NULL;

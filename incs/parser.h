@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define ARGS_ARR_SIZE = 4
+#define ARGS_ARR_SIZE 4
 
 enum			id {DEFAULT, ARGS, SUBSH, PIPESEQ, PIPE, ANDOR};
 typedef	struct	s_flags
@@ -20,7 +20,7 @@ typedef	struct		s_node
 	int				id; 
 	char			**args;
 	//voir si on remplacerai pas ca par une struct
-	int				ini_size;
+	int				capacity;
 	int				cur_size;
 	int				cur_i;
 
@@ -35,7 +35,7 @@ void		bst_print_dot(t_node* tree, FILE* stream);
 char		*push_args(t_node *node, char *s);
 
 t_node		*binnode(t_node *left, t_node *mom, t_node *right);
-t_node		*save_node(t_node *left, t_tokens tok, t_node *right, int identifier);
+t_node		*save_node(t_node *left, t_tokens tok, t_node *right, int id);
 t_node		*applie_7b(t_tokens *cur, char *s);
 
 /*

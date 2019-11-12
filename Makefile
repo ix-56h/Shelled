@@ -19,12 +19,14 @@ NAME		= 21sh
 OBJDIR		= objects/
 SRCDIR		= srcs/parser/
 LFTDIR		= libft/
-INCDIR		= incs/
+INCDIR		= incs/ libft/incs/
 
 # Source files (Can be changed)
 
-SRC			=	parser.c				misc.c	\
-				tokenizer.c					\
+SRC			=	parser.c				misc.c				\
+				tokenizer.c				dynamic_arrays.c	\
+
+LFT			= $(LFTDIR)/libft.a
 
 # Some tricks in order to get the makefile doing his job the way I want (Can't be changed)
 
@@ -52,7 +54,7 @@ YELLOW		= \033[33m
 
 all: $(NAME)
 
-$(NAME): $(OBJDIR) $(COBJ)
+$(NAME): $(LFT) $(OBJDIR) $(COBJ)
 	@echo "$(YELLOW)\n      - Building $(RESET)$(NAME) $(YELLOW)...\n$(RESET)"
 	@$(CC) $(CFLAGS) $(LIBS) -o $(NAME) $(COBJ) $(LIBS)
 	@echo "$(GREEN)***   Project $(NAME) successfully compiled   ***\n$(RESET)"
@@ -66,6 +68,9 @@ $(OBJDIR)%.o: $(SRCDIR)%.c
 	@echo "$(YELLOW)      - Compiling :$(RESET)" $<
 	@$(CC) $(CFLAGS) -c $< -o $@
 
+# Libft rules
+$(LFT):
+	@make -sC $(LFTDIR)
 
 # Deleting all .o files and then the directory where they were located
 
