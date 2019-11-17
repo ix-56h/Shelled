@@ -7,7 +7,7 @@
 
 #define ARGS_ARR_SIZE 4
 
-enum			id {DEFAULT, ARGS, SUBSH, PIPESEQ, PIPE, ANDOR};
+enum			id {DEFAULT, ARGS, SUBSH, PIPESEQ, PIPE, ANDOR, IO_REDIRECT};
 typedef	struct	s_flags
 {
 	unsigned	debug_all:1;
@@ -19,6 +19,7 @@ typedef	struct		s_node
 	struct s_node	*left;
 	int				id; 
 	char			**args;
+	int				io;
 	//voir si on remplacerai pas ca par une struct
 	int				capacity;
 	int				cur_size;

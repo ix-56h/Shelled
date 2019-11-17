@@ -30,6 +30,7 @@ t_node	*save_node(t_node *left, t_tokens tok, t_node *right, int id)
 	if (!(node = malloc(sizeof(t_node))))
 		exit(1);
 	node->cur_size = 0;
+	node->io = 0;
 	if ((id == ARGS)
 		&& !(node->args = ft_memalloc(sizeof(char *) * ARGS_ARR_SIZE)))
 		exit(1);

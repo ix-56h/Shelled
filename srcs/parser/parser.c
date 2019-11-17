@@ -512,8 +512,10 @@ t_node	*parse_io_redirect(char *s, t_tokens *cur)
 		*cur = get_next_token(s);
 		if ((node = parse_io_file(s, cur))
 			|| (node = parse_io_here(s, cur)))
-			node = binnode(save_node(NULL, tok, NULL, 0), node, node->right);
-			//just here, i need to save the io_number into the struct of the new node, because yes.
+		{
+			node = binnode(NULL, node, node->right);
+			node->io = ft_atoi(tok.data);
+		}		
 	}
 	else if ((node = parse_io_file(s, cur))
 			|| (node = parse_io_here(s, cur)))
@@ -534,7 +536,7 @@ t_node	*parse_io_file(char *s, t_tokens *cur)
 	{
 		*cur = get_next_token(s);
 		if ((node = parse_filename(s, cur)))
-			node = save_node(NULL, tok, node, 0);
+			node = save_node(NULL, tok, node, IO_REDIRECT);
 	}
 	return (node);
 }
