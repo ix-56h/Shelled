@@ -378,18 +378,15 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 	nod2 = NULL;
 	if ((node = parse_cmd_prefix(s, cur)))
 	{
-		if ((nod2 = parse_cmd_word(s, cur)))
+		while ((nod2 = parse_cmd_word(s, cur)))
 			node = binnode(node, nod2, nod2->right);
-		if (nod2 && (nod2 = parse_cmd_suffix(s, cur)))
+		while (nod2 && (nod2 = parse_cmd_suffix(s, cur)))
 			node = binnode(node, nod2, nod2->right);
 	}
 	else if ((node = parse_cmd_name(s, cur)))
 	{
-		if ((nod2 = parse_cmd_suffix(s, cur)))
-		{
-			binnode(node, nod2->left, NULL);
-			node = nod2;
-		}
+		while ((nod2 = parse_cmd_suffix(s, cur)))
+			node = binnode(node, nod2, nod2->right);
 	}
 	return (node);
 }
@@ -459,10 +456,7 @@ t_node	*parse_cmd_prefix(char *s, t_tokens *cur)
 		}
 	}
 	if ((nod2 = parse_io_redirect(s, cur)))
-	{
-		binnode(node, nod2->left, NULL);
-		node = nod2;
-	}
+		node = binnode(node, nod2, nod2->right);
 	return (node);
 }
 
@@ -487,10 +481,7 @@ t_node	*parse_cmd_suffix(char *s, t_tokens *cur)
 		}
 	}
 	if ((nod2 = parse_io_redirect(s, cur)))
-	{
-		binnode(node, nod2->left, NULL);
-		node = nod2;
-	}
+		node = binnode(node, nod2, nod2->right);
 	return (node);
 }
 
@@ -522,6 +513,7 @@ t_node	*parse_io_redirect(char *s, t_tokens *cur)
 		if ((node = parse_io_file(s, cur))
 			|| (node = parse_io_here(s, cur)))
 			node = binnode(save_node(NULL, tok, NULL, 0), node, node->right);
+			//just here, i need to save the io_number into the struct of the new node, because yes.
 	}
 	else if ((node = parse_io_file(s, cur))
 			|| (node = parse_io_here(s, cur)))
