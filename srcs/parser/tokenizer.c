@@ -62,7 +62,7 @@ void	ignore_chr_class(char *s, int *i, t_chr_class chr_class)
 	}
 }
 
-t_toktype	get_true_toktype(char *s, t_toktype toktype)
+t_toktype	get_true_toktype(char *s, t_toktype toktype, int *i)
 {
 	if (toktype == TOK_OPERATOR)
 	{
@@ -86,8 +86,13 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype)
 	}
 	else if (toktype == TOK_REDIRECTION)
 	{
-		if (s[2] && !strncmp(s, "<<-", 3))
+		if (s[2] && !strcmp(s, "<<-"))
 			return (TOK_DLESSDASH);
+		if (s[2] && s[2] == '-')
+		{
+			(*i)--;
+			s[2] = 0;
+		}
 		if (s[1] && !strncmp(s, "<<", 2))
 			return (TOK_DLESS);
 		if (s[1] && !strncmp(s, ">>", 2))
@@ -146,8 +151,6 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 		anchor++;
 		(*i)++;
 	}
-	if (toktype == TOK_IO_NUMBER && !(s[*i] == '>' || s[*i] == '<'))
-		toktype = TOK_WORD;
 	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
 	return (save_token(s + (*i - anchor), anchor, toktype));
 }
@@ -177,8 +180,13 @@ t_tokens	get_next_token(char *s)
 		i++;
 	}
 	else
+	{
 		token = get_token(s, &i, toktype, chr_class);
-	if (ABSTRACT_TOKEN[token.tok] && !(token.tok = get_true_toktype(token.data, token.tok)))
+		if (token.tok == TOK_WORD && (s[i] == '>' || s[i] == '<') && (ft_isdigits(token.data)))
+			token.tok = TOK_IO_NUMBER;
+	}
+	//printf("{%s, \"%s\"}\n", DEBUG_TOKEN[token.tok], token.data);
+	if (ABSTRACT_TOKEN[token.tok] && !(token.tok = get_true_toktype(token.data, token.tok, &i)))
 		return (token_error());
 	return (token);
 }

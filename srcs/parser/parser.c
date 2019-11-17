@@ -386,7 +386,10 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 	else if ((node = parse_cmd_name(s, cur)))
 	{
 		if ((nod2 = parse_cmd_suffix(s, cur)))
-			node = binnode(node, nod2, nod2->left);
+		{
+			binnode(node, nod2->left, NULL);
+			node = nod2;
+		}
 	}
 	return (node);
 }
@@ -456,17 +459,38 @@ t_node	*parse_cmd_prefix(char *s, t_tokens *cur)
 		}
 	}
 	if ((nod2 = parse_io_redirect(s, cur)))
-		node = binnode(node, nod2, nod2->right);
+	{
+		binnode(node, nod2->left, NULL);
+		node = nod2;
+	}
 	return (node);
 }
 
 t_node	*parse_cmd_suffix(char *s, t_tokens *cur)
 {
 	t_node		*node;
+	t_node		*nod2;
+	t_tokens	tok;
 	//char		*argvs;
 
 	node = NULL;
-	node = parse_io_redirect(s, cur);
+	nod2 = NULL;
+	tok = *cur;
+	if (tok.tok == TOK_WORD)
+	{
+		while (tok.tok == TOK_WORD)
+		{
+			*cur = get_next_token(s);
+			//ici faire un array et push a chaque word, un suffix correspond a un argv d'un cmd_name qui lui correspond a une commande (builtin/programme)
+			node = save_node(NULL, tok, NULL, 0);
+			tok = *cur;
+		}
+	}
+	if ((nod2 = parse_io_redirect(s, cur)))
+	{
+		binnode(node, nod2->left, NULL);
+		node = nod2;
+	}
 	return (node);
 }
 
@@ -494,15 +518,14 @@ t_node	*parse_io_redirect(char *s, t_tokens *cur)
 	tok = *cur;
 	if (tok.tok == TOK_IO_NUMBER)
 	{
+		*cur = get_next_token(s);
 		if ((node = parse_io_file(s, cur))
 			|| (node = parse_io_here(s, cur)))
-			node = binnode(save_node(NULL, tok, NULL, 0), node, NULL);
+			node = binnode(save_node(NULL, tok, NULL, 0), node, node->right);
 	}
 	else if ((node = parse_io_file(s, cur))
 			|| (node = parse_io_here(s, cur)))
-	{
 		return (node);
-	}
 	return (node);
 }
 
@@ -519,7 +542,7 @@ t_node	*parse_io_file(char *s, t_tokens *cur)
 	{
 		*cur = get_next_token(s);
 		if ((node = parse_filename(s, cur)))
-			node = save_node(node, tok, NULL, 0);
+			node = save_node(NULL, tok, node, 0);
 	}
 	return (node);
 }
