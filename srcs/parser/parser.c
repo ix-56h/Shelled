@@ -41,7 +41,7 @@ t_node	*parse_complete_commands(char *s, t_tokens *cur)
 	if ((node = parse_complete_command(s, cur)))
 	{
 		while ((nod2 = parse_complete_command(s, cur)))
-			node = binnode(node, nod2, NULL);
+			node = binnode(node->left, node, nod2);
 		if ((nod2 = parse_newline_list(s, cur)))
 		{
 			free(nod2);
@@ -58,13 +58,18 @@ t_node	*parse_complete_command(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_node		*nod2;
-
+	
 	node = NULL;
 	nod2 = NULL;
 	if ((node = parse_list(s, cur)))
 	{
+		while ((nod2 = parse_list(s, cur)))
+		{
+			binnode(node, nod2, nod2->right);
+			node = nod2;
+		}
 		if ((nod2 = parse_separator_op(s, cur)))
-			node = binnode(node, nod2, NULL);
+			node = binnode(node, nod2, nod2->right);
 	}
 	return (node);
 }
@@ -81,8 +86,8 @@ t_node	*parse_list(char *s, t_tokens *cur)
 	if ((node = parse_and_or(s, cur)))
 	{
 		while ((nod2 = parse_and_or(s, cur)))
-			node = binnode(node, nod2, NULL);
-		while ((nod2 = parse_separator_op(s, cur)))
+			node = binnode(node, nod2, nod2->right);
+		if ((nod2 = parse_separator_op(s, cur)))
 		{
 			if ((nod3 = parse_and_or(s, cur)))
 				node = binnode(node, nod2, nod3);
@@ -104,7 +109,7 @@ t_node	*parse_and_or(char *s, t_tokens *cur)
 	if ((node = parse_pipeline(s, cur)))
 	{
 		while ((nod2 = parse_pipeline(s, cur)))
-			node = binnode(node, nod2, NULL);
+			node = binnode(node, nod2, nod2->right);
 		while ((tok = *cur).tok == TOK_AND_IF || tok.tok == TOK_OR_IF)
 		{
 			*cur = get_next_token(s);
@@ -175,7 +180,7 @@ t_node	*parse_command(char *s, t_tokens *cur)
 	else if ((node = parse_compound_command(s, cur)))
 	{
 		if ((nod2 = parse_redirect_list(s, cur)))
-			node = binnode(node, nod2, NULL);
+			node = binnode(node, nod2, nod2->right);
 	}
 	else
 		node = parse_function_definition(s, cur);
@@ -236,9 +241,9 @@ t_node	*parse_compound_list(char *s, t_tokens *cur)
 	if ((node = parse_linebreak(s, cur)))
 	{
 		if ((nod2 = parse_term(s, cur)))
-			node = binnode(node, nod2, NULL);
+			node = binnode(node, nod2, nod2->right);
 		if (nod2 && (nod2 = parse_separator(s, cur)))
-			node = binnode(node, nod2, NULL);
+			node = binnode(node, nod2, nod2->right);
 	}
 	return (node);
 }
@@ -253,12 +258,12 @@ t_node	*parse_term(char *s, t_tokens *cur)
 	if ((node = parse_and_or(s, cur)))
 	{
 		while ((nod2 = parse_and_or(s, cur)))
-			node = binnode(node, nod2, NULL);
+			node = binnode(node, nod2, nod2->right);
 	}
 	if ((node = parse_separator(s, cur)))
 	{
 		if ((nod2 = parse_and_or(s, cur)))
-			node = binnode(node, nod2, NULL);
+			node = binnode(node, nod2, nod2->right);
 	}
 	return (node);
 }
@@ -693,7 +698,7 @@ int main(int ac, char **av)
 
 	if (ac < 2)
 	{
-		printf("Usage: ./rdp \"ls -la > output.txt\" [-debug=all] [-ast=draw]\n");
+		printf("Usage: ./21sh \"ls -la > output.txt\" [-debug=all] [-ast=draw]\n");
 		return (0);
 	}
 	f = check_param(av + 2);
