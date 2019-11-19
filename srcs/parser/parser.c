@@ -64,10 +64,7 @@ t_node	*parse_complete_command(char *s, t_tokens *cur)
 	if ((node = parse_list(s, cur)))
 	{
 		while ((nod2 = parse_list(s, cur)))
-		{
-			binnode(node, nod2, nod2->right);
-			node = nod2;
-		}
+			node = binnode(node, nod2, nod2->right);
 		if ((nod2 = parse_separator_op(s, cur)))
 			node = binnode(node, nod2, nod2->right);
 	}
@@ -85,14 +82,10 @@ t_node	*parse_list(char *s, t_tokens *cur)
 	nod3 = NULL;
 	if ((node = parse_and_or(s, cur)))
 	{
-		while ((nod2 = parse_and_or(s, cur)))
-			node = binnode(node, nod2, nod2->right);
-		if ((nod2 = parse_separator_op(s, cur)))
+		while ((nod2 = parse_separator_op(s, cur)))
 		{
 			if ((nod3 = parse_and_or(s, cur)))
 				node = binnode(node, nod2, nod3);
-			else
-				node = NULL;
 		}
 	}
 	return (node);
