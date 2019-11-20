@@ -1,5 +1,6 @@
 X			Redirections like "<< toto ls"
-X			Quotes
+O			Single Quotes
+X			Double Quotes
 X			Subshell
 X			Check assignment_word
 

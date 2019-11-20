@@ -132,6 +132,8 @@ t_tokens	get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class orig
 		printf("ERROR : Need to close sequence\n");
 		exit (0);
 	}
+	if (toktype == TOK_SQUOTE)
+		toktype = TOK_WORD;
 	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
 	return (save_token(s + (*i - anchor), anchor, toktype));
 }
