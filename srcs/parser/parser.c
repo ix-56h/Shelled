@@ -64,7 +64,10 @@ t_node	*parse_complete_command(char *s, t_tokens *cur)
 	if ((node = parse_list(s, cur)))
 	{
 		while ((nod2 = parse_list(s, cur)))
+		{
+			printf("while parselist here\n");
 			node = binnode(node, nod2, nod2->right);
+		}
 		if ((nod2 = parse_separator_op(s, cur)))
 			node = binnode(node, nod2, nod2->right);
 	}
@@ -106,16 +109,10 @@ t_node	*parse_and_or(char *s, t_tokens *cur)
 		while ((tok = *cur).tok == TOK_AND_IF || tok.tok == TOK_OR_IF)
 		{
 			*cur = get_next_token(s);
-			//if ((nod2 = parse_linebreak(s, cur)))
-			//{
-			//	free(nod2);
-				if ((nod2 = parse_pipeline(s, cur)))
-					node = save_node(node, tok, nod2, 5);
-				else
-					node = NULL;
-			//}
-			//else
-			//	node = NULL;
+			if ((nod2 = parse_pipeline(s, cur)))
+				node = save_node(node, tok, nod2, 5);
+			else
+				node = NULL;
 		}
 	}
 	return (node);
@@ -210,10 +207,14 @@ t_node	*parse_subshell(char *s, t_tokens *cur)
 	if (cur->tok == TOK_LPAREN)
 	{
 		*cur = get_next_token(s);
-		if ((node = parse_compound_list(s, cur)))
+		//if ((node = parse_compound_list(s, cur)))
+		if ((node = parse_complete_commands(s, cur)))
 		{
 			if (cur->tok == TOK_RPAREN)
+			{
 				node->id = SUBSH;
+				*cur = get_next_token(s);
+			}
 			else
 			{
 				printf("Error : subshell need to be closed\n");
@@ -231,13 +232,8 @@ t_node	*parse_compound_list(char *s, t_tokens *cur)
 	
 	node = NULL;
 	nod2 = NULL;
-	if ((node = parse_linebreak(s, cur)))
-	{
-		if ((nod2 = parse_term(s, cur)))
-			node = binnode(node, nod2, nod2->right);
-		if (nod2 && (nod2 = parse_separator(s, cur)))
-			node = binnode(node, nod2, nod2->right);
-	}
+	if ((node = parse_term(s, cur)) && (nod2 = parse_separator(s, cur)))
+		node = binnode(node, nod2, nod2->right);
 	return (node);
 }
 
@@ -253,8 +249,9 @@ t_node	*parse_term(char *s, t_tokens *cur)
 		while ((nod2 = parse_and_or(s, cur)))
 			node = binnode(node, nod2, nod2->right);
 	}
-	if ((node = parse_separator(s, cur)))
+	if (node && (nod2 = parse_separator(s, cur)))
 	{
+		node = binnode(node, nod2, nod2->right);
 		if ((nod2 = parse_and_or(s, cur)))
 			node = binnode(node, nod2, nod2->right);
 	}

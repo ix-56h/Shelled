@@ -138,8 +138,8 @@ t_tokens	get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class orig
 
 t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 {
-	t_chr_class chr_class = 0;
-	int anchor = 0;
+	t_chr_class	chr_class = 0;
+	int			anchor = 0;
 	
 	chr_class = get_chr_class[(unsigned char)s[*i]];
 	while (s[*i] &&
@@ -151,6 +151,8 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 		anchor++;
 		(*i)++;
 	}
+	if ((toktype == TOK_LPAREN || toktype == TOK_RPAREN) && (anchor += 1))
+		(*i)++;
 	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
 	return (save_token(s + (*i - anchor), anchor, toktype));
 }

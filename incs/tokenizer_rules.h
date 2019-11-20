@@ -40,8 +40,8 @@ t_chr_class		get_chr_class[255] = {
 	['{'] = CHR_RBRACE,
 	['}'] = CHR_LBRACE,
 	//['$'] = CHR_EXP,
-	['('] = CHR_RPAREN,
-	[')'] = CHR_LPAREN,
+	['('] = CHR_LPAREN,
+	[')'] = CHR_RPAREN,
 
 	['*'] = CHR_WORD,
 
@@ -86,7 +86,8 @@ t_toktype	token_chr_rules[TOK_MAX][CHR_MAX] = {
 	[TOK_OPERATOR] = {[CHR_AND] = 1, [CHR_SEMI] = 1},
 	[TOK_REDIRECTION] = {[CHR_RREDI] = 1,[CHR_LREDI] = 1, [CHR_PIPE] = 1, [CHR_AND] = 1},
 	[TOK_PIPE] = {[CHR_PIPE] = 1},
-	[TOK_VALIDATOR] = {[CHR_VALIDATOR] = 1},
+	[TOK_RPAREN] = {},
+	[TOK_LPAREN] = {},
 };
 
 t_toktype	get_tok_type[CHR_MAX] = {
@@ -126,7 +127,8 @@ const char	DEBUG_TOKEN[TOK_MAX][30] = {
 	[TOK_ESCAPE] = "TOK_WORD",
 	[TOK_SQUOTE] = "TOK_SQUOTE",
 	[TOK_DQUOTE] = "TOK_DQUOTE",
-	[TOK_SUBSHELL] = "TOK_SUBSHELL",
+	[TOK_LPAREN] = "TOK_LPAREN",
+	[TOK_RPAREN] = "TOK_RPAREN",
 	[TOK_SUBSTITUTION] = "TOK_SUBSTITUTION",
 	[TOK_PIPE] = "TOK_PIPE"
 };
