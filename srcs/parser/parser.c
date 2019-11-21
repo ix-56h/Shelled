@@ -373,14 +373,23 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 	nod2 = NULL;
 	if ((node = parse_cmd_prefix(s, cur)))
 	{
-		while ((nod2 = parse_cmd_word(s, cur)))
-			node = binnode(node, nod2, nod2->right);
-		while (nod2 && (nod2 = parse_cmd_suffix(s, cur)))
-			node = binnode(node, nod2, nod2->right);
+		if ((nod2 = parse_cmd_word(s, cur)))
+		{
+			node = binnode(nod2, node, node->right);
+			if ((nod2 = parse_cmd_suffix(s, cur)))
+				node = binnode(node, nod2, nod2->right);
+		}
+		else
+		{
+			while ((nod2 = parse_cmd_prefix(s, cur)))
+				node = binnode(node, nod2, nod2->right);
+		}
 	}
 	else if ((node = parse_cmd_name(s, cur)))
 	{
-		while ((nod2 = parse_cmd_suffix(s, cur)))
+		while ((nod2 = parse_cmd_name(s, cur)))
+			node = binnode(node, nod2, nod2->right);
+		if ((nod2 = parse_cmd_suffix(s, cur)))
 			node = binnode(node, nod2, nod2->right);
 	}
 	return (node);
@@ -401,16 +410,17 @@ t_node	*parse_cmd_name(char *s, t_tokens *cur)
 			*cur = get_next_token(s);
 			while ((tok = *cur).tok == TOK_WORD)
 			{
-				if (!push_args(node, tok.data))
-					exit(0);
-				free(tok.data);
-				tok.data = NULL;
+				//if (!push_args(node, tok.data))
+				//	exit(0);
+				//free(tok.data);
+				//tok.data = NULL;
 				*cur = get_next_token(s);
 			}
 		}
 		else
 		{
 			node = applie_7b(cur, cur->data);
+			*cur = get_next_token(s);
 		}
 	}
 	return(node);
@@ -426,6 +436,7 @@ t_node	*parse_cmd_word(char *s, t_tokens *cur)
 	if (cur->tok == TOK_WORD)
 	{
 		node = applie_7b(cur, s2);
+		*cur = get_next_token(s);
 	}
 	return(node);
 }
@@ -539,28 +550,28 @@ t_node	*parse_io_file(char *s, t_tokens *cur)
 t_node	*parse_filename(char *s, t_tokens *cur)
 {
 	t_node		*node;
-	t_node		*nod2;
-	t_node		*first;
+	//t_node		*nod2;
+	//t_node		*first;
 	t_tokens	tok;
 
 	node = NULL;
-	first = NULL;
-	nod2 = NULL;
+	//first = NULL;
+	//nod2 = NULL;
 	tok = *cur;
 	// rule 2
 	if (tok.tok == TOK_WORD)
 	{
 		node = save_node(NULL, *cur, NULL, DEFAULT);
-		first = node;
+		//first = node;
 		*cur = get_next_token(s);
-		while ((tok = *cur).tok == TOK_WORD)
-		{
-			nod2 = save_node(NULL, *cur, NULL, DEFAULT);
-			binnode(nod2, node, NULL);
-			node = nod2;
-			*cur = get_next_token(s);
-		}
-		node = first;
+		//while ((tok = *cur).tok == TOK_WORD)
+		//{
+		//	nod2 = save_node(NULL, *cur, NULL, DEFAULT);
+		//	binnode(nod2, node, NULL);
+		//	node = nod2;
+		//	*cur = get_next_token(s);
+		//}
+		//node = first;
 	}
 	return(node);
 }
@@ -592,7 +603,7 @@ t_node	*parse_here_end(char *s, t_tokens *cur)
 	// rule 3
 	if (cur->tok == TOK_WORD)
 	{
-		node = save_node(NULL, *cur, node, DEFAULT);
+		node = save_node(NULL, *cur, NULL, DEFAULT);
 		*cur = get_next_token(s);
 	}
 	return(node);
