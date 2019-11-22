@@ -381,7 +381,7 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 			//free
 			*cur = get_next_token(s);
 		}
-		if ((nod2 = parse_cmd_suffix(s, cur)))
+		while ((nod2 = parse_cmd_suffix(s, cur)))
 			node = binnode(node, nod2, nod2->right);
 		while (cur->tok == TOK_WORD)
 		{
@@ -408,7 +408,7 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 		else
 		{
 			while ((nod2 = parse_cmd_prefix(s, cur)))
-				node = binnode(node, nod2, nod2->right);
+				binnode(node, nod2, nod2->right);
 		}
 	}
 	return (node);
