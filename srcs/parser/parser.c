@@ -385,9 +385,14 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 	else if ((node = parse_cmd_name(s, cur)))
 	{
 		args = node;
+		while (cur->tok == TOK_WORD)
+		{
+			push_args(args, cur->data);
+			//free
+			*cur = get_next_token(s);
+		}
 		if ((nod2 = parse_cmd_suffix(s, cur)))
 			node = binnode(node, nod2, nod2->right);
-		//printf("%s\nthis is the end\n", cur->data);
 		while (cur->tok == TOK_WORD)
 		{
 			push_args(args, cur->data);
@@ -474,7 +479,6 @@ t_node	*parse_cmd_suffix(char *s, t_tokens *cur)
 	tok = *cur;
 	if (tok.tok == TOK_WORD)
 	{
-		printf("%s\nthis is the end\n", cur->data);
 		node = save_node(NULL, tok, NULL, ARGS);
 		*cur = get_next_token(s);
 		//while ((tok = *cur).tok == TOK_WORD)

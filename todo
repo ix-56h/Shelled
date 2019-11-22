@@ -1,8 +1,8 @@
-?			Redirections like ">> toto ls"
-x			here documents
+O			Redirections like ">> toto ls"
+X			here documents
 O			Single Quotes
 X			Double Quotes
-X			Subshell
+?			Subshell
 X			Check assignment_word
 
 X			check for this command
