@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
 #define ARGS_ARR_SIZE 4
 
 enum			id {DEFAULT, ARGS, SUBSH, PIPESEQ, PIPE, ANDOR, IO_REDIRECT};

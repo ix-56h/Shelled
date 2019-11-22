@@ -50,7 +50,7 @@ t_node		*applie_7b(t_tokens *cur, char *s)
 	if (s[0] == '=')
 	{
 		//applie rule 1
-		return (save_node(NULL, *cur, NULL, DEFAULT));
+		return (save_node(NULL, *cur, NULL, ARGS));
 	}
 	else
 	{
@@ -59,7 +59,7 @@ t_node		*applie_7b(t_tokens *cur, char *s)
 			cur->tok = TOK_ASSIGNMENT_WORD;
 		//else
 		//applie rule 1
-		return (save_node(NULL, *cur, NULL, DEFAULT));
+		return (save_node(NULL, *cur, NULL, ARGS));
 	}
 	return (NULL);
 }

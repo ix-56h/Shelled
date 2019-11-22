@@ -1,4 +1,5 @@
-X			Redirections like "<< toto ls"
+?			Redirections like ">> toto ls"
+x			here documents
 O			Single Quotes
 X			Double Quotes
 X			Subshell
