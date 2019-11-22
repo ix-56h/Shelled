@@ -372,43 +372,27 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 
 	node = NULL;
 	nod2 = NULL;
-	if ((node = parse_cmd_name(s, cur)))
-	{
-		args = node;
-		while (cur->tok == TOK_WORD)
-		{
-			push_args(args, cur->data);
-			//free
-			*cur = get_next_token(s);
-		}
-		while ((nod2 = parse_cmd_suffix(s, cur)))
-			node = binnode(node, nod2, nod2->right);
-		while (cur->tok == TOK_WORD)
-		{
-			push_args(args, cur->data);
-			//free
-			*cur = get_next_token(s);
-		}
 
-	}
-	else if ((node = parse_cmd_prefix(s, cur)))
+	if ((node = parse_cmd_prefix(s, cur)))
 	{
 		if ((nod2 = parse_cmd_word(s, cur)))
 		{
-			args = nod2;
 			node = binnode(nod2, node, node->right);
-			while ((nod2 = parse_cmd_word(s, cur)))
-			{
-				push_args(args, nod2->data);
-				//free node
-			}
 			if ((nod2 = parse_cmd_suffix(s, cur)))
 				binnode(nod2, node->left, node->left->right);
 		}
-		else
+	}
+	else if ((node = parse_cmd_name(s, cur)))
+	{
+		args = node;
+		if ((nod2 = parse_cmd_suffix(s, cur)))
+			node = binnode(node, nod2, nod2->right);
+		//printf("%s\nthis is the end\n", cur->data);
+		while (cur->tok == TOK_WORD)
 		{
-			while ((nod2 = parse_cmd_prefix(s, cur)))
-				binnode(node, nod2, nod2->right);
+			push_args(args, cur->data);
+			//free
+			*cur = get_next_token(s);
 		}
 	}
 	return (node);
@@ -472,8 +456,10 @@ t_node	*parse_cmd_prefix(char *s, t_tokens *cur)
 			//free
 		}
 	}
-	while ((nod2 = parse_io_redirect(s, cur)))
+	else if ((nod2 = parse_io_redirect(s, cur)))
 		node = binnode(node, nod2, nod2->right);
+	else
+		return (NULL);
 	return (node);
 }
 
@@ -488,17 +474,20 @@ t_node	*parse_cmd_suffix(char *s, t_tokens *cur)
 	tok = *cur;
 	if (tok.tok == TOK_WORD)
 	{
+		printf("%s\nthis is the end\n", cur->data);
 		node = save_node(NULL, tok, NULL, ARGS);
 		*cur = get_next_token(s);
-		while ((tok = *cur).tok == TOK_WORD)
-		{
-			push_args(node, tok.data);
-			*cur = get_next_token(s);
+		//while ((tok = *cur).tok == TOK_WORD)
+		//{
+		//	push_args(node, tok.data);
+		//	*cur = get_next_token(s);
 			//free
-		}
+		//}
 	}
-	if ((nod2 = parse_io_redirect(s, cur)))
+	else if ((nod2 = parse_io_redirect(s, cur)))
 		node = binnode(node, nod2, nod2->right);
+	else
+		return (NULL);
 	return (node);
 }
 
