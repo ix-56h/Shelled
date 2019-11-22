@@ -1,5 +1,6 @@
 O			Redirections like ">> toto ls"
-X			here documents
+?			here documents
+	done, just need to print prompt and check delimiter (right) and do redirection to command (left)
 O			Single Quotes
 X			Double Quotes
 ?			Subshell

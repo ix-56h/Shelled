@@ -604,7 +604,7 @@ t_node	*parse_here_end(char *s, t_tokens *cur)
 	t_tokens	tok;
 	
 	node = NULL;
-	// rule 3
+	// rule 3  -> applie quote removal for get the true delimiter
 	if (cur->tok == TOK_WORD)
 	{
 		node = save_node(NULL, *cur, NULL, DEFAULT);
