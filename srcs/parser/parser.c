@@ -379,7 +379,7 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 		{
 			node = binnode(nod2, node, node->right);
 			if ((nod2 = parse_cmd_suffix(s, cur)))
-				binnode(nod2, node->left, node->left->right);
+				node = binnode(node, nod2, nod2->right);
 		}
 	}
 	else if ((node = parse_cmd_name(s, cur)))
@@ -462,7 +462,9 @@ t_node	*parse_cmd_prefix(char *s, t_tokens *cur)
 		}
 	}
 	else if ((nod2 = parse_io_redirect(s, cur)))
+	{
 		node = binnode(node, nod2, nod2->right);
+	}
 	else
 		return (NULL);
 	return (node);
