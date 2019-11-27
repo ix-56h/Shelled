@@ -19,6 +19,7 @@ X			need see 7b rule in misc.c
 X			here documents
 
 
+X			Why not try to use binary mask for squote and dquote struct, with a definem, i could check if is a quoted word like : IS_QUOTED(cur->quoted) or IS_DQUOTED(cur->quoted) or IS_SQUOTE(cur->quoted) (not really usefull)
 X			check for this command
 cat /etc/passwd | tr : # | tr -s abcdefghijklmnopqrstuvwxyz| cut -c 2 | grep -e a -e b -e\
  c -e d -e e -e f -e g -e h -e i -e j -e k -e l -e m -e n -e o -e p -e q -e r -e s -e \
