@@ -47,6 +47,21 @@ typedef enum	e_toktype {
 	TOK_NEWLINE,
 	TOK_EOF,
 	/*
+	**	Reserved words
+	*/
+	TOK_IF,
+	TOK_THEN,
+	TOK_ELSE,
+	TOK_ELIF,
+	TOK_FI,
+	TOK_DO,
+	TOK_DONE,
+	TOK_CASE,
+	TOK_ESAC,
+	TOK_WHILE,
+	TOK_UNTIL,
+	TOK_FOR,
+	/*
 	**	Abstract token
 	*/
 	TOK_VALIDATOR,
@@ -84,6 +99,7 @@ typedef enum	e_chr_class {
 
 typedef struct		s_tokens {
 	t_toktype		tok;
+	unsigned		dquote:1;
 	char			*data;
 }					t_tokens;
 

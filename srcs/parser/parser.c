@@ -271,17 +271,6 @@ t_node	*parse_for_clause(char *s, t_tokens *cur)
 
 t_node	*parse_name(char *s, t_tokens *cur)
 {
-	t_node		*node;
-	t_tokens	tok;
-	
-	tok = *cur;
-	if (tok.tok == TOK_NAME)
-	{
-		//	applie rule 5
-		*cur = get_next_token(s);
-		return (save_node(NULL, tok, NULL, 0));
-	}
-	printf("Error parsing name\n");
 	return (NULL);
 }
 
@@ -419,7 +408,7 @@ t_node	*parse_cmd_name(char *s, t_tokens *cur)
 	{
 		if (!strchr(cur->data, '='))
 		{
-			//applie rule 1 (chekc reserved word associated, if not a reserved word, is word token so return him)
+			applie_rule_one(s, cur);
 			node = save_node(NULL, *cur, NULL, ARGS);
 			*cur = get_next_token(s);
 		}

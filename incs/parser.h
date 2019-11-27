@@ -24,6 +24,7 @@ typedef	struct		s_node
 	int				cur_size;
 	int				cur_i;
 
+	unsigned		dquote:1;
 	t_toktype		tok;
 	char			*data;
 	struct s_node	*right;
@@ -88,4 +89,14 @@ t_node		*parse_term(char *s, t_tokens *cur);
 t_node		*parse_until_clause(char *s, t_tokens *cur);
 t_node		*parse_while_clause(char *s, t_tokens *cur);
 t_node		*parse_wordlist(char *s, t_tokens *cur);
+
+/*
+**	misc.c
+*/
+
+t_flags		check_param(char **av);
+t_node		*binnode(t_node *left, t_node *mom, t_node *right);
+t_node		*save_node(t_node *left, t_tokens tok, t_node *right, int id);
+void		applie_rule_one(char *s, t_tokens *cur);
+t_node		*applie_7b(t_tokens *cur, char *s);
 #endif

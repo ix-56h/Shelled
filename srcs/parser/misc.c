@@ -41,15 +41,22 @@ t_node	*save_node(t_node *left, t_tokens tok, t_node *right, int id)
 	node->right = right;
 	node->id = id;
 	node->tok = tok.tok;
+	node->dquote = tok.dquote;
 	node->data = tok.data;
 	return (node);
+}
+
+void	applie_rule_one(char *s, t_tokens *cur)
+{
+	if (ft_strcmp(cur->data, "while") == 0)
+		cur->tok = TOK_WHILE;
 }
 
 t_node		*applie_7b(t_tokens *cur, char *s)
 {
 	if (s[0] == '=')
 	{
-		//applie rule 1
+		applie_rule_one(s, cur);
 		return (save_node(NULL, *cur, NULL, ARGS));
 	}
 	else

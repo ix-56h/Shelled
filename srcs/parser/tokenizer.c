@@ -44,6 +44,11 @@ t_tokens	save_token(char *s, int anchor, t_toktype toktype)
 	}
 	else
 		new.data = NULL;
+	if (toktype == TOK_DQUOTE)
+	{
+		new.dquote = 1; 
+		toktype = TOK_WORD;
+	}
 	new.tok = toktype;
 	return (new);
 }

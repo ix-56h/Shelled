@@ -1,10 +1,15 @@
+# IMPORTANT
+X			Error handler
+
+# OTHERS
 O			Redirections like ">> toto ls"
-?			here documents
-	done, just need to print prompt and check delimiter (right) and do redirection to command (left)
 O			Single Quotes
-X			Double Quotes
+?			Double Quotes
 ?			Subshell
 X			Check assignment_word
+X			need see 7b rule in misc.c
+X			here documents
+
 
 X			check for this command
 cat /etc/passwd | tr : # | tr -s abcdefghijklmnopqrstuvwxyz| cut -c 2 | grep -e a -e b -e\
