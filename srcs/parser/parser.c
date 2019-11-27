@@ -207,8 +207,7 @@ t_node	*parse_subshell(char *s, t_tokens *cur)
 	if (cur->tok == TOK_LPAREN)
 	{
 		*cur = get_next_token(s);
-		//if ((node = parse_compound_list(s, cur)))
-		if ((node = parse_complete_commands(s, cur)))
+		if ((node = parse_compound_list(s, cur)))
 		{
 			if (cur->tok == TOK_RPAREN)
 			{
@@ -232,8 +231,12 @@ t_node	*parse_compound_list(char *s, t_tokens *cur)
 	
 	node = NULL;
 	nod2 = NULL;
-	if ((node = parse_term(s, cur)) && (nod2 = parse_separator(s, cur)))
-		node = binnode(node, nod2, nod2->right);
+
+	if ((node = parse_term(s, cur)))
+	{
+		if ((nod2 = parse_separator(s, cur)))
+			node = binnode(node, nod2, nod2->left);
+	}
 	return (node);
 }
 
@@ -246,14 +249,17 @@ t_node	*parse_term(char *s, t_tokens *cur)
 	nod2 = NULL;
 	if ((node = parse_and_or(s, cur)))
 	{
+		// trouver une commande shell qui fait passer dans le while
 		while ((nod2 = parse_and_or(s, cur)))
-			node = binnode(node, nod2, nod2->right);
+		{
+			node = binnode(node, nod2, nod2->left);
+		}
 	}
 	if (node && (nod2 = parse_separator(s, cur)))
 	{
 		node = binnode(node, nod2, nod2->right);
 		if ((nod2 = parse_and_or(s, cur)))
-			node = binnode(node, nod2, nod2->right);
+			node = binnode(node->left, node, nod2);
 	}
 	return (node);
 }
