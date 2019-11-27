@@ -100,6 +100,7 @@ typedef enum	e_chr_class {
 typedef struct		s_tokens {
 	t_toktype		tok;
 	unsigned		dquote:1;
+	unsigned		squote:1;
 	char			*data;
 }					t_tokens;
 

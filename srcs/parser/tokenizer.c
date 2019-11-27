@@ -36,6 +36,8 @@ t_tokens	save_token(char *s, int anchor, t_toktype toktype)
 {
 	t_tokens	new;
 
+	new.dquote = 0; 
+	new.squote = 0; 
 	if (anchor > 0)
 	{
 		if (!(new.data = ft_memalloc(sizeof(char) * (anchor + 1))))
@@ -47,6 +49,11 @@ t_tokens	save_token(char *s, int anchor, t_toktype toktype)
 	if (toktype == TOK_DQUOTE)
 	{
 		new.dquote = 1; 
+		toktype = TOK_WORD;
+	}
+	else if (toktype == TOK_SQUOTE)
+	{
+		new.squote = 1;
 		toktype = TOK_WORD;
 	}
 	new.tok = toktype;

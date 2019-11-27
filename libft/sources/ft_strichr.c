@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strichr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,11 +12,14 @@
 
 #include <string.h>
 
-char	*ft_strchr(const char *s, char c)
+int		ft_strichr(const char *s, char c)
 {
-	while (*s && *s != c)
-		s++;
-	if (*s == c)
-		return ((char *)s);
-	return (NULL);
+	int i;
+
+	i = 0;
+	while (s[i] && s[i] != c)
+		i++;
+	if (s[i] == c)
+		return (i);
+	return (-1);
 }

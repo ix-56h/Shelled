@@ -25,6 +25,7 @@ typedef	struct		s_node
 	int				cur_i;
 
 	unsigned		dquote:1;
+	unsigned		squote:1;
 	t_toktype		tok;
 	char			*data;
 	struct s_node	*right;

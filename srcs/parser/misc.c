@@ -54,6 +54,8 @@ void	applie_rule_one(char *s, t_tokens *cur)
 
 t_node		*applie_7b(t_tokens *cur, char *s)
 {
+	int		tmp;
+
 	if (s[0] == '=')
 	{
 		applie_rule_one(s, cur);
@@ -62,29 +64,20 @@ t_node		*applie_7b(t_tokens *cur, char *s)
 	else
 	{
 		//check if word before = form a valid name, if yes, ASSIGMENT_WORD are the toktype
-		if (!ft_isdigit(*s))
-			cur->tok = TOK_ASSIGNMENT_WORD;
+		
+		//if ((tok.tok == TOK_WORD) && (ft_strichr(s, '=') > 0) && (cur->squote + cur->dquote) == 0)
+		if ((tmp = ft_strichr(s, '=') > 0) && (cur->squote + cur->dquote) == 0)
+		{
+			// first character of a valid name is not a digit
+			if (!ft_isdigit(s[0]))
+				cur->tok = TOK_ASSIGNMENT_WORD;
+		}
 		//else
 		//applie rule 1
 		return (save_node(NULL, *cur, NULL, ARGS));
 	}
 	return (NULL);
 }
-
-/*t_node	*save_args(t_node *left, char **avs, t_node *right)
-{
-	t_node	*node = NULL;
-
-	if (!(node = malloc(sizeof(t_node))))
-		exit(1);
-	node->left = left;
-	node->right = right;
-	node->id = ARGS;
-	node->args = avs;
-	node->tok = tok.tok;
-	node->data = tok.data;
-	return (node);
-}*/
 
 void bst_print_dot_null(char *data, void *key, int nullcount, FILE* stream)
 {

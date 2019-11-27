@@ -1,12 +1,20 @@
 # IMPORTANT
 X			Error handler
+X			Check assignment_word 
+				- Check grammar, my cmd_word return a node or null but my cmd_prefix doesn't check if current word are a ASSIGNMENT_WORD because i didnt check before calling him
+				- Need to tokenize ASSIGNMENT_WORD with quotes for the value ( ex : x="ptdr" )
+				- Need to check for the 7b rule if the current word is the first or not
+
+
+# Important notes
+The WORD tokens shall have the word expansion rules applied to them immediately before the associated command is executed, not at the time the command is parsed.
+
 
 # OTHERS
 O			Redirections like ">> toto ls"
 O			Single Quotes
 ?			Double Quotes
 ?			Subshell
-X			Check assignment_word
 X			need see 7b rule in misc.c
 X			here documents
 
