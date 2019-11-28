@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #define ARGS_ARR_SIZE 4
 
-enum			id {DEFAULT, ARGS, SUBSH, PIPESEQ, PIPE, ANDOR, IO_REDIRECT};
+enum			id {DEFAULT, ARGS, SUBSH, PIPESEQ, PIPE, ANDOR, IO_REDIRECT, ASSIGNMENT_WORD};
 typedef	struct	s_flags
 {
 	unsigned	debug_all:1;

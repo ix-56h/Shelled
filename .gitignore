@@ -2,3 +2,6 @@
 *.txt
 a.out
 *.o
+tree.dot
+tree.png
+objects/

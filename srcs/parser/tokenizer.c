@@ -73,8 +73,6 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype, int *i)
 			return (TOK_DSEMI);
 		if (!s[1] && !strncmp(s, ";", 1))
 			return (TOK_SEMI);
-		if (!s[1] && !strncmp(s, "=", 1))
-			return (TOK_ASSIGN);
 		if (!s[1] && !strncmp(s, "&", 1))
 			return (TOK_AND);
 	}
@@ -127,6 +125,7 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 			(token_chr_rules[toktype][(chr_class = get_chr_class[(unsigned char)s[*i]])]
 				|| prev_class == CHR_ESCAPE || quote > 0))
 	{
+		(toktype == TOK_WORD && s[*i] == '=') ? (toktype = TOK_ASSIGNMENT_WORD) : 0;
 		(quoted == 0 && is_opening_class(chr_class)) ? (quoted = 1) : 0;
 		if (quote > 0 && chr_class == quote)
 			quote = 0;

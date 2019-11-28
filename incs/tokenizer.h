@@ -31,7 +31,6 @@ typedef enum	e_toktype {
 	TOK_AND_IF,
 	TOK_OR_IF,
 	TOK_AND,
-	TOK_ASSIGN,
 	TOK_DLESS,
 	TOK_DGREAT,
 	TOK_LREDI,

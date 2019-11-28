@@ -77,6 +77,14 @@ t_toktype	token_chr_rules[TOK_MAX][CHR_MAX] = {
 		[CHR_DQUOTE] = 1,
 		[CHR_DASH] = 1
 	},
+	[TOK_ASSIGNMENT_WORD] = {
+		[CHR_WORD] = 1,
+		[CHR_DIGIT] = 1,
+		[CHR_ESCAPE] = 1,
+		[CHR_SQUOTE] = 1,
+		[CHR_DQUOTE] = 1,
+		[CHR_DASH] = 1
+	},
 	[TOK_IO_NUMBER] = {[CHR_DIGIT] = 1,},
 	[TOK_BANG] = {[CHR_BANG] = 1,},
 	[TOK_OPERATOR] = {[CHR_AND] = 1, [CHR_SEMI] = 1},

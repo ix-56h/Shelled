@@ -372,7 +372,7 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 	{
 		if ((nod2 = parse_cmd_word(s, cur)))
 		{
-			node = binnode(nod2, node, node->right);
+			node = binnode(node, nod2, NULL);
 			if ((nod2 = parse_cmd_suffix(s, cur)))
 				node = binnode(node, nod2, nod2->right);
 		}
@@ -447,13 +447,13 @@ t_node	*parse_cmd_prefix(char *s, t_tokens *cur)
 	tok = *cur;
 	if (tok.tok == TOK_ASSIGNMENT_WORD)
 	{
-		node = save_node(NULL, tok, NULL, ARGS);
+		node = save_node(NULL, tok, NULL, ASSIGNMENT_WORD);
 		*cur = get_next_token(s);
 		while ((tok = *cur).tok == TOK_ASSIGNMENT_WORD)
 		{
-			push_args(node, tok.data);
+			nod2 = save_node(NULL, tok, NULL, ASSIGNMENT_WORD);
+			node = binnode(node, nod2, NULL);
 			*cur = get_next_token(s);
-			//free
 		}
 	}
 	else if ((nod2 = parse_io_redirect(s, cur)))
