@@ -32,12 +32,10 @@ t_tokens	token_error(void)
 	return (new);
 }
 
-t_tokens	save_token(char *s, int anchor, t_toktype toktype)
+t_tokens	save_token(char *s, int anchor, t_toktype toktype, int quoted)
 {
 	t_tokens	new;
 
-	new.dquote = 0; 
-	new.squote = 0; 
 	if (anchor > 0)
 	{
 		if (!(new.data = ft_memalloc(sizeof(char) * (anchor + 1))))
@@ -46,16 +44,7 @@ t_tokens	save_token(char *s, int anchor, t_toktype toktype)
 	}
 	else
 		new.data = NULL;
-	if (toktype == TOK_DQUOTE)
-	{
-		new.dquote = 1; 
-		toktype = TOK_WORD;
-	}
-	else if (toktype == TOK_SQUOTE)
-	{
-		new.squote = 1;
-		toktype = TOK_WORD;
-	}
+	new.quoted = quoted; 
 	new.tok = toktype;
 	return (new);
 }
@@ -125,41 +114,24 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype, int *i)
 	return (TOK_ERROR);
 }
 
-t_tokens	get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class origin_class)
-{
-	t_chr_class		chr_class = 0;
-	t_chr_class		prev_class = 0;
-	int				anchor = 0;
-
-	while (s[*i] && ((chr_class = get_chr_class[(unsigned char)s[*i]]) != origin_class
-				|| (prev_class == CHR_ESCAPE && toktype == TOK_DQUOTE)))
-	{
-		prev_class = chr_class;
-		//printf("[%s, '%c', %d]\n", DEBUG_CHR[chr_class], s[*i], anchor);
-		anchor++;
-		(*i)++;
-	}
-	if (!s[*i] || chr_class != origin_class)
-	{
-		printf("ERROR : Need to close sequence\n");
-		exit (0);
-	}
-	if (toktype == TOK_SQUOTE)
-		toktype = TOK_WORD;
-	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
-	return (save_token(s + (*i - anchor), anchor, toktype));
-}
-
 t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 {
 	t_chr_class	chr_class = 0;
 	int			anchor = 0;
-	
+	int			quote = 0;
+	int			quoted = 0;
+
 	chr_class = get_chr_class[(unsigned char)s[*i]];
+	(is_opening_class(chr_class)) ? (quoted = 1) : 0;
 	while (s[*i] &&
 			(token_chr_rules[toktype][(chr_class = get_chr_class[(unsigned char)s[*i]])]
-				|| prev_class == CHR_ESCAPE))
+				|| prev_class == CHR_ESCAPE || quote > 0))
 	{
+		(quoted == 0 && is_opening_class(chr_class)) ? (quoted = 1) : 0;
+		if (quote > 0 && chr_class == quote)
+			quote = 0;
+		else if (is_opening_class(chr_class))
+			quote = chr_class;
 		prev_class = chr_class;
 		//printf("[%s, '%c', %d]\n", DEBUG_CHR[chr_class], s[*i], anchor);
 		anchor++;
@@ -167,8 +139,10 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 	}
 	if ((toktype == TOK_LPAREN || toktype == TOK_RPAREN) && (anchor += 1))
 		(*i)++;
+	if (quote != 0)
+		return (token_error());
 	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
-	return (save_token(s + (*i - anchor), anchor, toktype));
+	return (save_token(s + (*i - anchor), anchor, toktype, quoted));
 }
 
 t_tokens	get_next_token(char *s)
@@ -179,7 +153,7 @@ t_tokens	get_next_token(char *s)
 	static int		i = 0;
 
 	if (s[i] == '\0')
-		return (save_token(NULL, 0, TOK_EOF));
+		return (save_token(NULL, 0, TOK_EOF, 0));
 	if (!(chr_class = get_chr_class[(unsigned char)s[i]]))
 		return (token_error());
 	if (chr_class == CHR_COMMENT || chr_class == CHR_SP)
@@ -189,36 +163,27 @@ t_tokens	get_next_token(char *s)
 	}
 	if (!(toktype = get_tok_type[chr_class]))
 		return (token_error());
-	if (is_opening_class(chr_class))
-	{
-		i++;
-		token = get_sequence_token(s, &i,  toktype, chr_class);
-		i++;
-	}
-	else
-	{
-		token = get_token(s, &i, toktype, chr_class);
-		if (token.tok == TOK_WORD && (s[i] == '>' || s[i] == '<') && (ft_isdigits(token.data)))
-			token.tok = TOK_IO_NUMBER;
-	}
+	token = get_token(s, &i, toktype, chr_class);
+	if (token.tok == TOK_WORD && (s[i] == '>' || s[i] == '<') && (ft_isdigits(token.data)))
+		token.tok = TOK_IO_NUMBER;
 	//printf("{%s, \"%s\"}\n", DEBUG_TOKEN[token.tok], token.data);
 	if (ABSTRACT_TOKEN[token.tok] && !(token.tok = get_true_toktype(token.data, token.tok, &i)))
 		return (token_error());
 	return (token);
 }
 
-//int main(int argc, char *argv[])
-//{
-//	t_tokens	tok;
-//	
-//	(void)argc;
-//	tok = get_next_token(argv[1]);
-//	while (tok.tok != TOK_ERROR && tok.tok != TOK_EOF)
-//	{
-//		printf("{%s, \"%s\"}\n", DEBUG_TOKEN[tok.tok], tok.data);
-//		tok = get_next_token(argv[1]);
-//	}
-//	if (tok.tok == TOK_ERROR)
-//		printf("Syntax error\n");
-//	return 0;
-//}
+/*int main(int argc, char *argv[])
+{
+	t_tokens	tok;
+	
+	(void)argc;
+	tok = get_next_token(argv[1]);
+	while (tok.tok != TOK_ERROR && tok.tok != TOK_EOF)
+	{
+		printf("{%s, \"%s\"}\n", DEBUG_TOKEN[tok.tok], tok.data);
+		tok = get_next_token(argv[1]);
+	}
+	if (tok.tok == TOK_ERROR)
+		printf("Syntax error\n");
+	return 0;
+}*/

@@ -37,8 +37,6 @@ typedef enum	e_toktype {
 	TOK_LREDI,
 	TOK_RREDI,
 	TOK_ESCAPE,
-	TOK_SQUOTE,
-	TOK_DQUOTE,
 	TOK_SUBSHELL,
 	TOK_SUBSTITUTION,
 	TOK_BANG,
@@ -99,16 +97,14 @@ typedef enum	e_chr_class {
 
 typedef struct		s_tokens {
 	t_toktype		tok;
-	unsigned		dquote:1;
-	unsigned		squote:1;
+	int				quoted;
 	char			*data;
 }					t_tokens;
 
-t_tokens	get_sequence_token(char *s, int *i, t_toktype toktype, t_chr_class origin_class);
 t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class);
 void		ignore_chr_class(char *s, int *i, t_chr_class chr_class);
 int			is_opening_class(t_chr_class chr_class);
-t_tokens	save_token(char *s, int anchor, t_toktype toktype);
+t_tokens	save_token(char *s, int anchor, t_toktype toktype, int quoted);
 t_tokens	get_next_token(char *s);
 //void		eat(int anchor);
 #endif

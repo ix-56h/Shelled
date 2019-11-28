@@ -12,8 +12,7 @@ The WORD tokens shall have the word expansion rules applied to them immediately 
 
 # OTHERS
 O			Redirections like ">> toto ls"
-O			Single Quotes
-?			Double Quotes
+O			Quotes
 ?			Subshell
 X			need see 7b rule in misc.c
 X			here documents
