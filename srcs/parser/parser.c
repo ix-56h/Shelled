@@ -707,6 +707,8 @@ int main(int ac, char **av)
 	if (f.debug_all)
 		printf("f.d = %u\nf.a = %u\n", f.debug_all, f.ast_draw);
 	tok = get_next_token(input);
+	if (tok.tok == TOK_ERROR)
+		return (0);
 	//run the parser
 	node = parse_program(input, &tok);
 	if (f.ast_draw)

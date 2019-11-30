@@ -13,6 +13,7 @@
 #ifndef FT_TOK_H
 # define FT_TOK_H
 #include "libft.h"
+#include "error_handler.h"
 typedef enum	e_toktype {
 	TOK_ERROR,
 	TOK_NAME,
@@ -82,6 +83,8 @@ typedef enum	e_chr_class {
 	CHR_PIPE,
 	CHR_SQUOTE,
 	CHR_DQUOTE,
+	CHR_BQUOTE,
+	CHR_DOL,
 	CHR_COMMENT,
 	CHR_EXP,
 	CHR_RBRACE,

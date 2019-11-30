@@ -16,6 +16,7 @@ t_chr_class		get_chr_class[255] = {
 	[' '] = CHR_SP,
 	['\t'] = CHR_SP,
 	[';'] = CHR_SEMI,
+	['$'] = CHR_DOL,
 	//['\n'] = CHR_VALIDATOR,
 
 	['#'] = CHR_COMMENT,
@@ -25,6 +26,7 @@ t_chr_class		get_chr_class[255] = {
 	['_'] = CHR_WORD,
 	['='] = CHR_WORD,
 	[':'] = CHR_WORD,
+	['`'] = CHR_BQUOTE,
 
 	['~'] = CHR_WORD,
 
@@ -75,6 +77,10 @@ t_toktype	token_chr_rules[TOK_MAX][CHR_MAX] = {
 		[CHR_ESCAPE] = 1,
 		[CHR_SQUOTE] = 1,
 		[CHR_DQUOTE] = 1,
+		[CHR_BQUOTE] = 1,
+		[CHR_LPAREN] = 1,
+		[CHR_RPAREN] = 1,
+		[CHR_DOL] = 1,
 		[CHR_DASH] = 1
 	},
 	[TOK_ASSIGNMENT_WORD] = {
@@ -83,6 +89,10 @@ t_toktype	token_chr_rules[TOK_MAX][CHR_MAX] = {
 		[CHR_ESCAPE] = 1,
 		[CHR_SQUOTE] = 1,
 		[CHR_DQUOTE] = 1,
+		[CHR_BQUOTE] = 1,
+		[CHR_LPAREN] = 1,
+		[CHR_RPAREN] = 1,
+		[CHR_DOL] = 1,
 		[CHR_DASH] = 1
 	},
 	[TOK_IO_NUMBER] = {[CHR_DIGIT] = 1,},
@@ -107,6 +117,8 @@ t_toktype	get_tok_type[CHR_MAX] = {
 	[CHR_PIPE] = TOK_PIPE,
 	[CHR_SQUOTE] = TOK_WORD,
 	[CHR_DQUOTE] = TOK_WORD,
+	[CHR_BQUOTE] = TOK_WORD,
+	[CHR_DOL] = TOK_WORD,
 	//[CHR_EXP] = TOK_EXP,
 	[CHR_AND] = TOK_OPERATOR,
 	[CHR_SEMI] = TOK_OPERATOR,

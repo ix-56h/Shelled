@@ -30,6 +30,11 @@ typedef	struct		s_node
 	struct s_node	*right;
 }					t_node;
 
+/*
+**	Root node of the current AST
+*/
+t_node		*g_root;
+
 t_flags		check_param(char **av);
 void		bst_print_dot(t_node* tree, FILE* stream);
 

@@ -1,15 +1,14 @@
 #include "parser.h"
 
-void	 free_ast(t_node *ast)
+void	 free_ast(void)
 {
-	
+
 }
 
-void	syn_error(t_node *root, int type)
+void	parse_error(int type)
 {
 	if (type == 1)
 		printf("error\n");
-	free_ast(root);
 }
 
 

@@ -18,17 +18,18 @@
 
 int			is_opening_class(t_chr_class chr_class)
 {
-	if (chr_class == CHR_SQUOTE || chr_class == CHR_DQUOTE)
+	if (chr_class == CHR_SQUOTE || chr_class == CHR_DQUOTE || chr_class == CHR_BQUOTE || chr_class == CHR_LPAREN)
 		return (1);
 	return (0);
 }
 
-t_tokens	token_error(void)
+t_tokens	token_error(int terr, const char *s)
 {
 	t_tokens new;
 
 	new.data = NULL;
 	new.tok = TOK_ERROR;
+	printf(": %s\n", s);
 	return (new);
 }
 
@@ -125,11 +126,13 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 			(token_chr_rules[toktype][(chr_class = get_chr_class[(unsigned char)s[*i]])]
 				|| prev_class == CHR_ESCAPE || quote > 0))
 	{
-		(toktype == TOK_WORD && s[*i] == '=') ? (toktype = TOK_ASSIGNMENT_WORD) : 0;
-		(quoted == 0 && is_opening_class(chr_class)) ? (quoted = 1) : 0;
-		if (quote > 0 && chr_class == quote)
+		(toktype == TOK_WORD && prev_class != CHR_ESCAPE && s[*i] == '=') ? (toktype = TOK_ASSIGNMENT_WORD) : 0;
+		(quoted == 0 && is_opening_class(chr_class) && prev_class != CHR_ESCAPE) ? (quoted = 1) : 0;
+		if (chr_class == CHR_RPAREN && quoted >= CHR_LPAREN)
+			quote -= CHR_LPAREN;
+		if (quote > 0 && chr_class == quote && prev_class != CHR_ESCAPE)
 			quote = 0;
-		else if (is_opening_class(chr_class))
+		else if (prev_class != CHR_ESCAPE && is_opening_class(chr_class))
 			quote = chr_class;
 		prev_class = chr_class;
 		//printf("[%s, '%c', %d]\n", DEBUG_CHR[chr_class], s[*i], anchor);
@@ -138,8 +141,8 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 	}
 	if ((toktype == TOK_LPAREN || toktype == TOK_RPAREN) && (anchor += 1))
 		(*i)++;
-	if (quote != 0)
-		return (token_error());
+	if (quote != 0 && !s[*i])
+		return (token_error(UNCLOSED_SEQUENCE, "unexpected EOF while looking for matching quote"));
 	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
 	return (save_token(s + (*i - anchor), anchor, toktype, quoted));
 }
@@ -154,20 +157,20 @@ t_tokens	get_next_token(char *s)
 	if (s[i] == '\0')
 		return (save_token(NULL, 0, TOK_EOF, 0));
 	if (!(chr_class = get_chr_class[(unsigned char)s[i]]))
-		return (token_error());
+		return (token_error(UNRECOGNIZED_CHAR, "unexpected character"));
 	if (chr_class == CHR_COMMENT || chr_class == CHR_SP)
 	{
 		ignore_chr_class(s, &i, chr_class);
 		return (get_next_token(s));
 	}
 	if (!(toktype = get_tok_type[chr_class]))
-		return (token_error());
+		return (token_error(UNRECOGNIZED_TOKEN, "unrecognized token"));
 	token = get_token(s, &i, toktype, chr_class);
 	if (token.tok == TOK_WORD && (s[i] == '>' || s[i] == '<') && (ft_isdigits(token.data)))
 		token.tok = TOK_IO_NUMBER;
 	//printf("{%s, \"%s\"}\n", DEBUG_TOKEN[token.tok], token.data);
 	if (ABSTRACT_TOKEN[token.tok] && !(token.tok = get_true_toktype(token.data, token.tok, &i)))
-		return (token_error());
+		return (token_error(UNRECOGNIZED_TOKEN, "unrecognized token"));
 	return (token);
 }
 

@@ -1,0 +1,12 @@
+#ifndef FT_ERROR_HANDLER_H
+# define FT_ERROR_HANDLER_H
+enum	tokerr{
+	UNCLOSED_SEQUENCE,
+	UNRECOGNIZED_CHAR,
+	UNRECOGNIZED_TOKEN
+};
+
+enum	parserr{
+	PARSERROR
+};
+#endif
