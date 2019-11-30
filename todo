@@ -2,7 +2,7 @@
 X			Error handler
 X			Check assignment_word 
 				- Need to check for the 7b rule if the current word is the first or not
-X			Rewrite tokenizer and process tokens as described in , don't forget all process during tokenization and after:
+X			Rewrite tokenizer and process tokens as described in , don't forget all process during tokenization and after (alias, expansion etc):
 			https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_03
 
 # Important notes
