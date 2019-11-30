@@ -113,19 +113,59 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype, int *i)
 	return (TOK_ERROR);
 }
 
+int			is_special_char(t_chr_class chr_class)
+{
+	if (chr_class = CHR_DQUOTE || chr_class == CHR_SQUOTE || chr_class == CHR_LPAREN || chr_class == CHR_BQUOTE)
+		return (1);
+	return (0);
+}
+
+int			get_cur_seq(char *s, int i, t_wstat *stat)
+{
+	if (s[i] == '"' && stat.dq == 0 && stat.sq== 0)
+		return (DQUOTE);
+	if (s[i] == '"' && (stat.dq == 1 || stat.sq== 1))
+		stat.dq = 0;
+	if (s[i] == '\'' && stat.sq== 0 && stat.dq== 0)
+		return (SQUOTE);
+	if (s[i] == '\'' && (stat.sq== 1 || stat.dq== 1))
+		stat.sq = 0;
+	if (s[i] == '`' && stat.bq == 0 && stat.sq == 0)
+		return (BQUOTE);
+	if (s[i] == '`' && (stat.bq == 1 || stat.sq == 1))
+		stat.bq = 0;
+	return (DEFAULT);	
+}
+
+void		get_sequence(char *s, int *anchor)
+{
+	t_wstat		seq;
+	int			i = *anchor;
+	int			cur = 0;
+
+	ft_bzero(seq, sizeof(t_wstat));
+	cur = get_cur_seq(s, i, &stat);
+	while (s[i] && cur != DEFAULT)
+	{
+		cur = get_cur_seq(s, i, &stat);
+		i++;
+	}
+	*anchor = i;
+}
+
 t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 {
 	t_chr_class	chr_class = 0;
 	int			anchor = 0;
-	int			quote = 0;
-	int			quoted = 0;
 
 	chr_class = get_chr_class[(unsigned char)s[*i]];
-	(is_opening_class(chr_class)) ? (quoted = 1) : 0;
-	while (s[*i] &&
-			(token_chr_rules[toktype][(chr_class = get_chr_class[(unsigned char)s[*i]])]
-				|| prev_class == CHR_ESCAPE || quote > 0))
+	if (is_special_char(chr_class))
+		get_sequence(s, &anchor, i, toktype);
+	while (s[*i] && (token_chr_rules[toktype][(chr_class = get_chr_class[(unsigned char)s[*i]])]
+				|| prev_class == CHR_ESCAPE))
 	{
+		if (is_special_char(chr_class))
+			get_sequence(s + (*i + anchor));
 		(toktype == TOK_WORD && prev_class != CHR_ESCAPE && s[*i] == '=') ? (toktype = TOK_ASSIGNMENT_WORD) : 0;
 		(quoted == 0 && is_opening_class(chr_class) && prev_class != CHR_ESCAPE) ? (quoted = 1) : 0;
 		if (chr_class == CHR_RPAREN && quoted >= CHR_LPAREN)

@@ -14,6 +14,9 @@
 # define FT_TOK_H
 #include "libft.h"
 #include "error_handler.h"
+
+enum			e_seq_states {DEFAULT, DQUOTE, SQUOTE, BQUOTE, EXPAN, ARITHM, SUB};
+
 typedef enum	e_toktype {
 	TOK_ERROR,
 	TOK_NAME,
@@ -96,6 +99,15 @@ typedef enum	e_chr_class {
 	CHR_NEWLINE,
 	CHR_MAX
 }				t_chr_class;
+
+typedef struct		s_wstat {
+	int		dq;
+	int		sq;
+	int		bq;
+	int		expa;
+	int		arith;
+	int		sub;
+}					t_wstat;
 
 typedef struct		s_tokens {
 	t_toktype		tok;
