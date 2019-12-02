@@ -562,12 +562,12 @@ t_node	*parse_filename(char *s, t_tokens *cur)
 	// rule 2
 	if (tok.tok == TOK_WORD)
 	{
-		node = save_node(NULL, *cur, NULL, DEFAULT);
+		node = save_node(NULL, *cur, NULL, DEFAULT_ID);
 		//first = node;
 		*cur = get_next_token(s);
 		//while ((tok = *cur).tok == TOK_WORD)
 		//{
-		//	nod2 = save_node(NULL, *cur, NULL, DEFAULT);
+		//	nod2 = save_node(NULL, *cur, NULL, DEFAULT_ID);
 		//	binnode(nod2, node, NULL);
 		//	node = nod2;
 		//	*cur = get_next_token(s);
@@ -587,7 +587,7 @@ t_node	*parse_io_here(char *s, t_tokens *cur)
 	nod2 = NULL;
 	if (cur->tok == TOK_DLESS || cur->tok == TOK_DLESSDASH)
 	{
-		node = save_node(NULL, *cur, NULL, DEFAULT);
+		node = save_node(NULL, *cur, NULL, DEFAULT_ID);
 		*cur = get_next_token(s);
 		if ((nod2 = parse_here_end(s, cur)))
 			node = binnode(NULL, node, nod2);
@@ -604,7 +604,7 @@ t_node	*parse_here_end(char *s, t_tokens *cur)
 	// rule 3  -> applie quote removal for get the true delimiter
 	if (cur->tok == TOK_WORD)
 	{
-		node = save_node(NULL, *cur, NULL, DEFAULT);
+		node = save_node(NULL, *cur, NULL, DEFAULT_ID);
 		*cur = get_next_token(s);
 	}
 	return(node);

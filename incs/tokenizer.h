@@ -15,8 +15,6 @@
 #include "libft.h"
 #include "error_handler.h"
 
-enum			e_seq_states {DEFAULT, DQUOTE, SQUOTE, BQUOTE, EXPAN, ARITHM, SUB};
-
 typedef enum	e_toktype {
 	TOK_ERROR,
 	TOK_NAME,
@@ -100,18 +98,8 @@ typedef enum	e_chr_class {
 	CHR_MAX
 }				t_chr_class;
 
-typedef struct		s_wstat {
-	int		dq;
-	int		sq;
-	int		bq;
-	int		expa;
-	int		arith;
-	int		sub;
-}					t_wstat;
-
 typedef struct		s_tokens {
 	t_toktype		tok;
-	int				quoted;
 	char			*data;
 }					t_tokens;
 
@@ -120,5 +108,5 @@ void		ignore_chr_class(char *s, int *i, t_chr_class chr_class);
 int			is_opening_class(t_chr_class chr_class);
 t_tokens	save_token(char *s, int anchor, t_toktype toktype, int quoted);
 t_tokens	get_next_token(char *s);
-//void		eat(int anchor);
+unsigned int	get_end_exp(char *s, int *i);
 #endif

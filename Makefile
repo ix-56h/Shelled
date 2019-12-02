@@ -25,7 +25,7 @@ INCDIR		= incs/ libft/incs/
 
 SRC			=	parser.c				misc.c				\
 				tokenizer.c				dynamic_arrays.c	\
-				parse_error.c								\
+				parse_error.c			wordexp_tokenizer.c	\
 
 LFT			= $(LFTDIR)/libft.a
 

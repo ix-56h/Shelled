@@ -115,41 +115,26 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype, int *i)
 
 int			is_special_char(t_chr_class chr_class)
 {
-	if (chr_class = CHR_DQUOTE || chr_class == CHR_SQUOTE || chr_class == CHR_LPAREN || chr_class == CHR_BQUOTE)
+	if (chr_class == CHR_DQUOTE || chr_class == CHR_SQUOTE || chr_class == CHR_DOL || chr_class == CHR_BQUOTE)
 		return (1);
 	return (0);
 }
 
-int			get_cur_seq(char *s, int i, t_wstat *stat)
+void		lex_sequence(char *s, int *anchor)
 {
-	if (s[i] == '"' && stat.dq == 0 && stat.sq== 0)
-		return (DQUOTE);
-	if (s[i] == '"' && (stat.dq == 1 || stat.sq== 1))
-		stat.dq = 0;
-	if (s[i] == '\'' && stat.sq== 0 && stat.dq== 0)
-		return (SQUOTE);
-	if (s[i] == '\'' && (stat.sq== 1 || stat.dq== 1))
-		stat.sq = 0;
-	if (s[i] == '`' && stat.bq == 0 && stat.sq == 0)
-		return (BQUOTE);
-	if (s[i] == '`' && (stat.bq == 1 || stat.sq == 1))
-		stat.bq = 0;
-	return (DEFAULT);	
-}
-
-void		get_sequence(char *s, int *anchor)
-{
-	t_wstat		seq;
+	//t_wstat		stat;
 	int			i = *anchor;
 	int			cur = 0;
 
-	ft_bzero(seq, sizeof(t_wstat));
-	cur = get_cur_seq(s, i, &stat);
-	while (s[i] && cur != DEFAULT)
-	{
-		cur = get_cur_seq(s, i, &stat);
-		i++;
-	}
+	ft_bzero(&stat, sizeof(t_wstat));
+	//cur = get_cur_seq(s, i, &stat);
+	if (*s == '\'')
+		lex_match_squote(s, anchor);
+	else if (*s == '"')
+		lex_match_dquote();
+	else if (*s == '$')
+		lex_process_dol();
+	//printf("tokenization error at get end exp\n");
 	*anchor = i;
 }
 
@@ -160,20 +145,13 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 
 	chr_class = get_chr_class[(unsigned char)s[*i]];
 	if (is_special_char(chr_class))
-		get_sequence(s, &anchor, i, toktype);
+		lex_sequence(s, &anchor);
 	while (s[*i] && (token_chr_rules[toktype][(chr_class = get_chr_class[(unsigned char)s[*i]])]
 				|| prev_class == CHR_ESCAPE))
 	{
 		if (is_special_char(chr_class))
-			get_sequence(s + (*i + anchor));
+			lex_sequence(s, &anchor);
 		(toktype == TOK_WORD && prev_class != CHR_ESCAPE && s[*i] == '=') ? (toktype = TOK_ASSIGNMENT_WORD) : 0;
-		(quoted == 0 && is_opening_class(chr_class) && prev_class != CHR_ESCAPE) ? (quoted = 1) : 0;
-		if (chr_class == CHR_RPAREN && quoted >= CHR_LPAREN)
-			quote -= CHR_LPAREN;
-		if (quote > 0 && chr_class == quote && prev_class != CHR_ESCAPE)
-			quote = 0;
-		else if (prev_class != CHR_ESCAPE && is_opening_class(chr_class))
-			quote = chr_class;
 		prev_class = chr_class;
 		//printf("[%s, '%c', %d]\n", DEBUG_CHR[chr_class], s[*i], anchor);
 		anchor++;
@@ -181,10 +159,8 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 	}
 	if ((toktype == TOK_LPAREN || toktype == TOK_RPAREN) && (anchor += 1))
 		(*i)++;
-	if (quote != 0 && !s[*i])
-		return (token_error(UNCLOSED_SEQUENCE, "unexpected EOF while looking for matching quote"));
 	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
-	return (save_token(s + (*i - anchor), anchor, toktype, quoted));
+	return (save_token(s + (*i - anchor), anchor, toktype, 0));
 }
 
 t_tokens	get_next_token(char *s)
@@ -208,6 +184,8 @@ t_tokens	get_next_token(char *s)
 	token = get_token(s, &i, toktype, chr_class);
 	if (token.tok == TOK_WORD && (s[i] == '>' || s[i] == '<') && (ft_isdigits(token.data)))
 		token.tok = TOK_IO_NUMBER;
+	//if (token.tok == TOK_WORD)
+		//field_splitting, don't forget to use IFS who's used to determine the character to do splitting
 	//printf("{%s, \"%s\"}\n", DEBUG_TOKEN[token.tok], token.data);
 	if (ABSTRACT_TOKEN[token.tok] && !(token.tok = get_true_toktype(token.data, token.tok, &i)))
 		return (token_error(UNRECOGNIZED_TOKEN, "unrecognized token"));

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #define ARGS_ARR_SIZE 4
 
-enum			id {DEFAULT, ARGS, SUBSH, PIPESEQ, PIPE, ANDOR, IO_REDIRECT, ASSIGNMENT_WORD};
+enum			id {DEFAULT_ID, ARGS, SUBSH, PIPESEQ, PIPE, ANDOR, IO_REDIRECT, ASSIGNMENT_WORD};
 typedef	struct	s_flags
 {
 	unsigned	debug_all:1;
@@ -24,7 +24,6 @@ typedef	struct		s_node
 	int				cur_size;
 	int				cur_i;
 
-	int				quoted;
 	t_toktype		tok;
 	char			*data;
 	struct s_node	*right;
