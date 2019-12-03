@@ -41,7 +41,6 @@ t_node	*save_node(t_node *left, t_tokens tok, t_node *right, int id)
 	node->right = right;
 	node->id = id;
 	node->tok = tok.tok;
-	node->quoted = tok.quoted;
 	node->data = tok.data;
 	return (node);
 }
@@ -66,7 +65,7 @@ t_node		*applie_7b(t_tokens *cur, char *s)
 		//check if word before = form a valid name, if yes, ASSIGMENT_WORD are the toktype
 		
 		//if ((tok.tok == TOK_WORD) && (ft_strichr(s, '=') > 0) && (cur->squote + cur->dquote) == 0)
-		if ((tmp = ft_strichr(s, '=') > 0) && (cur->quoted) == 0)
+		if ((tmp = ft_strichr(s, '=') > 0)) // && isquoted
 		{
 			// first character of a valid name is not a digit
 			if (!ft_isdigit(s[0]))

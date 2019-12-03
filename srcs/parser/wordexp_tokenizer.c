@@ -12,13 +12,72 @@
 
 #include "tokenizer.h"
 
-void		lex_match_squote(char *s, int *anchor)
+void		increment_pointors(int *i, int *a)
 {
-	while (s[*anchor] && s[*anchor] != '\'')
-		*anchor += 1;
-	if (!s[*anchor])
+	(*i)++;
+	(*a)++;
+}
+
+int			lex_match_squote(char *s, int *i, int *anchor)
+{
+	increment_pointors(i, anchor);
+	while (s[*i] && s[*i] != '\'')
+		increment_pointors(i, anchor);
+	if (s[*anchor] != '\'')
 	{
 		printf("ntm \n");
-		return (NULL);
+		return (0);
 	}
+	increment_pointors(i, anchor);
+	return (1);
+}
+
+int		lex_match_dquote(char *s, int *i, int *anchor)
+{
+	increment_pointors(i, anchor);
+	while (s[*i] && s[*i] != '"')
+	{
+		if (s[*i] == '\'' || s[*i] == '$' || s[*i] == '`')
+		{
+			if (!lex_sequence(s, i, anchor))
+				return (0);
+			continue;
+		}
+		increment_pointors(i, anchor);
+	}
+	if (s[*anchor] != '"')
+	{
+		printf("ntm \n");
+		return (0);
+	}
+	increment_pointors(i, anchor);
+	return (1);
+}
+
+int		lex_match_bquote(char *s, int *i, int *anchor)
+{
+	increment_pointors(i, anchor);
+	while (s[*i] && s[*i] != '\'')
+		increment_pointors(i, anchor);
+	if (s[*anchor] != '\'')
+	{
+		printf("ntm \n");
+		return (0);
+	}
+	increment_pointors(i, anchor);
+	return (1);
+}
+
+int		lex_match_dol(char *s, int *i, int *anchor)
+{
+	increment_pointors(i, anchor);
+	while (s[*i] && s[*i] != '\'')
+		increment_pointors(i, anchor);
+	if (s[*anchor] != '\'')
+	{
+		printf("ntm \n");
+		return (0);
+	}
+	increment_pointors(i, anchor);
+	return (1);
 }

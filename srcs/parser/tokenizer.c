@@ -33,7 +33,7 @@ t_tokens	token_error(int terr, const char *s)
 	return (new);
 }
 
-t_tokens	save_token(char *s, int anchor, t_toktype toktype, int quoted)
+t_tokens	save_token(char *s, int anchor, t_toktype toktype)
 {
 	t_tokens	new;
 
@@ -45,7 +45,6 @@ t_tokens	save_token(char *s, int anchor, t_toktype toktype, int quoted)
 	}
 	else
 		new.data = NULL;
-	new.quoted = quoted; 
 	new.tok = toktype;
 	return (new);
 }
@@ -113,29 +112,31 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype, int *i)
 	return (TOK_ERROR);
 }
 
-int			is_special_char(t_chr_class chr_class)
+int			is_special_char(t_chr_class chr_class, t_chr_class prev_class)
 {
-	if (chr_class == CHR_DQUOTE || chr_class == CHR_SQUOTE || chr_class == CHR_DOL || chr_class == CHR_BQUOTE)
+	if (prev_class == CHR_ESCAPE)
+		return (0);
+	else if (chr_class == CHR_DQUOTE || chr_class == CHR_SQUOTE || chr_class == CHR_DOL || chr_class == CHR_BQUOTE)
 		return (1);
 	return (0);
 }
 
-void		lex_sequence(char *s, int *anchor)
+int			lex_sequence(char *s, int *i, int *anchor)
 {
 	//t_wstat		stat;
-	int			i = *anchor;
-	int			cur = 0;
-
-	ft_bzero(&stat, sizeof(t_wstat));
+	int				ret = 0;
+	//ft_bzero(&stat, sizeof(t_wstat));
 	//cur = get_cur_seq(s, i, &stat);
-	if (*s == '\'')
-		lex_match_squote(s, anchor);
-	else if (*s == '"')
-		lex_match_dquote();
-	else if (*s == '$')
-		lex_process_dol();
+	if (s[*anchor] == '\'')
+		ret = lex_match_squote(s, i, anchor);
+	else if (s[*anchor] == '"')
+		ret = lex_match_dquote(s, i, anchor);
+	else if (s[*anchor] == '`')
+		lex_match_bquote(s, i, anchor);
+	else if (s[*anchor] == '$')
+		lex_match_dol(s, i, anchor);
 	//printf("tokenization error at get end exp\n");
-	*anchor = i;
+	return (ret);
 }
 
 t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
@@ -144,13 +145,17 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 	int			anchor = 0;
 
 	chr_class = get_chr_class[(unsigned char)s[*i]];
-	if (is_special_char(chr_class))
-		lex_sequence(s, &anchor);
+	if (is_special_char(chr_class, prev_class) && lex_sequence(s, i, &anchor) == 0)
+		return (token_error(0, "blele1"));
 	while (s[*i] && (token_chr_rules[toktype][(chr_class = get_chr_class[(unsigned char)s[*i]])]
 				|| prev_class == CHR_ESCAPE))
 	{
-		if (is_special_char(chr_class))
-			lex_sequence(s, &anchor);
+		if (is_special_char(chr_class, prev_class))
+		{
+			if (!lex_sequence(s, i, &anchor))
+				return (token_error(0, "blele2"));
+			continue;
+		}
 		(toktype == TOK_WORD && prev_class != CHR_ESCAPE && s[*i] == '=') ? (toktype = TOK_ASSIGNMENT_WORD) : 0;
 		prev_class = chr_class;
 		//printf("[%s, '%c', %d]\n", DEBUG_CHR[chr_class], s[*i], anchor);
@@ -160,7 +165,7 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 	if ((toktype == TOK_LPAREN || toktype == TOK_RPAREN) && (anchor += 1))
 		(*i)++;
 	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
-	return (save_token(s + (*i - anchor), anchor, toktype, 0));
+	return (save_token(s + (*i - anchor), anchor, toktype));
 }
 
 t_tokens	get_next_token(char *s)
@@ -171,7 +176,7 @@ t_tokens	get_next_token(char *s)
 	static int		i = 0;
 
 	if (s[i] == '\0')
-		return (save_token(NULL, 0, TOK_EOF, 0));
+		return (save_token(NULL, 0, TOK_EOF));
 	if (!(chr_class = get_chr_class[(unsigned char)s[i]]))
 		return (token_error(UNRECOGNIZED_CHAR, "unexpected character"));
 	if (chr_class == CHR_COMMENT || chr_class == CHR_SP)
@@ -181,7 +186,8 @@ t_tokens	get_next_token(char *s)
 	}
 	if (!(toktype = get_tok_type[chr_class]))
 		return (token_error(UNRECOGNIZED_TOKEN, "unrecognized token"));
-	token = get_token(s, &i, toktype, chr_class);
+	if ((token = get_token(s, &i, toktype, chr_class)).tok == TOK_ERROR)
+		return (token);
 	if (token.tok == TOK_WORD && (s[i] == '>' || s[i] == '<') && (ft_isdigits(token.data)))
 		token.tok = TOK_IO_NUMBER;
 	//if (token.tok == TOK_WORD)
