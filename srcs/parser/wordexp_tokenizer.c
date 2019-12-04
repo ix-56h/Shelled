@@ -24,10 +24,7 @@ int			lex_match_squote(char *s, int *i, int *anchor)
 	while (s[*i] && s[*i] != '\'')
 		increment_pointors(i, anchor);
 	if (s[*anchor] != '\'')
-	{
-		printf("ntm \n");
 		return (0);
-	}
 	increment_pointors(i, anchor);
 	return (1);
 }
@@ -46,10 +43,7 @@ int		lex_match_dquote(char *s, int *i, int *anchor)
 		increment_pointors(i, anchor);
 	}
 	if (s[*anchor] != '"')
-	{
-		printf("ntm \n");
 		return (0);
-	}
 	increment_pointors(i, anchor);
 	return (1);
 }
