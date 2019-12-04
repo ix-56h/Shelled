@@ -69,7 +69,7 @@ int		ABSTRACT_TOKEN[TOK_MAX] = {
 	[TOK_OPERATOR] = 1 // = == &&
 };
 
-t_toktype	token_chr_rules[TOK_MAX][CHR_MAX] = {
+int		token_chr_rules[TOK_MAX][CHR_MAX] = {
 	[TOK_SP] = {[CHR_SP] = 0,},
 	[TOK_WORD] = {
 		[CHR_WORD] = 1,

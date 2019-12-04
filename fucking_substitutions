@@ -1,0 +1,6 @@
+$a
+$(a aa aa)
+$( (zz zz zz) )
+$(	(zz zz zz) )
+$a$(zz zz zz)
+

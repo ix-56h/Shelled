@@ -109,13 +109,13 @@ int				is_opening_class(t_chr_class chr_class);
 t_tokens		save_token(char *s, int anchor, t_toktype toktype);
 t_tokens		get_next_token(char *s);
 unsigned int	get_end_exp(char *s, int *i);
-int				lex_sequence(char *s, int *i, int *anchor);
 
 /*
 **	wordexp_tokenizer.c
 */
+int			lex_sequence(char *s, int *i, int *anchor);
 int			lex_match_squote(char *s, int *i, int *anchor);
 int			lex_match_dquote(char *s, int *i, int *anchor);
-int			lex_match_bquote(char *s, int *i, int *anchor);
+int			lex_match_command_sub(char *s, int *i, int *anchor);
 int			lex_match_dol(char *s, int *i, int *anchor);
 #endif

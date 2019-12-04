@@ -121,23 +121,7 @@ int			is_special_char(t_chr_class chr_class, t_chr_class prev_class)
 	return (0);
 }
 
-int			lex_sequence(char *s, int *i, int *anchor)
-{
-	//t_wstat		stat;
-	int				ret = 0;
-	//ft_bzero(&stat, sizeof(t_wstat));
-	//cur = get_cur_seq(s, i, &stat);
-	if (s[*anchor] == '\'')
-		ret = lex_match_squote(s, i, anchor);
-	else if (s[*anchor] == '"')
-		ret = lex_match_dquote(s, i, anchor);
-	else if (s[*anchor] == '`')
-		lex_match_bquote(s, i, anchor);
-	else if (s[*anchor] == '$')
-		lex_match_dol(s, i, anchor);
-	//printf("tokenization error at get end exp\n");
-	return (ret);
-}
+
 
 t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 {
