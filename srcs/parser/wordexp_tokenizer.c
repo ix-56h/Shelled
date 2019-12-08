@@ -28,6 +28,7 @@ int			lex_sequence(char *s, int *i, int *anchor)
 		ret = lex_match_command_sub(s, i, anchor);
 	else if (s[*anchor] == '$')
 		ret = lex_match_dol(s, i, anchor);
+	printf("%i ma bite\n", ret);
 	//printf("tokenization error at get end exp\n");
 	return (ret);
 }
@@ -95,11 +96,24 @@ int		lex_match_command_sub(char *s, int *i, int *anchor)
 int		lex_match_dol(char *s, int *i, int *anchor)
 {
 	increment_pointors(i, anchor);
-	//do strncmp with :
-	//$(
-	//$( (
-	//$(	(
-	//else if $[a-zA-Z]
-	//else is just $ char
-	return (1);
+	if (s[*i] == '(')
+	{
+		if (lex_match_command_sub(s, i, anchor))
+		{
+			skip_whitespaces(s, i, anchor);
+			if (s[*i] && s[*i] == ')')
+			{
+				increment_pointors(i, anchor);
+				return (1);
+			}
+		}
+	}
+	else if (ft_isalpha(s[*i]) || s[*i] == '_')
+	{
+		increment_pointors(i, anchor);
+		while (ft_isalpha(s[*i]) || s[*i] == '_' || ft_isdigit(s[*i]))
+			increment_pointors(i, anchor);
+		return (1);
+	}
+	return (0);
 }

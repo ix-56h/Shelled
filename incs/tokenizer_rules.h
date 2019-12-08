@@ -41,7 +41,6 @@ t_chr_class		get_chr_class[255] = {
 	
 	['{'] = CHR_RBRACE,
 	['}'] = CHR_LBRACE,
-	//['$'] = CHR_EXP,
 	['('] = CHR_LPAREN,
 	[')'] = CHR_RPAREN,
 

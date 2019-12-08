@@ -136,6 +136,7 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 	{
 		if (is_special_char(chr_class, prev_class))
 		{
+		printf("%c\n", s[*i]);
 			if (!lex_sequence(s, i, &anchor))
 				return (token_error(0, "blele2"));
 			continue;
@@ -179,6 +180,7 @@ t_tokens	get_next_token(char *s)
 	//printf("{%s, \"%s\"}\n", DEBUG_TOKEN[token.tok], token.data);
 	if (ABSTRACT_TOKEN[token.tok] && !(token.tok = get_true_toktype(token.data, token.tok, &i)))
 		return (token_error(UNRECOGNIZED_TOKEN, "unrecognized token"));
+	printf("%s\n", token.data);
 	return (token);
 }
 

@@ -118,4 +118,9 @@ int			lex_match_squote(char *s, int *i, int *anchor);
 int			lex_match_dquote(char *s, int *i, int *anchor);
 int			lex_match_command_sub(char *s, int *i, int *anchor);
 int			lex_match_dol(char *s, int *i, int *anchor);
+
+/*
+**	wordexp_misc.c
+*/
+void		skip_whitespaces(char *s,int *i,int *a);
 #endif
