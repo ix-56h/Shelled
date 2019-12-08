@@ -1,0 +1,46 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    pre-push                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jerry <marvin@42.fr>                       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/11/18 16:28:15 by jerry             #+#    #+#              #
+#    Updated: 2019/11/21 14:55:21 by jerry            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+PARENT_BRANCH="$(git show-branch -a | grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn} '\*' | grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn} -v `git rev-parse --abbrev-ref HEAD` | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//')"
+if [ "$PARENT_BRANCH" ]
+then
+	git fetch
+	git pull origin $PARENT_BRANCH
+fi
+
+if which make >&-
+then
+	echo 'Checking compil: \c';
+	make fclean 2>&- >&- || make clean 2>&- >&-
+	if make NO_WARNING=true > /dev/null
+	then
+		echo 'OK'	
+	else
+		echo 'KO'
+		echo "Run \'make\' for further info"
+		exit 1
+	fi
+	make fclean 2>&- >&- || make clean 2>&- >&-
+fi
+if false && which norminette >&-
+then
+	echo 'Checking norm: \c';
+	GF_NORMINETTE_LOG="$(norminette)"
+	if [ "$(echo $GF_NORMINETTE_LOG | grep Error)" ]
+	then
+		echo 'KO'
+		echo "$GF_NORMINETTE_LOG"
+	else
+		echo 'OK'
+	fi
+fi
+exit 0

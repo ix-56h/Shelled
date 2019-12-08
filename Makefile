@@ -6,86 +6,121 @@
 #    By: niguinti <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2019/10/25 06:15:42 by niguinti         ###   ########.fr        #
+#    Updated: 2019/12/08 16:51:53 by jerry            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Executable's name (Can be changed)
+NAME := 21sh
+PROJECT := 21SH
+AUTHORS := Niguinti
 
-NAME		= 21sh
+RM = /bin/rm
 
-# All the directories needed to know where files should be (Can be changed)
+### Directories ###
+SRC_DIR := ./srcs
+INC_DIR := ./incs
+OBJ_DIR := ./.obj
 
-OBJDIR		= objects/
-SRCDIR		= srcs/parser/
-LFTDIR		= libft/
-INCDIR		= incs/ libft/incs/
+### SUB FILES ###
+SUB_DIRS := \
+	parser \
 
-# Source files (Can be changed)
 
-SRC			=	parser.c				misc.c				\
-				tokenizer.c				dynamic_arrays.c	\
-				parse_error.c			wordexp_tokenizer.c	\
-				wordexp_misc.c								\
+### INCLUDE SRC MAKEFILE ###
+include $(SRC_DIR)/sources.mk
 
-LFT			= $(LFTDIR)/libft.a
+### INCLUDE INC MAKEFILE ###
+include $(INC_DIR)/includes.mk
 
-# Some tricks in order to get the makefile doing his job the way I want (Can't be changed)
 
-CSRC		= $(addprefix $(SRCDIR), $(SRC))
-COBJ		= $(addprefix $(OBJDIR), $(OBJ))
-INCLUDES	= $(foreach include, $(INCDIR), -I$(include))
+### ALL SUB DIRS ###
+SRC_SUB_DIRS = $(addprefix $(SRC_DIR)/,$(SUB_DIRS))
+OBJ_SUB_DIRS = $(addprefix $(OBJ_DIR)/,$(SUB_DIRS))
+INC_SUB_DIRS = $(addprefix $(INC_DIR)/,$(SUB_DIRS))
 
-# How files should be compiled with set flags (Can be changed)
 
-CC			= gcc
-OBJ			= $(SRC:.c=.o)
-LIBS		= -L$(LFTDIR) -lft
-CFLAGS		= $(INCLUDES) -g3 
-#CFLAGS		= $(INCLUDES) -Wall -Wextra -Werror
-#CFLAGS		= $(INCLUDES) -Wall -Wextra -Werror -g3
-#CFLAGS		= $(INCLUDES) -Wall -Wextra -Werror -g3 -fsanitize=address
+### MAIN AND SUB FILES ###
+O_FILES = $(C_FILES:.c=.o)
 
-# Color codes
 
-RESET		= \033[0m
-GREEN		= \033[32m
-YELLOW		= \033[33m
+### Full Paths ###
+SRC = $(addprefix $(SRC_DIR)/,$(C_FILES))
+OBJ = $(addprefix $(OBJ_DIR)/,$(O_FILES))
+INC = $(addprefix $(INC_DIR)/,$(H_FILES))
 
-# Check if object directory exists, build libft and then the Project
 
-all: $(NAME)
+### Lib ###
+FT = ft
+FT_DIR = ./lib$(FT)
+FT_INC_DIR = $(FT_DIR)/incs
+FT_LNK = -L$(FT_DIR) -l$(FT)
 
-$(NAME): $(LFT) $(OBJDIR) $(COBJ)
-	@echo "$(YELLOW)\n      - Building $(RESET)$(NAME) $(YELLOW)...\n$(RESET)"
-	@$(CC) $(CFLAGS) $(LIBS) -o $(NAME) $(COBJ) $(LIBS)
+###  CC && FLAGS ###
+CC = clang -g
+DEBUG_FLAGS = -g3
+NO_WARNING ?= false
+ifeq ($(NO_WARNING), false)
+CFLAGS = \
+		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR)) \
+		 -Wall -Werror -Wextra
+else
+CFLAGS = \
+		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR))
+endif
+
+LFLAGS = -ltermcap \
+		 -lncurses \
+		 $(FT_LNK) \
+
+
+
+.PHONY: all clean fclean re
+
+all: init $(FT) $(NAME) bye_msg
+
+### Lib compil ###
+$(FT): | lib_msg
+	@make -sC $(FT_DIR)
+
+### Mkdir obj ###
+$(OBJ_DIR): | mkdir_msg
+	@mkdir -p $(OBJ_DIR) $(OBJ_SUB_DIRS)
+
+### Compilation ###
+.ONESHELL:
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC) $(MAKEFILE_LIST) | compil_msg
+	@echo "$(SCURSOR)$(YELLOW)\t- Compiling:$(RESET)$(@F) \c"
+	@$(CC) $(CFLAGS) -o $@ -c $<
+	@echo "$(RCURSOR)$(ERASEL)\c"
+
+### Link ###
+.ONESHELL:
+$(NAME): init $(OBJ_DIR) $(OBJ) $(INC) $(MAKEFILE_LIST) $(FT_DIR)/libft.a | link_msg
+	@echo "$(YELLOW)\t- Building $(RESET)$(NAME) $(YELLOW)...$(RESET) \c"
+	@$(CC) $(OBJ) $(LFLAGS) -o $(NAME)
 	@echo "$(GREEN)***   Project $(NAME) successfully compiled   ***\n$(RESET)"
 
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+### Clean ###
+$(FT)_clean: | lib_msg
+	@make -C $(FT_DIR) clean
 
-# Redefinition of implicit compilation rule to prompt some colors and file names during the said compilation
-
-$(OBJDIR)%.o: $(SRCDIR)%.c
-	@echo "$(YELLOW)      - Compiling :$(RESET)" $<
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-# Libft rules
-$(LFT):
-	@make -sC $(LFTDIR)
-
-# Deleting all .o files and then the directory where they were located
-
-clean:
+clean: $(FT)_clean | clean_msg
 	@echo "$(GREEN)***   Deleting all object from $(NAME)   ...   ***\n$(RESET)"
-	@rm -f $(COBJ)
+	$(RM) -rf $(OBJ_DIR)
 
-# Deleting the executable after cleaning up all .o files
+$(FT)_fclean: | lib_msg
+	@make -C $(FT_DIR) fclean
 
-fclean: clean
+fclean: $(FT)_fclean | fclean_msg
 	@echo "$(GREEN)***   Deleting executable file from $(NAME)   ...   ***\n$(RESET)"
-	@rm -f $(NAME)
+	$(RM) -rf $(OBJ_DIR)
+	$(RM) -rf $(NAME).dSYM
+	$(RM) -rf $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+init:
+	-@ sh ./.githooks/initme.sh 2>&- || true
+
+### INCLUDE TOOLS MAKEFILE ###
+include ./tools.mk

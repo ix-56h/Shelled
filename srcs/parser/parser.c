@@ -6,7 +6,7 @@
 /*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 02:56:03 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/21 18:31:48 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/08 15:44:39 by thdelmas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_node	*parse_program(char *s, t_tokens *cur)
 	t_node		*node;
 	t_node		*nod2;
 
+	(void)s;
 	node = NULL;
 	nod2 = NULL;
 	if ((node = parse_complete_commands(s, cur)))
@@ -36,6 +37,7 @@ t_node	*parse_complete_commands(char *s, t_tokens *cur)
 	t_node		*node;
 	t_node		*nod2;
 
+	(void)s;
 	node = NULL;
 	nod2 = NULL;
 	if ((node = parse_complete_command(s, cur)))
@@ -59,6 +61,7 @@ t_node	*parse_complete_command(char *s, t_tokens *cur)
 	t_node		*node;
 	t_node		*nod2;
 	
+	(void)s;
 	node = NULL;
 	nod2 = NULL;
 	if ((node = parse_list(s, cur)))
@@ -80,6 +83,7 @@ t_node	*parse_list(char *s, t_tokens *cur)
 	t_node		*nod2;
 	t_node		*nod3;
 
+	(void)s;
 	node = NULL;
 	nod2 = NULL;
 	nod3 = NULL;
@@ -100,6 +104,7 @@ t_node	*parse_and_or(char *s, t_tokens *cur)
 	t_node		*nod2;
 	t_tokens	tok;
 
+	(void)s;
 	node = NULL;
 	nod2 = NULL;
 	if ((node = parse_pipeline(s, cur)))
@@ -122,6 +127,7 @@ t_node	*parse_pipeline(char *s, t_tokens *cur)
 {
 	t_node		*node;
 
+	(void)s;
 	node = NULL;
 	if (cur->tok == TOK_BANG)
 	{
@@ -140,6 +146,7 @@ t_node	*parse_pipe_sequence(char *s, t_tokens *cur)
 	t_node		*nod2;
 	t_tokens	tok;
 
+	(void)s;
 	node = NULL;
 	nod2 = NULL;
 	if ((node = parse_command(s, cur)))
@@ -163,6 +170,7 @@ t_node	*parse_command(char *s, t_tokens *cur)
 	t_node	*node;
 	t_node	*nod2;
 
+	(void)s;
 	node = NULL;
 	nod2 = NULL;
 	if ((node = parse_simple_command(s, cur)))
@@ -181,6 +189,7 @@ t_node	*parse_compound_command(char *s, t_tokens *cur)
 {
 	t_node		*node;
 
+	(void)s;
 	node = NULL;
 	if ((node = parse_brace_group(s, cur)))
 		return (node);
@@ -203,6 +212,7 @@ t_node	*parse_subshell(char *s, t_tokens *cur)
 {
 	t_node		*node;
 
+	(void)s;
 	node = NULL;
 	if (cur->tok == TOK_LPAREN)
 	{
@@ -229,6 +239,7 @@ t_node	*parse_compound_list(char *s, t_tokens *cur)
 	t_node		*node;
 	t_node		*nod2;
 	
+	(void)s;
 	node = NULL;
 	nod2 = NULL;
 
@@ -245,6 +256,7 @@ t_node	*parse_term(char *s, t_tokens *cur)
 	t_node		*node;
 	t_node		*nod2;
 	
+	(void)s;
 	node = NULL;
 	nod2 = NULL;
 	if ((node = parse_and_or(s, cur)))
@@ -266,96 +278,136 @@ t_node	*parse_term(char *s, t_tokens *cur)
 
 t_node	*parse_for_clause(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_name(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
+	(void)s;
 	return (NULL);
 }
 
 t_node	*parse_in(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_wordlist(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_case_clause(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_case_list_ns(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_case_list(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_case_item_ns(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_case_item(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_pattern(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_if_clause(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_else_part(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_while_clause(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_until_clause(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_function_definition(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_function_body(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_fname(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_brace_group(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
 t_node	*parse_do_group(char *s, t_tokens *cur)
 {
+	(void)s;
+	(void)cur;
 	return (NULL);
 }
 
