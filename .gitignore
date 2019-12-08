@@ -1,6 +1,8 @@
 .*.swp
 *.txt
 a.out
+*.a
+21sh
 *.o
 tree.dot
 tree.png
