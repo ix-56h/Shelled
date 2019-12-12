@@ -121,8 +121,6 @@ int			is_special_char(t_chr_class chr_class, t_chr_class prev_class)
 	return (0);
 }
 
-
-
 t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 {
 	t_chr_class	chr_class = 0;

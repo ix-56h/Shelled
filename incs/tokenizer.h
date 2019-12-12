@@ -122,5 +122,6 @@ int			lex_match_dol(char *s, int *i, int *anchor);
 /*
 **	wordexp_misc.c
 */
+int			is_whitespace(char c);
 void		skip_whitespaces(char *s,int *i,int *a);
 #endif

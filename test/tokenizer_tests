@@ -1,5 +1,0 @@
-"`$(echo s)`"
-l"`$(echo s)`"
-"l`$(echo s)`"
-"l${s}"
-"l`echo ${s}`"

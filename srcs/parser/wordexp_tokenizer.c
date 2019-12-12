@@ -76,6 +76,15 @@ int		lex_match_command_sub(char *s, int *i, int *anchor)
 
 	close = (s[*i] == '`' ? '`' : ')');
 	increment_pointors(i, anchor);
+	if (is_whitespace(s[*i]))
+	{
+		skip_whitespaces(s, i, anchor);
+		if (s[*i] == '(')
+		{
+			if (!lex_match_command_sub(s, i, anchor))
+				return (0);
+		}
+	}
 	while (s[*i] && s[*i] != close)
 	{
 		if (s[*i] == '(' || s[*i] == '`')
