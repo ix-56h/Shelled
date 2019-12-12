@@ -20,6 +20,7 @@ int			lex_sequence(char *s, int *i, int *anchor)
 	int				ret = 0;
 	//ft_bzero(&stat, sizeof(t_wstat));
 	//cur = get_cur_seq(s, i, &stat);
+	printf("%i %s ma bite\n", ret, s+(*anchor));
 	if (s[*anchor] == '\'')
 		ret = lex_match_squote(s, i, anchor);
 	else if (s[*anchor] == '"')
@@ -28,7 +29,6 @@ int			lex_sequence(char *s, int *i, int *anchor)
 		ret = lex_match_command_sub(s, i, anchor);
 	else if (s[*anchor] == '$')
 		ret = lex_match_dol(s, i, anchor);
-	printf("%i ma bite\n", ret);
 	//printf("tokenization error at get end exp\n");
 	return (ret);
 }
@@ -78,7 +78,11 @@ int		lex_match_command_sub(char *s, int *i, int *anchor)
 	increment_pointors(i, anchor);
 	while (s[*i] && s[*i] != close)
 	{
-		//if (s[*i] == '\'' || s[*i] == '$' || s[*i] == '"')
+		if (s[*i] == '(' || s[*i] == '`')
+		{
+			if (!lex_match_command_sub(s, i, anchor))
+				return (0);
+		}
 		if (wexp_rules[BQU][s[*i]])
 		{
 			if (!lex_sequence(s, i, anchor))
@@ -101,11 +105,7 @@ int		lex_match_dol(char *s, int *i, int *anchor)
 		if (lex_match_command_sub(s, i, anchor))
 		{
 			skip_whitespaces(s, i, anchor);
-			if (s[*i] && s[*i] == ')')
-			{
-				increment_pointors(i, anchor);
-				return (1);
-			}
+			return (1);
 		}
 	}
 	else if (ft_isalpha(s[*i]) || s[*i] == '_')

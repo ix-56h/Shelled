@@ -136,7 +136,7 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 	{
 		if (is_special_char(chr_class, prev_class))
 		{
-		printf("%c\n", s[*i]);
+			printf("%c\n", s[*i]);
 			if (!lex_sequence(s, i, &anchor))
 				return (token_error(0, "blele2"));
 			continue;
