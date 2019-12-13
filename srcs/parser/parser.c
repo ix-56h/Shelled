@@ -110,7 +110,7 @@ t_node	*parse_and_or(char *s, t_tokens *cur)
 	if ((node = parse_pipeline(s, cur)))
 	{
 		while ((nod2 = parse_pipeline(s, cur)))
-			node = binnode(node, nod2, nod2->right);
+			node = binnode(node->left, node, nod2);
 		while ((tok = *cur).tok == TOK_AND_IF || tok.tok == TOK_OR_IF)
 		{
 			*cur = get_next_token(s);
@@ -422,9 +422,9 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 
 	if ((node = parse_cmd_prefix(s, cur)))
 	{
-		if ((nod2 = parse_cmd_word(s, cur)))
+		if (cur->tok == ASSIGNMENT_WORD && (nod2 = parse_cmd_word(s, cur)))
 		{
-			node = binnode(node, nod2, NULL);
+			node = binnode(node->left, node, nod2);
 			if ((nod2 = parse_cmd_suffix(s, cur)))
 				node = binnode(node, nod2, nod2->right);
 		}
@@ -439,7 +439,7 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 			*cur = get_next_token(s);
 		}
 		if ((nod2 = parse_cmd_suffix(s, cur)))
-			node = binnode(node, nod2, nod2->right);
+			node = binnode(node, nod2, nod2->left);
 		while (cur->tok == TOK_WORD)
 		{
 			push_args(args, cur->data);
@@ -510,7 +510,7 @@ t_node	*parse_cmd_prefix(char *s, t_tokens *cur)
 	}
 	else if ((nod2 = parse_io_redirect(s, cur)))
 	{
-		node = binnode(node, nod2, nod2->right);
+		return (nod2);
 	}
 	else
 		return (NULL);
@@ -538,7 +538,7 @@ t_node	*parse_cmd_suffix(char *s, t_tokens *cur)
 		//}
 	}
 	else if ((nod2 = parse_io_redirect(s, cur)))
-		node = binnode(node, nod2, nod2->right);
+		return (nod2);
 	else
 		return (NULL);
 	return (node);
@@ -554,7 +554,7 @@ t_node	*parse_redirect_list(char *s, t_tokens *cur)
 	if ((node = parse_io_redirect(s, cur)))
 	{
 		while ((nod2 = parse_io_redirect(s, cur)))
-			node = binnode(node, nod2, nod2->right);
+			node = binnode(nod2->left, nod2, node);
 	}
 	return (node);
 }
@@ -572,7 +572,6 @@ t_node	*parse_io_redirect(char *s, t_tokens *cur)
 		if ((node = parse_io_file(s, cur))
 			|| (node = parse_io_here(s, cur)))
 		{
-			node = binnode(NULL, node, node->right);
 			node->io = ft_atoi(tok.data);
 		}		
 	}
@@ -595,7 +594,7 @@ t_node	*parse_io_file(char *s, t_tokens *cur)
 	{
 		*cur = get_next_token(s);
 		if ((node = parse_filename(s, cur)))
-			node = save_node(NULL, tok, node, IO_REDIRECT);
+			node = save_node(node, tok, NULL, IO_REDIRECT);
 	}
 	return (node);
 }
@@ -642,7 +641,7 @@ t_node	*parse_io_here(char *s, t_tokens *cur)
 		node = save_node(NULL, *cur, NULL, DEFAULT_ID);
 		*cur = get_next_token(s);
 		if ((nod2 = parse_here_end(s, cur)))
-			node = binnode(NULL, node, nod2);
+			node = binnode(nod2, node, NULL);
 	}
 	return(node);
 }
