@@ -14,40 +14,51 @@
 
 t_flags		f;
 
+
 t_node	*parse_program(char *s, t_tokens *cur)
 {
 	t_node		*node;
 	t_node		*nod2;
+	t_int_stack	*stack;
 
+	if (!(stack = int_stack_creator(20)))
+		return (NULL);
 	(void)s;
 	node = NULL;
 	nod2 = NULL;
-	if ((node = parse_complete_commands(s, cur)))
+	if ((node = parse_complete_commands(s, cur, stack)))
 	{
-		if ((nod2 = parse_linebreak(s, cur)))
+		if ((nod2 = parse_linebreak(s, cur, stack)))
 			free(nod2);
 		else if (cur->tok != TOK_EOF)
 			node = NULL;
 	}
+	if (!is_int_empty(stack))
+	{
+		print_stack_errors(stack, cur);
+		return (NULL);
+	}
 	return (node);
 }
 
-t_node	*parse_complete_commands(char *s, t_tokens *cur)
+t_node	*parse_complete_commands(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_node		*nod2;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	(void)s;
 	node = NULL;
 	nod2 = NULL;
-	if ((node = parse_complete_command(s, cur)))
+	if ((node = parse_complete_command(s, cur, stack)))
 	{
-		while ((nod2 = parse_complete_command(s, cur)))
+		while ((nod2 = parse_complete_command(s, cur, stack)))
 			node = binnode(node->left, node, nod2);
-		if ((nod2 = parse_newline_list(s, cur)))
+		if ((nod2 = parse_newline_list(s, cur, stack)))
 		{
 			free(nod2);
-			if ((nod2 = parse_complete_command(s, cur)))
+			if ((nod2 = parse_complete_command(s, cur, stack)))
 				node = binnode(node, nod2, NULL);
 			else
 				node = NULL;
@@ -56,65 +67,71 @@ t_node	*parse_complete_commands(char *s, t_tokens *cur)
 	return (node);
 }
 
-t_node	*parse_complete_command(char *s, t_tokens *cur)
+t_node	*parse_complete_command(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_node		*nod2;
 	
+	if (!is_int_empty(stack))
+		return (NULL);
 	(void)s;
 	node = NULL;
 	nod2 = NULL;
-	if ((node = parse_list(s, cur)))
+	if ((node = parse_list(s, cur, stack)))
 	{
-		while ((nod2 = parse_list(s, cur)))
+		while ((nod2 = parse_list(s, cur, stack)))
 		{
 			printf("while parselist here\n");
 			node = binnode(node, nod2, nod2->right);
 		}
-		if ((nod2 = parse_separator_op(s, cur)))
+		if ((nod2 = parse_separator_op(s, cur, stack)))
 			node = binnode(node, nod2, nod2->right);
 	}
 	return (node);
 }
 
-t_node	*parse_list(char *s, t_tokens *cur)
+t_node	*parse_list(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_node		*nod2;
 	t_node		*nod3;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	(void)s;
 	node = NULL;
 	nod2 = NULL;
 	nod3 = NULL;
-	if ((node = parse_and_or(s, cur)))
+	if ((node = parse_and_or(s, cur, stack)))
 	{
-		while ((nod2 = parse_separator_op(s, cur)))
+		while ((nod2 = parse_separator_op(s, cur, stack)))
 		{
-			if ((nod3 = parse_and_or(s, cur)))
+			if ((nod3 = parse_and_or(s, cur, stack)))
 				node = binnode(node, nod2, nod3);
 		}
 	}
 	return (node);
 }
 
-t_node	*parse_and_or(char *s, t_tokens *cur)
+t_node	*parse_and_or(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_node		*nod2;
 	t_tokens	tok;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	(void)s;
 	node = NULL;
 	nod2 = NULL;
-	if ((node = parse_pipeline(s, cur)))
+	if ((node = parse_pipeline(s, cur, stack)))
 	{
-		while ((nod2 = parse_pipeline(s, cur)))
+		while ((nod2 = parse_pipeline(s, cur, stack)))
 			node = binnode(node, nod2, nod2->right);
 		while ((tok = *cur).tok == TOK_AND_IF || tok.tok == TOK_OR_IF)
 		{
 			*cur = get_next_token(s);
-			if ((nod2 = parse_pipeline(s, cur)))
+			if ((nod2 = parse_pipeline(s, cur, stack)))
 				node = save_node(node, tok, nod2, 5);
 			else
 				node = NULL;
@@ -123,39 +140,43 @@ t_node	*parse_and_or(char *s, t_tokens *cur)
 	return (node);
 }
 
-t_node	*parse_pipeline(char *s, t_tokens *cur)
+t_node	*parse_pipeline(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	(void)s;
 	node = NULL;
 	if (cur->tok == TOK_BANG)
 	{
-		if ((node = parse_pipe_sequence(s, cur)))
+		if ((node = parse_pipe_sequence(s, cur, stack)))
 			node = save_node(node, *cur, NULL, 4);
 		*cur = get_next_token(s);
 	}
 	else
-		node = parse_pipe_sequence(s, cur);
+		node = parse_pipe_sequence(s, cur, stack);
 	return (node);
 }
 
-t_node	*parse_pipe_sequence(char *s, t_tokens *cur)
+t_node	*parse_pipe_sequence(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_node		*nod2;
 	t_tokens	tok;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	(void)s;
 	node = NULL;
 	nod2 = NULL;
-	if ((node = parse_command(s, cur)))
+	if ((node = parse_command(s, cur, stack)))
 	{
 		tok = *cur;
 		while (tok.tok == TOK_PIPE)
 		{
 			*cur = get_next_token(s);
-			if ((nod2 = parse_command(s, cur)))
+			if ((nod2 = parse_command(s, cur, stack)))
 				node = save_node(node, tok, nod2, 3);
 			else
 				node = NULL;
@@ -165,59 +186,65 @@ t_node	*parse_pipe_sequence(char *s, t_tokens *cur)
 	return (node);
 }
 
-t_node	*parse_command(char *s, t_tokens *cur)
+t_node	*parse_command(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node	*node;
 	t_node	*nod2;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	(void)s;
 	node = NULL;
 	nod2 = NULL;
-	if ((node = parse_simple_command(s, cur)))
+	if ((node = parse_simple_command(s, cur, stack)))
 		return (node);
-	else if ((node = parse_compound_command(s, cur)))
+	else if ((node = parse_compound_command(s, cur, stack)))
 	{
-		if ((nod2 = parse_redirect_list(s, cur)))
+		if ((nod2 = parse_redirect_list(s, cur, stack)))
 			node = binnode(node, nod2, nod2->right);
 	}
 	else
-		node = parse_function_definition(s, cur);
+		node = parse_function_definition(s, cur, stack);
 	return (node);
 }
 
-t_node	*parse_compound_command(char *s, t_tokens *cur)
+t_node	*parse_compound_command(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	(void)s;
 	node = NULL;
-	if ((node = parse_brace_group(s, cur)))
+	if ((node = parse_brace_group(s, cur, stack)))
 		return (node);
-	else if ((node = parse_subshell(s, cur)))
+	else if ((node = parse_subshell(s, cur, stack)))
 		return (node);
-	else if ((node = parse_for_clause(s, cur)))
+	else if ((node = parse_for_clause(s, cur, stack)))
 		return (node);
-	else if ((node = parse_case_clause(s, cur)))
+	else if ((node = parse_case_clause(s, cur, stack)))
 		return (node);
-	else if ((node = parse_if_clause(s, cur)))
+	else if ((node = parse_if_clause(s, cur, stack)))
 		return (node);
-	else if ((node = parse_while_clause(s, cur)))
+	else if ((node = parse_while_clause(s, cur, stack)))
 		return (node);
-	else if ((node = parse_until_clause(s, cur)))
+	else if ((node = parse_until_clause(s, cur, stack)))
 		return (node);
 	return (node);
 }
 
-t_node	*parse_subshell(char *s, t_tokens *cur)
+t_node	*parse_subshell(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	(void)s;
 	node = NULL;
 	if (cur->tok == TOK_LPAREN)
 	{
 		*cur = get_next_token(s);
-		if ((node = parse_compound_list(s, cur)))
+		if ((node = parse_compound_list(s, cur, stack)))
 		{
 			if (cur->tok == TOK_RPAREN)
 			{
@@ -234,56 +261,60 @@ t_node	*parse_subshell(char *s, t_tokens *cur)
 	return (node);
 }
 
-t_node	*parse_compound_list(char *s, t_tokens *cur)
+t_node	*parse_compound_list(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_node		*nod2;
 	
+	if (!is_int_empty(stack))
+		return (NULL);
 	(void)s;
 	node = NULL;
 	nod2 = NULL;
 
-	if ((node = parse_term(s, cur)))
+	if ((node = parse_term(s, cur, stack)))
 	{
-		if ((nod2 = parse_separator(s, cur)))
+		if ((nod2 = parse_separator(s, cur, stack)))
 			node = binnode(node, nod2, nod2->left);
 	}
 	return (node);
 }
 
-t_node	*parse_term(char *s, t_tokens *cur)
+t_node	*parse_term(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_node		*nod2;
 	
+	if (!is_int_empty(stack))
+		return (NULL);
 	(void)s;
 	node = NULL;
 	nod2 = NULL;
-	if ((node = parse_and_or(s, cur)))
+	if ((node = parse_and_or(s, cur, stack)))
 	{
 		// trouver une commande shell qui fait passer dans le while
-		while ((nod2 = parse_and_or(s, cur)))
+		while ((nod2 = parse_and_or(s, cur, stack)))
 		{
 			node = binnode(node, nod2, nod2->left);
 		}
 	}
-	if (node && (nod2 = parse_separator(s, cur)))
+	if (node && (nod2 = parse_separator(s, cur, stack)))
 	{
 		node = binnode(node, nod2, nod2->right);
-		if ((nod2 = parse_and_or(s, cur)))
+		if ((nod2 = parse_and_or(s, cur, stack)))
 			node = binnode(node->left, node, nod2);
 	}
 	return (node);
 }
 
-t_node	*parse_for_clause(char *s, t_tokens *cur)
+t_node	*parse_for_clause(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_name(char *s, t_tokens *cur)
+t_node	*parse_name(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
@@ -291,7 +322,7 @@ t_node	*parse_name(char *s, t_tokens *cur)
 	return (NULL);
 }
 
-t_node	*parse_in(char *s, t_tokens *cur)
+t_node	*parse_in(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)s;
@@ -299,137 +330,139 @@ t_node	*parse_in(char *s, t_tokens *cur)
 	return (NULL);
 }
 
-t_node	*parse_wordlist(char *s, t_tokens *cur)
+t_node	*parse_wordlist(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_case_clause(char *s, t_tokens *cur)
+t_node	*parse_case_clause(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_case_list_ns(char *s, t_tokens *cur)
+t_node	*parse_case_list_ns(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_case_list(char *s, t_tokens *cur)
+t_node	*parse_case_list(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_case_item_ns(char *s, t_tokens *cur)
+t_node	*parse_case_item_ns(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_case_item(char *s, t_tokens *cur)
+t_node	*parse_case_item(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_pattern(char *s, t_tokens *cur)
+t_node	*parse_pattern(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_if_clause(char *s, t_tokens *cur)
+t_node	*parse_if_clause(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_else_part(char *s, t_tokens *cur)
+t_node	*parse_else_part(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_while_clause(char *s, t_tokens *cur)
+t_node	*parse_while_clause(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_until_clause(char *s, t_tokens *cur)
+t_node	*parse_until_clause(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_function_definition(char *s, t_tokens *cur)
+t_node	*parse_function_definition(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_function_body(char *s, t_tokens *cur)
+t_node	*parse_function_body(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_fname(char *s, t_tokens *cur)
+t_node	*parse_fname(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_brace_group(char *s, t_tokens *cur)
+t_node	*parse_brace_group(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_do_group(char *s, t_tokens *cur)
+t_node	*parse_do_group(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	(void)s;
 	(void)cur;
 	return (NULL);
 }
 
-t_node	*parse_simple_command(char *s, t_tokens *cur)
+t_node	*parse_simple_command(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node	*node;
 	t_node	*nod2;
 	t_node	*args;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	node = NULL;
 	nod2 = NULL;
 
-	if ((node = parse_cmd_prefix(s, cur)))
+	if ((node = parse_cmd_prefix(s, cur, stack)))
 	{
-		if ((nod2 = parse_cmd_word(s, cur)))
+		if ((nod2 = parse_cmd_word(s, cur, stack)))
 		{
 			node = binnode(node, nod2, NULL);
-			if ((nod2 = parse_cmd_suffix(s, cur)))
+			if ((nod2 = parse_cmd_suffix(s, cur, stack)))
 				node = binnode(node, nod2, nod2->right);
 		}
 	}
-	else if ((node = parse_cmd_name(s, cur)))
+	else if ((node = parse_cmd_name(s, cur, stack)))
 	{
 		args = node;
 		while (cur->tok == TOK_WORD)
@@ -438,7 +471,7 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 			//free
 			*cur = get_next_token(s);
 		}
-		if ((nod2 = parse_cmd_suffix(s, cur)))
+		if ((nod2 = parse_cmd_suffix(s, cur, stack)))
 			node = binnode(node, nod2, nod2->right);
 		while (cur->tok == TOK_WORD)
 		{
@@ -450,11 +483,13 @@ t_node	*parse_simple_command(char *s, t_tokens *cur)
 	return (node);
 }
 
-t_node	*parse_cmd_name(char *s, t_tokens *cur)
+t_node	*parse_cmd_name(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_tokens	tok;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	node = NULL;
 	if (cur->tok == TOK_WORD)
 	{
@@ -473,11 +508,13 @@ t_node	*parse_cmd_name(char *s, t_tokens *cur)
 	return(node);
 }
 
-t_node	*parse_cmd_word(char *s, t_tokens *cur)
+t_node	*parse_cmd_word(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	char		*s2;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	s2 = cur->data;
 	node = NULL;
 	if (cur->tok == TOK_WORD)
@@ -488,12 +525,14 @@ t_node	*parse_cmd_word(char *s, t_tokens *cur)
 	return(node);
 }
 
-t_node	*parse_cmd_prefix(char *s, t_tokens *cur)
+t_node	*parse_cmd_prefix(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_node		*nod2;
 	t_tokens	tok;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	node = NULL;
 	nod2 = NULL;
 	tok = *cur;
@@ -508,7 +547,7 @@ t_node	*parse_cmd_prefix(char *s, t_tokens *cur)
 			*cur = get_next_token(s);
 		}
 	}
-	else if ((nod2 = parse_io_redirect(s, cur)))
+	else if ((nod2 = parse_io_redirect(s, cur, stack)))
 	{
 		node = binnode(node, nod2, nod2->right);
 	}
@@ -517,12 +556,14 @@ t_node	*parse_cmd_prefix(char *s, t_tokens *cur)
 	return (node);
 }
 
-t_node	*parse_cmd_suffix(char *s, t_tokens *cur)
+t_node	*parse_cmd_suffix(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_node		*nod2;
 	t_tokens	tok;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	node = NULL;
 	nod2 = NULL;
 	tok = *cur;
@@ -537,56 +578,62 @@ t_node	*parse_cmd_suffix(char *s, t_tokens *cur)
 			//free
 		//}
 	}
-	else if ((nod2 = parse_io_redirect(s, cur)))
+	else if ((nod2 = parse_io_redirect(s, cur, stack)))
 		node = binnode(node, nod2, nod2->right);
 	else
 		return (NULL);
 	return (node);
 }
 
-t_node	*parse_redirect_list(char *s, t_tokens *cur)
+t_node	*parse_redirect_list(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_node		*nod2;
 	
+	if (!is_int_empty(stack))
+		return (NULL);
 	node = NULL;
 	nod2 = NULL;
-	if ((node = parse_io_redirect(s, cur)))
+	if ((node = parse_io_redirect(s, cur, stack)))
 	{
-		while ((nod2 = parse_io_redirect(s, cur)))
+		while ((nod2 = parse_io_redirect(s, cur, stack)))
 			node = binnode(node, nod2, nod2->right);
 	}
 	return (node);
 }
 
-t_node	*parse_io_redirect(char *s, t_tokens *cur)
+t_node	*parse_io_redirect(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_tokens	tok;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	node = NULL;
 	tok = *cur;
 	if (tok.tok == TOK_IO_NUMBER)
 	{
 		*cur = get_next_token(s);
-		if ((node = parse_io_file(s, cur))
-			|| (node = parse_io_here(s, cur)))
+		if ((node = parse_io_file(s, cur, stack))
+			|| (node = parse_io_here(s, cur, stack)))
 		{
 			node = binnode(NULL, node, node->right);
 			node->io = ft_atoi(tok.data);
 		}		
 	}
-	else if ((node = parse_io_file(s, cur))
-			|| (node = parse_io_here(s, cur)))
+	else if ((node = parse_io_file(s, cur, stack))
+			|| (node = parse_io_here(s, cur, stack)))
 		return (node);
 	return (node);
 }
 
-t_node	*parse_io_file(char *s, t_tokens *cur)
+t_node	*parse_io_file(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_tokens	tok;
 	
+	if (!is_int_empty(stack))
+		return (NULL);
 	node = NULL;
 	tok = *cur;
 	if (tok.tok == TOK_LREDI || tok.tok == TOK_LESSAND || tok.tok == TOK_RREDI
@@ -594,19 +641,26 @@ t_node	*parse_io_file(char *s, t_tokens *cur)
 		|| tok.tok == TOK_CLOBBER)
 	{
 		*cur = get_next_token(s);
-		if ((node = parse_filename(s, cur)))
+		if ((node = parse_filename(s, cur, stack)))
 			node = save_node(NULL, tok, node, IO_REDIRECT);
+		else
+		{
+			int_push(stack, PARSE_ERROR_NEAR);
+			return (NULL);
+		}
 	}
 	return (node);
 }
 
-t_node	*parse_filename(char *s, t_tokens *cur)
+t_node	*parse_filename(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	//t_node		*nod2;
 	//t_node		*first;
 	t_tokens	tok;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	node = NULL;
 	//first = NULL;
 	//nod2 = NULL;
@@ -629,29 +683,33 @@ t_node	*parse_filename(char *s, t_tokens *cur)
 	return(node);
 }
 
-t_node	*parse_io_here(char *s, t_tokens *cur)
+t_node	*parse_io_here(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_node		*nod2;
 	t_tokens	tok;
 	
+	if (!is_int_empty(stack))
+		return (NULL);
 	node = NULL;
 	nod2 = NULL;
 	if (cur->tok == TOK_DLESS || cur->tok == TOK_DLESSDASH)
 	{
 		node = save_node(NULL, *cur, NULL, DEFAULT_ID);
 		*cur = get_next_token(s);
-		if ((nod2 = parse_here_end(s, cur)))
+		if ((nod2 = parse_here_end(s, cur, stack)))
 			node = binnode(NULL, node, nod2);
 	}
 	return(node);
 }
 
-t_node	*parse_here_end(char *s, t_tokens *cur)
+t_node	*parse_here_end(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_tokens	tok;
 	
+	if (!is_int_empty(stack))
+		return (NULL);
 	node = NULL;
 	// rule 3  -> applie quote removal for get the true delimiter
 	if (cur->tok == TOK_WORD)
@@ -662,11 +720,13 @@ t_node	*parse_here_end(char *s, t_tokens *cur)
 	return(node);
 }
 
-t_node	*parse_newline_list(char *s, t_tokens *cur)
+t_node	*parse_newline_list(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_tokens	tok;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	node = NULL;
 	if (cur->tok == TOK_NEWLINE)
 	{
@@ -680,24 +740,28 @@ t_node	*parse_newline_list(char *s, t_tokens *cur)
 	return (node);
 }
 
-t_node	*parse_linebreak(char *s, t_tokens *cur)
+t_node	*parse_linebreak(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_tokens	tok;
 	
+	if (!is_int_empty(stack))
+		return (NULL);
 	node = NULL;
 	if (cur->tok == TOK_NEWLINE)
-		node = parse_newline_list(s, cur);
+		node = parse_newline_list(s, cur, stack);
 	else if (cur->tok == TOK_EOF)
 		node = save_node(NULL, *cur, NULL, 0);
 	return (node);
 }
 
-t_node	*parse_separator_op(char *s, t_tokens *cur)
+t_node	*parse_separator_op(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_tokens	tok;
 
+	if (!is_int_empty(stack))
+		return (NULL);
 	node = NULL;
 	tok = *cur;
 	if (tok.tok == TOK_AND || tok.tok == TOK_SEMI)
@@ -708,35 +772,39 @@ t_node	*parse_separator_op(char *s, t_tokens *cur)
 	return (node);
 }
 
-t_node	*parse_separator(char *s, t_tokens *cur)
+t_node	*parse_separator(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	
+	if (!is_int_empty(stack))
+		return (NULL);
 	node = NULL;
-	if ((node = parse_separator_op(s, cur)))
+	if ((node = parse_separator_op(s, cur, stack)))
 		return (node);
-	else if ((node = parse_newline_list(s, cur)))
+	else if ((node = parse_newline_list(s, cur, stack)))
 		return (node);
 	return (node);
 }
 
-t_node	*parse_sequential_sep(char *s, t_tokens *cur)
+t_node	*parse_sequential_sep(char *s, t_tokens *cur, t_int_stack *stack)
 {
 	t_node		*node;
 	t_tokens	tok;
 	
+	if (!is_int_empty(stack))
+		return (NULL);
 	node = NULL;
 	tok = *cur;
 	if (tok.tok == TOK_SEMI)
 	{
 		*cur = get_next_token(s);
-		if ((node = parse_linebreak(s, cur)))
+		if ((node = parse_linebreak(s, cur, stack)))
 		{
 			free(node);
 			node = save_node(NULL, tok, NULL, 0);
 		}
 	}
-	else if ((node = parse_newline_list(s, cur)))
+	else if ((node = parse_newline_list(s, cur, stack)))
 	{
 		free(node);
 		node = save_node(NULL, tok, NULL, 0);

@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "error_handler.h"
 
 void	 free_ast(void)
 {
@@ -11,6 +12,12 @@ void	parse_error(int type)
 		printf("error\n");
 }
 
+void	print_stack_errors(t_int_stack *stack, t_tokens *cur)
+{
+	printf("%s", G_ERROR_MSGS[int_peek(stack)]);
+	printf("%s'\n", cur->data);
+	int_pop(stack);
+}
 
 /*
 t_node	*parse_subshell(char *s, t_tokens *cur)

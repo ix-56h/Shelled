@@ -1,10 +1,11 @@
 # IMPORTANT
 X			Error handler
+			all functions on parser have the stack in argument, need to make a if on all parse functions begin
+
 X			Check assignment_word 
 				- Need to check for the 7b rule if the current word is the first or not
 X			Rewrite tokenizer and process tokens as described in , don't forget all process during tokenization and after (alias, expansion etc):
 			https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_03
-X			need to solve $a$($a)
 
 # Important notes
 The WORD tokens shall have the word expansion rules applied to them immediately before the associated command is executed, not at the time the command is parsed.
@@ -18,7 +19,6 @@ X			need see 7b rule in misc.c
 X			here documents
 
 
-X			Why not try to use binary mask for squote and dquote struct, with a definem, i could check if is a quoted word like : IS_QUOTED(cur->quoted) or IS_DQUOTED(cur->quoted) or IS_SQUOTE(cur->quoted) (not really usefull)
 X			check for this command
 cat /etc/passwd | tr : # | tr -s abcdefghijklmnopqrstuvwxyz| cut -c 2 | grep -e a -e b -e\
  c -e d -e e -e f -e g -e h -e i -e j -e k -e l -e m -e n -e o -e p -e q -e r -e s -e \

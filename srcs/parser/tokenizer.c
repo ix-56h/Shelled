@@ -12,6 +12,7 @@
 
 #include "tokenizer.h"
 #include "tokenizer_rules.h"
+#include "stack.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
