@@ -11,25 +11,23 @@
 /* ************************************************************************** */
 
 #include "tokenizer.h"
+#include "parser.h"
 #include "wexp_rules.h"
 #include "libft.h"
+#include "stack.h"
 
-int			lex_sequence(char *s, int *i, int *anchor)
+int			lex_sequence(char *s, int *i, int *anchor, t_stack *stack)
 {
 	//t_wstat		stat;
 	int				ret = 0;
-	//ft_bzero(&stat, sizeof(t_wstat));
-	//cur = get_cur_seq(s, i, &stat);
-	printf("%i %s ma bite\n", ret, s+(*anchor));
 	if (s[*anchor] == '\'')
-		ret = lex_match_squote(s, i, anchor);
+		ret = lex_match_squote(s, i, anchor, stack);
 	else if (s[*anchor] == '"')
-		ret = lex_match_dquote(s, i, anchor);
+		ret = lex_match_dquote(s, i, anchor, stack);
 	else if (s[*anchor] == '`')
-		ret = lex_match_command_sub(s, i, anchor);
+		ret = lex_match_command_sub(s, i, anchor, stack);
 	else if (s[*anchor] == '$')
-		ret = lex_match_dol(s, i, anchor);
-	//printf("tokenization error at get end exp\n");
+		ret = lex_match_dol(s, i, anchor, stack);
 	return (ret);
 }
 
@@ -39,18 +37,21 @@ void		increment_pointors(int *i, int *a)
 	(*a)++;
 }
 
-int			lex_match_squote(char *s, int *i, int *anchor)
+int			lex_match_squote(char *s, int *i, int *anchor, t_stack *stack)
 {
 	increment_pointors(i, anchor);
 	while (s[*i] && s[*i] != '\'')
 		increment_pointors(i, anchor);
 	if (s[*anchor] != '\'')
+	{
+		error_push(stack, UNEXPECTED_EOF, *anchor, '\'');
 		return (0);
+	}
 	increment_pointors(i, anchor);
 	return (1);
 }
 
-int		lex_match_dquote(char *s, int *i, int *anchor)
+int		lex_match_dquote(char *s, int *i, int *anchor, t_stack *stack)
 {
 	increment_pointors(i, anchor);
 	while (s[*i] && s[*i] != '"')
@@ -58,19 +59,22 @@ int		lex_match_dquote(char *s, int *i, int *anchor)
 		//if (s[*i] == '\'' || s[*i] == '$' || s[*i] == '`')
 		if (wexp_rules[DQU][s[*i]])
 		{
-			if (!lex_sequence(s, i, anchor))
+			if (!lex_sequence(s, i, anchor, stack))
 				return (0);
 			continue;
 		}
 		increment_pointors(i, anchor);
 	}
 	if (s[*anchor] != '"')
+	{
+		error_push(stack, UNEXPECTED_EOF, *anchor, '"');
 		return (0);
+	}
 	increment_pointors(i, anchor);
 	return (1);
 }
 
-int		lex_match_command_sub(char *s, int *i, int *anchor)
+int		lex_match_command_sub(char *s, int *i, int *anchor, t_stack *stack)
 {
 	char	close;
 
@@ -81,7 +85,7 @@ int		lex_match_command_sub(char *s, int *i, int *anchor)
 		skip_whitespaces(s, i, anchor);
 		if (s[*i] == '(')
 		{
-			if (!lex_match_command_sub(s, i, anchor))
+			if (!lex_match_command_sub(s, i, anchor, stack))
 				return (0);
 		}
 	}
@@ -89,29 +93,32 @@ int		lex_match_command_sub(char *s, int *i, int *anchor)
 	{
 		if (s[*i] == '(' || s[*i] == '`')
 		{
-			if (!lex_match_command_sub(s, i, anchor))
+			if (!lex_match_command_sub(s, i, anchor, stack))
 				return (0);
 		}
 		if (wexp_rules[BQU][s[*i]])
 		{
-			if (!lex_sequence(s, i, anchor))
+			if (!lex_sequence(s, i, anchor, stack))
 				return (0);
 			continue;
 		}
 		increment_pointors(i, anchor);
 	}
 	if (s[*anchor] != close)
+	{
+		error_push(stack, UNEXPECTED_EOF, *anchor, close);
 		return (0);
+	}
 	increment_pointors(i, anchor);
 	return (1);
 }
 
-int		lex_match_dol(char *s, int *i, int *anchor)
+int		lex_match_dol(char *s, int *i, int *anchor, t_stack *stack)
 {
 	increment_pointors(i, anchor);
 	if (s[*i] == '(')
 	{
-		if (lex_match_command_sub(s, i, anchor))
+		if (lex_match_command_sub(s, i, anchor, stack))
 		{
 			skip_whitespaces(s, i, anchor);
 			return (1);

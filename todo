@@ -10,6 +10,7 @@ X			Rewrite tokenizer and process tokens as described in , don't forget all proc
 # Important notes
 The WORD tokens shall have the word expansion rules applied to them immediately before the associated command is executed, not at the time the command is parsed.
 
+X	need to refactor code (wordexp_tokenizer.c need to be refactored, all usage of *i *anchor need to be reviewed)
 
 # OTHERS
 O			Redirections like ">> toto ls"

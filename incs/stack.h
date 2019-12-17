@@ -4,23 +4,32 @@
 
 enum	e_state_error{
 	EMPTY,
+	UNEXPECTED_EOF,
 	UNCLOSED_SEQUENCE,
 	UNRECOGNIZED_CHAR,
 	UNRECOGNIZED_TOKEN,
 	PARSE_ERROR_NEAR
 };
 
-typedef struct		s_int_stack
+typedef struct		s_staterror
+{
+	int				type;
+	int				line;
+	int				anchor;
+	char			character;
+}					t_staterror;
+
+typedef struct		s_stack
 {
 	int			top;
-	int			*ar;
+	void		*ar;
 	unsigned	capacity;
-}				t_int_stack;
+}				t_stack;
 
-t_int_stack		*int_stack_creator(unsigned capacity);
-int				is_int_full(t_int_stack *stack);
-int				is_int_empty(t_int_stack *stack);
-int				int_push(t_int_stack *stack, int item);
-int				int_pop(t_int_stack *stack);
-int				int_peek(t_int_stack *stack);
+t_stack			*stack_creator(unsigned capacity, size_t size);
+int				is_int_full(t_stack *stack);
+int				is_int_empty(t_stack *stack);
+int				int_push(t_stack *stack, int item);
+int				int_pop(t_stack *stack);
+int				int_peek(t_stack *stack);
 #endif

@@ -12,6 +12,7 @@
 
 #ifndef FT_TOK_H
 # define FT_TOK_H
+#include "stack.h"
 #include "libft.h"
 
 typedef enum	e_toktype {
@@ -102,21 +103,21 @@ typedef struct		s_tokens {
 	char			*data;
 }					t_tokens;
 
-t_tokens		get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class);
+t_tokens		get_token(char *s, int *i, t_chr_class chr_class, t_stack *stack);
 void			ignore_chr_class(char *s, int *i, t_chr_class chr_class);
 int				is_opening_class(t_chr_class chr_class);
 t_tokens		save_token(char *s, int anchor, t_toktype toktype);
-t_tokens		get_next_token(char *s);
+t_tokens		get_next_token(char *s, t_stack *stack);
 unsigned int	get_end_exp(char *s, int *i);
 
 /*
 **	wordexp_tokenizer.c
 */
-int			lex_sequence(char *s, int *i, int *anchor);
-int			lex_match_squote(char *s, int *i, int *anchor);
-int			lex_match_dquote(char *s, int *i, int *anchor);
-int			lex_match_command_sub(char *s, int *i, int *anchor);
-int			lex_match_dol(char *s, int *i, int *anchor);
+int			lex_sequence(char *s, int *i, int *anchor, t_stack *stack);
+int			lex_match_squote(char *s, int *i, int *anchor, t_stack *stack);
+int			lex_match_dquote(char *s, int *i, int *anchor, t_stack *stack);
+int			lex_match_command_sub(char *s, int *i, int *anchor, t_stack *stack);
+int			lex_match_dol(char *s, int *i, int *anchor, t_stack *stack);
 
 /*
 **	wordexp_misc.c
