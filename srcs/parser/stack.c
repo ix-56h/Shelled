@@ -38,14 +38,14 @@ int			int_push(t_stack *stack, int item)
 int			int_pop(t_stack *stack)
 {
 	if (is_int_empty(stack))
-		return (EMPTY);
+		return (0);
 	return (((int*)stack->ar)[stack->top--]);
 }
 
 int			int_peek(t_stack *stack)
 {
 	if (is_int_empty(stack))
-		return (EMPTY);
+		return (0);
 	return (((int*)stack->ar)[stack->top]);
 }
 

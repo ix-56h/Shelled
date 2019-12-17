@@ -166,7 +166,7 @@ t_tokens	get_next_token(char *s, t_stack *stack)
 	if (s[i] == '\0')
 		return (save_token(NULL, 0, TOK_EOF));
 	if (!(chr_class = get_chr_class[(unsigned char)s[i]]))
-		return (token_error(UNRECOGNIZED_CHAR, "unexpected character"));
+		return (token_error(UNRECOGNIZED_TOKEN, "unexpected character"));
 	if (chr_class == CHR_COMMENT || chr_class == CHR_SP)
 	{
 		ignore_chr_class(s, &i, chr_class);
