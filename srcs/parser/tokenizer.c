@@ -29,7 +29,6 @@ t_tokens	token_error(int terr, const char *s)
 
 	new.data = NULL;
 	new.tok = TOK_ERROR;
-	printf(": %s\n", s);
 	return (new);
 }
 
@@ -121,22 +120,28 @@ int			is_special_char(t_chr_class chr_class, t_chr_class prev_class)
 	return (0);
 }
 
-t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
+t_tokens	get_token(char *s, int *i, t_chr_class chr_class, t_stack *stack)
 {
-	t_chr_class	chr_class = 0;
+	t_chr_class	prev_class = chr_class;
 	int			anchor = 0;
+	t_toktype	toktype = get_tok_type[prev_class];
 
-	chr_class = get_chr_class[(unsigned char)s[*i]];
-	if (is_special_char(chr_class, prev_class) && lex_sequence(s, i, &anchor) == 0)
+	//chr_class = get_chr_class[(unsigned char)s[*i]];
+	if (is_special_char(chr_class, prev_class) && lex_sequence(s, i, &anchor, stack) == 0)
+	{
+		//int_push(stack, UNCLOSED_SEQUENCE);
 		return (token_error(0, "blele1"));
+	}
 	while (s[*i] && (token_chr_rules[toktype][(chr_class = get_chr_class[(unsigned char)s[*i]])]
 				|| prev_class == CHR_ESCAPE))
 	{
 		if (is_special_char(chr_class, prev_class))
 		{
-			printf("%c\n", s[*i]);
-			if (!lex_sequence(s, i, &anchor))
+			if (!lex_sequence(s, i, &anchor, stack))
+			{
+				//int_push(stack, UNCLOSED_SEQUENCE);
 				return (token_error(0, "blele2"));
+			}
 			continue;
 		}
 		(toktype == TOK_WORD && prev_class != CHR_ESCAPE && s[*i] == '=') ? (toktype = TOK_ASSIGNMENT_WORD) : 0;
@@ -151,7 +156,7 @@ t_tokens	get_token(char *s, int *i, t_toktype toktype, t_chr_class prev_class)
 	return (save_token(s + (*i - anchor), anchor, toktype));
 }
 
-t_tokens	get_next_token(char *s)
+t_tokens	get_next_token(char *s, t_stack *stack)
 {
 	t_chr_class		chr_class = 0;
 	t_toktype		toktype = 0;
@@ -161,16 +166,17 @@ t_tokens	get_next_token(char *s)
 	if (s[i] == '\0')
 		return (save_token(NULL, 0, TOK_EOF));
 	if (!(chr_class = get_chr_class[(unsigned char)s[i]]))
-		return (token_error(UNRECOGNIZED_CHAR, "unexpected character"));
+		return (token_error(UNRECOGNIZED_TOKEN, "unexpected character"));
 	if (chr_class == CHR_COMMENT || chr_class == CHR_SP)
 	{
 		ignore_chr_class(s, &i, chr_class);
-		return (get_next_token(s));
+		return (get_next_token(s, stack));
 	}
 	if (!(toktype = get_tok_type[chr_class]))
 		return (token_error(UNRECOGNIZED_TOKEN, "unrecognized token"));
-	if ((token = get_token(s, &i, toktype, chr_class)).tok == TOK_ERROR)
-		return (token);
+	token = get_token(s, &i, chr_class, stack);
+	if (!is_int_empty(stack))
+		return (token_error(1, "salop"));
 	if (token.tok == TOK_WORD && (s[i] == '>' || s[i] == '<') && (ft_isdigits(token.data)))
 		token.tok = TOK_IO_NUMBER;
 	//if (token.tok == TOK_WORD)
@@ -178,7 +184,6 @@ t_tokens	get_next_token(char *s)
 	//printf("{%s, \"%s\"}\n", DEBUG_TOKEN[token.tok], token.data);
 	if (ABSTRACT_TOKEN[token.tok] && !(token.tok = get_true_toktype(token.data, token.tok, &i)))
 		return (token_error(UNRECOGNIZED_TOKEN, "unrecognized token"));
-	printf("%s\n", token.data);
 	return (token);
 }
 

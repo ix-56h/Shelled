@@ -1,8 +1,21 @@
 #include "parser.h"
+#include "error_handler.h"
 
 void	 free_ast(void)
 {
 
+}
+
+int		error_push(t_stack *stack, int type, int begin, int anchor)
+{
+
+	if (is_int_full(stack))
+		return (0);//realloc
+	++stack->top;
+	((t_staterror*)stack->ar)[stack->top].begin = begin;
+	((t_staterror*)stack->ar)[stack->top].anchor = anchor;
+	((t_staterror*)stack->ar)[stack->top].type = type;
+	return (1);
 }
 
 void	parse_error(int type)
@@ -11,6 +24,19 @@ void	parse_error(int type)
 		printf("error\n");
 }
 
+t_staterror		error_peek(t_stack *stack)
+{
+	return (((t_staterror*)stack->ar)[stack->top]);
+}
+
+void	print_stack_errors(t_stack *stack, t_tokens *cur, char *s)
+{
+	t_staterror err;
+
+	err = error_peek(stack);
+	printf("%s", G_ERROR_MSGS_PREFIX[err.type]);
+	int_pop(stack);
+}
 
 /*
 t_node	*parse_subshell(char *s, t_tokens *cur)
