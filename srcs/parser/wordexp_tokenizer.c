@@ -16,11 +16,8 @@
 
 int			lex_sequence(char *s, int *i, int *anchor)
 {
-	//t_wstat		stat;
 	int				ret = 0;
-	//ft_bzero(&stat, sizeof(t_wstat));
-	//cur = get_cur_seq(s, i, &stat);
-	printf("%i %s ma bite\n", ret, s+(*anchor));
+
 	if (s[*anchor] == '\'')
 		ret = lex_match_squote(s, i, anchor);
 	else if (s[*anchor] == '"')
@@ -29,7 +26,6 @@ int			lex_sequence(char *s, int *i, int *anchor)
 		ret = lex_match_command_sub(s, i, anchor);
 	else if (s[*anchor] == '$')
 		ret = lex_match_dol(s, i, anchor);
-	//printf("tokenization error at get end exp\n");
 	return (ret);
 }
 
