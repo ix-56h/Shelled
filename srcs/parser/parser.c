@@ -635,6 +635,8 @@ t_node	*parse_io_file(char *s, t_tokens *cur, t_stack *stack)
 		*cur = get_next_token(s, stack);
 		if ((node = parse_filename(s, cur, stack)))
 			node = save_node(node, tok, NULL, IO_REDIRECT);
+		else
+			error_push(stack, PARSE_ERROR_NEAR, *cur);
 	}
 	return (node);
 }
