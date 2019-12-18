@@ -109,6 +109,6 @@ t_node		*applie_7b(t_tokens *cur, char *s);
 **	parse_error.c
 */
 void		print_stack_errors(t_stack *stack, t_tokens *cur, char *s);
-int			error_push(t_stack *stack, int type, t_tokens tok);
+int			error_push(t_stack *stack, int type, int i);
 
 #endif

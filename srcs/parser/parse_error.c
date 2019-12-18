@@ -6,14 +6,13 @@ void	 free_ast(void)
 
 }
 
-int		error_push(t_stack *stack, int type, t_tokens tok)
+int		error_push(t_stack *stack, int type, int i)
 {
 
 	if (is_int_full(stack))
 		return (0);//realloc
 	++stack->top;
-	((t_staterror*)stack->ar)[stack->top].begin = 0;
-	((t_staterror*)stack->ar)[stack->top].anchor = 0; // tok.anchor
+	((t_staterror*)stack->ar)[stack->top].pos = i;
 	((t_staterror*)stack->ar)[stack->top].type = type;
 	return (1);
 }

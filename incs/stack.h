@@ -16,8 +16,7 @@ enum	e_state_error{
 typedef struct		s_staterror
 {
 	int				type;
-	int				begin;
-	int				anchor;
+	int				pos;
 }					t_staterror;
 
 typedef struct		s_stack
