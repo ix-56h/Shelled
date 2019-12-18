@@ -32,7 +32,7 @@ t_tokens	token_error(int terr, const char *s)
 	return (new);
 }
 
-t_tokens	save_token(char *s, int anchor, t_toktype toktype)
+t_tokens	save_token(char *s, int i, int anchor, t_toktype toktype)
 {
 	t_tokens	new;
 
@@ -44,6 +44,8 @@ t_tokens	save_token(char *s, int anchor, t_toktype toktype)
 	}
 	else
 		new.data = NULL;
+	new.i = i;
+	new.anchor = anchor;
 	new.tok = toktype;
 	return (new);
 }
@@ -153,7 +155,7 @@ t_tokens	get_token(char *s, int *i, t_chr_class chr_class, t_stack *stack)
 	if ((toktype == TOK_LPAREN || toktype == TOK_RPAREN) && (anchor += 1))
 		(*i)++;
 	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
-	return (save_token(s + (*i - anchor), anchor, toktype));
+	return (save_token(s + (*i - anchor), *i, anchor, toktype));
 }
 
 t_tokens	get_next_token(char *s, t_stack *stack)
@@ -164,7 +166,7 @@ t_tokens	get_next_token(char *s, t_stack *stack)
 	static int		i = 0;
 
 	if (s[i] == '\0')
-		return (save_token(NULL, 0, TOK_EOF));
+		return (save_token(s, 0, 0, TOK_EOF));
 	if (!(chr_class = get_chr_class[(unsigned char)s[i]]))
 		return (token_error(UNRECOGNIZED_TOKEN, "unexpected character"));
 	if (chr_class == CHR_COMMENT || chr_class == CHR_SP)

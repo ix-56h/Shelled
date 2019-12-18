@@ -8,7 +8,6 @@ void	 free_ast(void)
 
 int		error_push(t_stack *stack, int type, int begin, int anchor)
 {
-
 	if (is_int_full(stack))
 		return (0);//realloc
 	++stack->top;
