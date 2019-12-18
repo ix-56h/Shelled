@@ -4,11 +4,8 @@
 
 enum	e_state_error{
 	EMPTY,
+	MATCH_LEX,
 	UNEXPECTED_EOF,
-	SQ_LEX,
-	DQ_LEX,
-	BQ_LEX,
-	PAREN_LEX,
 	UNRECOGNIZED_TOKEN,
 	PARSE_ERROR_NEAR
 };
@@ -16,7 +13,7 @@ enum	e_state_error{
 typedef struct		s_staterror
 {
 	int				type;
-	int				pos;
+	char			*near;
 }					t_staterror;
 
 typedef struct		s_stack

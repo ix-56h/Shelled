@@ -6,13 +6,13 @@ void	 free_ast(void)
 
 }
 
-int		error_push(t_stack *stack, int type, int i)
+int		error_push(t_stack *stack, int type, char *near)
 {
 
 	if (is_int_full(stack))
 		return (0);//realloc
 	++stack->top;
-	((t_staterror*)stack->ar)[stack->top].pos = i;
+	((t_staterror*)stack->ar)[stack->top].near = near;
 	((t_staterror*)stack->ar)[stack->top].type = type;
 	return (1);
 }
@@ -34,6 +34,8 @@ void	print_stack_errors(t_stack *stack, t_tokens *cur, char *s)
 
 	err = error_peek(stack);
 	printf("%s", G_ERROR_MSGS_PREFIX[err.type]);
+	if (err.near != NULL)
+		printf("'%s'\n", err.near);
 	int_pop(stack);
 }
 
