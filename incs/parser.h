@@ -2,6 +2,7 @@
 # define PARSER_H
 #include "tokenizer.h"
 #include "stack.h"
+#include "error_handler.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -106,9 +107,8 @@ void		applie_rule_one(char *s, t_tokens *cur);
 t_node		*applie_7b(t_tokens *cur, char *s);
 
 /*
-**	parse_error.c
+**	free_tree.c
 */
-void		print_stack_errors(t_stack *stack, t_tokens *cur, char *s);
-int			error_push(t_stack *stack, int type, char *near);
-
+void deleteTree(t_node *node); 
+void delete_ast(t_node **root); 
 #endif
