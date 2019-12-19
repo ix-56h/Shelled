@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/19 07:54:20 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/19 09:53:37 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ t_node	*parse_complete_commands(char *s, t_tokens *cur, t_stack *stack)
 			if ((nod2 = parse_complete_command(s, cur, stack)))
 				node = binnode(node, nod2, NULL);
 			else
-				node = NULL;
+			{
+				error_push(stack, PARSE_ERROR_NEAR, cur->data);
+				return (node);
+			}
 		}
 	}
 	return (node);
@@ -125,7 +128,10 @@ t_node	*parse_and_or(char *s, t_tokens *cur, t_stack *stack)
 			if ((nod2 = parse_pipeline(s, cur, stack)))
 				node = save_node(node, tok, nod2, 5);
 			else
-				node = NULL;
+			{
+				error_push(stack, PARSE_ERROR_NEAR, tok.data);
+				return (NULL);
+			}
 		}
 	}
 	return (node);
@@ -171,7 +177,7 @@ t_node	*parse_pipe_sequence(char *s, t_tokens *cur, t_stack *stack)
 				node = save_node(node, tok, nod2, 3);
 			else
 			{
-				error_push(stack, UNEXPECTED_TOKEN, cur->data);
+				error_push(stack, PARSE_ERROR_NEAR, tok.data);
 				return (node);
 			}
 			tok = *cur;
