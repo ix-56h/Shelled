@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_error.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/19 06:34:56 by niguinti          #+#    #+#             */
+/*   Updated: 2019/12/19 06:34:56 by niguinti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 #include "error_class.h"
 
@@ -31,8 +43,9 @@ void	print_stack_errors(t_stack *stack, t_tokens *cur, char *s)
 	{
 		ft_putstr("'");
 		ft_putstr(err.near);
-		ft_putstr("'\n");
+		ft_putstr("'");
 	}
+	ft_putstr("\n");
 	int_pop(stack);
 }
 
