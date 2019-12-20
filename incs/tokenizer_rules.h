@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_rules.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/09 03:35:54 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/15 18:06:10 by niguinti         ###   ########.fr       */
+/*   Created: 2019/12/19 06:37:48 by niguinti          #+#    #+#             */
+/*   Updated: 2019/12/19 06:37:49 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,8 @@ const char	DEBUG_TOKEN[TOK_MAX][30] = {
 	[TOK_LPAREN] = "TOK_LPAREN",
 	[TOK_RPAREN] = "TOK_RPAREN",
 	[TOK_SUBSTITUTION] = "TOK_SUBSTITUTION",
-	[TOK_PIPE] = "TOK_PIPE"
+	[TOK_PIPE] = "TOK_PIPE",
+	[TOK_EOF] = "TOK_EOF"
 };
 
 const char	DEBUG_CHR[CHR_MAX][30] = {

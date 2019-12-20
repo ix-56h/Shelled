@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/19 02:56:03 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/08 15:44:39 by thdelmas         ###   ########.fr       */
+/*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
+/*   Updated: 2019/12/20 01:48:37 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-t_flags		f;
 
 t_node	*parse_program(char *s, t_tokens *cur, t_stack *stack)
 {
@@ -54,7 +52,10 @@ t_node	*parse_complete_commands(char *s, t_tokens *cur, t_stack *stack)
 			if ((nod2 = parse_complete_command(s, cur, stack)))
 				node = binnode(node, nod2, NULL);
 			else
-				node = NULL;
+			{
+				error_push(stack, PARSE_ERROR_NEAR, cur->data);
+				return (node);
+			}
 		}
 	}
 	return (node);
@@ -127,7 +128,10 @@ t_node	*parse_and_or(char *s, t_tokens *cur, t_stack *stack)
 			if ((nod2 = parse_pipeline(s, cur, stack)))
 				node = save_node(node, tok, nod2, 5);
 			else
-				node = NULL;
+			{
+				error_push(stack, PARSE_ERROR_NEAR, tok.data);
+				return (NULL);
+			}
 		}
 	}
 	return (node);
@@ -172,7 +176,10 @@ t_node	*parse_pipe_sequence(char *s, t_tokens *cur, t_stack *stack)
 			if ((nod2 = parse_command(s, cur, stack)))
 				node = save_node(node, tok, nod2, 3);
 			else
-				node = NULL;
+			{
+				error_push(stack, PARSE_ERROR_NEAR, tok.data);
+				return (node);
+			}
 			tok = *cur;
 		}
 	}
@@ -245,10 +252,7 @@ t_node	*parse_subshell(char *s, t_tokens *cur, t_stack *stack)
 				*cur = get_next_token(s, stack);
 			}
 			else
-			{
-				printf("Error : subshell need to be closed\n");
-				node = NULL;
-			}
+				error_push(stack, PARSE_ERROR_NEAR, cur->data);
 		}
 	}
 	return (node);
@@ -461,7 +465,6 @@ t_node	*parse_simple_command(char *s, t_tokens *cur, t_stack *stack)
 		while (cur->tok == TOK_WORD)
 		{
 			push_args(args, cur->data);
-			//free
 			*cur = get_next_token(s, stack);
 		}
 		if ((nod2 = parse_cmd_suffix(s, cur, stack)))
@@ -469,7 +472,6 @@ t_node	*parse_simple_command(char *s, t_tokens *cur, t_stack *stack)
 		while (cur->tok == TOK_WORD)
 		{
 			push_args(args, cur->data);
-			//free
 			*cur = get_next_token(s, stack);
 		}
 	}
@@ -541,9 +543,7 @@ t_node	*parse_cmd_prefix(char *s, t_tokens *cur, t_stack *stack)
 		}
 	}
 	else if ((nod2 = parse_io_redirect(s, cur, stack)))
-	{
 		return (nod2);
-	}
 	else
 		return (NULL);
 	return (node);
@@ -564,12 +564,12 @@ t_node	*parse_cmd_suffix(char *s, t_tokens *cur, t_stack *stack)
 	{
 		node = save_node(NULL, tok, NULL, ARGS);
 		*cur = get_next_token(s, stack);
-		//while ((tok = *cur).tok == TOK_WORD)
-		//{
-		//	push_args(node, tok.data);
-		//	*cur = get_next_token(s, stack);
-			//free
-		//}
+		while ((tok = *cur).tok == TOK_WORD)
+		{
+			nod2 = save_node(NULL, tok, NULL, 0);
+			node = binnode(node, nod2, NULL);
+			*cur = get_next_token(s, stack);
+		}
 	}
 	else if ((nod2 = parse_io_redirect(s, cur, stack)))
 		return (nod2);
@@ -622,6 +622,7 @@ t_node	*parse_io_redirect(char *s, t_tokens *cur, t_stack *stack)
 t_node	*parse_io_file(char *s, t_tokens *cur, t_stack *stack)
 {
 	t_node		*node;
+	t_node		*nod2;
 	t_tokens	tok;
 	
 	if (!is_int_empty(stack))
@@ -633,8 +634,11 @@ t_node	*parse_io_file(char *s, t_tokens *cur, t_stack *stack)
 		|| tok.tok == TOK_CLOBBER)
 	{
 		*cur = get_next_token(s, stack);
-		if ((node = parse_filename(s, cur, stack)))
-			node = save_node(node, tok, NULL, IO_REDIRECT);
+		node = save_node(NULL, tok, NULL, IO_REDIRECT);
+		if ((nod2 = parse_filename(s, cur, stack)))
+			node = binnode(nod2, node, NULL);
+		else
+			error_push(stack, PARSE_ERROR_NEAR, tok.data);
 	}
 	return (node);
 }
@@ -799,38 +803,48 @@ t_node	*parse_sequential_sep(char *s, t_tokens *cur, t_stack *stack)
 	return (node);
 }
 
+void	free_stack(t_stack *stack)
+{
+	free(stack->ar);
+	free(stack);
+}
+
 int main(int ac, char **av)
 {
 	char		*input = av[1];
 	t_tokens	tok;
 	t_node		*node = NULL;
 	t_stack		*stack;
+	t_flags		f;
 
+	f.ast_draw = 0;
 	if (!(stack = stack_creator(20, sizeof(t_staterror))))
 		return (0);
 	if (ac < 2)
 	{
-		printf("Usage: ./21sh \"ls -la > output.txt\" [-debug=all] [-ast=draw]\n");
+		printf("Usage: ./21sh \"ls -la > output.txt\" [-ast=draw]\n");
 		return (0);
 	}
-	f = check_param(av + 2);
-	if (f.debug_all)
-		printf("f.d = %u\nf.a = %u\n", f.debug_all, f.ast_draw);
+
+	check_param(av + 2, &f);
+
 	tok = get_next_token(input, stack);
 	if (is_int_empty(stack))
 		node = parse_program(input, &tok, stack);
 	if (!is_int_empty(stack))
-	{
 		print_stack_errors(stack, &tok, input);
-		return (0);
-	}
-
-	if (f.ast_draw)
+	else if (f.ast_draw)
 	{
 		FILE *stream = fopen("tree.dot", "w");
 		if (!stream)
 			exit(0);
 		bst_print_dot(node, stream);
 	}
+	if (node != NULL)
+		delete_ast(&node);
+	if (tok.data != NULL)
+		free(tok.data);
+
+	free_stack(stack);
 	return 0;
 }

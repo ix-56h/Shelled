@@ -1,14 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_handler.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/19 06:37:12 by niguinti          #+#    #+#             */
+/*   Updated: 2019/12/19 06:37:13 by niguinti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_ERROR_HANDLER_H
 # define FT_ERROR_HANDLER_H
 #include "stack.h"
 
-const char	G_ERROR_MSGS_PREFIX[PARSE_ERROR_NEAR + 1][54] = {
-		[UNEXPECTED_EOF] = "unexpected EOF while looking for matching `",
-		[SQ_LEX] = "unexpected EOF while looking for matching `'`\n",
-		[DQ_LEX] = "unexpected EOF while looking for matching `\"`\n",
-		[BQ_LEX] = "unexpected EOF while looking for matching '`'\n",
-		[PAREN_LEX] = "unexpected EOF while looking for matching '('\n",
-		[PARSE_ERROR_NEAR] = "parse error near '"
-};
-
+/*
+**	parse_error.c
+*/
+void		print_stack_errors(t_stack *stack, t_tokens *cur, char *s);
+int			error_push(t_stack *stack, int type, char *near);
 #endif

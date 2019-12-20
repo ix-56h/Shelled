@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/19 06:37:18 by niguinti          #+#    #+#             */
+/*   Updated: 2019/12/19 06:50:29 by niguinti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
 #include "tokenizer.h"
 #include "stack.h"
+#include "error_handler.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -10,7 +23,6 @@
 enum			id {DEFAULT_ID, ARGS, SUBSH, PIPESEQ, PIPE, ANDOR, IO_REDIRECT, ASSIGNMENT_WORD};
 typedef	struct	s_flags
 {
-	unsigned	debug_all:1;
 	unsigned	ast_draw:1;
 }				t_flags;
 
@@ -29,14 +41,6 @@ typedef	struct		s_node
 	char			*data;
 	struct s_node	*right;
 }					t_node;
-
-/*
-**	Root node of the current AST
-*/
-t_node		*g_root;
-
-t_flags		check_param(char **av);
-void		bst_print_dot(t_node* tree, FILE* stream);
 
 char		*push_args(t_node *node, char *s);
 
@@ -99,16 +103,16 @@ t_node		*parse_wordlist(char *s, t_tokens *cur, t_stack *stack);
 **	misc.c
 */
 
-t_flags		check_param(char **av);
+void		bst_print_dot(t_node* tree, FILE* stream);
+void		check_param(char **av, t_flags *f);
 t_node		*binnode(t_node *left, t_node *mom, t_node *right);
 t_node		*save_node(t_node *left, t_tokens tok, t_node *right, int id);
 void		applie_rule_one(char *s, t_tokens *cur);
 t_node		*applie_7b(t_tokens *cur, char *s);
 
 /*
-**	parse_error.c
+**	free_tree.c
 */
-void		print_stack_errors(t_stack *stack, t_tokens *cur, char *s);
-int			error_push(t_stack *stack, int type, int begin, int anchor);
-
+void deleteTree(t_node *node); 
+void delete_ast(t_node **root); 
 #endif

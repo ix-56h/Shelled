@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wexp_tokenizer.c								:+:      :+:    :+:   */
+/*   wordexp_tokenizer.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/01 05:04:06 by niguinti          #+#    #+#             */
-/*   Updated: 2019/10/15 18:40:13 by niguinti         ###   ########.fr       */
+/*   Created: 2019/12/19 06:36:46 by niguinti          #+#    #+#             */
+/*   Updated: 2019/12/19 06:36:47 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int			lex_match_squote(char *s, int *i, int *anchor, t_stack *stack)
 		increment_pointors(i, anchor);
 	if (s[*anchor] != '\'')
 	{
-		error_push(stack, SQ_LEX, *anchor, '\'');
+		error_push(stack, MATCH_LEX, "'");
 		return (0);
 	}
 	increment_pointors(i, anchor);
@@ -67,7 +67,7 @@ int		lex_match_dquote(char *s, int *i, int *anchor, t_stack *stack)
 	}
 	if (s[*anchor] != '"')
 	{
-		error_push(stack, DQ_LEX, *anchor, '"');
+		error_push(stack, MATCH_LEX, "\""); 
 		return (0);
 	}
 	increment_pointors(i, anchor);
@@ -106,7 +106,7 @@ int		lex_match_command_sub(char *s, int *i, int *anchor, t_stack *stack)
 	}
 	if (s[*anchor] != close)
 	{
-		error_push(stack, (close == '`' ? BQ_LEX : PAREN_LEX), *anchor, close);
+		error_push(stack, MATCH_LEX, (close == '`') ? "`" : ")");
 		return (0);
 	}
 	increment_pointors(i, anchor);

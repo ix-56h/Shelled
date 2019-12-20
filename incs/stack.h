@@ -1,14 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/19 06:37:25 by niguinti          #+#    #+#             */
+/*   Updated: 2019/12/20 00:42:09 by niguinti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_STACK_H
 # define FT_STACK_H
 #include <stdlib.h>
 
 enum	e_state_error{
 	EMPTY,
+	MATCH_LEX,
 	UNEXPECTED_EOF,
-	SQ_LEX,
-	DQ_LEX,
-	BQ_LEX,
-	PAREN_LEX,
+	UNEXPECTED_TOKEN,
 	UNRECOGNIZED_TOKEN,
 	PARSE_ERROR_NEAR
 };
@@ -16,8 +26,7 @@ enum	e_state_error{
 typedef struct		s_staterror
 {
 	int				type;
-	int				begin;
-	int				anchor;
+	char			*near;
 }					t_staterror;
 
 typedef struct		s_stack

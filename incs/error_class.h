@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wordexp_misc.c                                     :+:      :+:    :+:   */
+/*   error_class.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/19 06:36:38 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/19 06:36:38 by niguinti         ###   ########.fr       */
+/*   Created: 2019/12/19 06:37:01 by niguinti          #+#    #+#             */
+/*   Updated: 2019/12/19 06:37:02 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parser.h>
+#ifndef ERROR_CLASS_H
+# define ERROR_CLASS_H
 
-int		is_whitespace(char c)
-{
-	if (c == ' ' || c == '\t')
-		return (1);
-	return (0);
-}
-
-void	skip_whitespaces(char *s, int *i, int *a)
-{
-	while (s[*i] && is_whitespace(s[*i]))
-	{
-		(*i)++;
-		(*a)++;
-	}
-}
+const char	G_ERROR_MSGS_PREFIX[PARSE_ERROR_NEAR + 1][54] = {
+		[MATCH_LEX] = "unexpected EOF while looking for matching ",
+		[UNEXPECTED_TOKEN] = "syntax error near unexpected ",
+		[UNRECOGNIZED_TOKEN] = "syntax error near unrecognized token ",
+		[PARSE_ERROR_NEAR] = "parse error near "
+};
+#endif

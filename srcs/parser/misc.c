@@ -1,19 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   misc.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/19 06:34:48 by niguinti          #+#    #+#             */
+/*   Updated: 2019/12/19 06:52:09 by niguinti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
-t_flags	check_param(char **av)
+void	check_param(char **av, t_flags *f)
 {
-	t_flags f;
-	f.debug_all = 0;
-	f.ast_draw = 0;
+	f->ast_draw = 0;
 	while (*av)
 	{
-		if (strcmp(*av, "-debug=all") == 0)
-			f.debug_all = 1;
-		else if (strcmp(*av, "-ast=draw") == 0)
-			f.ast_draw = 1;
+		if (strcmp(*av, "-ast=draw") == 0)
+			f->ast_draw = 1;
 		av++;
 	}
-	return (f);
 }
 
 t_node	*binnode(t_node *left, t_node *mom, t_node *right)

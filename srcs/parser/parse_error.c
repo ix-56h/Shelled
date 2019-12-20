@@ -1,26 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_error.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/19 06:34:56 by niguinti          #+#    #+#             */
+/*   Updated: 2019/12/19 06:34:56 by niguinti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
-#include "error_handler.h"
+#include "error_class.h"
 
 void	 free_ast(void)
 {
 
 }
 
-int		error_push(t_stack *stack, int type, int begin, int anchor)
+int		error_push(t_stack *stack, int type, char *near)
 {
 	if (is_int_full(stack))
 		return (0);//realloc
 	++stack->top;
-	((t_staterror*)stack->ar)[stack->top].begin = begin;
-	((t_staterror*)stack->ar)[stack->top].anchor = anchor;
+	((t_staterror*)stack->ar)[stack->top].near = near;
 	((t_staterror*)stack->ar)[stack->top].type = type;
 	return (1);
-}
-
-void	parse_error(int type)
-{
-	if (type == 1)
-		printf("error\n");
 }
 
 t_staterror		error_peek(t_stack *stack)
@@ -33,7 +38,14 @@ void	print_stack_errors(t_stack *stack, t_tokens *cur, char *s)
 	t_staterror err;
 
 	err = error_peek(stack);
-	printf("%s", G_ERROR_MSGS_PREFIX[err.type]);
+	ft_putstr(G_ERROR_MSGS_PREFIX[err.type]);
+	if (err.near != NULL)
+	{
+		ft_putstr("'");
+		ft_putstr(err.near);
+		ft_putstr("'");
+	}
+	ft_putstr("\n");
 	int_pop(stack);
 }
 

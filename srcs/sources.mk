@@ -22,6 +22,7 @@ C_FILES_parser = \
 	wordexp_tokenizer.c	\
 	wordexp_misc.c \
 	stack.c \
+	free_tree.c \
 
 # SUPPA concat loop
 C_FILES += $(foreach SUB_DIR,$(SUB_DIRS),$(addprefix $(SUB_DIR)/,$(C_FILES_$(SUB_DIR))))
