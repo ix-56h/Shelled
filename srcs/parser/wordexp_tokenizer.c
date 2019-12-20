@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:46 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/19 06:36:47 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/20 03:44:09 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,120 +16,109 @@
 #include "libft.h"
 #include "stack.h"
 
-int			lex_sequence(char *s, int *i, int *anchor, t_stack *stack)
+int			lex_sequence(char *s, int *anchor, t_stack *stack)
 {
 	int				ret = 0;
 
 	if (s[*anchor] == '\'')
-		ret = lex_match_squote(s, i, anchor, stack);
+		ret = lex_match_squote(s, anchor, stack);
 	else if (s[*anchor] == '"')
-		ret = lex_match_dquote(s, i, anchor, stack);
+		ret = lex_match_dquote(s, anchor, stack);
 	else if (s[*anchor] == '`')
-		ret = lex_match_command_sub(s, i, anchor, stack);
+		ret = lex_match_command_sub(s, anchor, stack);
 	else if (s[*anchor] == '$')
-		ret = lex_match_dol(s, i, anchor, stack);
+		ret = lex_match_dol(s, anchor, stack);
 	return (ret);
 }
 
-void		increment_pointors(int *i, int *a)
+int			lex_match_squote(char *s, int *anchor, t_stack *stack)
 {
-	(*i)++;
-	(*a)++;
-}
-
-int			lex_match_squote(char *s, int *i, int *anchor, t_stack *stack)
-{
-	increment_pointors(i, anchor);
-	while (s[*i] && s[*i] != '\'')
-		increment_pointors(i, anchor);
+	*anchor += 1;
+	while (s[*anchor] && s[*anchor] != '\'')
+		*anchor += 1;
 	if (s[*anchor] != '\'')
 	{
 		error_push(stack, MATCH_LEX, "'");
 		return (0);
 	}
-	increment_pointors(i, anchor);
+	*anchor += 1;
 	return (1);
 }
 
-int		lex_match_dquote(char *s, int *i, int *anchor, t_stack *stack)
+int		lex_match_dquote(char *s, int *anchor, t_stack *stack)
 {
-	increment_pointors(i, anchor);
-	while (s[*i] && s[*i] != '"')
+	*anchor += 1;
+	while (s[*anchor] && s[*anchor] != '"')
 	{
-		//if (s[*i] == '\'' || s[*i] == '$' || s[*i] == '`')
-		if (wexp_rules[DQU][s[*i]])
+		if (wexp_rules[DQU][s[*anchor]])
 		{
-			if (!lex_sequence(s, i, anchor, stack))
+			if (!lex_sequence(s, anchor, stack))
 				return (0);
 			continue;
 		}
-		increment_pointors(i, anchor);
+		*anchor += 1;
 	}
 	if (s[*anchor] != '"')
 	{
 		error_push(stack, MATCH_LEX, "\""); 
 		return (0);
 	}
-	increment_pointors(i, anchor);
+	*anchor += 1;
 	return (1);
 }
 
-int		lex_match_command_sub(char *s, int *i, int *anchor, t_stack *stack)
+int		lex_match_command_sub(char *s, int *anchor, t_stack *stack)
 {
 	char	close;
 
-	close = (s[*i] == '`' ? '`' : ')');
-	increment_pointors(i, anchor);
-	if (is_whitespace(s[*i]))
+	close = (s[*anchor] == '`' ? '`' : ')');
+	*anchor += 1;
+	if (is_whitespace(s[*anchor]))
 	{
-		skip_whitespaces(s, i, anchor);
-		if (s[*i] == '(')
+		skip_whitespaces(s, anchor);
+		if (s[*anchor] == '(')
 		{
-			if (!lex_match_command_sub(s, i, anchor, stack))
+			if (!lex_match_command_sub(s, anchor, stack))
 				return (0);
 		}
 	}
-	while (s[*i] && s[*i] != close)
+	while (s[*anchor] && s[*anchor] != close)
 	{
-		if (s[*i] == '(' || s[*i] == '`')
+		if (s[*anchor] == '(' || s[*anchor] == '`')
 		{
-			if (!lex_match_command_sub(s, i, anchor, stack))
+			if (!lex_match_command_sub(s, anchor, stack))
 				return (0);
 		}
-		if (wexp_rules[BQU][s[*i]])
+		if (wexp_rules[BQU][s[*anchor]])
 		{
-			if (!lex_sequence(s, i, anchor, stack))
+			if (!lex_sequence(s, anchor, stack))
 				return (0);
 			continue;
 		}
-		increment_pointors(i, anchor);
+		*anchor += 1;
 	}
 	if (s[*anchor] != close)
 	{
 		error_push(stack, MATCH_LEX, (close == '`') ? "`" : ")");
 		return (0);
 	}
-	increment_pointors(i, anchor);
+	*anchor += 1;
 	return (1);
 }
 
-int		lex_match_dol(char *s, int *i, int *anchor, t_stack *stack)
+int		lex_match_dol(char *s, int *anchor, t_stack *stack)
 {
-	increment_pointors(i, anchor);
-	if (s[*i] == '(')
+	*anchor += 1;
+	if (s[*anchor] == '(')
 	{
-		if (lex_match_command_sub(s, i, anchor, stack))
-		{
-			skip_whitespaces(s, i, anchor);
-			return (1);
-		}
+		if (lex_match_command_sub(s, anchor, stack))
+			skip_whitespaces(s, anchor);
 	}
-	else if (ft_isalpha(s[*i]) || s[*i] == '_')
+	else if (ft_isalpha(s[*anchor]) || s[*anchor] == '_')
 	{
-		increment_pointors(i, anchor);
-		while (ft_isalpha(s[*i]) || s[*i] == '_' || ft_isdigit(s[*i]))
-			increment_pointors(i, anchor);
-		return (1);
+		*anchor += 1;
+		while (ft_isalpha(s[*anchor]) || s[*anchor] == '_' || ft_isdigit(s[*anchor]))
+			*anchor += 1;
 	}
-	return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:10 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/20 02:22:07 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/20 05:03:20 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_tokens	token_error(int type, t_stack *stack, char c)
 	return (new);
 }
 
-t_tokens	save_token(char *s, int i, int anchor, t_toktype toktype)
+t_tokens	save_token(char *s, int anchor, t_toktype toktype)
 {
 	t_tokens	new;
 
@@ -55,7 +55,6 @@ t_tokens	save_token(char *s, int i, int anchor, t_toktype toktype)
 	}
 	else
 		new.data = NULL;
-	new.i = i;
 	new.anchor = anchor;
 	new.tok = toktype;
 	return (new);
@@ -90,12 +89,12 @@ t_toktype	check_operator(char *s, size_t len, int *i)
 		*i -= (len - 2);
 		ret = TOK_DSEMI;
 	}
-	else if (!s[1] && !strncmp(s, ";", 1))
+	else if (!strncmp(s, ";", 1))
 	{
 		*i -= (len - 1);
 		ret = TOK_SEMI;
 	}
-	else if (!s[1] && !strncmp(s, "&", 1))
+	else if (!strncmp(s, "&", 1))
 	{
 		*i -= (len - 1);
 		ret = TOK_AND;
@@ -108,12 +107,12 @@ t_toktype	check_pipe(char *s, size_t len, int *i)
 	t_toktype	ret;
 
 	ret = 0;
-	if (s[1] && !strncmp(s, "||", 2))
+	if (!strncmp(s, "||", 2))
 	{
 		*i -= (len - 2);
 		ret = TOK_OR_IF;
 	}
-	else if (!s[1] && !strncmp(s, "|", 1))
+	else if (!strncmp(s, "|", 1))
 	{
 		*i -= (len - 1);
 		ret = TOK_PIPE;
@@ -199,34 +198,30 @@ int			is_special_char(t_chr_class chr_class, t_chr_class prev_class)
 	return (0);
 }
 
-t_tokens	get_token(char *s, int *i, t_chr_class chr_class, t_stack *stack)
+int		get_token(char *s, t_chr_class chr_class, t_stack *stack, t_tokens *tok)
 {
 	t_chr_class	prev_class = chr_class;
 	int			anchor = 0;
 	t_toktype	toktype = get_tok_type[prev_class];
 
-	//chr_class = get_chr_class[(unsigned char)s[*i]];
-	if (is_special_char(chr_class, prev_class) && lex_sequence(s, i, &anchor, stack) == 0)
-		return (token_error(0, stack, 0));
-	while (s[*i] && (token_chr_rules[toktype][(chr_class = get_chr_class[(unsigned char)s[*i]])]
+	if (is_special_char(chr_class, prev_class) && lex_sequence(s, &anchor, stack) == 0)
+		return (anchor);
+	while (s[anchor] && (token_chr_rules[toktype][(chr_class = get_chr_class[(unsigned char)s[anchor]])]
 				|| prev_class == CHR_ESCAPE))
 	{
 		if (is_special_char(chr_class, prev_class))
 		{
-			if (!lex_sequence(s, i, &anchor, stack))
-				return (token_error(0, stack, 0));
+			if (!lex_sequence(s, &anchor, stack))
+				return (anchor);
 			continue;
 		}
-		(toktype == TOK_WORD && prev_class != CHR_ESCAPE && s[*i] == '=') ? (toktype = TOK_ASSIGNMENT_WORD) : 0;
+		(toktype == TOK_WORD && prev_class != CHR_ESCAPE && s[anchor] == '=') ? (toktype = TOK_ASSIGNMENT_WORD) : 0;
 		prev_class = chr_class;
-		//printf("[%s, '%c', %d]\n", DEBUG_CHR[chr_class], s[*i], anchor);
 		anchor++;
-		(*i)++;
 	}
-	if ((toktype == TOK_LPAREN || toktype == TOK_RPAREN) && (anchor += 1))
-		(*i)++;
-	//printf("{%s, \"%.*s\"}\n", DEBUG_TOKEN[toktype], anchor, s + (*i - anchor));
-	return (save_token(s + (*i - anchor), *i, anchor, toktype));
+	((toktype == TOK_LPAREN || toktype == TOK_RPAREN) ? (anchor += 1) : 0);
+	*tok = save_token(s, anchor, toktype);
+	return (anchor);
 }
 
 t_tokens	get_next_token(char *s, t_stack *stack)
@@ -237,7 +232,7 @@ t_tokens	get_next_token(char *s, t_stack *stack)
 	static int		i = 0;
 
 	if (s[i] == '\0')
-		return (save_token(s, 0, 0, TOK_EOF));
+		return (save_token(s, 0, TOK_EOF));
 	if (!(chr_class = get_chr_class[(unsigned char)s[i]]))
 		return (token_error(UNRECOGNIZED_TOKEN, stack, s[i]));
 	if (chr_class == CHR_COMMENT || chr_class == CHR_SP)
@@ -247,34 +242,18 @@ t_tokens	get_next_token(char *s, t_stack *stack)
 	}
 	if (!(toktype = get_tok_type[chr_class]))
 		return (token_error(UNRECOGNIZED_TOKEN, stack, s[i]));
-	token = get_token(s, &i, chr_class, stack);
+	i += get_token(s + i, chr_class, stack, &token);
 	if (!is_int_empty(stack))
 		return (token_error(0, stack, 0));
 	if (token.tok == TOK_WORD && (s[i] == '>' || s[i] == '<') && (ft_isdigits(token.data)))
 		token.tok = TOK_IO_NUMBER;
 	//if (token.tok == TOK_WORD)
 		//field_splitting, don't forget to use IFS who's used to determine the character to do splitting
-	//printf("{%s, \"%s\"}\n", DEBUG_TOKEN[token.tok], token.data);
 	if (ABSTRACT_TOKEN[token.tok] && !(token.tok = get_true_toktype(token.data, token.tok, &i)))
 	{
 		error_push(stack, UNRECOGNIZED_TOKEN, token.data);
 		return (token_error(0, stack, 0));
 	}
+	//printf("%s\n", token.data);
 	return (token);
 }
-
-/*int main(int argc, char *argv[])
-{
-	t_tokens	tok;
-	
-	(void)argc;
-	tok = get_next_token(argv[1]);
-	while (tok.tok != TOK_ERROR && tok.tok != TOK_EOF)
-	{
-		printf("{%s, \"%s\"}\n", DEBUG_TOKEN[tok.tok], tok.data);
-		tok = get_next_token(argv[1]);
-	}
-	if (tok.tok == TOK_ERROR)
-		printf("Syntax error\n");
-	return 0;
-}*/

@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:38 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/19 06:36:38 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/20 03:05:17 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,8 @@ int		is_whitespace(char c)
 	return (0);
 }
 
-void	skip_whitespaces(char *s, int *i, int *a)
+void	skip_whitespaces(char *s, int *a)
 {
-	while (s[*i] && is_whitespace(s[*i]))
-	{
-		(*i)++;
+	while (s[*a] && is_whitespace(s[*a]))
 		(*a)++;
-	}
 }

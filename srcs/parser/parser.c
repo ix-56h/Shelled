@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/20 01:48:37 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/20 04:55:42 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_node	*parse_program(char *s, t_tokens *cur, t_stack *stack)
 		if ((nod2 = parse_linebreak(s, cur, stack)))
 			free(nod2);
 		else if (cur->tok != TOK_EOF)
-			node = NULL;
+			error_push(stack, PARSE_ERROR_NEAR, cur->data);
 	}
 	return (node);
 }
@@ -130,7 +130,7 @@ t_node	*parse_and_or(char *s, t_tokens *cur, t_stack *stack)
 			else
 			{
 				error_push(stack, PARSE_ERROR_NEAR, tok.data);
-				return (NULL);
+				return (node);
 			}
 		}
 	}
@@ -544,8 +544,6 @@ t_node	*parse_cmd_prefix(char *s, t_tokens *cur, t_stack *stack)
 	}
 	else if ((nod2 = parse_io_redirect(s, cur, stack)))
 		return (nod2);
-	else
-		return (NULL);
 	return (node);
 }
 
@@ -573,8 +571,6 @@ t_node	*parse_cmd_suffix(char *s, t_tokens *cur, t_stack *stack)
 	}
 	else if ((nod2 = parse_io_redirect(s, cur, stack)))
 		return (nod2);
-	else
-		return (NULL);
 	return (node);
 }
 
@@ -825,9 +821,7 @@ int main(int ac, char **av)
 		printf("Usage: ./21sh \"ls -la > output.txt\" [-ast=draw]\n");
 		return (0);
 	}
-
 	check_param(av + 2, &f);
-
 	tok = get_next_token(input, stack);
 	if (is_int_empty(stack))
 		node = parse_program(input, &tok, stack);

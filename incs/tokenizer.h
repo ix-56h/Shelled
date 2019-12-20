@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:36 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/19 06:37:38 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/20 03:09:02 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,30 +100,29 @@ typedef enum	e_chr_class {
 
 typedef struct		s_tokens {
 	t_toktype		tok;
-	int				i;
 	int				anchor;
 	char			*data;
 }					t_tokens;
 
-t_tokens		get_token(char *s, int *i, t_chr_class chr_class, t_stack *stack);
+int				get_token(char *s, t_chr_class chr_class, t_stack *stack, t_tokens *tok);
 void			ignore_chr_class(char *s, int *i, t_chr_class chr_class);
 int				is_opening_class(t_chr_class chr_class);
-t_tokens		save_token(char *s, int i, int anchor, t_toktype toktype);
+t_tokens		save_token(char *s, int anchor, t_toktype toktype);
 t_tokens		get_next_token(char *s, t_stack *stack);
 unsigned int	get_end_exp(char *s, int *i);
 
 /*
 **	wordexp_tokenizer.c
 */
-int			lex_sequence(char *s, int *i, int *anchor, t_stack *stack);
-int			lex_match_squote(char *s, int *i, int *anchor, t_stack *stack);
-int			lex_match_dquote(char *s, int *i, int *anchor, t_stack *stack);
-int			lex_match_command_sub(char *s, int *i, int *anchor, t_stack *stack);
-int			lex_match_dol(char *s, int *i, int *anchor, t_stack *stack);
+int			lex_sequence(char *s, int *anchor, t_stack *stack);
+int			lex_match_squote(char *s, int *anchor, t_stack *stack);
+int			lex_match_dquote(char *s, int *anchor, t_stack *stack);
+int			lex_match_command_sub(char *s, int *anchor, t_stack *stack);
+int			lex_match_dol(char *s, int *anchor, t_stack *stack);
 
 /*
 **	wordexp_misc.c
 */
 int			is_whitespace(char c);
-void		skip_whitespaces(char *s,int *i,int *a);
+void		skip_whitespaces(char *s, int *a);
 #endif
