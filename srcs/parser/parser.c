@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/21 04:12:45 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/21 04:53:37 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ t_node	*parse_program(char *s, t_tokens *cur, t_stack *stack)
 		else if (cur->tok != TOK_EOF)
 			error_push(stack, PARSE_ERROR_NEAR, cur->data);
 	}
+	else if (cur->tok != TOK_EOF)
+		error_push(stack, PARSE_ERROR_NEAR, cur->data);
 	return (node);
 }
 
@@ -102,6 +104,11 @@ t_node	*parse_list(char *s, t_tokens *cur, t_stack *stack)
 		{
 			if ((nod3 = parse_and_or(s, cur, stack)))
 				node = binnode(node, nod2, nod3);
+			else
+			{
+				free(nod2->data);
+				free(nod2);
+			}
 		}
 	}
 	return (node);
@@ -804,8 +811,12 @@ t_node	*parse_sequential_sep(char *s, t_tokens *cur, t_stack *stack)
 	return (node);
 }
 
-void	free_stack(t_stack *stack)
+void	free_sh(t_node *node, t_tokens tok, t_stack *stack)
 {
+	if (node != NULL)
+		delete_ast(&node);
+	if (tok.data != NULL)
+		free(tok.data);
 	free(stack->ar);
 	free(stack);
 }
@@ -820,30 +831,29 @@ int main(int ac, char **av)
 
 	f.ast_draw = 0;
 	if (!(stack = stack_creator(20, sizeof(t_staterror))))
-		return (0);
+		return (EXIT_FAILURE);
 	if (ac < 2)
 	{
 		printf("Usage: ./21sh \"ls -la > output.txt\" [-ast=draw]\n");
-		return (0);
+		return (EXIT_FAILURE);
 	}
 	check_param(av + 2, &f);
 	tok = get_next_token(input, stack);
 	if (is_int_empty(stack))
 		node = parse_program(input, &tok, stack);
 	if (!is_int_empty(stack))
+	{
 		print_stack_errors(stack, &tok, input);
-	if (f.ast_draw)
+		free_sh(node, tok, stack);
+		return (EXIT_FAILURE);
+	}
+	else if (f.ast_draw)
 	{
 		FILE *stream = fopen("tree.dot", "w");
 		if (!stream)
 			exit(0);
 		bst_print_dot(node, stream);
 	}
-	if (node != NULL)
-		delete_ast(&node);
-	if (tok.data != NULL)
-		free(tok.data);
-
-	free_stack(stack);
-	return 0;
+	free_sh(node, tok, stack);
+	return (EXIT_SUCCESS);
 }

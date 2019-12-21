@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:46 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/20 03:44:09 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/21 04:44:46 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ int		lex_match_dol(char *s, int *anchor, t_stack *stack)
 	{
 		if (lex_match_command_sub(s, anchor, stack))
 			skip_whitespaces(s, anchor);
+		else
+			return (0);
 	}
 	else if (ft_isalpha(s[*anchor]) || s[*anchor] == '_')
 	{
