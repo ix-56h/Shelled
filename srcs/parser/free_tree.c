@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:39 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/20 05:06:00 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/21 04:12:58 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ void deleteTree(t_node* node)
 	/* then delete the node */
 	if (node->id == ARGS)
 	{
-		while (node->args[i])
+		while (i < node->cur_size)
 		{
 			free(node->args[i]);
 			node->args[i] = NULL;
 			i++;
 		}
 		free(node->args);
+		node->args = NULL;
 	}
-	node->args = NULL;
 	if (node->data != NULL)
 	{
 		free(node->data);

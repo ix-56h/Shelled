@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:56 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/19 06:34:56 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/21 03:21:28 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,19 @@ void	print_stack_errors(t_stack *stack, t_tokens *cur, char *s)
 {
 	t_staterror err;
 
-	err = error_peek(stack);
-	ft_putstr(G_ERROR_MSGS_PREFIX[err.type]);
-	if (err.near != NULL)
+	while (stack->top != -1)
 	{
-		ft_putstr("'");
-		ft_putstr(err.near);
-		ft_putstr("'");
+		err = error_peek(stack);
+		ft_putstr(G_ERROR_MSGS_PREFIX[err.type]);
+		if (err.near != NULL)
+		{
+			ft_putstr("'");
+			ft_putstr(err.near);
+			ft_putstr("'");
+		}
+		ft_putstr("\n");
+		int_pop(stack);
 	}
-	ft_putstr("\n");
-	int_pop(stack);
 }
 
 /*

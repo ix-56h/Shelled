@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:18 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/20 02:49:55 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/21 04:12:31 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ typedef	struct	s_flags
 typedef	struct		s_node
 {
 	struct s_node	*left;
+	int				state; 
 	int				id; 
-	char			**args;
 	int				io;
+
+	char			**args;
 	//voir si on remplacerai pas ca par une struct
 	int				capacity;
 	int				cur_size;

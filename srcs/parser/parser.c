@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/20 04:55:42 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/21 04:12:45 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ t_node	*parse_and_or(char *s, t_tokens *cur, t_stack *stack)
 				node = save_node(node, tok, nod2, 5);
 			else
 			{
+				node = save_node(node, tok, nod2, 0);
 				error_push(stack, PARSE_ERROR_NEAR, tok.data);
 				return (node);
 			}
@@ -236,6 +237,7 @@ t_node	*parse_compound_command(char *s, t_tokens *cur, t_stack *stack)
 t_node	*parse_subshell(char *s, t_tokens *cur, t_stack *stack)
 {
 	t_node		*node;
+	t_tokens	tok;
 
 	if (!is_int_empty(stack))
 		return (NULL);
@@ -243,16 +245,19 @@ t_node	*parse_subshell(char *s, t_tokens *cur, t_stack *stack)
 	node = NULL;
 	if (cur->tok == TOK_LPAREN)
 	{
+		tok = *cur;
 		*cur = get_next_token(s, stack);
 		if ((node = parse_compound_list(s, cur, stack)))
 		{
 			if (cur->tok == TOK_RPAREN)
 			{
-				node->id = SUBSH;
+				free(cur->data);
+				node->state = SUBSH;
 				*cur = get_next_token(s, stack);
 			}
 			else
 				error_push(stack, PARSE_ERROR_NEAR, cur->data);
+			free(tok.data);
 		}
 	}
 	return (node);
@@ -827,7 +832,7 @@ int main(int ac, char **av)
 		node = parse_program(input, &tok, stack);
 	if (!is_int_empty(stack))
 		print_stack_errors(stack, &tok, input);
-	else if (f.ast_draw)
+	if (f.ast_draw)
 	{
 		FILE *stream = fopen("tree.dot", "w");
 		if (!stream)
