@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/21 04:53:37 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/23 00:50:36 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -619,6 +619,7 @@ t_node	*parse_io_redirect(char *s, t_tokens *cur, t_stack *stack)
 			|| (node = parse_io_here(s, cur, stack)))
 		{
 			node->io = ft_atoi(tok.data);
+			free(tok.data);
 		}		
 	}
 	else if ((node = parse_io_file(s, cur, stack))
