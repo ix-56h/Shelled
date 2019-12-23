@@ -6,7 +6,7 @@
 #    By: thdelmas <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2019/12/23 01:52:57 by niguinti         ###   ########.fr        #
+#    Updated: 2019/12/23 03:56:26 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ C_FILES_tokenizer = \
 	wordexp_misc.c \
 
 C_FILES_ast_visitor = \
+	visitor.c \
 
 
 # SUPPA concat loop

@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/23 00:50:36 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/23 03:58:37 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -812,17 +812,7 @@ t_node	*parse_sequential_sep(char *s, t_tokens *cur, t_stack *stack)
 	return (node);
 }
 
-void	free_sh(t_node *node, t_tokens tok, t_stack *stack)
-{
-	if (node != NULL)
-		delete_ast(&node);
-	if (tok.data != NULL)
-		free(tok.data);
-	free(stack->ar);
-	free(stack);
-}
-
-int main(int ac, char **av)
+/*int main(int ac, char **av)
 {
 	char		*input = av[1];
 	t_tokens	tok;
@@ -857,4 +847,4 @@ int main(int ac, char **av)
 	}
 	free_sh(node, tok, stack);
 	return (EXIT_SUCCESS);
-}
+}*/
