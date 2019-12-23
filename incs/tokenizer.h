@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:36 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/20 03:09:02 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/23 04:41:06 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef enum	e_toktype {
 	TOK_DLESSDASH,
 	TOK_CLOBBER,
 	TOK_IN,
-	TOK_SP,
 	TOK_WORD,
 	TOK_AND_IF,
 	TOK_OR_IF,
@@ -37,13 +36,7 @@ typedef enum	e_toktype {
 	TOK_DGREAT,
 	TOK_LREDI,
 	TOK_RREDI,
-	TOK_ESCAPE,
-	TOK_SUBSHELL,
-	TOK_SUBSTITUTION,
 	TOK_BANG,
-	TOK_RPAREN,
-	TOK_LPAREN,
-	TOK_NEWLINE,
 	TOK_EOF,
 	/*
 	**	Reserved words
@@ -63,6 +56,14 @@ typedef enum	e_toktype {
 	/*
 	**	Abstract token
 	*/
+	TOK_POSIX_MAX,
+	TOK_RPAREN,
+	TOK_LPAREN,
+	TOK_ESCAPE,
+	TOK_SUBSTITUTION,
+	TOK_NEWLINE,
+	TOK_SP,
+	TOK_SUBSHELL,
 	TOK_VALIDATOR,
 	TOK_OPERATOR,
 	TOK_REDIRECTION,
