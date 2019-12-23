@@ -1,19 +1,29 @@
-# IMPORTANT
-X			Error handler
-			all functions on parser have the stack in argument, need to make a if on all parse functions begin
+#	FIX-visitor
+*	Make a generic realloc
+*	Copy of env 
+*	Make a generic search engine for binary / aliases (in a **char and get the value)
+*	Execve wrapper for a user friendly usage (with visit_pipe, visit_dless etc)
 
+https://n-pn.fr/t/2318-c--programmation-systeme-execve-fork-et-pipe
+
+*	Builtints
+	- env
+	- unsetenv
+	- echo
+	- cd
+	- exit
+
+# IMPORTANT
 X			Check assignment_word 
 				- Need to check for the 7b rule if the current word is the first or not
-X			Rewrite tokenizer and process tokens as described in , don't forget all process during tokenization and after (alias, expansion etc):
-			https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_03
 
 # Important notes
 The WORD tokens shall have the word expansion rules applied to them immediately before the associated command is executed, not at the time the command is parsed.
 
-X	need to refactor code (wordexp_tokenizer.c need to be refactored, all usage of *i *anchor need to be reviewed in tokenizer.c too)
+*	https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_03
 
 # OTHERS
-?			Subshell
+
 X			need see 7b rule in misc.c
 X			here documents
 
@@ -23,8 +33,11 @@ cat /etc/passwd | tr : # | tr -s abcdefghijklmnopqrstuvwxyz| cut -c 2 | grep -e 
 t -e u -e v -e w -e x -e y -e z |sort|uniq -c
 
 #		FOR 42sh
+
+?			Subshell
+			* (Not necessary) parse all others functions (cases, functions if etc) for parse him correctly in 42sh
+
 X			Error handling for parser :
 			1 : (echo a) (echo b)
-			2 :
 
 

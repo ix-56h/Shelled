@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:36 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/23 04:41:06 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/23 06:43:37 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef enum	e_toktype {
 	/*
 	**	Abstract token
 	*/
+	TOK_PIPE,
 	TOK_POSIX_MAX,
 	TOK_RPAREN,
 	TOK_LPAREN,
@@ -67,7 +68,6 @@ typedef enum	e_toktype {
 	TOK_VALIDATOR,
 	TOK_OPERATOR,
 	TOK_REDIRECTION,
-	TOK_PIPE,
 	TOK_MAX
 }				t_toktype;
 

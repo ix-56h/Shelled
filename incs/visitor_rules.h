@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:47:24 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/23 05:37:39 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/23 06:52:51 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		(*G_VISIT_RULES[TOK_POSIX_MAX]) (t_node *node) = {
 	[TOK_AND_IF] = visit_and_if,
 	[TOK_OR_IF] = visit_or_if,
 	//[TOK_AND] = visit_and,
+	[TOK_PIPE] = visit_pipe,
 	[TOK_DLESS] = visit_dless,
 	[TOK_DGREAT] = visit_dgreat,
 	[TOK_LREDI] = visit_left_redi,

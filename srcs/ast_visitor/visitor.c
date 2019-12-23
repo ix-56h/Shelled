@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:06:21 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/23 05:37:52 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/23 07:03:02 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int		visit_and_if(t_node *node)
 {
 	if (node->left && node->right)
 	{
-		if ((*G_VISIT_RULES[node->left->tok])(node->left))
+		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left))
 		{
-			if ((*G_VISIT_RULES[node->right->tok])(node->right))
+			if (G_VISIT_RULES[node->right->tok] && (*G_VISIT_RULES[node->right->tok])(node->right))
 				return (1);
 		}
 	}
@@ -41,10 +41,23 @@ int		visit_or_if(t_node *node)
 {
 	if (node->left && node->right)
 	{
-		if ((*G_VISIT_RULES[node->left->tok])(node->left))
+		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left))
 				return (1);
-		else if ((*G_VISIT_RULES[node->right->tok])(node->right))
+		else if (G_VISIT_RULES[node->right->tok] && (*G_VISIT_RULES[node->right->tok])(node->right))
 			return (1);
+	}
+	return (0);
+}
+
+int		visit_pipe(t_node *node)
+{
+	if (node->left && node->right)
+	{
+		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left))
+		{
+			if (G_VISIT_RULES[node->right->tok] && (*G_VISIT_RULES[node->right->tok])(node->right))
+				return (1);
+		}
 	}
 	return (0);
 }
@@ -91,10 +104,15 @@ int		visit_semi(t_node *node)
 
 int		visit(t_node *root)
 {
-	if ((*G_VISIT_RULES[root->tok])(root))
+	if (!root)
+		return (1);
+	if (G_VISIT_RULES[root->tok] && (*G_VISIT_RULES[root->tok])(root))
 	{
 		printf("wahouh\n");
+		return (1);
 	}
+	else
+		printf("21sh: no visit function for '%s'\n", root->data);
 	return (0);
 }
 
