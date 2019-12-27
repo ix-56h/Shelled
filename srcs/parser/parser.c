@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/23 00:50:36 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/27 01:23:03 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,8 @@ t_node	*parse_and_or(char *s, t_tokens *cur, t_stack *stack)
 	if ((node = parse_pipeline(s, cur, stack)))
 	{
 		while ((nod2 = parse_pipeline(s, cur, stack)))
-			node = binnode(node->left, node, nod2);
+			node = binnode(node, nod2, nod2->left);
+			//node = binnode(node->left, node, nod2);
 		while ((tok = *cur).tok == TOK_AND_IF || tok.tok == TOK_OR_IF)
 		{
 			*cur = get_next_token(s, stack);
@@ -464,11 +465,17 @@ t_node	*parse_simple_command(char *s, t_tokens *cur, t_stack *stack)
 
 	if ((node = parse_cmd_prefix(s, cur, stack)))
 	{
-		if (cur->tok == ASSIGNMENT_WORD && (nod2 = parse_cmd_word(s, cur, stack)))
+		if ((nod2 = parse_cmd_word(s, cur, stack)))
 		{
+			args = nod2;
+			while (cur->tok == TOK_WORD)
+			{
+				push_args(args, cur->data);
+				*cur = get_next_token(s, stack);
+			}
 			node = binnode(node->left, node, nod2);
 			if ((nod2 = parse_cmd_suffix(s, cur, stack)))
-				node = binnode(node, nod2, nod2->right);
+				node = binnode(node, nod2, nod2->left);
 		}
 	}
 	else if ((node = parse_cmd_name(s, cur, stack)))
@@ -554,8 +561,8 @@ t_node	*parse_cmd_prefix(char *s, t_tokens *cur, t_stack *stack)
 			*cur = get_next_token(s, stack);
 		}
 	}
-	else if ((nod2 = parse_io_redirect(s, cur, stack)))
-		return (nod2);
+	else if ((node = parse_io_redirect(s, cur, stack)))
+		return (node);
 	return (node);
 }
 
