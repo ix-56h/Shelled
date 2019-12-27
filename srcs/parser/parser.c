@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/27 01:23:03 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/27 03:00:13 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -473,9 +473,14 @@ t_node	*parse_simple_command(char *s, t_tokens *cur, t_stack *stack)
 				push_args(args, cur->data);
 				*cur = get_next_token(s, stack);
 			}
-			node = binnode(node->left, node, nod2);
+			node = binnode(nod2, node, node->left);
 			if ((nod2 = parse_cmd_suffix(s, cur, stack)))
 				node = binnode(node, nod2, nod2->left);
+			while (cur->tok == TOK_WORD)
+			{
+				push_args(args, cur->data);
+				*cur = get_next_token(s, stack);
+			}
 		}
 	}
 	else if ((node = parse_cmd_name(s, cur, stack)))
