@@ -6,7 +6,7 @@
 #    By: niguinti <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2019/12/08 16:51:53 by jerry            ###   ########.fr        #
+#    Updated: 2019/12/23 01:55:30 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ OBJ_DIR := ./.obj
 
 ### SUB FILES ###
 SUB_DIRS := \
+	tokenizer \
 	parser \
+	ast_visitor \
 
 
 ### INCLUDE SRC MAKEFILE ###
