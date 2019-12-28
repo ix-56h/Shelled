@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:06:21 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/23 07:03:02 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/28 17:29:41 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		visit_right_redi(t_node *node)
 
 int		visit_semi(t_node *node)
 {
-	return (0);
+    return (visit(node->left) + visit(node->right));
 }
 
 int		visit(t_node *root)
