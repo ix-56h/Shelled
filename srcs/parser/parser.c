@@ -468,6 +468,7 @@ t_node	*parse_simple_command(char *s, t_tokens *cur, t_stack *stack)
 		if ((nod2 = parse_cmd_word(s, cur, stack)))
 		{
 			args = nod2;
+			push_args(args, ft_strdup(args->data));
 			while (cur->tok == TOK_WORD)
 			{
 				push_args(args, cur->data);
