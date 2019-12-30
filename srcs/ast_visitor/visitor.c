@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:06:21 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/23 07:03:02 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/27 04:45:36 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,27 @@ int		visit_pipe(t_node *node)
 
 int		visit_dless(t_node *node)
 {
+	if (node->left && node->right)
+	{
+		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left))
+		{
+			if (G_VISIT_RULES[node->right->tok] && (*G_VISIT_RULES[node->right->tok])(node->right))
+				return (1);
+		}
+	}
 	return (0);
 }
 
 int		visit_dgreat(t_node *node)
 {
+	if (node->left && node->right)
+	{
+		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left))
+		{
+			if (G_VISIT_RULES[node->right->tok] && (*G_VISIT_RULES[node->right->tok])(node->right))
+				return (1);
+		}
+	}
 	return (0);
 }
 
@@ -99,7 +115,7 @@ int		visit_right_redi(t_node *node)
 
 int		visit_semi(t_node *node)
 {
-	return (0);
+	return (visit(node->left) + visit(node->right));
 }
 
 int		visit(t_node *root)
