@@ -6,7 +6,7 @@
 #    By: thdelmas <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2019/12/23 06:56:03 by niguinti         ###   ########.fr        #
+#    Updated: 2019/12/30 17:28:53 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,10 @@ C_FILES_tokenizer = \
 
 C_FILES_ast_visitor = \
 	visitor.c \
+
+C_FILES_shell = \
+	main.c \
+	env.c \
 
 C_FILES_builtins = \
 				   

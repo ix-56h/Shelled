@@ -1,8 +1,21 @@
 #	FIX-visitor
-*	Make a generic realloc
-*	Copy of env 
-*	Make a generic search engine for binary / aliases (in a **char and get the value)
-*	Execve wrapper for a user friendly usage (with visit_pipe, visit_dless etc)
+	*	Make a generic realloc
+	*	Copy of env 
+	*	Make a generic search engine for binary / aliases (in a **char and get the value)
+	*	Execve wrapper for a user friendly usage (with visit_pipe, visit_dless etc)
+##	Features
+	*	|
+	[
+		*	>
+		*	<
+		*	>>
+		*	<<
+	]
+	[
+		*	>&
+		#	 2.7.6 Duplicating an Output File Descriptor
+		*	<&
+	]
 
 https://n-pn.fr/t/2318-c--programmation-systeme-execve-fork-et-pipe
 

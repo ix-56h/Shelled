@@ -6,7 +6,7 @@
 #    By: thdelmas <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 14:33:36 by thdelmas          #+#    #+#              #
-#    Updated: 2019/12/23 03:58:03 by niguinti         ###   ########.fr        #
+#    Updated: 2019/12/30 17:29:38 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ H_FILES =	\
 			visitor.h \
 			visitor_rules.h \
 			wexp_rules.h \
+			sh.h \
 
 
 # SUPPA concat loop
