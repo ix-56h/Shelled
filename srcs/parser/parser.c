@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/31 15:58:38 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/31 16:02:22 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -468,6 +468,7 @@ t_node	*parse_simple_command(char *s, t_tokens *cur, t_stack *stack)
 		if ((nod2 = parse_cmd_word(s, cur, stack)))
 		{
 			args = nod2;
+			push_args(args, ft_strdup(args->data));
 			while (cur->tok == TOK_WORD)
 			{
 				push_args(args, cur->data);
