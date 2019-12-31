@@ -6,12 +6,14 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/31 14:30:06 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/31 16:42:09 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SH_CLASS_H
 # define SH_CLASS_H
+# include <sys/types.h>
+# include <pwd.h>
 # include <parser.h>
 # include <visitor.h>
 # define PATH_MAX 256
