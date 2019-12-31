@@ -6,13 +6,11 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:28:07 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/31 16:43:27 by akeiflin         ###   ########.fr       */
+/*   Updated: 2019/12/31 17:28:39 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sh.h>
-#include <sys/types.h>
-#include <pwd.h>
 #include <unistd.h>
 
 char	**init_env(char **env)
