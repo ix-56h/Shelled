@@ -6,14 +6,11 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:28:07 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/31 18:26:03 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/31 18:28:13 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sh.h>
-#include <sys/types.h>
-#include <pwd.h>
-#include <uuid/uuid.h>
 #include <unistd.h>
 
 char	**init_env(char **env)
