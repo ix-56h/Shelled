@@ -6,7 +6,7 @@
 #    By: niguinti <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2019/12/30 17:29:20 by niguinti         ###   ########.fr        #
+#    Updated: 2019/12/31 16:09:22 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,6 @@ CFLAGS = \
 endif
 
 LFLAGS = -ltermcap \
-		 -lncurses \
 		 $(FT_LNK) \
 
 
