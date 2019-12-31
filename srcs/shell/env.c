@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:28:07 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/30 19:02:12 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/31 13:41:38 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,33 @@ char	**init_env(char **env)
 		exit(EXIT_FAILURE);
 	env[4] = 0;
 	return (env);
+}
+
+char	**cpy_env(char **envp)
+{
+	char	**cpy;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	if (!(cpy = (char **)malloc(sizeof(char *) * (i + 1))))
+		return (NULL);
+	i = 0;
+	while (envp[i])
+	{
+		if (!(cpy[i] = (char *)malloc(sizeof(char) * (ft_strlen(envp[i]) + 1))))
+			return (NULL);
+		j = 0;
+		while (envp[i][j])
+		{
+			cpy[i][j] = envp[i][j];
+			j++;
+		}
+		cpy[i][j] = 0;
+		i++;
+	}
+	cpy[i] = NULL;
+	return (cpy);
 }

@@ -6,22 +6,11 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:48 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/21 04:13:07 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/31 14:29:00 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-void	check_param(char **av, t_flags *f)
-{
-	f->ast_draw = 0;
-	while (*av)
-	{
-		if (strcmp(*av, "-ast=draw") == 0)
-			f->ast_draw = 1;
-		av++;
-	}
-}
 
 t_node	*binnode(t_node *left, t_node *mom, t_node *right)
 {

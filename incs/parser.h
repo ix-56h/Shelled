@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:18 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/30 13:41:01 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/31 14:29:17 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ t_node		*parse_wordlist(char *s, t_tokens *cur, t_stack *stack);
 */
 
 void		bst_print_dot(t_node* tree, FILE* stream);
-void		check_param(char **av, t_flags *f);
 t_node		*binnode(t_node *left, t_node *mom, t_node *right);
 t_node		*save_node(t_node *left, t_tokens tok, t_node *right, int id);
 void		applie_rule_one(char *s, t_tokens *cur);

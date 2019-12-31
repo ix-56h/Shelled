@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/30 18:57:55 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/31 14:30:06 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,16 @@ typedef	struct	s_sh
 /*
 **	main.c
 */
-
+void		check_param(char **av, t_flags *f);
+void		free_sh(t_sh *sh);
+int			init_shell(t_sh *sh, int ac, char **av, char **envp);
+void		tree_draw(t_node *node, t_flags f);
 
 
 /*
 **	env.c
 */
 char	**init_env(char **env);
+char	**cpy_env(char **envp);
 
 #endif

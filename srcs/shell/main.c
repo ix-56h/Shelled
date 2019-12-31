@@ -6,11 +6,22 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/30 19:08:36 by niguinti         ###   ########.fr       */
+/*   Updated: 2019/12/31 14:29:10 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sh.h>
+
+void	check_param(char **av, t_flags *f)
+{
+	f->ast_draw = 0;
+	while (*av)
+	{
+		if (strcmp(*av, "-ast=draw") == 0)
+			f->ast_draw = 1;
+		av++;
+	}
+}
 
 void	free_sh(t_sh *sh)
 {
@@ -41,6 +52,7 @@ int		init_shell(t_sh *sh, int ac, char **av, char **envp)
 		printf("Usage: ./21sh \"ls -la > output.txt\" [-ast=draw]\n");
 		return (0);
 	}
+	check_param(av, (&sh->f));
 	if (!(sh->stack = stack_creator(20, sizeof(t_staterror))))
 		return (0);
 	sh->node = NULL;
@@ -48,11 +60,11 @@ int		init_shell(t_sh *sh, int ac, char **av, char **envp)
 	sh->input = av[1];
 	if (!envp[0])
 		sh->env = init_env(sh->env);
-	//else
-	//	sh->env = cpy_env(envp);
+	else
+		sh->env = cpy_env(envp);
 	//cpy env and add +1 to shlvl
-	//if (!(sh->env))
-	//	return (0);
+	if (!(sh->env))
+		return (0);
 	sh->tok = get_next_token(sh->input, sh->stack);
 	return (1);
 }
