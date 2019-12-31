@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
+#    By: niguinti <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2019/12/31 16:46:21 by akeiflin         ###   ########.fr        #
+#    Updated: 2019/12/31 16:09:22 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,9 @@ SUB_DIRS := \
 	tokenizer \
 	parser \
 	ast_visitor \
-	shell \
-	builtins \
-	utils \
-	line_edit \
+	shell\
+	builtins\
+	utils\
 
 
 ### INCLUDE SRC MAKEFILE ###

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
+#    By: niguinti <niguinti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/20 19:34:49 by niguinti          #+#    #+#              #
-#    Updated: 2019/12/31 16:54:46 by akeiflin         ###   ########.fr        #
+#    Updated: 2019/08/15 15:06:16 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRC			=	ft_atoi.c         ft_islower.c      ft_memcpy.c       ft_putendl.c      
 				ft_isalpha.c      ft_memccpy.c      ft_nbrlen_base.c  ft_putstr.c       ft_strchr.c       ft_strequ.c       ft_strmap.c       ft_strnstr.c      ft_strtrimf.c	\
 				ft_isascii.c      ft_memchr.c       ft_putchar.c      ft_putstr_fd.c    ft_strclen.c      ft_striter.c      ft_strmapi.c      ft_strrchr.c      ft_tolower.c	\
 				ft_isdigit.c      ft_memcmp.c       ft_putchar_fd.c   ft_size_digit.c   ft_strclr.c       ft_striteri.c     ft_strncat.c      ft_strrev.c       ft_toupper.c	\
-				ft_isdigits.c	  ft_strichr.c		ft_calloc.c		  ft_strljoin.c  																							\
+				ft_isdigits.c		ft_strichr.c																																	\
 # Some tricks in order to get the makefile doing his job the way I want (Can't be changed)
 
 CSRC		= $(addprefix $(SRCDIR), $(SRC))
