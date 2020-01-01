@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   visitor_rules.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:47:24 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/23 06:52:51 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/01 20:20:41 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_VISITOR_RULES_H
 # define FT_VISITOR_RULES_H
 # include "tokenizer.h"
-
-int		(*G_VISIT_RULES[TOK_POSIX_MAX]) (t_node *node) = {
+# include "tokenizer.h"
+int		(*G_VISIT_RULES[TOK_POSIX_MAX]) (t_node *node, t_pipe_list *piped) = {
 	[TOK_NAME] = visit_cmd,
 	//[TOK_ASSIGNMENT_WORD] = visit_assignment_word,
 	[TOK_LESSAND] = visit_lessand,

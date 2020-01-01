@@ -9,3 +9,5 @@ tree.png
 objects/
 *.dSYM
 .vscode/
+ls
+cat
