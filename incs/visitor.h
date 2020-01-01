@@ -6,14 +6,14 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:46:14 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/01 20:19:39 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/01 23:37:49 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_VISITOR_H
 # define FT_VISITOR_H
-# define WRITE_END 0
-# define READ_END 1
+# define WRITE_END 1
+# define READ_END 0
 
 typedef  struct s_pipe_list
 {

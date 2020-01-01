@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/01 20:45:56 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/01 23:43:44 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,33 +44,34 @@ int		visit_cmd(t_node *node, t_pipe_list *piped)
 		{
 			if (piped->used == 1)
 			{
-				printf( "With stdin %i\n", piped->fd[1]);
-				dup2(piped->fd[1], 0);
+				printf( "With stdin %i\n", piped->fd[READ_END]);
+				dup2(piped->fd[READ_END], 0);
 			}
 			if (!piped->prev && piped->used != 1)
 			{
-				printf( "With stdout %i\n", piped->fd[0]);
+				printf( "With stdout %i\n", piped->fd[WRITE_END]);
 				piped->used = 1;
-				dup2(piped->fd[0], 1);
+				dup2(piped->fd[WRITE_END], 1);
 			}
 			else if (piped->next)
 			{
-				printf( "With stdout %i\n", piped->next->fd[0]);
+				printf( "With stdout %i\n", piped->next->fd[WRITE_END]);
 				piped->next->used = 1;
-				dup2(piped->next->fd[0], 1);
+				dup2(piped->next->fd[WRITE_END], 1);
 			}
 		}
 		if ((pid = fork()) == -1)
 			return (0);
 		else if (pid == 0) //FILS
 		{
-
+			close(piped->fd[READ_END]);
 			execve(node->data, node->args, NULL);
-			wait(NULL);
 			exit(1);
 		}
 		else //PARENT
 		{
+			close(piped->fd[WRITE_END]);
+			//wait(NULL);
 			restore_fd(savedfd);
 			return (1);
 		}
