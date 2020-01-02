@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/02 16:10:20 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/02 19:15:30 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,13 +189,13 @@ int		visit_dgreat(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 	{
 		if ((fd = open(node->right->data, O_CREAT | O_WRONLY | O_APPEND, 0744)) == -1)
 			return (0);
-		dl_push_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
+		dl_append_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
 		redir->in = node->io;
 		redir->out = fd;
 		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
 		{
-				dl_free_one((t_dl_node *)redir);
-				return (1);
+			dl_free_one((t_dl_node *)redir);
+			return (1);
 		}
 	}
 	return (0);
@@ -217,7 +217,7 @@ int		visit_right_redi(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 	{
 		if ((fd = open(node->right->data, O_CREAT | O_WRONLY | O_TRUNC, 0744)) == -1)
 			return (0);
-		dl_push_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
+		dl_append_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
 		redir->in = node->io;
 		redir->out = fd;
 		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))

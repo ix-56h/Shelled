@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/01 20:26:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/01 20:34:28 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/02 19:13:40 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,6 @@ int		dl_push(t_dl_node** head_ref, void *new_data)
 } 
 
 /*
-**  Add a new node before 'next_dl_node'
-**  Return 0 if succes and -1 if error
-*/
-
-int		dl_insert_before(t_dl_node* head_ref, t_dl_node* next_dl_node, void *new_data) 
-{
-    t_dl_node	*new_node;
-
-	if (next_dl_node == NULL)
-		return (-1);
-	if (!(new_node = calloc(sizeof(t_dl_node), sizeof(t_dl_node)))) //calloc pas garder
-        return (-1);
-	new_node->data = new_data;
-	new_node->prev = next_dl_node->prev;
-	next_dl_node->prev = new_node;
-	new_node->next = next_dl_node;
-	if (new_node->prev != NULL) 
-		new_node->prev->next = new_node; 
-	else
-		head_ref = new_node; 
-	return (0);
-}
-
-/*
 **  Add a new node on the end of a list
 **  Return 0 if succes and -1 if error
 */
@@ -71,7 +47,7 @@ int		dl_append(t_dl_node** head_ref, void *new_data)
 	nav_node = *head_ref;
 	while (nav_node && nav_node->next)
 		nav_node = nav_node->next;
-	if (!(new_node = calloc(sizeof(t_dl_node), sizeof(t_dl_node)))) //calloc pas garder
+	if (!(new_node = ft_calloc(sizeof(t_dl_node), sizeof(t_dl_node))))
 		return (-1);
 	new_node->data = new_data;
 	if (nav_node)
@@ -93,6 +69,48 @@ int     dl_push_node(t_dl_node** head_ref, t_dl_node *new_node, void *new_data)
 		(*head_ref)->prev = new_node; 
 	*head_ref = new_node;
     return (0);
+}
+
+int		dl_append_node(t_dl_node** head_ref, t_dl_node *new_node, void *new_data)
+{
+	t_dl_node	*nav_node;
+
+	nav_node = *head_ref;
+	while (nav_node && nav_node->next)
+		nav_node = nav_node->next;
+	new_node->data = new_data;
+	if (nav_node)
+	{
+		nav_node->next = new_node;
+		new_node->prev = nav_node;
+	}
+	else
+		*head_ref = new_node;
+	return (0);
+}
+
+/*
+**  Add a new node before 'next_dl_node'
+**  Return 0 if succes and -1 if error
+*/
+
+int		dl_insert_before(t_dl_node* head_ref, t_dl_node* next_dl_node, void *new_data) 
+{
+    t_dl_node	*new_node;
+
+	if (next_dl_node == NULL)
+		return (-1);
+	if (!(new_node = calloc(sizeof(t_dl_node), sizeof(t_dl_node)))) //calloc pas garder
+        return (-1);
+	new_node->data = new_data;
+	new_node->prev = next_dl_node->prev;
+	next_dl_node->prev = new_node;
+	new_node->next = next_dl_node;
+	if (new_node->prev != NULL) 
+		new_node->prev->next = new_node; 
+	else
+		head_ref = new_node; 
+	return (0);
 }
 
 /*
