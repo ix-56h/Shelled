@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/31 16:02:22 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/02 14:23:27 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -457,14 +457,18 @@ t_node	*parse_simple_command(char *s, t_tokens *cur, t_stack *stack)
 	t_node	*node;
 	t_node	*nod2;
 	t_node	*args;
+	t_node	*first;
 
 	if (!is_int_empty(stack))
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
-
+	first = NULL;
 	if ((node = parse_cmd_prefix(s, cur, stack)))
 	{
+		first = node;
+		while ((nod2 = parse_cmd_prefix(s, cur, stack)))
+			node = binnode(node, nod2, nod2->left);
 		if ((nod2 = parse_cmd_word(s, cur, stack)))
 		{
 			args = nod2;
@@ -474,7 +478,7 @@ t_node	*parse_simple_command(char *s, t_tokens *cur, t_stack *stack)
 				push_args(args, cur->data);
 				*cur = get_next_token(s, stack);
 			}
-			node = binnode(nod2, node, node->left);
+			binnode(nod2, first, first->left);
 			if ((nod2 = parse_cmd_suffix(s, cur, stack)))
 				node = binnode(node, nod2, nod2->left);
 			while (cur->tok == TOK_WORD)
@@ -634,7 +638,7 @@ t_node	*parse_io_redirect(char *s, t_tokens *cur, t_stack *stack)
 		{
 			node->io = ft_atoi(tok.data);
 			free(tok.data);
-		}		
+		}
 	}
 	else if ((node = parse_io_file(s, cur, stack))
 			|| (node = parse_io_here(s, cur, stack)))
