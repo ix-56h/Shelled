@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/01 20:26:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/02 19:20:18 by akeiflin         ###   ########.fr       */
+/*   Created: 2019/10/19 16:27:25 by akeiflin          #+#    #+#             */
+/*   Updated: 2020/01/02 19:29:31 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int		dl_append_node(t_dl_node** head_ref, t_dl_node *new_node, void *new_data)
 	nav_node = *head_ref;
 	while (nav_node && nav_node->next)
 		nav_node = nav_node->next;
+	if (!(new_node = ft_calloc(sizeof(t_dl_node))))
+		return (-1);
 	new_node->data = new_data;
 	if (nav_node)
 	{

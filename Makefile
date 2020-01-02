@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2020/01/01 20:27:29 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/01/02 19:27:13 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SUB_DIRS := \
 	shell \
 	builtins \
 	utils \
+	line_edit \
 
 
 ### INCLUDE SRC MAKEFILE ###

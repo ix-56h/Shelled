@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/02 19:15:30 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/02 19:36:18 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		set_redir_fd(t_redir_list *redir)
 {
 	while (redir)
 	{
-		if (dup2(redir->out, redir->in) == 1)
+		if (dup2(redir->out, redir->in) == -1)
 			return (EXIT_FAILURE);
 		redir = redir->next;
 	}

@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/01/01 20:27:20 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/01/02 19:26:56 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,21 @@ C_FILES_ast_visitor = \
 C_FILES_shell = \
 	main.c \
 	env.c \
+
+C_FILES_line_edit = \
+	alloc.c \
+	clear.c \
+	controleur.c \
+	garbage.c \
+	get_things.c \
+	historique.c \
+	ligne.c \
+	line_edit.c \
+	line_key1.c \
+	line_key2.c \
+	line_misc.c \
+	move.c \
+	term_misc.c \
 
 C_FILES_builtins = \
 				   
