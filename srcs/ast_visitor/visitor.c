@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/02 04:18:39 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/02 16:10:20 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,11 +183,18 @@ int		visit_dless(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 
 int		visit_dgreat(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 {
-	if (node->left && node->right)
+	int		fd;
+
+	if (node->right && node->right->tok == TOK_WORD)
 	{
+		if ((fd = open(node->right->data, O_CREAT | O_WRONLY | O_APPEND, 0744)) == -1)
+			return (0);
+		dl_push_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
+		redir->in = node->io;
+		redir->out = fd;
 		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
 		{
-			if (G_VISIT_RULES[node->right->tok] && (*G_VISIT_RULES[node->right->tok])(node->right, piped, redir))
+				dl_free_one((t_dl_node *)redir);
 				return (1);
 		}
 	}
@@ -208,7 +215,7 @@ int		visit_right_redi(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 
 	if (node->right && node->right->tok == TOK_WORD)
 	{
-		if ((fd = open(node->right->data, O_CREAT | O_WRONLY, 0744)) == -1)
+		if ((fd = open(node->right->data, O_CREAT | O_WRONLY | O_TRUNC, 0744)) == -1)
 			return (0);
 		dl_push_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
 		redir->in = node->io;
