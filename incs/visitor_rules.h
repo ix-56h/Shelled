@@ -6,15 +6,15 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:47:24 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/01 20:20:41 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/02 01:51:26 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_VISITOR_RULES_H
 # define FT_VISITOR_RULES_H
 # include "tokenizer.h"
-# include "tokenizer.h"
-int		(*G_VISIT_RULES[TOK_POSIX_MAX]) (t_node *node, t_pipe_list *piped) = {
+
+int		(*G_VISIT_RULES[TOK_POSIX_MAX]) (t_node *node, t_pipe_list *piped, t_redir_list *redir) = {
 	[TOK_NAME] = visit_cmd,
 	//[TOK_ASSIGNMENT_WORD] = visit_assignment_word,
 	[TOK_LESSAND] = visit_lessand,
