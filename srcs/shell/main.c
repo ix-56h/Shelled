@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/02 18:45:00 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/02 18:54:41 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ void	free_sh(t_sh *sh)
 	size_t	i;
 
 	i = 0;
+	if (sh->input)
+		free(sh->input);
+	sh->input = NULL;
 	if (sh->node != NULL)
 		delete_ast((&sh->node));
 	if ((sh->tok).data != NULL)
