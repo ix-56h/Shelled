@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/02 14:23:27 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/02 16:09:24 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -480,7 +480,12 @@ t_node	*parse_simple_command(char *s, t_tokens *cur, t_stack *stack)
 			}
 			binnode(nod2, first, first->left);
 			if ((nod2 = parse_cmd_suffix(s, cur, stack)))
+			{
+				first = nod2;
 				node = binnode(node, nod2, nod2->left);
+				while ((nod2 = parse_cmd_prefix(s, cur, stack)))
+					node = binnode(node, nod2, nod2->left);
+			}
 			while (cur->tok == TOK_WORD)
 			{
 				push_args(args, cur->data);
@@ -498,7 +503,12 @@ t_node	*parse_simple_command(char *s, t_tokens *cur, t_stack *stack)
 			*cur = get_next_token(s, stack);
 		}
 		if ((nod2 = parse_cmd_suffix(s, cur, stack)))
+		{
+			first = nod2;
 			node = binnode(node, nod2, nod2->left);
+			while ((nod2 = parse_cmd_prefix(s, cur, stack)))
+				node = binnode(node, nod2, nod2->left);
+		}
 		while (cur->tok == TOK_WORD)
 		{
 			push_args(args, cur->data);
