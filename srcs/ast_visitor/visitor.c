@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/02 02:39:57 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/02 04:18:39 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,17 @@ int		set_pipe_fd(t_pipe_list *piped)
 	return (EXIT_SUCCESS);
 }
 
+int		set_redir_fd(t_redir_list *redir)
+{
+	while (redir)
+	{
+		if (dup2(redir->out, redir->in) == 1)
+			return (EXIT_FAILURE);
+		redir = redir->next;
+	}
+	return (1);
+}
+
 int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 {
 	int	pid;
@@ -75,6 +86,8 @@ int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 	{
 		save_fd(savedfd);
 		printf( "Executing : %s\n", node->data);
+		if (redir)
+			set_redir_fd(redir);
 		if (piped)
 			set_pipe_fd(piped);
 		if ((pid = fork()) == -1)
@@ -195,10 +208,16 @@ int		visit_right_redi(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 
 	if (node->right && node->right->tok == TOK_WORD)
 	{
-		fd = open(node->right->data, O_CREAT | O_WRONLY);
+		if ((fd = open(node->right->data, O_CREAT | O_WRONLY, 0744)) == -1)
+			return (0);
 		dl_push_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
-		//
+		redir->in = node->io;
 		redir->out = fd;
+		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
+		{
+				dl_free_one((t_dl_node *)redir);
+				return (1);
+		}
 	}
 	return (0);
 }

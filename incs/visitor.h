@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:46:14 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/02 01:49:51 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/02 04:17:27 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ typedef struct s_pipe_list
 }               t_pipe_list;
 typedef struct s_redir_list
 {
-    struct s_pipe_list  *next;
-    struct s_pipe_list  *prev;
+    struct s_redir_list  *next;
+    struct s_redir_list  *prev;
     int                 in;
     int                 out;
 }               t_redir_list;
