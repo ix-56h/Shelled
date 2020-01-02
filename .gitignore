@@ -8,3 +8,6 @@ tree.dot
 tree.png
 objects/
 *.dSYM
+.vscode/
+cat
+ls

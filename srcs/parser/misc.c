@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   misc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:48 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/31 14:29:00 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/02 02:46:53 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_node	*save_node(t_node *left, t_tokens tok, t_node *right, int id)
 	if (!(node = malloc(sizeof(t_node))))
 		exit(1);
 	node->cur_size = 0;
-	node->io = 0;
+	node->io = 1;
 	if (id == ARGS)
 	{
 		if (!(node->args = ft_memalloc(sizeof(char *) * ARGS_ARR_SIZE)))
