@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:26:01 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/12/31 00:13:11 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/02 21:48:22 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,10 @@ t_winsize		get_winsize()
 {
 	t_winsize size;
 
-	ioctl(0, TIOCGWINSZ, &size);
-	return size;
+	if (ioctl(0, TIOCGWINSZ, &size) != -1)
+		return (size);
+	else
+		return ((t_winsize){-1, -1, 0, 0});
 }
 
 int				get_last_word_index(t_line *line)
