@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    sources.mk                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thdelmas <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2019/12/30 17:28:53 by niguinti         ###   ########.fr        #
+#    Updated: 2020/01/02 18:47:42 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,24 @@ C_FILES_shell = \
 	main.c \
 	env.c \
 
+C_FILES_line_edit = \
+	alloc.c \
+	clear.c \
+	controleur.c \
+	garbage.c \
+	get_things.c \
+	historique.c \
+	ligne.c \
+	line_edit.c \
+	line_key1.c \
+	line_key2.c \
+	line_misc.c \
+	move.c \
+	term_misc.c \
+
 C_FILES_builtins = \
 				   
 C_FILES_utils = \
-
+	double_linked_list.c \
 # SUPPA concat loop
 C_FILES += $(foreach SUB_DIR,$(SUB_DIRS),$(addprefix $(SUB_DIR)/,$(C_FILES_$(SUB_DIR))))

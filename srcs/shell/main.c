@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/31 14:29:10 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/02 18:45:00 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <signal.h>
 #include <sh.h>
+#include "ligne.h"
 
 void	check_param(char **av, t_flags *f)
 {
@@ -21,6 +23,21 @@ void	check_param(char **av, t_flags *f)
 			f->ast_draw = 1;
 		av++;
 	}
+}
+
+void		free_env(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env && env[i])
+	{
+		free(env[i]);
+		++i;
+	}
+	if (env && env[i])
+		free(env[i]);
+	free(env);
 }
 
 void	free_sh(t_sh *sh)
@@ -34,30 +51,15 @@ void	free_sh(t_sh *sh)
 		free((sh->tok).data);
 	free((sh->stack)->ar);
 	free((sh->stack));
-	if (sh->env)
-	{
-		while ((sh->env)[i])
-		{
-			free((sh->env)[i]);
-			i++;
-		}
-		free((sh->env));
-	}
 }
 
 int		init_shell(t_sh *sh, int ac, char **av, char **envp)
 {
-	if (ac < 2)
-	{
-		printf("Usage: ./21sh \"ls -la > output.txt\" [-ast=draw]\n");
-		return (0);
-	}
 	check_param(av, (&sh->f));
 	if (!(sh->stack = stack_creator(20, sizeof(t_staterror))))
 		return (0);
 	sh->node = NULL;
 	sh->env = NULL;
-	sh->input = av[1];
 	if (!envp[0])
 		sh->env = init_env(sh->env);
 	else
@@ -65,7 +67,8 @@ int		init_shell(t_sh *sh, int ac, char **av, char **envp)
 	//cpy env and add +1 to shlvl
 	if (!(sh->env))
 		return (0);
-	sh->tok = get_next_token(sh->input, sh->stack);
+	init_term();
+	signal(SIGWINCH, &handle_resize);
 	return (1);
 }
 
@@ -80,7 +83,53 @@ void	tree_draw(t_node *node, t_flags f)
 	}
 }
 
+void	re_init_sh(t_sh *sh)
+{
+	if (!(sh->stack = stack_creator(20, sizeof(t_staterror))))
+		return ;
+	sh->node = NULL;
+	sh->env = NULL;
+}
+
 int main(int ac, char **av, char **envp)
+{
+	t_sh		sh;
+	t_dl_node		*head;
+	t_line			*line;
+
+	head = NULL;
+	if (init_shell(&sh, ac, av, envp) == 0)
+		return (EXIT_FAILURE);
+	while (1)
+	{
+		sh.input = run_line_edit();
+		sh.tok = get_next_token(sh.input, sh.stack);
+		if (is_int_empty(sh.stack))
+			sh.node = parse_program(sh.input, &(sh.tok), sh.stack);
+			
+		// pour l'exit, on va voir de peut-etre faire une global voir 
+		if (ft_strcmp(sh.input, "exit") == 0) //stop temporaire???
+			break;
+
+		if (!is_int_empty(sh.stack))
+		{
+			print_stack_errors(sh.stack, &(sh.tok), sh.input);
+			free_sh(&sh);
+			return (EXIT_FAILURE);
+		}
+		else
+			visit(sh.node);	
+		free_sh(&sh);
+		re_init_sh(&sh);
+	}
+	free_historic();
+	tree_draw(sh.node, sh.f);
+	free_sh(&sh);
+	free_env(sh.env);
+	return (EXIT_SUCCESS);
+}
+
+/*int main(int ac, char **av, char **envp)
 {
 	t_sh		sh;
 
@@ -100,3 +149,4 @@ int main(int ac, char **av, char **envp)
 	free_sh(&sh);
 	return (EXIT_SUCCESS);
 }
+*/

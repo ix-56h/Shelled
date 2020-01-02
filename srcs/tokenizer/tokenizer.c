@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:10 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/23 00:50:19 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/02 18:43:19 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,10 @@ t_tokens	get_next_token(char *s, t_stack *stack)
 	static int		i = 0;
 
 	if (s[i] == '\0')
+	{
+		i = 0;
 		return (save_token(s, 0, TOK_EOF));
+	}
 	if (!(chr_class = get_chr_class[(unsigned char)s[i]]))
 		return (token_error(UNRECOGNIZED_TOKEN, stack, s[i]));
 	if (chr_class == CHR_COMMENT || chr_class == CHR_SP)
