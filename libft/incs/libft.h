@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 23:02:11 by niguinti          #+#    #+#             */
-/*   Updated: 2019/08/14 18:14:05 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/02 19:18:51 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,5 @@ int				ft_tolower(int c);
 int				ft_toupper(int c);
 char			*ft_itoa_base(int value, int base, int caps);
 int				ft_nbrlen_base(long long n, int base);
+void			*ft_calloc(size_t size);
 #endif

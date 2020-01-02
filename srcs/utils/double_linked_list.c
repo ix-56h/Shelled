@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/01 20:26:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/02 19:13:40 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/02 19:20:18 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		dl_append(t_dl_node** head_ref, void *new_data)
 	nav_node = *head_ref;
 	while (nav_node && nav_node->next)
 		nav_node = nav_node->next;
-	if (!(new_node = ft_calloc(sizeof(t_dl_node), sizeof(t_dl_node))))
+	if (!(new_node = ft_calloc(sizeof(t_dl_node))))
 		return (-1);
 	new_node->data = new_data;
 	if (nav_node)
