@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/02 21:56:19 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/03 19:00:31 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	tree_draw(t_node *node, t_flags f)
 		if (!stream)
 			exit(0);
 		bst_print_dot(node, stream);
+		fclose(stream);
 	}
 }
 
@@ -121,12 +122,15 @@ int main(int ac, char **av, char **envp)
 			return (EXIT_FAILURE);
 		}
 		else
+		{
+			tree_draw(sh.node, sh.f);
 			visit(sh.node);	
+		}
 		free_sh(&sh);
 		re_init_sh(&sh);
 	}
 	free_historic();
-	tree_draw(sh.node, sh.f);
+	
 	free_sh(&sh);
 	free_env(sh.env);
 	close(0);close(1);close(2); // a des fin de debug

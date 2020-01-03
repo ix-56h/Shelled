@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/03 03:03:40 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/03 19:16:28 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,19 @@ int		set_used_fd(t_pipe_list *piped)
 
 int		set_redir_fd(t_redir_list *redir)
 {
-	while (redir)
+	if (redir)
 	{
-		if (dup2(redir->out, redir->in) == -1)
-			return (EXIT_FAILURE);
-		close(redir->out);
-		redir = redir->next;
+		while (redir)
+		{
+			if (redir->out == -1)
+				close(redir->in);
+			else if (dup2(redir->out, redir->in) == -1)
+				return (EXIT_FAILURE);
+			close(redir->out);
+			redir = redir->next;
+		}
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
@@ -125,13 +130,12 @@ int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 	if (node->tok == TOK_WORD)
 	{
 		save_fd(savedfd);
-		if (redir)
-			set_redir_fd(redir);
 		if ((pid = fork()) == -1)
 			return (0);
 		else if (pid == 0) //FILS
 		{
 			set_pipe_fd(piped);
+			set_redir_fd(redir);
 			execve(node->data, node->args, NULL);
 			exit(1);
 		}
@@ -283,7 +287,10 @@ int		visit_greatand(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 	{
 		dl_append_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
 		redir->in = node->io;
-		redir->out = ft_atoi(node->right->data);
+		if (ft_strcmp(node->right->data, "-") == 0)
+			redir->out = -1;
+		else
+			redir->out = ft_atoi(node->right->data);
 		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
 		{
 				dl_free_one((t_dl_node *)redir);
