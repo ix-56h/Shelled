@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/02 18:54:41 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/02 21:56:19 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ int main(int ac, char **av, char **envp)
 	tree_draw(sh.node, sh.f);
 	free_sh(&sh);
 	free_env(sh.env);
+	close(0);close(1);close(2); // a des fin de debug
 	return (EXIT_SUCCESS);
 }
 

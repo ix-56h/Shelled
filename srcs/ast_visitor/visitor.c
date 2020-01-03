@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/02 19:36:18 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/03 01:35:21 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ int	restore_fd(int savedfd[3])
 		return (EXIT_FAILURE);
 	if (dup2(savedfd[2], STDERR_FILENO) == -1)
 		return (EXIT_FAILURE);
+	close(savedfd[0]);
+	close(savedfd[1]);
+	close(savedfd[2]);
 	return (EXIT_SUCCESS);
 }
 
@@ -45,22 +48,45 @@ int		set_pipe_fd(t_pipe_list *piped)
 {
 	if (piped->used == 1)
 	{
-		//printf( "With stdin %i\n", piped->fd[READ_END]);
-		if (dup2(piped->fd[READ_END], 0) == -1)
+		if (dup2(piped->fd[READ_END], STDIN_FILENO) == -1)
 			return (EXIT_FAILURE);
 	}
 	if (!piped->prev && piped->used != 1)
 	{
-		//printf( "With stdout %i\n", piped->fd[WRITE_END]);
-		if (dup2(piped->fd[WRITE_END], 1) == -1)
+		if (dup2(piped->fd[WRITE_END], STDOUT_FILENO) == -1)
 			return (EXIT_FAILURE);
+	}
+	else if (piped->next)
+	{
+		if (dup2(piped->next->fd[WRITE_END], STDOUT_FILENO) == -1)
+			return (EXIT_FAILURE); ;
+	}
+	return (EXIT_SUCCESS);
+}
+
+int		close_unused_piped_fd(t_pipe_list *piped)
+{
+	if (piped->used == 1)
+		close(piped->fd[WRITE_END]);
+	if (!piped->prev && piped->used != 1)
+		close(piped->fd[READ_END]);
+	else if (piped->next)
+		close(piped->fd[READ_END]);
+	return (EXIT_SUCCESS);
+}
+
+int		close_and_set_used_piped_fd(t_pipe_list *piped)
+{
+	if (piped->used == 1)
+		close(piped->fd[READ_END]);
+	if (!piped->prev && piped->used != 1)
+	{
+		close(piped->fd[WRITE_END]);
 		piped->used = 1;
 	}
 	else if (piped->next)
 	{
-		//printf( "With stdout %i\n", piped->next->fd[WRITE_END]);
-		if (dup2(piped->next->fd[WRITE_END], 1) == -1)
-			return (EXIT_FAILURE); 
+		close(piped->fd[WRITE_END]);
 		piped->next->used = 1;
 	}
 	return (EXIT_SUCCESS);
@@ -72,6 +98,7 @@ int		set_redir_fd(t_redir_list *redir)
 	{
 		if (dup2(redir->out, redir->in) == -1)
 			return (EXIT_FAILURE);
+		close(redir->out);
 		redir = redir->next;
 	}
 	return (1);
@@ -95,14 +122,14 @@ int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 		else if (pid == 0) //FILS
 		{
 			if (piped)
-				close(piped->fd[READ_END]);
+				close_unused_piped_fd(piped);
 			execve(node->data, node->args, NULL);
 			exit(1);
 		}
 		else //PARENT
 		{
 			if (piped)
-				close(piped->fd[WRITE_END]);
+				close_and_set_used_piped_fd(piped);
 			if (!piped  || (piped && !piped->next))
 				wait(NULL);
 			restore_fd(savedfd);
@@ -239,9 +266,17 @@ int		visit_lessand(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 
 int		visit_greatand(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 {
-	/*
-	** Function for 42sh
-	*/
+	if (node->right && node->right->tok == TOK_WORD)
+	{
+		dl_append_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
+		redir->in = node->io;
+		redir->out = ft_atoi(node->right->data);
+		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
+		{
+				dl_free_one((t_dl_node *)redir);
+				return (1);
+		}
+	}
 	return (0);
 }
 
