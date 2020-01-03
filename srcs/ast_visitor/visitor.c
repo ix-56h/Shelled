@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/03 01:35:21 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/03 03:03:40 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,50 +46,63 @@ int	restore_fd(int savedfd[3])
 
 int		set_pipe_fd(t_pipe_list *piped)
 {
-	if (piped->used == 1)
+	if (piped)
 	{
-		if (dup2(piped->fd[READ_END], STDIN_FILENO) == -1)
-			return (EXIT_FAILURE);
-	}
-	if (!piped->prev && piped->used != 1)
-	{
-		if (dup2(piped->fd[WRITE_END], STDOUT_FILENO) == -1)
-			return (EXIT_FAILURE);
-	}
-	else if (piped->next)
-	{
-		if (dup2(piped->next->fd[WRITE_END], STDOUT_FILENO) == -1)
-			return (EXIT_FAILURE); ;
+		if (piped->used == 1)
+		{
+			if (dup2(piped->fd[READ_END], STDIN_FILENO) == -1)
+			{
+				close(piped->fd[WRITE_END]);
+				close(piped->fd[READ_END]);
+				return (EXIT_FAILURE);
+			}
+		}
+		if (!piped->prev && piped->used != 1)
+		{
+			if (dup2(piped->fd[WRITE_END], STDOUT_FILENO) == -1)
+			{
+				close(piped->fd[WRITE_END]);
+				close(piped->fd[READ_END]);
+				return (EXIT_FAILURE);
+			}
+		}
+		else if (piped->next)
+		{
+			if (dup2(piped->next->fd[WRITE_END], STDOUT_FILENO) == -1)
+			{
+				close(piped->next->fd[WRITE_END]);
+				close(piped->next->fd[READ_END]);
+				return (EXIT_FAILURE); ;
+			}
+		}
 	}
 	return (EXIT_SUCCESS);
 }
 
-int		close_unused_piped_fd(t_pipe_list *piped)
+int		close_used_pipe_fd(t_pipe_list *piped)
 {
-	if (piped->used == 1)
-		close(piped->fd[WRITE_END]);
-	if (!piped->prev && piped->used != 1)
-		close(piped->fd[READ_END]);
-	else if (piped->next)
-		close(piped->fd[READ_END]);
+	if (piped)
+	{
+		if (piped->used == 1)
+			close(piped->fd[READ_END]);
+		if (!piped->prev && piped->used != 1)
+			close(piped->fd[WRITE_END]);
+		else if (piped->next)
+			close(piped->next->fd[WRITE_END]);
+	}
 	return (EXIT_SUCCESS);
 }
 
-int		close_and_set_used_piped_fd(t_pipe_list *piped)
-{
-	if (piped->used == 1)
-		close(piped->fd[READ_END]);
-	if (!piped->prev && piped->used != 1)
+int		set_used_fd(t_pipe_list *piped)
+{	if (piped)
 	{
-		close(piped->fd[WRITE_END]);
-		piped->used = 1;
-	}
-	else if (piped->next)
-	{
-		close(piped->fd[WRITE_END]);
-		piped->next->used = 1;
+		if (!piped->prev && piped->used != 1)
+			piped->used = 1;
+		else if (piped->next)
+			piped->next->used = 1;
 	}
 	return (EXIT_SUCCESS);
+
 }
 
 int		set_redir_fd(t_redir_list *redir)
@@ -112,27 +125,28 @@ int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 	if (node->tok == TOK_WORD)
 	{
 		save_fd(savedfd);
-		printf( "Executing : %s\n", node->data);
 		if (redir)
 			set_redir_fd(redir);
-		if (piped)
-			set_pipe_fd(piped);
 		if ((pid = fork()) == -1)
 			return (0);
 		else if (pid == 0) //FILS
 		{
-			if (piped)
-				close_unused_piped_fd(piped);
+			set_pipe_fd(piped);
 			execve(node->data, node->args, NULL);
 			exit(1);
 		}
 		else //PARENT
 		{
-			if (piped)
-				close_and_set_used_piped_fd(piped);
-			if (!piped  || (piped && !piped->next))
+			close_used_pipe_fd(piped);
+			if (piped == NULL)
 				wait(NULL);
+			else if (!piped->next && piped->used == 1)
+				wait(NULL);
+			else
+				waitpid(pid, NULL, WNOHANG);
+			set_used_fd(piped);
 			restore_fd(savedfd);
+			printf( "Done: %s\n", node->data);
 			return (1);
 		}
 	}
@@ -182,7 +196,6 @@ int		visit_pipe(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 		piped->fd[0] = pipefd[0];
 		piped->fd[1] = pipefd[1];
 		piped->used = 0;
-		printf("New pipe fd: %i, %i\n", pipefd[WRITE_END], pipefd[READ_END]);
 		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
 		{
 			if (G_VISIT_RULES[node->right->tok] && (*G_VISIT_RULES[node->right->tok])(node->right, piped, redir))
@@ -301,7 +314,6 @@ int		visit(t_node *root)
 	{
 		if ((*G_VISIT_RULES[root->tok])(root, NULL, NULL))
 		{
-			printf("wahouh\n");
 			return (1);
 		}
 	}
