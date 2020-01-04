@@ -86,7 +86,9 @@ char			*run_line_edit(void);
 */
 
 int				init_term(void);
-struct termios	*save_term(void);
+int				restore_term(void);
+int				set_term_mode(void);
+struct termios	*save_term(int act);
 void			term_other(char *str, int iter);
 void			cur_mov(int y, int x);
 
