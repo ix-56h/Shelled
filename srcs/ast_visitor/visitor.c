@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/03 19:16:28 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/04 02:56:50 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int		set_redir_fd(t_redir_list *redir)
 {
 	if (redir)
 	{
+		redir = (t_redir_list *)dl_get_last((t_dl_node *)redir);
 		while (redir)
 		{
 			if (redir->out == -1)
@@ -116,7 +117,7 @@ int		set_redir_fd(t_redir_list *redir)
 			else if (dup2(redir->out, redir->in) == -1)
 				return (EXIT_FAILURE);
 			close(redir->out);
-			redir = redir->next;
+			redir = redir->prev;
 		}
 	}
 	return (EXIT_SUCCESS);
@@ -134,6 +135,7 @@ int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 			return (0);
 		else if (pid == 0) //FILS
 		{
+		//	for(int i = 1; i; 0);
 			set_pipe_fd(piped);
 			set_redir_fd(redir);
 			execve(node->data, node->args, NULL);
@@ -212,31 +214,26 @@ int		visit_pipe(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 	return (0);
 }
 
-int		visit_dless(t_node *node, t_pipe_list *piped, t_redir_list *redir)
+int		visit_dless(t_node *node, t_pipe_list *piped, t_redir_list *redir) // <<
 {
-	if (node->left && node->right)
-	{
-		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
-		{
-			if (G_VISIT_RULES[node->right->tok] && (*G_VISIT_RULES[node->right->tok])(node->right, piped, redir))
-				return (1);
-		}
-	}
 	return (0);
 }
 
-int		visit_dgreat(t_node *node, t_pipe_list *piped, t_redir_list *redir)
+int		visit_dgreat(t_node *node, t_pipe_list *piped, t_redir_list *redir) // >>
 {
 	int		fd;
 
-	if (node->right && node->right->tok == TOK_WORD)
+	if (node->left && node->right && node->right->tok == TOK_WORD)
 	{
-		if ((fd = open(node->right->data, O_CREAT | O_WRONLY | O_APPEND, 0744)) == -1)
+		if ((fd = open(node->right->data, (O_CREAT | O_WRONLY | O_APPEND), 0644)) == -1)
 			return (0);
-		dl_append_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
-		redir->in = node->io;
+		dl_push_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
+		if (node->io != -1)
+			redir->in = node->io;
+		else
+			redir->in = STDOUT_FILENO;
 		redir->out = fd;
-		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
+		if ((*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
 		{
 			dl_free_one((t_dl_node *)redir);
 			return (1);
@@ -245,24 +242,46 @@ int		visit_dgreat(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 	return (0);
 }
 
-int		visit_left_redi(t_node *node, t_pipe_list *piped, t_redir_list *redir)
+int		visit_left_redi(t_node *node, t_pipe_list *piped, t_redir_list *redir) // <
 {
-	/*
-	** Function for 42sh
-	*/
+	int		fd;
+
+	if (node->left && node->right && node->right->tok == TOK_WORD)
+	{
+		if ((fd = open(node->right->data, O_RDONLY)) == -1)
+		{
+			ft_putstr("21sh: Aucun fichier ou dossier de ce type:");
+			ft_putstr(node->right->data);
+			return (0);
+		}
+		dl_push_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
+		if (node->io != -1)
+			redir->in = node->io;
+		else
+			redir->in = STDIN_FILENO;
+		redir->out = fd;
+		if ((*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
+		{
+			dl_free_one((t_dl_node *)redir);
+			return (1);
+		}
+	}
 	return (0);
 }
 
-int		visit_right_redi(t_node *node, t_pipe_list *piped, t_redir_list *redir)
+int		visit_right_redi(t_node *node, t_pipe_list *piped, t_redir_list *redir) // >
 {
 	int		fd;
 
 	if (node->right && node->right->tok == TOK_WORD)
 	{
-		if ((fd = open(node->right->data, O_CREAT | O_WRONLY | O_TRUNC, 0744)) == -1)
+		if ((fd = open(node->right->data, (O_CREAT | O_WRONLY | O_TRUNC), 0644)) == -1)
 			return (0);
-		dl_append_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
-		redir->in = node->io;
+		dl_push_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
+		if (node->io != -1)
+			redir->in = node->io;
+		else
+			redir->in = STDOUT_FILENO;
 		redir->out = fd;
 		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
 		{
@@ -273,20 +292,38 @@ int		visit_right_redi(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 	return (0);
 }
 
-int		visit_lessand(t_node *node, t_pipe_list *piped, t_redir_list *redir)
+int		visit_lessand(t_node *node, t_pipe_list *piped, t_redir_list *redir) // <&
 {
-	/*
-	** Function for 42sh
-	*/
+	//Je sais pas vraiment comment ca marche 🤔
+	if (node->right && node->right->tok == TOK_WORD)
+	{
+		dl_push_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
+		if (node->io != -1)
+			redir->in = node->io;
+		else
+			redir->in = STDIN_FILENO;
+		if (ft_strcmp(node->right->data, "-") == 0)
+			redir->out = -1;
+		else
+			redir->out = ft_atoi(node->right->data);
+		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
+		{
+				dl_free_one((t_dl_node *)redir);
+				return (1);
+		}
+	}
 	return (0);
 }
 
-int		visit_greatand(t_node *node, t_pipe_list *piped, t_redir_list *redir)
+int		visit_greatand(t_node *node, t_pipe_list *piped, t_redir_list *redir) // >&
 {
 	if (node->right && node->right->tok == TOK_WORD)
 	{
-		dl_append_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
-		redir->in = node->io;
+		dl_push_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
+		if (node->io != -1)
+			redir->in = node->io;
+		else
+			redir->in = STDOUT_FILENO;
 		if (ft_strcmp(node->right->data, "-") == 0)
 			redir->out = -1;
 		else
@@ -305,11 +342,26 @@ int		visit_semi(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 	return (visit(node->left) + visit(node->right));
 }
 
-int		visit_lessgreat(t_node *node, t_pipe_list *piped, t_redir_list *redir)
+int		visit_lessgreat(t_node *node, t_pipe_list *piped, t_redir_list *redir) // <>
 {
-	/*
-	** Function for 42sh
-	*/
+	int		fd;
+
+	if (node->left && node->right && node->right->tok == TOK_WORD)
+	{
+		if ((fd = open(node->right->data, (O_CREAT | O_RDWR), 0644)) == -1)
+			return (0);
+		dl_push_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
+		if (node->io != -1)
+			redir->in = node->io;
+		else
+			redir->in = STDIN_FILENO;
+		redir->out = fd;
+		if ((*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
+		{
+			dl_free_one((t_dl_node *)redir);
+			return (1);
+		}
+	}
 	return (0);
 }
 
