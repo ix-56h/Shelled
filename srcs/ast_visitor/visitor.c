@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/04 02:56:50 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/04 19:11:34 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,9 @@ int		set_redir_fd(t_redir_list *redir)
 	return (EXIT_SUCCESS);
 }
 
+int				restore_term(void);
+int				set_term_mode(void);
+
 int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 {
 	int	pid;
@@ -131,6 +134,7 @@ int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 	if (node->tok == TOK_WORD)
 	{
 		save_fd(savedfd);
+		restore_term();
 		if ((pid = fork()) == -1)
 			return (0);
 		else if (pid == 0) //FILS
@@ -149,7 +153,8 @@ int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 			else if (!piped->next && piped->used == 1)
 				wait(NULL);
 			else
-				waitpid(pid, NULL, WNOHANG);
+				waitpid(-2, NULL, WNOHANG);
+			set_term_mode();
 			set_used_fd(piped);
 			restore_fd(savedfd);
 			printf( "Done: %s\n", node->data);
