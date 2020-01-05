@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/05 20:37:55 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/05 20:42:10 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ int		set_redir_fd(t_redir_list *redir)
 int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 {
 	int	pid;
-	int	savedfd[3];
 
 	if (node->tok == TOK_WORD)
 	{
@@ -164,7 +163,6 @@ int		visit_pipe(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 	{
 		if (pipe(pipefd) == -1)
 			return (0);
-		printf("Pipe: %i, %i\n", pipefd[0], pipefd[1]);
 		dl_push_node((t_dl_node **)&piped, malloc(sizeof(t_pipe_list)), NULL);
 		piped->fd[0] = pipefd[0];
 		piped->fd[1] = pipefd[1];
