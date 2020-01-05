@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/04 19:11:34 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/05 20:37:55 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,7 @@
 #include <visitor.h>
 #include "visitor_rules.h"
 #include "double_linked_list.h"
-
-int	save_fd(int	savedfd[3])
-{
-	if ((savedfd[0] = dup(STDIN_FILENO)) == -1)
-		return (EXIT_FAILURE);
-	if ((savedfd[1] = dup(STDOUT_FILENO)) == -1)
-		return (EXIT_FAILURE);
-	if ((savedfd[2] = dup(STDERR_FILENO)) == -1)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
-int	restore_fd(int savedfd[3])
-{
-	if (dup2(savedfd[0], STDIN_FILENO) == -1)
-		return (EXIT_FAILURE);
-	if (dup2(savedfd[1], STDOUT_FILENO) == -1)
-		return (EXIT_FAILURE);
-	if (dup2(savedfd[2], STDERR_FILENO) == -1)
-		return (EXIT_FAILURE);
-	close(savedfd[0]);
-	close(savedfd[1]);
-	close(savedfd[2]);
-	return (EXIT_SUCCESS);
-}
+#include "ligne.h"
 
 int		set_pipe_fd(t_pipe_list *piped)
 {
@@ -51,29 +27,25 @@ int		set_pipe_fd(t_pipe_list *piped)
 		if (piped->used == 1)
 		{
 			if (dup2(piped->fd[READ_END], STDIN_FILENO) == -1)
-			{
-				close(piped->fd[WRITE_END]);
-				close(piped->fd[READ_END]);
 				return (EXIT_FAILURE);
-			}
 		}
 		if (!piped->prev && piped->used != 1)
 		{
 			if (dup2(piped->fd[WRITE_END], STDOUT_FILENO) == -1)
-			{
-				close(piped->fd[WRITE_END]);
-				close(piped->fd[READ_END]);
 				return (EXIT_FAILURE);
-			}
+
 		}
 		else if (piped->next)
 		{
 			if (dup2(piped->next->fd[WRITE_END], STDOUT_FILENO) == -1)
-			{
-				close(piped->next->fd[WRITE_END]);
-				close(piped->next->fd[READ_END]);
-				return (EXIT_FAILURE); ;
-			}
+				return (EXIT_FAILURE);
+		}
+		close(piped->fd[WRITE_END]);
+		close(piped->fd[READ_END]);
+		while ((piped = piped->next))
+		{
+			close(piped->fd[WRITE_END]);
+			close(piped->fd[READ_END]);
 		}
 	}
 	return (EXIT_SUCCESS);
@@ -94,7 +66,8 @@ int		close_used_pipe_fd(t_pipe_list *piped)
 }
 
 int		set_used_fd(t_pipe_list *piped)
-{	if (piped)
+{	
+	if (piped)
 	{
 		if (!piped->prev && piped->used != 1)
 			piped->used = 1;
@@ -102,7 +75,6 @@ int		set_used_fd(t_pipe_list *piped)
 			piped->next->used = 1;
 	}
 	return (EXIT_SUCCESS);
-
 }
 
 int		set_redir_fd(t_redir_list *redir)
@@ -123,9 +95,6 @@ int		set_redir_fd(t_redir_list *redir)
 	return (EXIT_SUCCESS);
 }
 
-int				restore_term(void);
-int				set_term_mode(void);
-
 int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 {
 	int	pid;
@@ -133,13 +102,11 @@ int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 
 	if (node->tok == TOK_WORD)
 	{
-		save_fd(savedfd);
 		restore_term();
 		if ((pid = fork()) == -1)
 			return (0);
 		else if (pid == 0) //FILS
 		{
-		//	for(int i = 1; i; 0);
 			set_pipe_fd(piped);
 			set_redir_fd(redir);
 			execve(node->data, node->args, NULL);
@@ -148,16 +115,10 @@ int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 		else //PARENT
 		{
 			close_used_pipe_fd(piped);
-			if (piped == NULL)
-				wait(NULL);
-			else if (!piped->next && piped->used == 1)
-				wait(NULL);
-			else
-				waitpid(-2, NULL, WNOHANG);
+			if ((piped && !piped->next && piped->used == 1) || !piped)
+				while (wait(NULL) > 0);
 			set_term_mode();
 			set_used_fd(piped);
-			restore_fd(savedfd);
-			printf( "Done: %s\n", node->data);
 			return (1);
 		}
 	}
@@ -203,6 +164,7 @@ int		visit_pipe(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 	{
 		if (pipe(pipefd) == -1)
 			return (0);
+		printf("Pipe: %i, %i\n", pipefd[0], pipefd[1]);
 		dl_push_node((t_dl_node **)&piped, malloc(sizeof(t_pipe_list)), NULL);
 		piped->fd[0] = pipefd[0];
 		piped->fd[1] = pipefd[1];
