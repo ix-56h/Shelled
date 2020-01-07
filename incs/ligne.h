@@ -6,9 +6,10 @@
 #endif
 
 
-# define BUFFSIZE				10
+# define BUFFSIZE				512
 # define PROMPT_DEFAULT			"42sh> "
 # define PROMPT_SUBLINE			"> "
+# define PROMPT_HEREDOC			"heredoc> "
 
 # if defined(__ITERM__)
 #  define KEY_CTRL_LEFT_CODE	"\x1b\x1b[D"
@@ -78,7 +79,7 @@ typedef struct	s_line_and_node
 }				t_line_and_node;
 
 //t_line_and_node	g_for_resize;
-
+char			*run_heredoc(char	*endstring);
 char			*run_line_edit(void);
 
 /*
