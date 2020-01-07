@@ -25,6 +25,7 @@ char	*run_heredoc(char	*endstring)
 	}
 	dl_del_one_with_data(dl_get_last(head), free_line);
 	ret = concat_lines(head);
+	ret = ft_strljoin(ret, "\n", FIRST);
 	dl_free_whith_content(head, free_line);
 	return (ret);
 }
