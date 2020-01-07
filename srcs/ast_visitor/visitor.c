@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/07 18:48:47 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/07 19:10:39 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int		set_redir_fd(t_redir_list *redir)
 {
 	if (redir)
 	{
-		redir = (t_redir_list *)dl_get_last((t_dl_node *)redir);
+	//	redir = (t_redir_list *)dl_get_last((t_dl_node *)redir);
 		while (redir)
 		{
 			if (redir->out == -1)
@@ -89,7 +89,7 @@ int		set_redir_fd(t_redir_list *redir)
 			else if (dup2(redir->out, redir->in) == -1)
 				return (EXIT_FAILURE);
 			close(redir->out);
-			redir = redir->prev;
+			redir = redir->next;
 		}
 	}
 	return (EXIT_SUCCESS);
