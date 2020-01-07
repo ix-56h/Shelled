@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/02 18:54:41 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/07 15:47:02 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		init_shell(t_sh *sh, int ac, char **av, char **envp)
 	if (!(sh->env))
 		return (0);
 	init_term();
-	signal(SIGWINCH, &handle_resize);
+	//signal(SIGWINCH, &handle_resize);
 	return (1);
 }
 
