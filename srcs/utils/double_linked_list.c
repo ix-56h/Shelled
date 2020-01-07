@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 16:27:25 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/02 19:29:31 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/07 18:26:13 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,18 +170,39 @@ t_dl_node	*dl_get_head(t_dl_node *node)
 	return (res);
 }
 
-void	dl_free_one(t_dl_node *to_free)
+void	dl_del_one(t_dl_node *node)
 {
 	t_dl_node	*next;
-	t_dl_node	*last;
+	t_dl_node	*prev;
 
-	next = to_free->next;
-	last = to_free->prev;
-	if (last)
-		to_free->prev->next = next;
-	if (next)
-		to_free->next->prev = last;
-	free(to_free);
+	if (node)
+	{
+		next = node->next;
+		prev = node->prev;
+		free(node);
+		if (next)
+			next->prev = prev;
+		if (prev)
+			prev->next = next;
+	}
+}
+
+void	dl_del_one_with_data(t_dl_node *node, void (*free_fonc)())
+{
+	t_dl_node	*next;
+	t_dl_node	*prev;
+
+	if (node)
+	{
+		next = node->next;
+		prev = node->prev;
+		free_fonc(node->data);
+		free(node);
+		if (next)
+			next->prev = prev;
+		if (prev)
+			prev->next = next;
+	}
 }
 
 void	dl_free_list(t_dl_node *head)

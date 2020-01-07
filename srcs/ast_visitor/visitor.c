@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/05 20:42:10 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/07 18:48:47 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ int		visit_pipe(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 		{
 			if (G_VISIT_RULES[node->right->tok] && (*G_VISIT_RULES[node->right->tok])(node->right, piped, redir))
 			{
-				dl_free_one((t_dl_node *)piped);
+				dl_del_one((t_dl_node *)piped);
 				return (1);
 			}
 		}
@@ -181,6 +181,28 @@ int		visit_pipe(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 
 int		visit_dless(t_node *node, t_pipe_list *piped, t_redir_list *redir) // <<
 {
+	int		pipefd[2];
+	char	*str;
+
+	if (node->right)
+	{
+		str = run_heredoc(node->right->data);
+		if (pipe(pipefd) == -1)
+			return (0);
+		write(pipefd[WRITE_END], str, ft_strlen(str));
+		close(pipefd[WRITE_END]);
+		dl_push_node((t_dl_node **)&redir, malloc(sizeof(t_redir_list)), NULL);
+		if (node->io != -1)
+			redir->in = node->io;
+		else
+			redir->in = STDIN_FILENO;
+		redir->out = pipefd[READ_END];
+		if ((*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
+		{
+			dl_del_one((t_dl_node *)redir);
+			return (1);
+		}
+	}
 	return (0);
 }
 
@@ -200,7 +222,7 @@ int		visit_dgreat(t_node *node, t_pipe_list *piped, t_redir_list *redir) // >>
 		redir->out = fd;
 		if ((*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
 		{
-			dl_free_one((t_dl_node *)redir);
+			dl_del_one((t_dl_node *)redir);
 			return (1);
 		}
 	}
@@ -227,7 +249,7 @@ int		visit_left_redi(t_node *node, t_pipe_list *piped, t_redir_list *redir) // <
 		redir->out = fd;
 		if ((*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
 		{
-			dl_free_one((t_dl_node *)redir);
+			dl_del_one((t_dl_node *)redir);
 			return (1);
 		}
 	}
@@ -250,7 +272,7 @@ int		visit_right_redi(t_node *node, t_pipe_list *piped, t_redir_list *redir) // 
 		redir->out = fd;
 		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
 		{
-				dl_free_one((t_dl_node *)redir);
+				dl_del_one((t_dl_node *)redir);
 				return (1);
 		}
 	}
@@ -273,7 +295,7 @@ int		visit_lessand(t_node *node, t_pipe_list *piped, t_redir_list *redir) // <&
 			redir->out = ft_atoi(node->right->data);
 		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
 		{
-				dl_free_one((t_dl_node *)redir);
+				dl_del_one((t_dl_node *)redir);
 				return (1);
 		}
 	}
@@ -295,7 +317,7 @@ int		visit_greatand(t_node *node, t_pipe_list *piped, t_redir_list *redir) // >&
 			redir->out = ft_atoi(node->right->data);
 		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
 		{
-				dl_free_one((t_dl_node *)redir);
+				dl_del_one((t_dl_node *)redir);
 				return (1);
 		}
 	}
@@ -323,7 +345,7 @@ int		visit_lessgreat(t_node *node, t_pipe_list *piped, t_redir_list *redir) // <
 		redir->out = fd;
 		if ((*G_VISIT_RULES[node->left->tok])(node->left, piped, redir))
 		{
-			dl_free_one((t_dl_node *)redir);
+			dl_del_one((t_dl_node *)redir);
 			return (1);
 		}
 	}
