@@ -8,7 +8,7 @@ char	*run_heredoc(char	*endstring)
 	t_dl_node		*head;
 	t_line			*line;
 	char			*ret;
-
+	t_dl_node		*tmp_node; 
 	head = NULL;
 	line = init_line(NULL, NULL, 0, new_prompt(PROMPT_HEREDOC));
 	ft_putstr(line->prompt->str);
@@ -24,13 +24,13 @@ char	*run_heredoc(char	*endstring)
 		read_loop(&line, &head, READ_MODE_LIMITED);
 	}
 	move_cur_on_last_line(dl_find_data(head, line));
-	if (head == dl_get_last(head))
-	{
-		dl_del_one_with_data(dl_get_last(head), free_line);
-		head = NULL;
-	}
+	tmp_node = dl_find_data(head, line);
+	if (tmp_node->prev)
+		tmp_node->prev->next = NULL;
 	else
-		dl_del_one_with_data(dl_get_last(head), free_line);
+		head = NULL;
+	tmp_node->prev = NULL;
+	dl_free_whith_content(tmp_node, free_line);
 	ret = concat_lines(head);
 	if (ret)
 		ret = ft_strljoin(ret, "\n", FIRST);
