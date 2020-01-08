@@ -23,6 +23,7 @@ char	*run_heredoc(char	*endstring)
 		dl_append(&head, line);
 		read_loop(&line, &head, READ_MODE_LIMITED);
 	}
+	move_cur_on_last_line(dl_find_data(head, line));
 	if (head == dl_get_last(head))
 	{
 		dl_del_one_with_data(dl_get_last(head), free_line);
@@ -62,6 +63,7 @@ char	*run_line_edit(void)
 		read_loop(&line, &head, READ_MODE_LIMITED);
 	}
 	add_historic(head);
+	move_cur_on_last_line(dl_find_data(head, line));
 	historic_reset();
 	ret = concat_lines(head);
 	head = NULL;
