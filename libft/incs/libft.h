@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 23:02:11 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/31 17:15:57 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/08 03:51:23 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,5 @@ char			*ft_itoa_base(int value, int base, int caps);
 int				ft_nbrlen_base(long long n, int base);
 void			*ft_calloc(size_t size);
 char			*ft_strljoin(char *s1, char *s2, char to_free);
+char			*ft_strreplace(char *str, char *to_find, char *replace_str);
 #endif
