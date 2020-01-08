@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/02 16:09:24 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/08 17:52:50 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -727,6 +727,8 @@ t_node	*parse_io_here(char *s, t_tokens *cur, t_stack *stack)
 		*cur = get_next_token(s, stack);
 		if ((nod2 = parse_here_end(s, cur, stack)))
 			node = binnode(nod2, node, NULL);
+		else
+			error_push(stack, PARSE_ERROR_NEAR, tok.data);
 	}
 	return(node);
 }
@@ -739,10 +741,10 @@ t_node	*parse_here_end(char *s, t_tokens *cur, t_stack *stack)
 	if (!is_int_empty(stack))
 		return (NULL);
 	node = NULL;
-	// rule 3  -> applie quote removal for get the true delimiter
 	if (cur->tok == TOK_WORD)
 	{
 		node = save_node(NULL, *cur, NULL, DEFAULT_ID);
+		// rule 3  -> applie quote removal for get the true delimiter
 		*cur = get_next_token(s, stack);
 	}
 	return(node);
