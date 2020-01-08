@@ -23,9 +23,16 @@ char	*run_heredoc(char	*endstring)
 		dl_append(&head, line);
 		read_loop(&line, &head, READ_MODE_LIMITED);
 	}
-	dl_del_one_with_data(dl_get_last(head), free_line);
+	if (head == dl_get_last(head))
+	{
+		dl_del_one_with_data(dl_get_last(head), free_line);
+		head = NULL;
+	}
+	else
+		dl_del_one_with_data(dl_get_last(head), free_line);
 	ret = concat_lines(head);
-	ret = ft_strljoin(ret, "\n", FIRST);
+	if (ret)
+		ret = ft_strljoin(ret, "\n", FIRST);
 	dl_free_whith_content(head, free_line);
 	return (ret);
 }
