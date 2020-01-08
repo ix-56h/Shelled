@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:22:13 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/07 15:46:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/08 15:04:41 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,18 @@ char	*concat_lines(t_dl_node *head)
 	char	*str;
 
 	str = NULL;
-	if (!head->next)
-		return (ft_strdup(((t_line *)head->data)->line));
-	while (head->next)
+	if (head)
 	{
-		str = ft_strljoin(str, ((t_line *)head->data)->line, FIRST);	
-		str = ft_strljoin(str, "\n", FIRST);
-		head = head->next;
+		if (!head->next)
+			return (ft_strdup(((t_line *)head->data)->line));
+		while (head->next)
+		{
+			str = ft_strljoin(str, ((t_line *)head->data)->line, FIRST);	
+			str = ft_strljoin(str, "\n", FIRST);
+			head = head->next;
+		}
+		str = ft_strljoin(str, ((t_line *)head->data)->line, FIRST);
 	}
-	str = ft_strljoin(str, ((t_line *)head->data)->line, FIRST);
 	return (str);
 }
 
