@@ -11,3 +11,4 @@ objects/
 .vscode/
 cat
 ls
+echo
