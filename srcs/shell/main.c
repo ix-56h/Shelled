@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/07 18:13:45 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/09 16:52:18 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,6 @@ void	check_param(char **av, t_flags *f)
 			f->ast_draw = 1;
 		av++;
 	}
-}
-
-void		free_env(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env && env[i])
-	{
-		free(env[i]);
-		++i;
-	}
-	if (env && env[i])
-		free(env[i]);
-	free(env);
 }
 
 void	free_sh(t_sh *sh)
@@ -62,13 +47,13 @@ int		init_shell(t_sh *sh, int ac, char **av, char **envp)
 	if (!(sh->stack = stack_creator(20, sizeof(t_staterror))))
 		return (0);
 	sh->node = NULL;
-	sh->env = NULL;
+	g_env = NULL;
 	if (!envp[0])
-		sh->env = init_env(sh->env);
+		g_env = init_env(g_env);
 	else
-		sh->env = cpy_env(envp);
+		g_env = cpy_env(envp);
 	//cpy env and add +1 to shlvl
-	if (!(sh->env))
+	if (!g_env)
 		return (0);
 	init_term();
 	//signal(SIGWINCH, &handle_resize);
@@ -91,7 +76,6 @@ void	re_init_sh(t_sh *sh)
 	if (!(sh->stack = stack_creator(20, sizeof(t_staterror))))
 		return ;
 	sh->node = NULL;
-	sh->env = NULL;
 }
 
 int main(int ac, char **av, char **envp)
@@ -128,7 +112,7 @@ int main(int ac, char **av, char **envp)
 	free_historic();
 	tree_draw(sh.node, sh.f);
 	free_sh(&sh);
-	free_env(sh.env);
+	free_env(g_env);
 	return (EXIT_SUCCESS);
 }
 

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:28:07 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/31 18:28:13 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/09 16:58:15 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sh.h>
 #include <unistd.h>
+#include "libft.h"
 
 char	**init_env(char **env)
 {
@@ -40,31 +41,130 @@ char	**init_env(char **env)
 	return (env);
 }
 
-char	**cpy_env(char **envp)
+/*
+**	Copy and realloc all the `env'
+**	Entry filled with "\0" whill be skipped
+*/
+
+char		**cpy_env(char **env)
 {
-	char	**cpy;
-	size_t	i;
-	size_t	j;
+	int		len;
+	int		i;
+	char	**head;
+	char	**c_env;
+
+	i = -1;
+	len = 0;
+	while (env[++i])
+		if (ft_strcmp(env[i], "") != 0)
+			++len;
+	head = ft_calloc(sizeof(char *) * (len + 1));
+	c_env = head;
+	while (*env)
+	{
+		if (ft_strcmp(*env, "") != 0)
+		{
+			*c_env = ft_strdup(*env);
+			++c_env;
+			++env;
+		}
+		else
+			++env;
+	}
+	return (head);
+}
+
+/*
+**	Edit an entry in env
+**	Return 1 or 0 if the value exist or not
+*/
+
+int			ft_edit_env(char **env, char *looking, char *value)
+{
+	char	*new_env;
+	int		i;
 
 	i = 0;
-	while (envp[i])
-		i++;
-	if (!(cpy = (char **)malloc(sizeof(char *) * (i + 1))))
-		return (NULL);
-	i = 0;
-	while (envp[i])
+	while (env && *env)
 	{
-		if (!(cpy[i] = (char *)malloc(sizeof(char) * (ft_strlen(envp[i]) + 1))))
-			return (NULL);
-		j = 0;
-		while (envp[i][j])
+		if (ft_strcmp(*env, looking) == '=')
 		{
-			cpy[i][j] = envp[i][j];
-			j++;
+			new_env = ft_vjoin(3, looking, "=", value);
+			*env = ft_free(*env);
+			*env = new_env;
+			return (1);
 		}
-		cpy[i][j] = 0;
-		i++;
+		++env;
 	}
-	cpy[i] = NULL;
-	return (cpy);
+	return (0);
+}
+
+/*
+**	Add a new entry in the env
+**	Return new env (The list a a new malloc and the previous one is already freed)
+*/
+
+char		**add_env(char **env, char *var, char *value)
+{
+	size_t		i;
+	size_t		j;
+	char		**new_env;
+	char		*new_var;
+
+	j = 0;
+	i = 0;
+	while (env && env[i])
+		++i;
+	i += 2;
+	new_env = ft_calloc(sizeof(char *) * i);
+	while (j < i - 2)
+	{
+		new_env[j] = env[j];
+		j++;
+	}
+	env = ft_free(env);
+	new_var = ft_vjoin(3, var, "=", value);
+	new_env[j] = new_var;
+	return (new_env);
+}
+
+/*
+**	Remove the value, clone and free the old env
+**	Return a new env
+*/
+
+char		**del_var(char **env, char *var)
+{
+	int		i;
+	char	**new_env;
+
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strcmp(env[i], var) == '=')
+		{
+			env[i] = ft_free(env[i]);
+			env[i] = ft_strdup("");
+			new_env = cpy_env(env);
+			free_env(env);
+			return (new_env);
+		}
+		++i;
+	}
+	return (env);
+}
+
+void		free_env(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env && env[i])
+	{
+		free(env[i]);
+		++i;
+	}
+	if (env && env[i])
+		free(env[i]);
+	free(env);
 }
