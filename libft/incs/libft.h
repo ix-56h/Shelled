@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 23:02:11 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/09 17:31:32 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/09 22:15:11 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,5 @@ char			*ft_strljoin(char *s1, char *s2, char to_free);
 char			*ft_strreplace(char *str, char *to_find, char *replace_str);
 void			*ft_free(void *alloced);
 char			*ft_vjoin(int n, ...);
+void			ft_vprint(int n, ...);
 #endif
