@@ -6,17 +6,12 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:56 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/21 03:21:28 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/09 14:53:03 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "error_class.h"
-
-void	 free_ast(void)
-{
-
-}
 
 int		error_push(t_stack *stack, int type, char *near)
 {
