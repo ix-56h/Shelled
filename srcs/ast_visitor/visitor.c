@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/07 19:10:39 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/09 22:48:36 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "visitor_rules.h"
 #include "double_linked_list.h"
 #include "ligne.h"
+#include "sh.h"
 
 int		set_pipe_fd(t_pipe_list *piped)
 {
@@ -108,7 +109,7 @@ int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 		{
 			set_pipe_fd(piped);
 			set_redir_fd(redir);
-			execve(node->data, node->args, NULL);
+			execve(node->data, node->args, g_env);
 			exit(1);
 		}
 		else //PARENT
