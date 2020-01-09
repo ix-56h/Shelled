@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 23:02:11 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/08 04:01:52 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/09 17:31:32 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,6 @@ int				ft_nbrlen_base(long long n, int base);
 void			*ft_calloc(size_t size);
 char			*ft_strljoin(char *s1, char *s2, char to_free);
 char			*ft_strreplace(char *str, char *to_find, char *replace_str);
+void			*ft_free(void *alloced);
+char			*ft_vjoin(int n, ...);
 #endif
