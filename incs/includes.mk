@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 14:33:36 by thdelmas          #+#    #+#              #
-#    Updated: 2020/01/02 18:49:37 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/01/09 21:07:37 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ H_FILES =	\
 			visitor_rules.h \
 			wexp_rules.h \
 			sh.h \
+			builtins.h \
 
 
 # SUPPA concat loop

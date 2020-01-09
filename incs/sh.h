@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/09 17:00:47 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/09 21:27:24 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <pwd.h>
 # include <parser.h>
 # include <visitor.h>
-# define PATH_MAX 256
+# define FT_PATH_MAX 256
 
 char	**g_env;
 
