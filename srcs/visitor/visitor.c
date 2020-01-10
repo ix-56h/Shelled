@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/09 22:48:36 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/10 18:39:57 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 #include <sys/wait.h>
 #include <parser.h>
 #include <visitor.h>
-#include "visitor_rules.h"
+#include <visitor_rules.h>
 #include "double_linked_list.h"
 #include "ligne.h"
 #include "sh.h"
+
 
 int		set_pipe_fd(t_pipe_list *piped)
 {

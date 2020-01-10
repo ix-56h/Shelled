@@ -6,19 +6,14 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:56 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/21 03:21:28 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/10 16:54:15 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "error_class.h"
 
-void	 free_ast(void)
-{
-
-}
-
-int		error_push(t_stack *stack, int type, char *near)
+int		error_push(t_lifo *stack, int type, char *near)
 {
 	if (is_int_full(stack))
 		return (0);//realloc
@@ -28,12 +23,12 @@ int		error_push(t_stack *stack, int type, char *near)
 	return (1);
 }
 
-t_staterror		error_peek(t_stack *stack)
+t_staterror		error_peek(t_lifo *stack)
 {
 	return (((t_staterror*)stack->ar)[stack->top]);
 }
 
-void	print_stack_errors(t_stack *stack, t_tokens *cur, char *s)
+void	print_stack_errors(t_lifo *stack, t_tokens *cur, char *s)
 {
 	t_staterror err;
 

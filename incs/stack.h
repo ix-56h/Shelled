@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:25 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/20 00:42:09 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/10 14:21:41 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,29 @@ enum	e_state_error{
 	PARSE_ERROR_NEAR
 };
 
-typedef struct		s_staterror
-{
-	int				type;
-	char			*near;
-}					t_staterror;
-
-typedef struct		s_stack
+typedef struct	s_lifo
 {
 	int			top;
 	void		*ar;
 	unsigned	capacity;
-}				t_stack;
+}				t_lifo;
 
-t_stack			*stack_creator(unsigned capacity, size_t size);
-int				is_int_full(t_stack *stack);
-int				is_int_empty(t_stack *stack);
-int				int_push(t_stack *stack, int item);
-int				int_pop(t_stack *stack);
-int				int_peek(t_stack *stack);
+typedef	struct  s_stacks
+{
+	t_lifo		*errors;
+//	t_fifo		*here_docs;
+}				t_stacks;
+
+typedef struct	s_staterror
+{
+	int			type;
+	char		*near;
+}				t_staterror;
+
+t_lifo			*lifo_creator(unsigned capacity, size_t size);
+int				is_int_full(t_lifo *stack);
+int				is_int_empty(t_lifo *stack);
+int				int_push(t_lifo *stack, int item);
+int				int_pop(t_lifo *stack);
+int				int_peek(t_lifo *stack);
 #endif

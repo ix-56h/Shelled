@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:46:14 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/02 04:17:27 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/10 18:38:13 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_VISITOR_H
 # define WRITE_END 1
 # define READ_END 0
+# include <ast.h>
 
 typedef struct s_pipe_list
 {
@@ -42,5 +43,4 @@ int	visit_left_redi(t_node *node, t_pipe_list *piped, t_redir_list *redir);
 int	visit_right_redi(t_node *node, t_pipe_list *piped, t_redir_list *redir);
 int	visit_semi(t_node *node, t_pipe_list *piped, t_redir_list *redir);
 int	visit(t_node *root);
-
 #endif

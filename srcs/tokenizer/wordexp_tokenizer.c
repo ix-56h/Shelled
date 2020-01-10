@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:46 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/21 04:44:46 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/10 16:45:13 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "libft.h"
 #include "stack.h"
 
-int			lex_sequence(char *s, int *anchor, t_stack *stack)
+int			lex_sequence(char *s, int *anchor, t_lifo *stack)
 {
 	int				ret = 0;
 
@@ -31,7 +31,7 @@ int			lex_sequence(char *s, int *anchor, t_stack *stack)
 	return (ret);
 }
 
-int			lex_match_squote(char *s, int *anchor, t_stack *stack)
+int			lex_match_squote(char *s, int *anchor, t_lifo *stack)
 {
 	*anchor += 1;
 	while (s[*anchor] && s[*anchor] != '\'')
@@ -45,7 +45,7 @@ int			lex_match_squote(char *s, int *anchor, t_stack *stack)
 	return (1);
 }
 
-int		lex_match_dquote(char *s, int *anchor, t_stack *stack)
+int		lex_match_dquote(char *s, int *anchor, t_lifo *stack)
 {
 	*anchor += 1;
 	while (s[*anchor] && s[*anchor] != '"')
@@ -67,7 +67,7 @@ int		lex_match_dquote(char *s, int *anchor, t_stack *stack)
 	return (1);
 }
 
-int		lex_match_command_sub(char *s, int *anchor, t_stack *stack)
+int		lex_match_command_sub(char *s, int *anchor, t_lifo *stack)
 {
 	char	close;
 
@@ -106,7 +106,7 @@ int		lex_match_command_sub(char *s, int *anchor, t_stack *stack)
 	return (1);
 }
 
-int		lex_match_dol(char *s, int *anchor, t_stack *stack)
+int		lex_match_dol(char *s, int *anchor, t_lifo *stack)
 {
 	*anchor += 1;
 	if (s[*anchor] == '(')
