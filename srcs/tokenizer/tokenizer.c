@@ -6,13 +6,13 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/02 18:43:19 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/10 17:33:13 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
-#include "tokenizer_rules.h"
-#include "error_handler.h"
+#include <tokenizer.h>
+#include <tokenizer_rules.h>
+#include <error_handler.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -24,7 +24,7 @@ int			is_opening_class(t_chr_class chr_class)
 	return (0);
 }
 
-t_tokens	token_error(int type, t_stack *stack, char c)
+t_tokens	token_error(int type, t_lifo*stack, char c)
 {
 	t_tokens	new;
 	char		near[2];
@@ -198,7 +198,7 @@ int			is_special_char(t_chr_class chr_class, t_chr_class prev_class)
 	return (0);
 }
 
-int		get_token(char *s, t_chr_class chr_class, t_stack *stack, t_tokens *tok)
+int		get_token(char *s, t_chr_class chr_class, t_lifo*stack, t_tokens *tok)
 {
 	t_chr_class	prev_class = chr_class;
 	int			anchor = 0;
@@ -224,7 +224,7 @@ int		get_token(char *s, t_chr_class chr_class, t_stack *stack, t_tokens *tok)
 	return (anchor);
 }
 
-t_tokens	get_next_token(char *s, t_stack *stack)
+t_tokens	get_next_token(char *s, t_lifo*stack)
 {
 	t_chr_class		chr_class = 0;
 	t_toktype		toktype = 0;

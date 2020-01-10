@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2020/01/02 18:50:08 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/01/10 15:56:34 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,18 +18,22 @@ RM = /bin/rm
 
 ### Directories ###
 SRC_DIR := ./srcs
-INC_DIR := ./incs
 OBJ_DIR := ./.obj
 
+INC_DIR := ./incs
+			
 ### SUB FILES ###
 SUB_DIRS := \
+	error_handler \
 	tokenizer \
 	parser \
-	ast_visitor \
+	visitor \
 	shell \
 	builtins \
 	utils \
 	line_edit \
+	ast \
+	stack \
 
 
 ### INCLUDE SRC MAKEFILE ###
@@ -53,7 +57,6 @@ O_FILES = $(C_FILES:.c=.o)
 SRC = $(addprefix $(SRC_DIR)/,$(C_FILES))
 OBJ = $(addprefix $(OBJ_DIR)/,$(O_FILES))
 INC = $(addprefix $(INC_DIR)/,$(H_FILES))
-
 
 ### Lib ###
 FT = ft
@@ -82,7 +85,6 @@ LFLAGS = -ltermcap \
 .PHONY: all clean fclean re
 
 all: init $(FT) $(NAME) bye_msg
-
 ### Lib compil ###
 $(FT): | lib_msg
 	@make -sC $(FT_DIR)
@@ -90,6 +92,7 @@ $(FT): | lib_msg
 ### Mkdir obj ###
 $(OBJ_DIR): | mkdir_msg
 	@mkdir -p $(OBJ_DIR) $(OBJ_SUB_DIRS)
+	echo $(INC)
 
 ### Compilation ###
 .ONESHELL:

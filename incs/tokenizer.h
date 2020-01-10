@@ -6,13 +6,13 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:36 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/23 06:43:37 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/10 15:59:27 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_TOK_H
 # define FT_TOK_H
-#include "stack.h"
+#include <stack.h>
 #include "libft.h"
 
 typedef enum	e_toktype {
@@ -105,21 +105,21 @@ typedef struct		s_tokens {
 	char			*data;
 }					t_tokens;
 
-int				get_token(char *s, t_chr_class chr_class, t_stack *stack, t_tokens *tok);
+int				get_token(char *s, t_chr_class chr_class, t_lifo *stack, t_tokens *tok);
 void			ignore_chr_class(char *s, int *i, t_chr_class chr_class);
 int				is_opening_class(t_chr_class chr_class);
 t_tokens		save_token(char *s, int anchor, t_toktype toktype);
-t_tokens		get_next_token(char *s, t_stack *stack);
+t_tokens		get_next_token(char *s, t_lifo *stack);
 unsigned int	get_end_exp(char *s, int *i);
 
 /*
 **	wordexp_tokenizer.c
 */
-int			lex_sequence(char *s, int *anchor, t_stack *stack);
-int			lex_match_squote(char *s, int *anchor, t_stack *stack);
-int			lex_match_dquote(char *s, int *anchor, t_stack *stack);
-int			lex_match_command_sub(char *s, int *anchor, t_stack *stack);
-int			lex_match_dol(char *s, int *anchor, t_stack *stack);
+int			lex_sequence(char *s, int *anchor, t_lifo *stack);
+int			lex_match_squote(char *s, int *anchor, t_lifo *stack);
+int			lex_match_dquote(char *s, int *anchor, t_lifo *stack);
+int			lex_match_command_sub(char *s, int *anchor, t_lifo *stack);
+int			lex_match_dol(char *s, int *anchor, t_lifo *stack);
 
 /*
 **	wordexp_misc.c

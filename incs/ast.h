@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handler.h                                    :+:      :+:    :+:   */
+/*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/19 06:37:12 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/10 15:29:26 by niguinti         ###   ########.fr       */
+/*   Created: 2020/01/10 15:05:56 by niguinti          #+#    #+#             */
+/*   Updated: 2020/01/10 15:28:47 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_ERROR_HANDLER_H
-# define FT_ERROR_HANDLER_H
-#include <stack.h>
+#ifndef AST_H
+# define AST_H
+#include <tokenizer.h>
 
-/*
-**	parse_error.c
-*/
-void		print_stack_errors(t_lifo *stack, t_tokens *cur, char *s);
-int			error_push(t_lifo *stack, int type, char *near);
+typedef	struct		s_node
+{
+	struct s_node	*left;
+	int				state; 
+	int				id; 
+	int				io;
+
+	char			**args;
+	//voir si on remplacerai pas ca par une struct
+	int				capacity;
+	int				cur_size;
+	int				cur_i;
+
+	t_toktype		tok;
+	char			*data;
+	struct s_node	*right;
+}					t_node;
 #endif
