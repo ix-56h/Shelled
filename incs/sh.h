@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/11 20:57:46 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 00:43:42 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define SH_CLASS_H
 # include <sys/types.h>
 # include <pwd.h>
-# include <parser.h>
-# define PATH_MAX 256
+# include <ast.h>
+# define FT_PATH_MAX 256
 # define SHELL_NAME "21sh"
 
 typedef	struct	s_flags

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:28:07 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/09 16:58:15 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/09 21:27:16 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**init_env(char **env)
 {
 	struct passwd	*pw;
 	char			*tmp;
-	char			cwd[PATH_MAX];
+	char			cwd[FT_PATH_MAX];
 
 	pw = getpwuid(getuid());
 	if ((tmp = pw->pw_dir) && !(*getcwd(cwd, sizeof(cwd))))

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/10 18:37:11 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 00:47:32 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <visitor.h>
 #include <sh.h>
 #include <ligne.h>
+#include <parser.h>
 
 void	check_param(char **av, t_flags *f)
 {
