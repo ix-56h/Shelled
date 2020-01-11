@@ -1,13 +1,13 @@
 #ifndef LIGNE_H
 # define LIGNE_H
 
-#ifndef NULL
-# define 
-#endif
-
+# include <sys/ioctl.h>
+# include "double_linked_list.h"
+# include "historique.h"
+# include "sh.h"
 
 # define BUFFSIZE				512
-# define PROMPT_DEFAULT			"42sh> "
+# define PROMPT_DEFAULT			SHELL_NAME"> "
 # define PROMPT_SUBLINE			"> "
 # define PROMPT_HEREDOC			"heredoc> "
 
@@ -50,9 +50,6 @@
 
 # define READ_MODE_FULL			1
 # define READ_MODE_LIMITED		2
-# include <sys/ioctl.h>
-# include "double_linked_list.h"
-# include "historique.h"
 
 typedef struct winsize t_winsize;
 typedef struct	s_pos
