@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/10 17:35:50 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/11 20:57:46 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <pwd.h>
 # include <parser.h>
 # define PATH_MAX 256
+# define SHELL_NAME "21sh"
 
 typedef	struct	s_flags
 {
