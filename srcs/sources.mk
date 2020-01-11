@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/01/11 04:12:42 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/01/12 00:47:39 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,14 @@ C_FILES_line_edit = \
 					term_misc.c \
 
 C_FILES_builtins = \
+					ft_env.c \
+					ft_setenv.c \
+					ft_take.c \
+					ft_unsetenv.c \
+					ft_addpath.c \
+					ft_cd.c \
+					ft_echo.c \
+					builtin_misc.c \
 
 C_FILES_utils = \
 				double_linked_list.c \
