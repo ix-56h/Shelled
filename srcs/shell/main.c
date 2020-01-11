@@ -6,13 +6,15 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/09 16:52:18 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 00:45:39 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
+#include <visitor.h>
 #include <sh.h>
-#include "ligne.h"
+#include <ligne.h>
+#include <parser.h>
 
 void	check_param(char **av, t_flags *f)
 {
@@ -37,14 +39,15 @@ void	free_sh(t_sh *sh)
 		delete_ast((&sh->node));
 	if ((sh->tok).data != NULL)
 		free((sh->tok).data);
-	free((sh->stack)->ar);
-	free((sh->stack));
+	free((sh->stack.errors->ar));
+	free((sh->stack.errors));
+	// free here_docs
 }
 
 int		init_shell(t_sh *sh, int ac, char **av, char **envp)
 {
 	check_param(av, (&sh->f));
-	if (!(sh->stack = stack_creator(20, sizeof(t_staterror))))
+	if (!(sh->stack.errors = lifo_creator(20, sizeof(t_staterror))))
 		return (0);
 	sh->node = NULL;
 	g_env = NULL;
@@ -68,13 +71,15 @@ void	tree_draw(t_node *node, t_flags f)
 		if (!stream)
 			exit(0);
 		bst_print_dot(node, stream);
+		fclose(stream);
 	}
 }
 
 void	re_init_sh(t_sh *sh)
 {
-	if (!(sh->stack = stack_creator(20, sizeof(t_staterror))))
+	if (!(sh->stack.errors = lifo_creator(20, sizeof(t_staterror))))
 		return ;
+	// need to alloc here_docs ? idk
 	sh->node = NULL;
 }
 
@@ -90,27 +95,29 @@ int main(int ac, char **av, char **envp)
 	while (1)
 	{
 		sh.input = run_line_edit();
-		sh.tok = get_next_token(sh.input, sh.stack);
-		if (is_int_empty(sh.stack))
-			sh.node = parse_program(sh.input, &(sh.tok), sh.stack);
+		sh.tok = get_next_token(sh.input, sh.stack.errors);
+		if (is_int_empty(sh.stack.errors))
+			sh.node = parse_program(&sh);
 			
 		// pour l'exit, on va voir de peut-etre faire une global voir 
 		if (ft_strcmp(sh.input, "exit") == 0) //stop temporaire???
 			break;
 
-		if (!is_int_empty(sh.stack))
+		if (!is_int_empty(sh.stack.errors))
 		{
-			print_stack_errors(sh.stack, &(sh.tok), sh.input);
+			print_stack_errors(sh.stack.errors, &(sh.tok), sh.input);
 			free_sh(&sh);
 			return (EXIT_FAILURE);
 		}
 		else
+		{
+			tree_draw(sh.node, sh.f);
 			visit(sh.node);	
+		}
 		free_sh(&sh);
 		re_init_sh(&sh);
 	}
 	free_historic();
-	tree_draw(sh.node, sh.f);
 	free_sh(&sh);
 	free_env(g_env);
 	return (EXIT_SUCCESS);

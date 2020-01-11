@@ -6,13 +6,14 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:47:24 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/23 06:52:51 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/10 17:31:22 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_VISITOR_RULES_H
 # define FT_VISITOR_RULES_H
-# include "tokenizer.h"
+# include <visitor.h>
+# include <tokenizer.h>
 
 int		(*G_VISIT_RULES[TOK_POSIX_MAX]) (t_node *node) = {
 	[TOK_NAME] = visit_cmd,

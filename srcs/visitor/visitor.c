@@ -6,12 +6,11 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/30 13:25:48 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/10 17:04:29 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.h>
-#include <visitor.h>
 #include <visitor_rules.h>
 
 int		visit_cmd(t_node *node)
