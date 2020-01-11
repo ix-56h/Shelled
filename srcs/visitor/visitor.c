@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/11 04:25:38 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 00:17:49 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int		visit_cmd(t_node *node, t_pipe_list *piped, t_redir_list *redir)
 		{
 			set_pipe_fd(piped);
 			set_redir_fd(redir);
-			execve(node->data, node->args, g_env);
+			//execve(node->data, node->args, g_env);
+			exec_cmd(node, &g_env);
 			exit(1);
 		}
 		else //PARENT
