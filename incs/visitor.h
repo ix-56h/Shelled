@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:46:14 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/12 20:01:08 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 20:11:01 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ int	close_used_pipe_fd(t_pipe_list *piped);
 int	set_used_fd(t_pipe_list *piped);
 int	set_redir_fd(t_redir_list *redir);
 
-int exec_cmd(t_node *cmd, char ***env);
+int	exec_cmd(t_node *cmd, char **env, t_io_lists io);
 #endif

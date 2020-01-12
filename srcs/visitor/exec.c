@@ -6,13 +6,14 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/12 00:57:44 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 21:25:10 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 #include <sys/stat.h>
 #include "libft.h"
 #include "visitor.h"
@@ -45,9 +46,9 @@ int             err_exec(char *buff, int err)
         else if (err == ERR_PATH_ACCES)
             ft_vprintfd(STDERR_FILENO, 3, SHELL_NAME": permission denied: ", buff, "\n");
         else if (err == ERR_NO_FILE)
-            ft_vprint(STDERR_FILENO, 3, SHELL_NAME": no such file or directory: ", buff, "\n");
+            ft_vprintfd(STDERR_FILENO, 3, SHELL_NAME": no such file or directory: ", buff, "\n");
         else if (err == ERR_CMD_NOT_FOUND)
-            ft_vprint(STDERR_FILENO, 3, SHELL_NAME": command not found: ", buff, "\n");
+            ft_vprintfd(STDERR_FILENO, 3, SHELL_NAME": command not found: ", buff, "\n");
     }
     return (err);
 }
@@ -156,7 +157,47 @@ static int		is_path(char *buff)
 	return (0);
 }
 
-int				exec_cmd(t_node *cmd, char ***env)
+
+
+int				exec_with_fork(t_node *cmd, char **env, t_io_lists io, char *cmd_path)
+{
+	char	*program;
+	int		pid;
+	
+	program = (cmd_path) ? cmd_path : cmd->data;
+	if ((pid = fork()) == -1)
+		return (0);
+	else if (pid == 0) //FILS
+	{
+		set_pipe_fd(io.piped);
+		set_redir_fd(io.redir);
+		execve(program, cmd->args, ((env) ? env : g_env));
+		exit(1);
+	}
+	else //PARENT
+	{
+		close_used_pipe_fd(io.piped);
+		if ((io.piped && !io.piped->next && io.piped->used == 1) || !io.piped)
+			while (wait(NULL) > 0);
+		set_used_fd(io.piped);
+		return (1);
+	}
+}
+
+int				exec_without_fork(t_node *cmd, char **env, t_io_lists io)
+{
+		set_pipe_fd(io.piped);
+		set_redir_fd(io.redir);
+		ft_setenv(cmd->args, ((env) ? &env : &g_env));
+		close_used_pipe_fd(io.piped);
+		if ((io.piped && !io.piped->next && io.piped->used == 1) || !io.piped)
+			while (wait(NULL) > 0);
+		set_used_fd(io.piped);
+		return (1);
+}
+
+
+int				exec_cmd(t_node *cmd, char **env, t_io_lists io)
 {
 	//t_builtin	func;
 	int			err;
@@ -167,16 +208,19 @@ int				exec_cmd(t_node *cmd, char ***env)
 	/*if (!altenv && (func = get_builtin_func(cmd->cmd)))
 		return (func(cmd->args, env));*/
     if (ft_strcmp(cmd->data, "setenv") == 0)
-		return (ft_setenv(cmd->args, &g_env));
-	if (is_path(cmd->data))
+		exec_without_fork(cmd, env, io); //exec witout fork
+	else if (is_path(cmd->data))
 	{
 		if ((err = test_path(cmd)) == 0)
-            execve(cmd->data, cmd->args, ((env) ? *env : g_env));
+            exec_with_fork(cmd, env, io, NULL);
 	}
 	else
 	{
-		if ((err = test_env(cmd, *env, &cmd_path)) == 0)
-			execve(cmd_path, cmd->args, ((env) ? *env : g_env));
+		if ((err = test_env(cmd, env, &cmd_path)) == 0)
+		{
+			exec_with_fork(cmd, env, io, cmd_path);
+			ft_free(cmd_path);
+		}
 	}
 	return (err);
 }

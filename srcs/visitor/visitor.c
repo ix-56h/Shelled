@@ -6,14 +6,13 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/12 20:01:01 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 20:08:06 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
-#include <sys/wait.h>
 #include <parser.h>
 #include <visitor.h>
 #include <visitor_rules.h>
@@ -23,29 +22,11 @@
 
 int		visit_cmd(t_node *node, t_io_lists io)
 {
-	int	pid;
-
 	if (node->tok == TOK_WORD)
 	{
 		restore_term();
-		if ((pid = fork()) == -1)
-			return (0);
-		else if (pid == 0) //FILS
-		{
-			set_pipe_fd(io.piped);
-			set_redir_fd(io.redir);
-			execve(node->data, node->args, g_env);
-			exit(1);
-		}
-		else //PARENT
-		{
-			close_used_pipe_fd(io.piped);
-			if ((io.piped && !io.piped->next && io.piped->used == 1) || !io.piped)
-				while (wait(NULL) > 0);
-			set_term_mode();
-			set_used_fd(io.piped);
-			return (1);
-		}
+		exec_cmd(node, NULL);
+		set_term_mode();
 	}
 	return (0);
 }
