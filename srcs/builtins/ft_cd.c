@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:43:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/12 22:06:33 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 23:35:05 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ int					ft_cd(char **argv, char ***tenv)
 	ft_err = 0;
 	argc = count_arg(argv);
 	if (argc == 0)
-		ft_err = change_path(getenv("HOME"), &oldpath, tenv); //getenv ?
+		ft_err = change_path(get_env(*tenv, "HOME"), &oldpath, tenv);
 	else if (ft_strcmp(argv[1], "-") == 0)
 	{
-		if ((tmp = getenv("OLDPWD"))) //getenv???
+		if ((tmp = get_env(*tenv, "OLDPWD")))
 			ft_err = change_path(tmp, &oldpath, tenv);
 		else
 			ft_err = change_path(oldpath, &oldpath, tenv);

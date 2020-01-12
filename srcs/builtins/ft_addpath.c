@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 10:58:39 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/09 22:01:28 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 23:34:51 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int				ft_addpath(char **argv, char ***env)
 
 	if (argv[1])
 	{
-		path = getenv("PATH");   //getenv?
+		path = get_env(*env, "PATH");
 		new_path = ft_vjoin(3, path, ":", argv[1]);
 		new_arg = malloc(sizeof(char *) * 4);
 		new_arg[0] = ft_strdup("setenv");
