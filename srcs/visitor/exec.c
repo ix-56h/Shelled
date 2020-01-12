@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/12 22:42:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 23:19:16 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 #include "sh.h"
 #include "ast.h"
 #include "builtins.h"
+#include "builtin_rules.h"
+
+typedef int	(*t_builtin)(char **, char ***); //lel a enlever d'ici
 
 void		free_tab(char **tab)
 {
@@ -203,18 +206,36 @@ int     save_and_restore_fd(int action)
     return (1);
 }
 
+t_builtin lookforbuiltin(char *data)
+{
+	if (ft_strcmp(data, "addpath") == 0)
+		return (ft_addpath);
+	if (ft_strcmp(data, "cd") == 0)
+		return (ft_cd);
+	if (ft_strcmp(data, "echo") == 0)
+		return (ft_echo);
+	if (ft_strcmp(data, "setenv") == 0)
+		return (ft_setenv);
+	if (ft_strcmp(data, "take") == 0)
+		return (ft_take);
+	if (ft_strcmp(data, "unsetenv") == 0)
+		return (ft_unsetenv);
+	return (NULL);
+}
+
 int				exec_without_fork(t_node *cmd, char **env, t_io_lists io)
 {
+		t_builtin exec_builtin;
 		save_and_restore_fd(0);
 		set_pipe_fd(io.piped);
 		set_redir_fd(io.redir);
-		ft_echo(cmd->args, ((env) ? &env : &g_env));
+		exec_builtin = lookforbuiltin(cmd->data);
+		exec_builtin(cmd->args, ((env) ? &env : &g_env));
 		close_used_pipe_fd(io.piped);
 		save_and_restore_fd(1);
 		set_used_fd(io.piped);
 		return (1);
 }
-
 
 int				exec_cmd(t_node *cmd, char **env, t_io_lists io)
 {
@@ -226,7 +247,7 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io)
 	err = 0;
 	/*if (!altenv && (func = get_builtin_func(cmd->cmd)))
 		return (func(cmd->args, env));*/
-    if (ft_strcmp(cmd->data, "echo") == 0)
+    if (lookforbuiltin(cmd->data))
 		exec_without_fork(cmd, env, io); //exec witout fork
 	else if (is_path(cmd->data))
 	{
