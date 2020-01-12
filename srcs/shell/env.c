@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:28:07 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/09 21:27:16 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 23:28:59 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,4 +167,22 @@ void		free_env(char **env)
 	if (env && env[i])
 		free(env[i]);
 	free(env);
+}
+
+char		*get_env(char **env, char *looking)
+{
+	char	*res;
+	int		i;
+
+	i = 0;
+	res = NULL;
+	while (env && *env)
+	{
+		if (ft_strcmp(*env, looking) == '=')
+			break ;
+		env++;
+	}
+	if (env && *env)
+		return ((*env) + ft_strlen(looking) + 1);
+	return (NULL);
 }
