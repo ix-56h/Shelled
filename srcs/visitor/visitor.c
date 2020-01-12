@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/12 21:56:26 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 22:13:37 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		visit_cmd(t_node *node, t_io_lists io)
 		exec_cmd(node, NULL, io);
 		set_term_mode();
 	}
-	return (0);
+	return (1);
 }
 
 int		visit_and_if(t_node *node, t_io_lists io)
