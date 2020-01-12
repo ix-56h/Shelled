@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/12 22:04:57 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 22:08:42 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ int				exec_without_fork(t_node *cmd, char **env, t_io_lists io)
 		save_and_restore_fd(0);
 		set_pipe_fd(io.piped);
 		set_redir_fd(io.redir);
-		ft_echo(cmd->args, ((env) ? env : g_env));
+		ft_echo(cmd->args, ((env) ? &env : &g_env));
 		close_used_pipe_fd(io.piped);
 		save_and_restore_fd(1);
 		if ((io.piped && !io.piped->next && io.piped->used == 1) || !io.piped)
