@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/12 23:22:10 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 23:31:03 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	**get_env_path(void)
 	char	*path;
 	char	**paths;
 
-	path = getenv("PATH");   //gentenv a revoir si ca marche
+	path = get_env(g_env, "PATH");   //gentenv a revoir si ca marche
 	if (path)
 	{
 		paths = ft_strsplit(path, ':');
