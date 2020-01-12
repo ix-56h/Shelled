@@ -6,13 +6,14 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/12 22:13:37 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 22:42:58 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <sys/wait.h>
 #include <parser.h>
 #include <visitor.h>
 #include <visitor_rules.h>
@@ -26,6 +27,8 @@ int		visit_cmd(t_node *node, t_io_lists io)
 	{
 		restore_term();
 		exec_cmd(node, NULL, io);
+		if ((io.piped && !io.piped->next && io.piped->used == 1) || !io.piped)
+			while (wait(NULL) > 0);
 		set_term_mode();
 	}
 	return (1);

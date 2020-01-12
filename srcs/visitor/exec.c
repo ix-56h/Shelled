@@ -6,14 +6,13 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/12 22:08:42 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 22:42:54 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <sys/wait.h>
 #include <sys/stat.h>
 #include "libft.h"
 #include "visitor.h"
@@ -177,8 +176,6 @@ int				exec_with_fork(t_node *cmd, char **env, t_io_lists io, char *cmd_path)
 	else //PARENT
 	{
 		close_used_pipe_fd(io.piped);
-		if ((io.piped && !io.piped->next && io.piped->used == 1) || !io.piped)
-			while (wait(NULL) > 0);
 		set_used_fd(io.piped);
 		return (1);
 	}
@@ -214,8 +211,6 @@ int				exec_without_fork(t_node *cmd, char **env, t_io_lists io)
 		ft_echo(cmd->args, ((env) ? &env : &g_env));
 		close_used_pipe_fd(io.piped);
 		save_and_restore_fd(1);
-		if ((io.piped && !io.piped->next && io.piped->used == 1) || !io.piped)
-			while (wait(NULL) > 0);
 		set_used_fd(io.piped);
 		return (1);
 }
