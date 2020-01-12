@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/12 23:19:16 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 23:22:10 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 #include "sh.h"
 #include "ast.h"
 #include "builtins.h"
-#include "builtin_rules.h"
 
 typedef int	(*t_builtin)(char **, char ***); //lel a enlever d'ici
 
