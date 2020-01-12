@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/12 21:25:10 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 22:04:57 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,12 +184,36 @@ int				exec_with_fork(t_node *cmd, char **env, t_io_lists io, char *cmd_path)
 	}
 }
 
+int     save_and_restore_fd(int action)
+{
+    static int  fds[3] = {-1};
+
+    if (action == 0)                                //Save stdin/out/err
+    {
+        fds[STDIN_FILENO] = dup(STDIN_FILENO);
+        fds[STDOUT_FILENO] = dup(STDOUT_FILENO);
+        fds[STDERR_FILENO] = dup(STDERR_FILENO);
+    }
+    else if (action == 1)                           //Restore stdin/out/err
+    {
+        dup2(fds[STDIN_FILENO], STDIN_FILENO);
+        close(fds[STDIN_FILENO]);
+        dup2(fds[STDOUT_FILENO], STDOUT_FILENO);
+        close(fds[STDOUT_FILENO]);
+        dup2(fds[STDERR_FILENO], STDERR_FILENO);
+        close(fds[STDERR_FILENO]);
+    }
+    return (1);
+}
+
 int				exec_without_fork(t_node *cmd, char **env, t_io_lists io)
 {
+		save_and_restore_fd(0);
 		set_pipe_fd(io.piped);
 		set_redir_fd(io.redir);
-		ft_setenv(cmd->args, ((env) ? &env : &g_env));
+		ft_echo(cmd->args, ((env) ? env : g_env));
 		close_used_pipe_fd(io.piped);
+		save_and_restore_fd(1);
 		if ((io.piped && !io.piped->next && io.piped->used == 1) || !io.piped)
 			while (wait(NULL) > 0);
 		set_used_fd(io.piped);
@@ -207,7 +231,7 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io)
 	err = 0;
 	/*if (!altenv && (func = get_builtin_func(cmd->cmd)))
 		return (func(cmd->args, env));*/
-    if (ft_strcmp(cmd->data, "setenv") == 0)
+    if (ft_strcmp(cmd->data, "echo") == 0)
 		exec_without_fork(cmd, env, io); //exec witout fork
 	else if (is_path(cmd->data))
 	{
