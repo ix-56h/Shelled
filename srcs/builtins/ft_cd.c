@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:43:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/09 21:56:41 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 21:52:50 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 static int	err_acces(char *buff, int error)
 {
 	if (error == ERR_PATH_ACCES)
-		ft_vprint(3, "cd: permission denied: ", buff, "\n");
+		ft_vprintfd(STDERR_FILENO, 3, "cd: permission denied: ", buff, "\n");
 	else if (error == ERR_NO_FILE)
-		ft_vprint(3, "cd: no such file or directory: ", buff, "\n");
+		ft_vprintfd(STDERR_FILENO,3, "cd: no such file or directory: ", buff, "\n");
 	else if (error == ERR_CD_OLDPWD)
-		ft_putendl("cd: no such old path");
+		ft_putendl_fd("cd: no such old path", STDERR_FILENO);
 	return (error);
 }
 
