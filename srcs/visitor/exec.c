@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/12 00:40:27 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/12 00:57:44 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@
 #include "visitor.h"
 #include "sh.h"
 #include "ast.h"
-
-#define ERR_IS_FOLDER       1           //lel les defines ici
-#define ERR_PATH_ACCES      2
-#define ERR_NO_FILE         3
-#define ERR_CMD_NOT_FOUND   4
+#include "builtins.h"
 
 void		free_tab(char **tab)
 {
@@ -170,7 +166,8 @@ int				exec_cmd(t_node *cmd, char ***env)
 	err = 0;
 	/*if (!altenv && (func = get_builtin_func(cmd->cmd)))
 		return (func(cmd->args, env));*/
-    //if (ft_strcmp(cmd->data, "setenv"))
+    if (ft_strcmp(cmd->data, "setenv") == 0)
+		return (ft_setenv(cmd->args, &g_env));
 	if (is_path(cmd->data))
 	{
 		if ((err = test_path(cmd)) == 0)
