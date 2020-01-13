@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/13 17:34:28 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/13 17:52:07 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -676,7 +676,6 @@ t_node	*parse_io_here(t_sh *sh)
 		{
 			node = binnode(nod2, node, NULL);
 			fifo_insert(sh->stack.here_docs, node);
-			//push to stack_heredoc
 		}
 		else
 			error_push(sh->stack.errors, PARSE_ERROR_NEAR, tok.data);
