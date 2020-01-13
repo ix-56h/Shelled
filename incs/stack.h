@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:25 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/10 14:21:41 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/13 17:32:40 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,19 @@ typedef struct	s_lifo
 	unsigned	capacity;
 }				t_lifo;
 
+typedef struct	s_fifo
+{
+	int			front;
+	int			rear;
+	void		**ar;
+	unsigned	capacity;
+}				t_fifo;
+
+
 typedef	struct  s_stacks
 {
 	t_lifo		*errors;
-//	t_fifo		*here_docs;
+	t_fifo		*here_docs;
 }				t_stacks;
 
 typedef struct	s_staterror
@@ -42,10 +51,23 @@ typedef struct	s_staterror
 	char		*near;
 }				t_staterror;
 
+/*
+**	Lifo stack (realloc)
+*/
 t_lifo			*lifo_creator(unsigned capacity, size_t size);
-int				is_int_full(t_lifo *stack);
-int				is_int_empty(t_lifo *stack);
-int				int_push(t_lifo *stack, int item);
-int				int_pop(t_lifo *stack);
-int				int_peek(t_lifo *stack);
+int				lifo_full(t_lifo *stack);
+int				lifo_empty(t_lifo *stack);
+int				lifo_push(t_lifo *stack, int item);
+int				lifo_pop(t_lifo *stack);
+int				lifo_peek(t_lifo *stack);
+
+/*
+**	Fifo queue (no realloc)
+*/
+t_fifo			*fifo_creator(unsigned capacity, size_t size);
+int				fifo_insert(t_fifo *q, void *item);
+void			fifo_delete(t_fifo *q);
+int				fifo_empty(t_fifo *q);
+int				fifo_full(t_fifo *q);
+void			*fifo_peek(t_fifo *q);
 #endif

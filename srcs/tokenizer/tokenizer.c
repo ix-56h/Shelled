@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/10 17:33:13 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/13 17:07:30 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,7 +246,7 @@ t_tokens	get_next_token(char *s, t_lifo*stack)
 	if (!(toktype = get_tok_type[chr_class]))
 		return (token_error(UNRECOGNIZED_TOKEN, stack, s[i]));
 	i += get_token(s + i, chr_class, stack, &token);
-	if (!is_int_empty(stack))
+	if (!lifo_empty(stack))
 		return (token_error(0, stack, 0));
 	if (token.tok == TOK_WORD && (s[i] == '>' || s[i] == '<') && (ft_isdigits(token.data)))
 		token.tok = TOK_IO_NUMBER;

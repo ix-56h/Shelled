@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/01/12 00:44:58 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/01/13 17:53:14 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ C_FILES_parser = \
 				 dynamic_arrays.c \
 				 parse_error.c \
 				 stack.c \
+				 queue.c \
 				 free_tree.c \
 
 C_FILES_tokenizer = \
