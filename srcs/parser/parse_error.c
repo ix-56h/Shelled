@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:56 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/10 16:54:15 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/13 17:08:15 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int		error_push(t_lifo *stack, int type, char *near)
 {
-	if (is_int_full(stack))
+	if (lifo_full(stack))
 		return (0);//realloc
 	++stack->top;
 	((t_staterror*)stack->ar)[stack->top].near = near;
@@ -43,7 +43,7 @@ void	print_stack_errors(t_lifo *stack, t_tokens *cur, char *s)
 			ft_putstr("'");
 		}
 		ft_putstr("\n");
-		int_pop(stack);
+		lifo_pop(stack);
 	}
 }
 
