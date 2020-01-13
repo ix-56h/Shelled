@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/13 19:16:01 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/13 19:30:02 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <sh.h>
 #include <ligne.h>
 #include <parser.h>
+#include <visitor.h>
 
 void	check_param(char **av, t_flags *f)
 {
@@ -104,9 +105,7 @@ int main(int ac, char **av, char **envp)
 		if (lifo_empty(sh.stack.errors))
 			sh.node = parse_program(&sh);
 		if (!fifo_empty(sh.stack.here_docs))
-		{
-			//here doc here
-		}
+			exec_heredoc(sh.stack.here_docs);
 		// pour l'exit, on va voir de peut-etre faire une global voir 
 		if (ft_strcmp(sh.input, "exit") == 0) //stop temporaire???
 			break;

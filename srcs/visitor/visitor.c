@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/12 22:42:58 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/13 19:35:30 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,28 @@
 #include <parser.h>
 #include <visitor.h>
 #include <visitor_rules.h>
+#include "stack.h"
 #include "double_linked_list.h"
 #include "ligne.h"
 #include "sh.h"
+
+int		exec_heredoc(t_fifo *stack)
+{
+	t_node	*node;
+	char	*str;
+	while (!fifo_empty(stack))
+	{
+		node = fifo_peek(stack);
+		if (node->right)
+		{
+			str = run_heredoc(node->right->data);
+			free(node->right->data);
+			node->right->data = str;
+		}
+		fifo_delete(stack);
+	}
+	return (0);
+}
 
 int		visit_cmd(t_node *node, t_io_lists io)
 {
@@ -96,7 +115,7 @@ int		visit_dless(t_node *node, t_io_lists io) // <<
 
 	if (node->right)
 	{
-		str = run_heredoc(node->right->data);
+		str = node->right->data;
 		if (pipe(pipefd) == -1)
 			return (0);
 		write(pipefd[WRITE_END], str, ft_strlen(str));
