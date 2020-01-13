@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/10 17:37:38 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/13 17:34:28 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_node	*parse_program(t_sh *sh)
 	t_node		*node;
 	t_node		*nod2;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
@@ -38,7 +38,7 @@ t_node	*parse_complete_commands(t_sh *sh)
 	t_node		*node;
 	t_node		*nod2;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
@@ -66,7 +66,7 @@ t_node	*parse_complete_command(t_sh *sh)
 	t_node		*node;
 	t_node		*nod2;
 	
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
@@ -89,7 +89,7 @@ t_node	*parse_list(t_sh *sh)
 	t_node		*nod2;
 	t_node		*nod3;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
@@ -116,7 +116,7 @@ t_node	*parse_and_or(t_sh *sh)
 	t_node		*nod2;
 	t_tokens	tok;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
@@ -145,7 +145,7 @@ t_node	*parse_pipeline(t_sh *sh)
 {
 	t_node		*node;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	if (sh->tok.tok == TOK_BANG)
@@ -165,7 +165,7 @@ t_node	*parse_pipe_sequence(t_sh *sh)
 	t_node		*nod2;
 	t_tokens	tok;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
@@ -193,7 +193,7 @@ t_node	*parse_command(t_sh *sh)
 	t_node	*node;
 	t_node	*nod2;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
@@ -213,7 +213,7 @@ t_node	*parse_compound_command(t_sh *sh)
 {
 	t_node		*node;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	if ((node = parse_brace_group(sh)))
@@ -238,7 +238,7 @@ t_node	*parse_subshell(t_sh *sh)
 	t_node		*node;
 	t_tokens	tok;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	if (sh->tok.tok == TOK_LPAREN)
@@ -266,7 +266,7 @@ t_node	*parse_compound_list(t_sh *sh)
 	t_node		*node;
 	t_node		*nod2;
 	
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
@@ -284,7 +284,7 @@ t_node	*parse_term(t_sh *sh)
 	t_node		*node;
 	t_node		*nod2;
 	
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
@@ -407,7 +407,7 @@ t_node	*parse_simple_command(t_sh *sh)
 	t_node	*args;
 	t_node	*first;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
@@ -470,7 +470,7 @@ t_node	*parse_cmd_name(t_sh *sh)
 {
 	t_node		*node;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	if (sh->tok.tok == TOK_WORD)
@@ -495,7 +495,7 @@ t_node	*parse_cmd_word(t_sh *sh)
 	t_node		*node;
 	char		*s2;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	s2 = sh->tok.data;
 	node = NULL;
@@ -513,7 +513,7 @@ t_node	*parse_cmd_prefix(t_sh *sh)
 	t_node		*nod2;
 	t_tokens	tok;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
@@ -540,7 +540,7 @@ t_node	*parse_cmd_suffix(t_sh *sh)
 	t_node		*nod2;
 	t_tokens	tok;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
@@ -566,7 +566,7 @@ t_node	*parse_redirect_list(t_sh *sh)
 	t_node		*node;
 	t_node		*nod2;
 	
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
@@ -583,7 +583,7 @@ t_node	*parse_io_redirect(t_sh *sh)
 	t_node		*node;
 	t_tokens	tok;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	tok = sh->tok;
@@ -609,7 +609,7 @@ t_node	*parse_io_file(t_sh *sh)
 	t_node		*nod2;
 	t_tokens	tok;
 	
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	tok = sh->tok;
@@ -634,7 +634,7 @@ t_node	*parse_filename(t_sh *sh)
 	//t_node		*first;
 	t_tokens	tok;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	//first = NULL;
@@ -664,7 +664,7 @@ t_node	*parse_io_here(t_sh *sh)
 	t_node		*nod2;
 	t_tokens	tok;
 	
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
@@ -675,6 +675,7 @@ t_node	*parse_io_here(t_sh *sh)
 		if ((nod2 = parse_here_end(sh)))
 		{
 			node = binnode(nod2, node, NULL);
+			fifo_insert(sh->stack.here_docs, node);
 			//push to stack_heredoc
 		}
 		else
@@ -688,7 +689,7 @@ t_node	*parse_here_end(t_sh *sh)
 	t_node		*node;
 	t_tokens	tok;
 	
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	if (sh->tok.tok == TOK_WORD)
@@ -705,7 +706,7 @@ t_node	*parse_newline_list(t_sh *sh)
 	t_node		*node;
 	t_tokens	tok;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	if (sh->tok.tok == TOK_NEWLINE)
@@ -725,7 +726,7 @@ t_node	*parse_linebreak(t_sh *sh)
 	t_node		*node;
 	t_tokens	tok;
 	
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	if (sh->tok.tok == TOK_NEWLINE)
@@ -740,7 +741,7 @@ t_node	*parse_separator_op(t_sh *sh)
 	t_node		*node;
 	t_tokens	tok;
 
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	tok = sh->tok;
@@ -756,7 +757,7 @@ t_node	*parse_separator(t_sh *sh)
 {
 	t_node		*node;
 	
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	if ((node = parse_separator_op(sh)))
@@ -771,7 +772,7 @@ t_node	*parse_sequential_sep(t_sh *sh)
 	t_node		*node;
 	t_tokens	tok;
 	
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
 	tok = sh->tok;
@@ -810,9 +811,9 @@ t_node	*parse_sequential_sep(t_sh *sh)
 	}
 	check_param(av + 2, &f);
 	tok = get_next_token(input, stack);
-	if (is_int_empty(sh->stack.errors))
+	if (lifo_empty(sh->stack.errors))
 		node = parse_program(input, &tok, stack);
-	if (!is_int_empty(sh->stack.errors))
+	if (!lifo_empty(sh->stack.errors))
 	{
 		print_stack_errors(stack, &tok, input);
 		free_sh(node, tok, stack);

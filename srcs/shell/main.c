@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/10 17:37:55 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/13 17:41:05 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,16 @@ void	free_sh(t_sh *sh)
 	free((sh->stack.errors->ar));
 	free((sh->stack.errors));
 	// free here_docs
+	free(sh->stack.here_docs->ar);
+	free(sh->stack.here_docs);
 }
 
 int		init_shell(t_sh *sh, int ac, char **av, char **envp)
 {
 	check_param(av, (&sh->f));
 	if (!(sh->stack.errors = lifo_creator(20, sizeof(t_staterror))))
+		return (0);
+	if (!(sh->stack.here_docs = fifo_creator(20, sizeof(t_node*))))
 		return (0);
 	sh->node = NULL;
 	g_env = NULL;
@@ -78,7 +82,8 @@ void	re_init_sh(t_sh *sh)
 {
 	if (!(sh->stack.errors = lifo_creator(20, sizeof(t_staterror))))
 		return ;
-	// need to alloc here_docs ? idk
+	if (!(sh->stack.here_docs = fifo_creator(20, sizeof(t_node*))))
+		return ;
 	sh->node = NULL;
 }
 
@@ -95,14 +100,16 @@ int main(int ac, char **av, char **envp)
 	{
 		sh.input = run_line_edit();
 		sh.tok = get_next_token(sh.input, sh.stack.errors);
-		if (is_int_empty(sh.stack.errors))
+		if (lifo_empty(sh.stack.errors))
 			sh.node = parse_program(&sh);
-			
+		if (!fifo_empty(sh.stack.here_docs))
+		{
+			//here doc here
+		}
 		// pour l'exit, on va voir de peut-etre faire une global voir 
 		if (ft_strcmp(sh.input, "exit") == 0) //stop temporaire???
 			break;
-
-		if (!is_int_empty(sh.stack.errors))
+		if (!lifo_empty(sh.stack.errors))
 		{
 			print_stack_errors(sh.stack.errors, &(sh.tok), sh.input);
 			free_sh(&sh);
@@ -128,9 +135,9 @@ int main(int ac, char **av, char **envp)
 
 	if (init_shell(&sh, ac, av, envp) == 0)
 		return (EXIT_FAILURE);
-	if (is_int_empty(sh.stack))
+	if (lifo_empty(sh.stack))
 		sh.node = parse_program(sh.input, &(sh.tok), sh.stack);
-	if (!is_int_empty(sh.stack))
+	if (!lifo_empty(sh.stack))
 	{
 		print_stack_errors(sh.stack, &(sh.tok), sh.input);
 		free_sh(&sh);
