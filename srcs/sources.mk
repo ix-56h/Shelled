@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/01/10 17:26:08 by niguinti         ###   ########.fr        #
+#    Updated: 2020/01/14 17:22:43 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ C_FILES_line_edit = \
 					line_misc.c \
 					move.c \
 					term_misc.c \
+					test_key.c \
 
 C_FILES_builtins = \
 

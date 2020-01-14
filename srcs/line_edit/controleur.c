@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:53:43 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/01 17:56:14 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/14 17:25:42 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ void	    	arrow_line_action(t_line **line, char *buff, t_dl_node **head, char mo
 		arrow_up_act(line, head);
 	else if (ft_strcmp(buff, KEY_DOWN_CODE) == 0 && mode == READ_MODE_FULL)
 		arrow_down_act(line, head);
-	else if (ft_strcmp(buff, KEY_CTRL_LEFT_CODE) == 0)
+	else if (is_ctrl_left(buff))
 		cur_move_to_index(*line, get_last_word_index(*line));
-	else if (ft_strcmp(buff, KEY_CTRL_RIGHT_CODE) == 0)
+	else if (is_ctrl_right(buff))
 		cur_move_to_index(*line, get_next_word_index(*line));
-	else if (ft_strcmp(buff, KEY_CTRL_UP_CODE) == 0 && mode == READ_MODE_LIMITED && dl_find_data(*head, *line)->prev)
+	else if (is_ctrl_up(buff) && mode == READ_MODE_LIMITED && dl_find_data(*head, *line)->prev)
 		arrow_ctrl_up(line, head);
-	else if (ft_strcmp(buff, KEY_CTRL_DOWN_CODE) == 0 && mode == READ_MODE_LIMITED && dl_find_data(*head, *line)->next)
+	else if (is_ctrl_down(buff) && mode == READ_MODE_LIMITED && dl_find_data(*head, *line)->next)
 		arrow_ctrl_down(line, head);
 }
