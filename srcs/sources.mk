@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/01/13 19:15:53 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/01/14 01:44:04 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ C_FILES_builtins = \
 					ft_unsetenv.c \
 					ft_addpath.c \
 					ft_cd.c \
+					ft_cd2.c \
 					ft_echo.c \
 					builtin_misc.c \
 

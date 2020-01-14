@@ -6,13 +6,15 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:47:22 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/09 21:42:10 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/14 00:03:54 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "sh.h"
 #include "builtins.h"
+#include "ast.h"
+#include "visitor.h"
 
 static void	printenv(char **env)
 {
@@ -42,13 +44,16 @@ static char	*ft_strschr(const char *s, int c)
 	return (NULL);
 }
 
-/*static void	ft_env_sub(t_cmd *cmd, char ***tenv, char ***env, char **argv)
+static void	ft_env_sub(char ***tenv, char ***env, char **argv)
 {
-	if ((cmd->cmd = *argv))
+	t_node	node;
+	t_io_lists	io;
+
+	io = (t_io_lists) {NULL, NULL};
+	if ((node.data = *argv))
 	{
-		cmd->args = argv;
-		//exec_cmd(cmd, tenv, env); lel
-		ft_free(cmd->fullpath);
+		node.args = argv;
+		exec_cmd(&node, *env, io);
 	}
 	else
 		printenv(*env);
@@ -59,13 +64,12 @@ int			ft_env(char **argv, char ***tenv)
 {
 	char	**env;
 	char	*value;
-	t_cmd	cmd;
 
 	if (*(++argv) && ft_strcmp(*argv, "-i") == 0)
 		env = NULL;
 	else
 	{
-		env = clone_env(*tenv);
+		env = cpy_env(*tenv);
 		--argv;
 	}
 	while (++argv)
@@ -80,7 +84,6 @@ int			ft_env(char **argv, char ***tenv)
 		else
 			break ;
 	}
-	ft_env_sub(&cmd, tenv, &env, argv);
+	ft_env_sub(tenv, &env, argv);
 	return (0);
 }
-*/

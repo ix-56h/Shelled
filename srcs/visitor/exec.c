@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/12 23:31:03 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/14 00:07:25 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 #include "sh.h"
 #include "ast.h"
 #include "builtins.h"
-
-typedef int	(*t_builtin)(char **, char ***); //lel a enlever d'ici
 
 void		free_tab(char **tab)
 {
@@ -203,23 +201,6 @@ int     save_and_restore_fd(int action)
         close(fds[STDERR_FILENO]);
     }
     return (1);
-}
-
-t_builtin lookforbuiltin(char *data)
-{
-	if (ft_strcmp(data, "addpath") == 0)
-		return (ft_addpath);
-	if (ft_strcmp(data, "cd") == 0)
-		return (ft_cd);
-	if (ft_strcmp(data, "echo") == 0)
-		return (ft_echo);
-	if (ft_strcmp(data, "setenv") == 0)
-		return (ft_setenv);
-	if (ft_strcmp(data, "take") == 0)
-		return (ft_take);
-	if (ft_strcmp(data, "unsetenv") == 0)
-		return (ft_unsetenv);
-	return (NULL);
 }
 
 int				exec_without_fork(t_node *cmd, char **env, t_io_lists io)
