@@ -173,4 +173,13 @@ int				term_can_print(t_dl_node *head, int readsize);
 void			handle_resize(int signo);
 char			*concat_lines(t_dl_node *head);
 
+/*
+**	test_key.c
+*/
+
+int	is_ctrl_left(char *buff);
+int	is_ctrl_right(char *buff);
+int	is_ctrl_up(char *buff);
+int	is_ctrl_down(char *buff);
+
 #endif
