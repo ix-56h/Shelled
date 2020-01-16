@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:53:43 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/02 19:52:14 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/14 19:52:41 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ int				read_loop(t_line **line, t_dl_node **head, char mode)
 {
 	char	buff[BUFFSIZE + 1];
 	int		readsize;
+	int		eof;
+	t_line	*tmp;
 
+	eof = 0;
 	while (!!!!!!!!!!!!!!!!!!!!!!!0)
 	{
 		ft_bzero(buff, sizeof(char) * BUFFSIZE + 1);
@@ -64,10 +67,32 @@ int				read_loop(t_line **line, t_dl_node **head, char mode)
 				cur_move_to_index(*line, 0);
 			else if (ft_strcmp(buff, KEY_END) == 0)
 				cur_move_to_index(*line, ft_strlen((*line)->line));
+			else if (ft_strcmp(buff, "\004") == 0)
+			{
+				if (mode & READ_MODE_LINE)
+				{
+					if (dl_find_data(*head, *line)->prev == NULL)
+					{
+						free_line(*line);
+						*line = init_line(NULL, ft_strdup("exit"), 4, new_prompt(PROMPT_DEFAULT));
+						(*head)->data = *line;
+						break ;
+					}
+				}
+				else if (mode & READ_MODE_HEREDOC)
+				{
+					tmp = init_line(NULL, ft_strdup("\004"), 0, NULL);
+					dl_append(head, tmp);
+					*line = tmp;
+					break ;
+				}
+			}
 			else
 				arrow_line_action(line, buff, head, mode);
 		}
 	}
+	if (eof)
+		return (1);
 	ft_putchar('\n');
 	return (0);
 }
@@ -78,16 +103,16 @@ void	    	arrow_line_action(t_line **line, char *buff, t_dl_node **head, char mo
 		arrow_left_act(*line);
 	else if (ft_strcmp(buff, KEY_RIGHT_CODE) == 0)
 		arrow_right_act(*line);
-	else if (ft_strcmp(buff, KEY_UP_CODE) == 0 && mode == READ_MODE_FULL)
+	else if (ft_strcmp(buff, KEY_UP_CODE) == 0 && mode & READ_MODE_FULL)
 		arrow_up_act(line, head);
-	else if (ft_strcmp(buff, KEY_DOWN_CODE) == 0 && mode == READ_MODE_FULL)
+	else if (ft_strcmp(buff, KEY_DOWN_CODE) == 0 && mode & READ_MODE_FULL)
 		arrow_down_act(line, head);
-	else if (ft_strcmp(buff, KEY_CTRL_LEFT_CODE) == 0)
+	else if (is_ctrl_left(buff))
 		cur_move_to_index(*line, get_last_word_index(*line));
-	else if (ft_strcmp(buff, KEY_CTRL_RIGHT_CODE) == 0)
+	else if (is_ctrl_right(buff))
 		cur_move_to_index(*line, get_next_word_index(*line));
-	else if (ft_strcmp(buff, KEY_CTRL_UP_CODE) == 0 && mode == READ_MODE_LIMITED && dl_find_data(*head, *line)->prev)
+	else if (is_ctrl_up(buff) && mode & READ_MODE_LIMITED && dl_find_data(*head, *line)->prev)
 		arrow_ctrl_up(line, head);
-	else if (ft_strcmp(buff, KEY_CTRL_DOWN_CODE) == 0 && mode == READ_MODE_LIMITED && dl_find_data(*head, *line)->next)
+	else if (is_ctrl_down(buff) && mode & READ_MODE_LIMITED && dl_find_data(*head, *line)->next)
 		arrow_ctrl_down(line, head);
 }
