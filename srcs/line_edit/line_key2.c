@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:32:29 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/07 18:58:46 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/16 19:55:55 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,45 @@ void	suppr_act(t_line *line, t_dl_node **head)
 		}
 		term_other(TERM_CLEAR_CUR_END, 1);
 		term_other(TERM_LOAD_CUR, 1);
+	}
+}
+
+int		ctrl_d_act(t_line **line, t_dl_node **head, char mode)
+{
+	t_line	*tmp;
+
+	if (mode & READ_MODE_LINE)
+	{
+		if (dl_find_data(*head, *line)->prev == NULL && (*line)->line[0] == '\0')
+		{
+			free_line(*line);
+			*line = init_line(NULL, ft_strdup("exit"), 4, new_prompt(PROMPT_DEFAULT));
+			(*head)->data = *line;
+			return (1);
+		}
+	}
+	else if (mode & READ_MODE_HEREDOC)
+	{
+		tmp = init_line(NULL, ft_strdup("\004"), 0, NULL);
+		dl_append(head, tmp);
+		*line = tmp;
+	}
+	return (0);
+}
+
+void	ctrl_c_act(t_line **line, t_dl_node **head, char mode)
+{
+	if (mode & READ_MODE_LINE)
+	{
+		dl_free_whith_content(*head, free_line);
+		*head = NULL;
+		*line = init_line(NULL, ft_strdup(""), 0, new_prompt(PROMPT_DEFAULT));
+		dl_append(head, *line);
+		(*head)->data = *line;
+	}
+	else if (mode & READ_MODE_HEREDOC)
+	{
+		(*line)->line[0] = '\030';
+		(*line)->line[1] = '\0';
 	}
 }

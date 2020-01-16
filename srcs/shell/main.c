@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/13 19:30:02 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/16 18:27:50 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,6 @@ int main(int ac, char **av, char **envp)
 		sh.tok = get_next_token(sh.input, sh.stack.errors);
 		if (lifo_empty(sh.stack.errors))
 			sh.node = parse_program(&sh);
-		if (!fifo_empty(sh.stack.here_docs))
-			exec_heredoc(sh.stack.here_docs);
 		// pour l'exit, on va voir de peut-etre faire une global voir 
 		if (ft_strcmp(sh.input, "exit") == 0) //stop temporaire???
 			break;
@@ -117,8 +115,11 @@ int main(int ac, char **av, char **envp)
 		}
 		else
 		{
-			tree_draw(sh.node, sh.f);
-			visit(sh.node);	
+			if (exec_heredoc(sh.stack.here_docs))
+			{
+				tree_draw(sh.node, sh.f);
+				visit(sh.node);	
+			}
 		}
 		free_sh(&sh);
 		re_init_sh(&sh);

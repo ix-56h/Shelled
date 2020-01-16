@@ -5,6 +5,29 @@
 #include "libft.h"
 #include "ligne.h"
 
+void	ctrl_c_handler(int lel)
+{
+	ioctl(STDOUT_FILENO, TIOCSTI, "\030");
+}
+
+int		heredoc_ctrl_c(t_dl_node *head, t_line *line)
+{
+	if (ft_strcmp(line->line, "\030") == 0)
+	{
+		dl_free_whith_content(head, free_line);
+		return (1);
+	}
+	return (0);
+}
+
+void	heredoc_set_line_and_run(t_dl_node **head, t_line **line)
+{
+	*line = init_line(NULL, NULL, 0, new_prompt(PROMPT_HEREDOC));
+	ft_putstr((*line)->prompt->str);
+	dl_append(head, *line);
+	read_loop(line, head, READ_MODE_LIMITED | READ_MODE_HEREDOC);
+}
+
 char	*run_heredoc(char	*endstring)
 {
 	t_dl_node		*head;
@@ -12,23 +35,22 @@ char	*run_heredoc(char	*endstring)
 	char			*ret;
 	t_dl_node		*tmp_node; 
 	
+	signal(SIGINT, ctrl_c_handler);
 	head = NULL;
-	line = init_line(NULL, NULL, 0, new_prompt(PROMPT_HEREDOC));
-	ft_putstr(line->prompt->str);
-	dl_append(&head, line);
-	read_loop(&line, &head, READ_MODE_LIMITED | READ_MODE_HEREDOC);
+	heredoc_set_line_and_run(&head, &line);
+	if (heredoc_ctrl_c(head, line))
+		return (NULL);
 	while (ft_strcmp(line->line, endstring) != 0 && ft_strcmp(line->line, "\004") != 0)
 	{
 		if (dl_find_data(head, line)->next)
 			move_cur_on_last_line(dl_find_data(head, line));
-		line = init_line(NULL, NULL, 0, new_prompt(PROMPT_HEREDOC));
-		ft_putstr(line->prompt->str);
-		dl_append(&head, line);
-		read_loop(&line, &head, READ_MODE_LIMITED | READ_MODE_HEREDOC);
+		heredoc_set_line_and_run(&head, &line);
+		if (heredoc_ctrl_c(head, line))
+			return (NULL);
 	}
 	move_cur_on_last_line(dl_find_data(head, line));
 	tmp_node = dl_find_data(head, line);
-	if (tmp_node->prev)
+	if (tmp_node && tmp_node->prev)
 		tmp_node->prev->next = NULL;
 	else
 		head = NULL;
@@ -38,12 +60,8 @@ char	*run_heredoc(char	*endstring)
 	if (ret)
 		ret = ft_strljoin(ret, "\n", FIRST);
 	dl_free_whith_content(head, free_line);
+	signal(SIGINT, SIG_DFL);
 	return (ret);
-}
-
-void	ctrl_c_handler(int lel)
-{
-	ioctl(STDOUT_FILENO, TIOCSTI, "\030");
 }
 
 char	*run_line_edit(void)

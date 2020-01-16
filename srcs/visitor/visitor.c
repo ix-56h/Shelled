@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/13 19:35:30 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/16 18:40:23 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,25 @@ int		exec_heredoc(t_fifo *stack)
 {
 	t_node	*node;
 	char	*str;
+	int		err;
+
+	err = 0;
 	while (!fifo_empty(stack))
 	{
 		node = fifo_peek(stack);
 		if (node->right)
 		{
-			str = run_heredoc(node->right->data);
-			free(node->right->data);
-			node->right->data = str;
+			if ((str = run_heredoc(node->right->data)))
+			{
+				free(node->right->data);
+				node->right->data = str;
+			}
+			else
+				err = 1;
 		}
 		fifo_delete(stack);
 	}
-	return (0);
+	return ((err) ? 0 : 1);
 }
 
 int		visit_cmd(t_node *node, t_io_lists io)

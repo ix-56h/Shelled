@@ -133,6 +133,8 @@ void			arrow_up_act(t_line **line, t_dl_node **head);
 void			arrow_ctrl_down(t_line **line, t_dl_node **head);
 void			arrow_ctrl_up(t_line **line, t_dl_node **head);
 void			suppr_act(t_line *line, t_dl_node **head);
+int				ctrl_d_act(t_line **line, t_dl_node **head, char mode);
+void			ctrl_c_act(t_line **line, t_dl_node **head, char mode);
 
 /*
 **	clear.c
@@ -163,9 +165,9 @@ char			*concat_lines(t_dl_node *head);
 **	test_key.c
 */
 
-int	is_ctrl_left(char *buff);
-int	is_ctrl_right(char *buff);
-int	is_ctrl_up(char *buff);
-int	is_ctrl_down(char *buff);
+int				is_ctrl_left(char *buff);
+int				is_ctrl_right(char *buff);
+int				is_ctrl_up(char *buff);
+int				is_ctrl_down(char *buff);
 
 #endif
