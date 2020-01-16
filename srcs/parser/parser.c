@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/13 17:52:07 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/15 15:42:43 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,11 +290,8 @@ t_node	*parse_term(t_sh *sh)
 	nod2 = NULL;
 	if ((node = parse_and_or(sh)))
 	{
-		// trouver une commande shell qui fait passer dans le while
 		while ((nod2 = parse_and_or(sh)))
-		{
 			node = binnode(node, nod2, nod2->left);
-		}
 	}
 	if (node && (nod2 = parse_separator(sh)))
 	{
@@ -416,7 +413,7 @@ t_node	*parse_simple_command(t_sh *sh)
 	{
 		first = node;
 		while ((nod2 = parse_cmd_prefix(sh)))
-			node = binnode(node, nod2, nod2->left);
+			node = binnode(node, nod2, nod2->right);
 		if ((nod2 = parse_cmd_word(sh)))
 		{
 			args = nod2;
@@ -426,13 +423,13 @@ t_node	*parse_simple_command(t_sh *sh)
 				push_args(args, sh->tok.data);
 				sh->tok = get_next_token(sh->input, sh->stack.errors);
 			}
-			binnode(nod2, first, first->left);
+			binnode(nod2, first, first->right);
 			if ((nod2 = parse_cmd_suffix(sh)))
 			{
 				first = nod2;
-				node = binnode(node, nod2, nod2->left);
+				node = binnode(node, nod2, nod2->right);
 				while ((nod2 = parse_cmd_prefix(sh)))
-					node = binnode(node, nod2, nod2->left);
+					node = binnode(node, nod2, nod2->right);
 			}
 			while (sh->tok.tok == TOK_WORD)
 			{
@@ -453,9 +450,9 @@ t_node	*parse_simple_command(t_sh *sh)
 		if ((nod2 = parse_cmd_suffix(sh)))
 		{
 			first = nod2;
-			node = binnode(node, nod2, nod2->left);
+			node = binnode(node, nod2, nod2->right);
 			while ((nod2 = parse_cmd_prefix(sh)))
-				node = binnode(node, nod2, nod2->left);
+				node = binnode(node, nod2, nod2->right);
 		}
 		while (sh->tok.tok == TOK_WORD)
 		{
@@ -525,7 +522,7 @@ t_node	*parse_cmd_prefix(t_sh *sh)
 		while ((tok = sh->tok).tok == TOK_ASSIGNMENT_WORD)
 		{
 			nod2 = save_node(NULL, tok, NULL, ASSIGNMENT_WORD);
-			node = binnode(node, nod2, NULL);
+			node = binnode(NULL, nod2, node);
 			sh->tok = get_next_token(sh->input, sh->stack.errors);
 		}
 	}
@@ -552,7 +549,7 @@ t_node	*parse_cmd_suffix(t_sh *sh)
 		while ((tok = sh->tok).tok == TOK_WORD)
 		{
 			nod2 = save_node(NULL, tok, NULL, 0);
-			node = binnode(node, nod2, NULL);
+			node = binnode(NULL, nod2, node);
 			sh->tok = get_next_token(sh->input, sh->stack.errors);
 		}
 	}
@@ -573,7 +570,7 @@ t_node	*parse_redirect_list(t_sh *sh)
 	if ((node = parse_io_redirect(sh)))
 	{
 		while ((nod2 = parse_io_redirect(sh)))
-			node = binnode(nod2->left, nod2, node);
+			node = binnode(node, nod2, nod2->right);
 	}
 	return (node);
 }
@@ -620,7 +617,7 @@ t_node	*parse_io_file(t_sh *sh)
 		sh->tok = get_next_token(sh->input, sh->stack.errors);
 		node = save_node(NULL, tok, NULL, IO_REDIRECT);
 		if ((nod2 = parse_filename(sh)))
-			node = binnode(nod2, node, NULL);
+			node = binnode(NULL, node, nod2);
 		else
 			error_push(sh->stack.errors, PARSE_ERROR_NEAR, tok.data);
 	}
@@ -630,30 +627,19 @@ t_node	*parse_io_file(t_sh *sh)
 t_node	*parse_filename(t_sh *sh)
 {
 	t_node		*node;
-	//t_node		*nod2;
-	//t_node		*first;
 	t_tokens	tok;
 
 	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
-	//first = NULL;
-	//nod2 = NULL;
 	tok = sh->tok;
-	// rule 2
 	if (tok.tok == TOK_WORD)
 	{
+		//rule 2
+		// [Redirection to or from filename]
+		//The expansions specified in Redirection shall occur. As specified there, exactly one field can result (or the result is unspecified), and there are additional requirements on pathname expansion.
 		node = save_node(NULL, sh->tok, NULL, DEFAULT_ID);
-		//first = node;
 		sh->tok = get_next_token(sh->input, sh->stack.errors);
-		//while ((tok = sh->tok).tok == TOK_WORD)
-		//{
-		//	nod2 = save_node(NULL, sh->tok, NULL, DEFAULT_ID);
-		//	binnode(nod2, node, NULL);
-		//	node = nod2;
-		//	sh->tok = get_next_token(sh->input, sh->stack.errors);
-		//}
-		//node = first;
 	}
 	return(node);
 }
@@ -674,7 +660,7 @@ t_node	*parse_io_here(t_sh *sh)
 		sh->tok = get_next_token(sh->input, sh->stack.errors);
 		if ((nod2 = parse_here_end(sh)))
 		{
-			node = binnode(nod2, node, NULL);
+			node = binnode(NULL, node, nod2);
 			fifo_insert(sh->stack.here_docs, node);
 		}
 		else

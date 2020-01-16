@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/01/14 01:44:04 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/01/14 17:43:23 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ C_FILES_line_edit = \
 					line_misc.c \
 					move.c \
 					term_misc.c \
+					test_key.c \
 
 C_FILES_builtins = \
 					ft_env.c \

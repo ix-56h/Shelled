@@ -11,22 +11,6 @@
 # define PROMPT_SUBLINE			"> "
 # define PROMPT_HEREDOC			"heredoc> "
 
-# if defined(__ITERM__)
-#  define KEY_CTRL_LEFT_CODE	"\x1b\x1b[D"
-#  define KEY_CTRL_RIGHT_CODE	"\x1b\x1b[C"
-#  define KEY_CTRL_UP_CODE		"\x1b\x1b[A"
-#  define KEY_CTRL_DOWN_CODE	"\x1b\x1b[B"
-# elif defined(__APPLE__)
-#  define KEY_CTRL_LEFT_CODE	"\x1b""b"
-#  define KEY_CTRL_RIGHT_CODE	"\x1b""f"
-#  define KEY_CTRL_UP_CODE		"\x1b""[a"
-#  define KEY_CTRL_DOWN_CODE	"\x1b""[b"
-# else
-#  define KEY_CTRL_LEFT_CODE	"\033[1;5D"
-#  define KEY_CTRL_RIGHT_CODE	"\033[1;5C"
-#  define KEY_CTRL_UP_CODE		"\033[1;5A"
-#  define KEY_CTRL_DOWN_CODE	"\033[1;5B"
-# endif
 # define KEY_UP_CODE			"\033[A"
 # define KEY_DOWN_CODE			"\033[B"
 # define KEY_RIGHT_CODE			"\033[C"
@@ -50,6 +34,8 @@
 
 # define READ_MODE_FULL			1
 # define READ_MODE_LIMITED		2
+# define READ_MODE_LINE			4
+# define READ_MODE_HEREDOC		8
 
 typedef struct winsize t_winsize;
 typedef struct	s_pos
@@ -172,5 +158,14 @@ int				count_row_in_line(t_line *line, t_winsize winsize);
 int				term_can_print(t_dl_node *head, int readsize);
 void			handle_resize(int signo);
 char			*concat_lines(t_dl_node *head);
+
+/*
+**	test_key.c
+*/
+
+int	is_ctrl_left(char *buff);
+int	is_ctrl_right(char *buff);
+int	is_ctrl_up(char *buff);
+int	is_ctrl_down(char *buff);
 
 #endif
