@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <signal.h>
+#include <unistd.h>
 #include <sh.h>
 #include "libft.h"
 #include "ligne.h"
@@ -38,12 +40,18 @@ char	*run_heredoc(char	*endstring)
 	return (ret);
 }
 
+void	ctrl_c_handler(int lel)
+{
+	ioctl(STDOUT_FILENO, TIOCSTI, "\030");
+}
+
 char	*run_line_edit(void)
 {
 	t_dl_node		*head;
 	t_line			*line;
 	char			*ret;
 
+	signal(SIGINT, ctrl_c_handler);
 	head = NULL;
 	line = init_line(NULL, NULL, 0, new_prompt(PROMPT_DEFAULT));
 	ft_putstr(line->prompt->str);
@@ -67,5 +75,6 @@ char	*run_line_edit(void)
 	historic_reset();
 	ret = concat_lines(head);
 	head = NULL;
+	signal(SIGINT, SIG_DFL);
 	return (ret);
 }

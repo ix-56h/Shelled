@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:53:43 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/02 19:52:14 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/16 05:38:02 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,16 @@ int				read_loop(t_line **line, t_dl_node **head, char mode)
 				cur_move_to_index(*line, 0);
 			else if (ft_strcmp(buff, KEY_END) == 0)
 				cur_move_to_index(*line, ft_strlen((*line)->line));
+			else if (ft_strcmp(buff, "\030") == 0)
+			{
+				dl_free_whith_content(*head, free_line);
+				*head = NULL;
+				*line = init_line(NULL, ft_strdup(""), 0, new_prompt(PROMPT_DEFAULT));
+				dl_append(head, *line);
+				(*head)->data = *line;
+				break ;
+
+			}
 			else
 				arrow_line_action(line, buff, head, mode);
 		}
