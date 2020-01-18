@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:46:14 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/13 19:29:16 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/18 22:13:53 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	visit(t_node *root);
 
 int	set_pipe_fd(t_pipe_list *piped);
 int	close_used_pipe_fd(t_pipe_list *piped);
+int close_unused_pipe_fd(t_pipe_list *piped);
 int	set_used_fd(t_pipe_list *piped);
 int	set_redir_fd(t_redir_list *redir);
 

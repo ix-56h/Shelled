@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/14 00:07:25 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/18 22:13:16 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ int				exec_with_fork(t_node *cmd, char **env, t_io_lists io, char *cmd_path)
 	else if (pid == 0) //FILS
 	{
 		set_pipe_fd(io.piped);
+		close_unused_pipe_fd(io.piped);
 		set_redir_fd(io.redir);
 		execve(program, cmd->args, ((env) ? env : g_env));
 		exit(1);
@@ -176,7 +177,6 @@ int				exec_with_fork(t_node *cmd, char **env, t_io_lists io, char *cmd_path)
 	else //PARENT
 	{
 		close_used_pipe_fd(io.piped);
-		set_used_fd(io.piped);
 		return (1);
 	}
 }
@@ -213,7 +213,6 @@ int				exec_without_fork(t_node *cmd, char **env, t_io_lists io)
 		exec_builtin(cmd->args, ((env) ? &env : &g_env));
 		close_used_pipe_fd(io.piped);
 		save_and_restore_fd(1);
-		set_used_fd(io.piped);
 		return (1);
 }
 

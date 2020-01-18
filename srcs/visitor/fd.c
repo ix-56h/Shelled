@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 23:06:50 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/11 04:13:38 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/18 22:04:10 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,20 @@ int		close_used_pipe_fd(t_pipe_list *piped)
 			close(piped->fd[WRITE_END]);
 		else if (piped->next)
 			close(piped->next->fd[WRITE_END]);
+	}
+	return (EXIT_SUCCESS);
+}
+
+int		close_unused_pipe_fd(t_pipe_list *piped)
+{
+	if (piped)
+	{
+		if (piped->used == 1)
+			close(piped->fd[WRITE_END]);
+		if (!piped->prev && piped->used != 1)
+			close(piped->fd[READ_END]);
+		else if (piped->next)
+			close(piped->next->fd[READ_END]);
 	}
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/16 18:40:23 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/18 21:12:10 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,20 @@ int		exec_heredoc(t_fifo *stack)
 
 int		visit_cmd(t_node *node, t_io_lists io)
 {
+	int	tmp = 999;
+	int	tmp2 = 999;
 	if (node->tok == TOK_WORD)
 	{
 		restore_term();
 		exec_cmd(node, NULL, io);
 		if ((io.piped && !io.piped->next && io.piped->used == 1) || !io.piped)
-			while (wait(NULL) > 0);
+		{
+			while ( tmp2 > 0)
+			{
+				tmp2 = wait(&tmp);
+			}
+		}
+		set_used_fd(io.piped);
 		set_term_mode();
 	}
 	return (1);

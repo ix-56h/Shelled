@@ -65,7 +65,7 @@ FT_INC_DIR = $(FT_DIR)/incs
 FT_LNK = -L$(FT_DIR) -l$(FT)
 
 ###  CC && FLAGS ###
-CC = clang -fsanitize=address
+CC = clang -g3 
 DEBUG_FLAGS = -g3
 NO_WARNING ?= false
 ifeq ($(NO_WARNING), false)
