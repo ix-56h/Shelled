@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/18 23:46:48 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/18 23:57:07 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int		visit_pipe(t_node *node, t_io_lists io)
 		io.piped->fd[0] = pipefd[0];
 		io.piped->fd[1] = pipefd[1];
 		io.piped->used = 0;
-		if (G_VISIT_RULES[node->left->tok] && (*G_VISIT_RULES[node->left->tok])(node->left, io))
+		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io))
 		{
 			if (!(*G_VISIT_RULES[node->right->tok])(node->right, io))
 			{
