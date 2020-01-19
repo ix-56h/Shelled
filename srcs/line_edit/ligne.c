@@ -5,7 +5,7 @@
 #include "libft.h"
 #include "ligne.h"
 
-void	ctrl_c_handler(int lel)
+static void	ctrl_c_handler(int lel)
 {
 	ioctl(STDOUT_FILENO, TIOCSTI, "\030");
 }

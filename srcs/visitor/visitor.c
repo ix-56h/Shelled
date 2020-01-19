@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/18 23:57:07 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/19 00:59:51 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <signal.h>
 #include <parser.h>
 #include <visitor.h>
 #include <visitor_rules.h>
@@ -47,6 +48,11 @@ int		exec_heredoc(t_fifo *stack)
 	return ((err) ? 0 : 1);
 }
 
+static void	ctrl_c_handler(int lel)
+{
+	ft_putchar('\n');
+}
+
 int		visit_cmd(t_node *node, t_io_lists io)
 {
 	int	ret_value;
@@ -55,6 +61,7 @@ int		visit_cmd(t_node *node, t_io_lists io)
 
 	final_ret = 0;
 	ret_value = 1;
+	signal(SIGINT, ctrl_c_handler);
 	if (node->tok == TOK_WORD)
 	{
 		restore_term();
@@ -72,6 +79,7 @@ int		visit_cmd(t_node *node, t_io_lists io)
 		set_used_fd(io.piped);
 		set_term_mode();
 	}
+	signal(SIGINT, SIG_DFL);
 	return (final_ret);
 }
 
@@ -182,8 +190,7 @@ int		visit_left_redi(t_node *node, t_io_lists io) // <
 	{
 		if ((fd = open(node->right->data, O_RDONLY)) == -1)
 		{
-			ft_putstr("21sh: Aucun fichier ou dossier de ce type:");
-			ft_putstr(node->right->data);
+			ft_vprintfd(3, SHELL_NAME": no such file or directory: ", node->right->data, "\n");
 			return (1);
 		}
 		dl_push_node((t_dl_node **)&io.redir, malloc(sizeof(t_redir_list)), NULL);
