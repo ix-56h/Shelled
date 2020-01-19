@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:04:37 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/07 15:20:39 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/19 01:25:26 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,38 @@ int		ft_isallprint(char *str)
 	return (1);
 }
 
+/*int		is_multiline(t_dl_node *head)
+{
+	char	finded;
+	char	backslash;
+	int		i;
+	char	*line;
+
+	i = 0;
+	finded = 0;
+	while (head)
+	{
+		backslash = 0;
+		line = ((t_line *)head->data)->line;
+		while (line[i])
+		{
+			if (line[i] == '"' || line[i] == '\'')
+			{
+				if (finded == 0)
+					finded = line[i];
+				else if (finded == line[i])
+					finded = 0;
+			}
+			if (i + 1 == ft_strlen(line) && line[i] == '\\')
+				backslash = 1;
+			++i;
+		}
+		i = 0;
+		head = head->next;
+	}
+	return (finded || backslash);
+}*/
+
 int		is_multiline(t_dl_node *head)
 {
 	char	finded;
@@ -66,6 +98,9 @@ int		is_multiline(t_dl_node *head)
 		line = ((t_line *)head->data)->line;
 		while (line[i])
 		{
+			if (line[i] == '\\')
+				if (line[i + 1] != '\0')
+					i += 2;
 			if (line[i] == '"' || line[i] == '\'')
 			{
 				if (finded == 0)

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:32:29 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/16 19:55:55 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/19 01:15:54 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	arrow_ctrl_down(t_line **line, t_dl_node **head)
 		cur_move_to_index(*line, ft_strlen((*line)->line));
 		term_other(TERM_DOWN, 1);
 		*line = current->next->data;
-		//g_for_resize.line = *line;
 		cur_move_to_index(*line, 0);
 		(*line)->index = 0;
 	}
@@ -39,7 +38,6 @@ void	arrow_ctrl_up(t_line **line, t_dl_node **head)
 		cur_move_to_index(*line, 0);
 		term_other(TERM_UP, 1);
 		*line = current->prev->data;
-		//g_for_resize.line = *line;
 		cur_move_to_index(*line, 0);
 		(*line)->index = 0;
 	}

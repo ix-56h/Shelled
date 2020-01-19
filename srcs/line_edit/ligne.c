@@ -75,14 +75,7 @@ char	*run_line_edit(void)
 	line = init_line(NULL, NULL, 0, new_prompt(PROMPT_DEFAULT));
 	ft_putstr(line->prompt->str);
 	dl_append(&head, line);
-	//g_for_resize.node = head;
-	//g_for_resize.line = line;
-	/*if (*/read_loop(&line, &head, READ_MODE_FULL | READ_MODE_LINE);/* ==-1)*/
-	/*{
-		free_line(head->data);
-		head->data = init_line(NULL, ft_strdup("exit"), 4, new_prompt(PROMPT_DEFAULT));
-		line = head->data;
-	}*/
+	read_loop(&line, &head, READ_MODE_FULL | READ_MODE_LINE);
 	while (is_multiline(head))
 	{
 		if (dl_find_data(head, line)->next)
@@ -90,8 +83,6 @@ char	*run_line_edit(void)
 		line = init_line(NULL, NULL, 0, new_prompt(PROMPT_SUBLINE));
 		ft_putstr(line->prompt->str);
 		dl_append(&head, line);
-		//g_for_resize.node = head;
-		//g_for_resize.line = line;
 		read_loop(&line, &head, READ_MODE_LIMITED | READ_MODE_LINE);
 	}
 	add_historic(head);

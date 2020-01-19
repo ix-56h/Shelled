@@ -61,7 +61,6 @@ typedef struct	s_line_and_node
 	t_line	*line;
 }				t_line_and_node;
 
-//t_line_and_node	g_for_resize;
 char			*run_heredoc(char	*endstring);
 char			*run_line_edit(void);
 
