@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:18 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/10 17:02:46 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/22 03:09:20 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_node		*parse_in(t_sh *sh);
 t_node		*parse_io_file(t_sh *sh);
 t_node		*parse_io_here(t_sh *sh);
 t_node		*parse_io_redirect(t_sh *sh);
-t_node		*parse_linebreak(t_sh *sh);
+int			parse_linebreak(t_sh *sh);
 t_node		*parse_list(t_sh *sh);
 t_node		*parse_name(t_sh *sh);
 t_node		*parse_newline_list(t_sh *sh);

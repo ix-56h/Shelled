@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/01/14 17:43:23 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/01/22 02:01:42 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,4 +66,7 @@ C_FILES_builtins = \
 C_FILES_utils = \
 				double_linked_list.c \
 				# SUPPA concat loop
+
+C_FILES_expansions = \
+
 C_FILES += $(foreach SUB_DIR,$(SUB_DIRS),$(addprefix $(SUB_DIR)/,$(C_FILES_$(SUB_DIR))))

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/13 17:07:30 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/21 13:42:59 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,6 +257,5 @@ t_tokens	get_next_token(char *s, t_lifo*stack)
 		error_push(stack, UNRECOGNIZED_TOKEN, token.data);
 		return (token_error(0, stack, 0));
 	}
-	//printf("%s\n", token.data);
 	return (token);
 }
