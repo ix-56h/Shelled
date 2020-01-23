@@ -6,8 +6,11 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 02:28:03 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/22 02:28:04 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/23 23:24:24 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef FT_EXPANSIONS_H
+# define FT_EXPANSIONS_H
 
+#endif
