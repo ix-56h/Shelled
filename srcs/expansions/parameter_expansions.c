@@ -16,7 +16,7 @@
 
 static int	look_for_pattern(char *param, char *word, size_t index, int act)
 {
-	char	pattern[256];
+	char	pattern[FT_PATH_MAX];
 	size_t	i;
 
 	i = 0;
@@ -78,7 +78,7 @@ char		*remove_small_suffix(char *param, char *word)
 		param = ft_strjoinf("$", param, 2);
 		process_expression(&param);
 		i = ft_strlen(param) - 1;
-		while (i-- > 0)
+		while (i > 0)
 		{
 			if (param[i] == word[0] && look_for_pattern(param, word, i, 1))
 			{
@@ -86,6 +86,7 @@ char		*remove_small_suffix(char *param, char *word)
 				free(word);
 				return (param);
 			}
+			i--;
 		}
 		free(word);
 		return (param);
@@ -107,7 +108,7 @@ char		*remove_small_prefix(char *param, char *word)
 			process_expression(&word);
 		param = ft_strjoinf("$", param, 2);
 		process_expression(&param);
-		while (param[i++])
+		while (param[i])
 		{
 			if (param[i] == word[0] && look_for_pattern(param, word, i, 2))
 			{
@@ -115,6 +116,7 @@ char		*remove_small_prefix(char *param, char *word)
 				free(word);
 				return (param);
 			}
+			i++;
 		}
 		free(word);
 		return (param);

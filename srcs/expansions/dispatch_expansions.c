@@ -14,8 +14,6 @@
 #include "sh.h"
 #include "expansions.h"
 
-#include <stdio.h>
-
 t_exp_param		g_dispatch_string[MOD_MAX] =
 {
 	{ MOD_USE_DEFAULT, ":-", use_default_value },

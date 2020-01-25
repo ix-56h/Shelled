@@ -17,7 +17,7 @@ char	*remove_brace(char *word)
 {
 	int		i;
 	int		j;
-	char	tmp[256];
+	char	tmp[FT_PATH_MAX];
 	char	*new_word;
 
 	i = 0;
@@ -64,7 +64,13 @@ char	*get_mod_type(char *word, size_t i, int act)
 	str = ft_strnew(3);
 	str[0] = word[i];
 	if (act == 1)
-		str[1] = ft_isalnum(word[i + 1]) ? '\0' : word[i + 1];
+	{
+		if (word[i + 1] == '+' || word[i + 1] == '-'
+		|| word[i + 1] == '=' || word[i + 1] == '?')
+			str[1] = word[i + 1];
+		else
+			str[1] = '\0';
+	}
 	else if (act == 2)
 		str[1] = word[i + 1] == '%' ? word[i + 1] : '\0';
 	else if (act == 3)

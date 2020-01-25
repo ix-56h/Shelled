@@ -15,7 +15,6 @@
 #include "expansions.h"
 #include "libft.h"
 
-#include <stdio.h>
 char	*test_parameter(t_exp_data *exp, char *word)
 {
 	int		i;
