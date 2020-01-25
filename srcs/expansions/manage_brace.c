@@ -75,7 +75,7 @@ int		check_braces(char *word, size_t *a)
 		{
 			i++;
 			obrace++;
-			break ;
+//			break ;
 		}
 		i++;
 	}
