@@ -15,6 +15,8 @@
 #include "sh.h"
 #include "libft.h"
 
+#include <stdio.h>
+
 int		get_length_mod(int act)
 {
 	static int mod;
@@ -60,6 +62,9 @@ char	*expand_tilde(char *w)
 
 char	*expand_word(char *word)
 {
+	char *word_len;
+
+	word_len = NULL;
 	if (word[0] == '~')
 		word = expand_tilde(word);
 	get_recur_end(0);
@@ -67,8 +72,11 @@ char	*expand_word(char *word)
 	process_expression(&word);
 	if (get_length_mod(2) == 1)
 	{
-		word = ft_itoa(ft_strlen(word));
+		word_len = ft_itoa(ft_strlen(word));
 		get_length_mod(0);
+		quote_removal(&word_len);
+		free(word);
+		return (word_len);
 	}
 	quote_removal(&word);
 	return (word);

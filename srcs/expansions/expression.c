@@ -43,12 +43,15 @@ char	*test_parameter(t_exp_data *exp, char *word)
 	return (new_word);
 }
 
+#include <stdio.h>
+
 char	*process_parameter(size_t *i, char *word)
 {
 	t_exp_data	exp;
 	char		*new_word;
 
 	new_word = NULL;
+//	printf("\n|%s|\n", word);
 	if (!check_braces(word, i))
 		return (ft_strdup(""));
 	exp.modifier = get_expansion_format(word);

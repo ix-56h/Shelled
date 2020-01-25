@@ -79,6 +79,8 @@ char	*get_mod_type(char *word, size_t i, int act)
 	return (str);
 }
 
+#include <stdio.h>
+
 char	*get_expansion_format(char *word)
 {
 	size_t	a;
@@ -86,12 +88,15 @@ char	*get_expansion_format(char *word)
 
 	a = 1;
 	modifier = NULL;
-	if (word[a + 1] == '#')
-		get_length_mod(1);
 	while (word[a] && word[a] != '{')
 		a++;
 	if (word[a - 1] != '$')
 		return (modifier);
+	if (word[a + 1] == '#')
+	{
+		get_length_mod(1);
+		a++;
+	}
 	while (word[a] && word[a] != '}')
 	{
 		a++;
