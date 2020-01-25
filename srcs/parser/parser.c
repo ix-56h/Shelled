@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/22 03:09:06 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/25 03:27:14 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -474,13 +474,10 @@ t_node	*parse_cmd_name(t_sh *sh)
 		{
 			applie_rule_one(sh->input, &sh->tok);
 			node = save_node(NULL, sh->tok, NULL, ARGS);
-			sh->tok = get_next_token(sh->input, sh->stack.errors);
 		}
 		else
-		{
 			node = applie_7b(&(sh->tok), sh->tok.data);
-			sh->tok = get_next_token(sh->input, sh->stack.errors);
-		}
+		sh->tok = get_next_token(sh->input, sh->stack.errors);
 	}
 	return(node);
 }

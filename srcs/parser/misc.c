@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:48 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/22 01:42:22 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/25 03:23:40 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ t_node		*applie_7b(t_tokens *cur, char *s)
 	{
 		if ((tmp = ft_strichr(s, '=')) > 0) // && isquoted
 		{
-			// first character of a valid name is not a digit
 			if (!ft_isdigit(s[0]))
 				cur->tok = TOK_ASSIGNMENT_WORD;
 		}
