@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/21 13:42:59 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/25 03:25:38 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,6 @@ int		get_token(char *s, t_chr_class chr_class, t_lifo*stack, t_tokens *tok)
 				return (anchor);
 			continue;
 		}
-		(toktype == TOK_WORD && prev_class != CHR_ESCAPE && s[anchor] == '=') ? (toktype = TOK_ASSIGNMENT_WORD) : 0;
 		prev_class = chr_class;
 		anchor++;
 	}
@@ -250,8 +249,6 @@ t_tokens	get_next_token(char *s, t_lifo*stack)
 		return (token_error(0, stack, 0));
 	if (token.tok == TOK_WORD && (s[i] == '>' || s[i] == '<') && (ft_isdigits(token.data)))
 		token.tok = TOK_IO_NUMBER;
-	//if (token.tok == TOK_WORD)
-		//field_splitting, don't forget to use IFS who's used to determine the character to do splitting
 	if (ABSTRACT_TOKEN[token.tok] && !(token.tok = get_true_toktype(token.data, token.tok, &i)))
 	{
 		error_push(stack, UNRECOGNIZED_TOKEN, token.data);
