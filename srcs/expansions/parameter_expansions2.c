@@ -14,8 +14,6 @@
 #include "sh.h"
 #include "expansions.h"
 
-#include <stdio.h>
-
 char	*use_default_value(char *param, char *word)
 {
 	char *new_word;
@@ -30,11 +28,7 @@ char	*use_default_value(char *param, char *word)
 	}
 	else
 	{
-		while (word[0] == '$' && word[1])
-		{
-			word = ft_strjoinf(word, "}", 1);
-			process_expression(&word);
-		}
+		process_expression(&word);
 		free(param);
 		return (word);
 	}
@@ -51,8 +45,7 @@ char	*assign_default_value(char *param, char *word)
 	}
 	else
 	{
-		if (word[0] == '$' && word[1])
-			process_expression(&word);
+		process_expression(&word);
 		add_set(param, word);
 	}
 	free(param);
@@ -76,13 +69,11 @@ char	*indicate_error(char *param, char *word)
 		ft_putstr_fd(": parameter null or not set", 2);
 		return (word);
 	}
-	if (word[0] == '$' && word[1])
-		process_expression(&word);
+	process_expression(&word);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(word, 2);
 	free(param);
 	free(word);
-	return (NULL);
 	return (ft_strdup(""));
 }
 
@@ -96,11 +87,8 @@ char	*use_alternative_value(char *param, char *word)
 	}
 	else
 	{
-		while (word[0] == '$' && word[1])
-		{
-			word = ft_strjoinf(word, "}", 1);
-			process_expression(&word);
-		}
+		word = ft_strjoinf(word, "}", 1);
+		process_expression(&word);
 		free(param);
 		return (word);
 	}

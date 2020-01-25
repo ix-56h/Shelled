@@ -105,7 +105,7 @@ char			*remove_large_prefix(char *param, char *word);
 char			*remove_brace(char *word);
 char			*get_expansion_format(char *word);
 char			*error_modifier(char *param, char *word);
-int				parameter_error(char c, char *word);
+int				parameter_error(char *word, int index, int act);
 
 /*
 **	manage_brace.c
@@ -120,7 +120,7 @@ char			*get_last_part(char *word, size_t *a);
 char			*dispatch_exp(char *full_word, char *mod);
 
 
-int		get_lenght_mod(int act);
+int		get_length_mod(int act);
 int		get_recur_end(int act);
 
 #endif

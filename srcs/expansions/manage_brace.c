@@ -66,7 +66,7 @@ int		check_braces(char *word, size_t *a)
 	cbrace = 0;
 	if (word[2] == '}')
 	{
-		ft_putstr_fd("42sh: bad substitution", 2);
+		ft_putstr_fd("42sh: bad substitution1", 2);
 		return (0);
 	}
 	while (word[i])
@@ -75,6 +75,7 @@ int		check_braces(char *word, size_t *a)
 		{
 			i++;
 			obrace++;
+			break ;
 		}
 		i++;
 	}
@@ -86,11 +87,6 @@ int		check_braces(char *word, size_t *a)
 		if (obrace == cbrace)
 			break ;
 		i++;
-	}
-	if (obrace > cbrace)
-	{
-		ft_putstr_fd("42sh: bad substitution", 2);
-		return (0);
 	}
 	*a = i + 1;
 	return (1);

@@ -15,6 +15,7 @@
 #include "expansions.h"
 #include "libft.h"
 
+#include <stdio.h>
 char	*test_parameter(t_exp_data *exp, char *word)
 {
 	int		i;
@@ -22,13 +23,13 @@ char	*test_parameter(t_exp_data *exp, char *word)
 
 	i = 1;
 	new_word = NULL;
-	if (exp->last[0] == '$')
+	if (exp->last[0])
 		process_expression(&exp->last);
 	if (!exp->modifier)
 	{
 		new_word = remove_brace(word);
 		while (new_word[i++])
-			if (parameter_error(new_word[i], new_word))
+			if (parameter_error(new_word, i, 1))
 				return (ft_strdup(""));
 		process_expression(&new_word);
 	}

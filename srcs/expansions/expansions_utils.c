@@ -37,12 +37,12 @@ char	*remove_brace(char *word)
 	return (new_word);
 }
 
-int		parameter_error(char c, char *word)
+int		parameter_error(char *word, int index, int act)
 {
-	if (c == '$' || c == '{')
+	if (word[index] == '{' && word[index - 1] != '$')
 	{
-		ft_putstr_fd("42sh: bad substitution", 2);
-		if (word)
+		ft_putstr_fd("42sh: bad substitution!", 2);
+		if (act == 1)
 			free(word);
 		return (1);
 	}
@@ -51,8 +51,8 @@ int		parameter_error(char c, char *word)
 
 char	*error_modifier(char *param, char *word)
 {
-	(void)param;
-	(void)word;
+	free(word);
+	free(param);
 	ft_putstr_fd("42sh: unrecognized modifier", 2);
 	return (ft_strdup(""));
 }
@@ -82,7 +82,6 @@ char	*get_expansion_format(char *word)
 	modifier = NULL;
 	if (word[a + 1] == '#')
 	{
-	//	g_length_mod = 1;
 		get_length_mod(1);
 		a++;
 	}

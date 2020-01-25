@@ -73,7 +73,7 @@ static char		*get_param(char *full_word, char *mod)
 		i++;
 	len = i;
 	while (full_word[len++] != mod[0])
-		if (parameter_error(full_word[len], NULL))
+		if (parameter_error(full_word, len, 0))
 			return (ft_strdup(""));
 	len -= i;
 	parameter = ft_strnew(len);
