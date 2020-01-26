@@ -36,7 +36,7 @@ char	*process_simple_parameter(size_t *i, char *word)
 	ft_strncpy(expression, word + *i, (a - *i));
 	(*i)--;
 	word[*i] = 0;
-	if (!(tmp = get_env(g_env, expression)))
+	if (!(tmp = get_env(g_set, expression)))
 	{
 		new_word = ft_strjoinf(word, word + a, 1);
 		*i -= 1;
