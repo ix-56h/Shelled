@@ -55,8 +55,6 @@ static char		*get_word(char *full_word, char *mod)
 	return (word);
 }
 
-#include <stdio.h>
-
 static char		*get_param(char *full_word, char *mod)
 {
 	int		i;
@@ -64,7 +62,6 @@ static char		*get_param(char *full_word, char *mod)
 	int		len;
 	char	*parameter;
 
-//	printf("\nfull word : |%s| - %zu -\n", full_word, ft_strlen(full_word));
 	i = 0;
 	j = 0;
 	while (full_word[i] != '{')
@@ -78,10 +75,8 @@ static char		*get_param(char *full_word, char *mod)
 			return (ft_strdup(""));
 	len -= i;
 	parameter = ft_strnew(len);
-//	printf("\nLEN %zu\n", len);
 	while (full_word[i] != mod[0])
 		parameter[j++] = full_word[i++];
-//	printf("\nparam : |%s| - %zu -\n", parameter, ft_strlen(parameter));
 	return (parameter);
 }
 

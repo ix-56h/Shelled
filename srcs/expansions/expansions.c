@@ -15,8 +15,6 @@
 #include "sh.h"
 #include "libft.h"
 
-#include <stdio.h>
-
 int		get_length_mod(int act)
 {
 	static int mod;
