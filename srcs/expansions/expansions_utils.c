@@ -38,11 +38,12 @@ char	*remove_brace(char *word)
 	return (new_word);
 }
 
-char	*error_test(char *param, char *word)
+char	*error_modifier(char *param, char *word)
 {
 	(void)param;
 	(void)word;
-	return (ft_strdup("unrecognized modifier"));
+	ft_putstr_fd("42sh: unrecognized modifier", 2);
+	return (ft_strdup(""));
 }
 
 char	*get_mod_type(char *word, size_t i, int act)
@@ -77,7 +78,9 @@ char	*get_expansion_format(char *word)
 	{
 		a++;
 		if (word[a] == ':')
+		{
 			return (modifier = get_mod_type(word, a, 1));
+		}
 		else if (word[a] == '%')
 			return (modifier = get_mod_type(word, a, 2));
 		else if (word[a] == '#')

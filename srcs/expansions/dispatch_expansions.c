@@ -26,7 +26,7 @@ t_exp_param		g_dispatch_string[MOD_MAX] = 	// ajouter au .h ?
 	{ MOD_RM_LARGE_SUFFIX, "%%", remove_small_suffix },		// 6
 	{ MOD_RM_SMALL_PREFIX, "#", remove_small_prefix },		// 7
 	{ MOD_RM_LARGE_PREFIX, "##", remove_small_prefix },		// 8
-	{ MOD_ERROR, ":", error_test }							// 9
+	{ MOD_ERROR, ":", error_modifier }							// 9
 };
 
 static char		*get_word(char *full_word, char *mod)
@@ -97,5 +97,7 @@ char			*dispatch_exp(char *full_word, char *mod)
 		if (ft_strcmp(mod, g_dispatch_string[i].s) == 0)
 			new_word = g_dispatch_string[i].ft(parameter, word);
 	}
+	if (!new_word)
+		new_word = error_modifier(NULL, NULL);
 	return (new_word);
 }

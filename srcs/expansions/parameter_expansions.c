@@ -73,7 +73,7 @@ char		*remove_small_suffix(char *param, char *word)
 	i = 0;
 	if (get_env(g_set, param))
 	{
-		if (word[0] == '$')
+		if (word[0] == '$' && word[1])
 			process_expression(&word);
 		param = ft_strjoinf("$", param, 2);
 		process_expression(&param);
@@ -102,7 +102,7 @@ char		*remove_small_prefix(char *param, char *word)
 	i = 0;
 	if (get_env(g_set, param))
 	{
-		if (word[0] == '$')
+		if (word[0] == '$' && word[1])
 			process_expression(&word);
 		param = ft_strjoinf("$", param, 2);
 		process_expression(&param);

@@ -63,7 +63,7 @@ int		check_braces(char *word, size_t *a)
 
 	if (word[2] == '}')
 	{
-		ft_putstr_fd("42sh: bad substitution 1", 2);
+		ft_putstr_fd("42sh: bad substitution", 2);
 		return (0);
 	}
 	while (word[i])
@@ -75,7 +75,7 @@ int		check_braces(char *word, size_t *a)
 		}
 		else if ((word[i] == '{' && word[i - 1] != '$')/* || word[i] == '{'*/)
 		{
-			ft_putstr_fd("42sh: bad substitution 1", 2);
+			ft_putstr_fd("42sh: bad substitution", 2);
 			return (0);
 		}
 		i++;

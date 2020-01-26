@@ -90,7 +90,7 @@ char	*remove_large_prefix(char *param, char *word);
 */
 char	*remove_brace(char *word);
 char	*get_expansion_format(char *word);
-char	*error_test(char *param, char *word);
+char	*error_modifier(char *param, char *word);
 
 /*
 **	manage_brace.c
