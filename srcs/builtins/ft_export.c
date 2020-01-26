@@ -2,8 +2,6 @@
 #include "sh.h"
 #include "builtins.h"
 
-#include <stdio.h>
-
 static void		print_export(char **env)
 {
 	int i;
