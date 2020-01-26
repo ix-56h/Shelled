@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/03/06 20:11:49 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/03/11 18:57:56 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ C_FILES_tokenizer = \
 					tokenizer_misc.c \
 					wordexp_misc.c \
 					wordexp_tokenizer.c \
+					lex_sequence.c \
 					gnt_standalone.c \
 
 C_FILES_visitor = \
@@ -144,5 +145,10 @@ C_FILES_expansions = \
 					 quote_removal.c \
 					 expression.c \
 					 substitution.c \
+					 parameter_expansions.c \
+					 parameter_expansions2.c \
+					 expansions_utils.c \
+					 dispatch_expansions.c \
+					 manage_brace.c \
 
 C_FILES += $(foreach SUB_DIR,$(SUB_DIRS),$(addprefix $(SUB_DIR)/,$(C_FILES_$(SUB_DIR))))
