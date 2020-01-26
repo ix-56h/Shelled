@@ -90,6 +90,40 @@ int		visit_semi(t_node *node, t_io_lists io, t_job **job)
 	ret += visit(node->right, job, new_io.cmd);
 	return (ret);
 }
+/*
+int		visit_assign_temp(char *data, char **args)
+{
+	t_sh	sh;
+	char	*item;
+	char	*value;
+	char	*old_value;
+
+	sh.f.ast_draw = 0;
+	if (!(sh.stack.errors = lifo_creator(20, sizeof(t_staterror))))
+		return (0);
+	if (!(sh.stack.here_docs = fifo_creator(20, sizeof(t_node*))))
+		return (0);
+	sh.input = ft_strdup(args[1]);
+	sh.tok = get_next_token(sh.input, sh.stack.errors);
+	if ((value = ft_strchr(data, '=')))
+	{
+		if (ft_strlen(data) > 1)
+		{
+			value[0] = '\0';
+			value = &value[1];
+			item = data;
+			old_value = ft_strdup(get_env(g_set, item));
+			add_set(item, value);
+		}
+	}
+	lifo_empty(sh.stack.errors) ? sh.node = parse_program(&sh) : 0;
+	process_sh(&sh);
+	add_set(item, old_value);
+	free(data);
+	free(old_value);
+	free_sh(&sh);
+	return (1);
+}
 
 int		visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 {
@@ -100,7 +134,9 @@ int		visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 	(void)io;
 	(void)job;
 	data = ft_strdup(node->data);
-	if ((value = ft_strchr(data, '=')))
+	if (node->args[1] && visit_assign_temp(data, node->args))
+		return (0);
+	else if ((value = ft_strchr(data, '=')))
 	{
 		if (ft_strlen(data) > 1)
 		{
@@ -115,4 +151,4 @@ int		visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 	ft_dprintf(2, SHELL_NAME": Assignement word error: %s\n", node->data);
 	free(data);
 	return (1);
-}
+}*/

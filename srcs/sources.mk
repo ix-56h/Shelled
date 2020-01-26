@@ -62,6 +62,7 @@ C_FILES_visitor = \
 				  visitor.c \
 				  visitor_redir.c \
 				  visitor_redir2.c \
+				  visitor_assign.c \
 				  visitor_special.c \
 				  fd.c \
 				  fd2.c \
