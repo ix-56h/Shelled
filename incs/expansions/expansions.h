@@ -17,7 +17,6 @@
 
 typedef char	*t_format_ft(char *s1, char *s2);
 
-	int				g_length_mod;
 	int				g_test;
 
 typedef enum	e_exp_mod{
@@ -119,5 +118,9 @@ char			*get_last_part(char *word, size_t *a);
 **	dispatch_expansions.c
 */
 char			*dispatch_exp(char *full_word, char *mod);
+
+
+int		get_lenght_mod(int act);
+int		get_recur_end(int act);
 
 #endif

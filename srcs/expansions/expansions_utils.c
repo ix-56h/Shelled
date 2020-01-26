@@ -82,7 +82,8 @@ char	*get_expansion_format(char *word)
 	modifier = NULL;
 	if (word[a + 1] == '#')
 	{
-		g_length_mod = 1;
+	//	g_length_mod = 1;
+		get_length_mod(1);
 		a++;
 	}
 	while (word[a] && word[a] != '}')

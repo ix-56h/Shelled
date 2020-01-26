@@ -22,13 +22,13 @@ char	*get_last_part(char *word, size_t *a)
 
 	j = *a;
 	i = 0;
-	if (g_test == 1)
+	if (get_recur_end(2) == 1)
 		return (ft_strdup(""));
 	while (word[j])
 		tmp[i++] = word[j++];
 	tmp[i] = '\0';
 	new_word = ft_strdup(tmp);
-	g_test = 1;
+	get_recur_end(1);
 	return (new_word);
 }
 
@@ -86,6 +86,11 @@ int		check_braces(char *word, size_t *a)
 		if (obrace == cbrace)
 			break ;
 		i++;
+	}
+	if (obrace > cbrace)
+	{
+		ft_putstr_fd("42sh: bad substitution", 2);
+		return (0);
 	}
 	*a = i + 1;
 	return (1);
