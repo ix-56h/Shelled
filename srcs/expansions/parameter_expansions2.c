@@ -87,7 +87,8 @@ char	*use_alternative_value(char *param, char *word)
 	}
 	else
 	{
-		word = ft_strjoinf(word, "}", 1);
+		if (word[0] == '$' && word[1] == '{')
+			word = ft_strjoinf(word, "}", 1);
 		process_expression(&word);
 		free(param);
 		return (word);

@@ -81,17 +81,16 @@ char	*get_expansion_format(char *word)
 	a = 1;
 	modifier = NULL;
 	if (word[a + 1] == '#')
-	{
 		get_length_mod(1);
+	while (word[a] && word[a] != '{')
 		a++;
-	}
+	if (word[a - 1] != '$')
+		return (modifier);
 	while (word[a] && word[a] != '}')
 	{
 		a++;
 		if (word[a] == ':')
-		{
 			return (modifier = get_mod_type(word, a, 1));
-		}
 		else if (word[a] == '%')
 			return (modifier = get_mod_type(word, a, 2));
 		else if (word[a] == '#')
