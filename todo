@@ -6,15 +6,12 @@ X			Check assignment_word
 
 Chaque built-in doit avoir au minimum les options dictées par le standard POSIX, (sauf pour set et unset)
 Builtins:
--	type 
+-	type
 -	export
 -- Job control
 	- fg
-	- jobs 
+	- jobs
 	- bg
-
-- set
-- unset
 
 Exp:
 -	${}
