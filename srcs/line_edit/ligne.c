@@ -61,6 +61,8 @@ char	*run_heredoc(char	*endstring)
 		ret = ft_strljoin(ret, "\n", FIRST);
 	dl_free_whith_content(head, free_line);
 	signal(SIGINT, SIG_DFL);
+	if (!ret)
+		ret = ft_strdup("");
 	return (ret);
 }
 

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/19 01:01:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/28 00:00:24 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int		visit_pipe(t_node *node, t_io_lists io)
 		io.piped->fd[0] = pipefd[0];
 		io.piped->fd[1] = pipefd[1];
 		io.piped->used = 0;
-		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io))
+		if (node->left && !(*G_VISIT_RULES[node->left->tok])(node->left, io))
 		{
 			if (!(*G_VISIT_RULES[node->right->tok])(node->right, io))
 			{
@@ -129,6 +129,13 @@ int		visit_pipe(t_node *node, t_io_lists io)
 			}
 		}
 	}
+	return (1);
+}
+
+int		visit_semi(t_node *node, t_io_lists io)
+{
+	if (node->left)
+		return (visit(node->left) + visit(node->right));
 	return (1);
 }
 
@@ -150,11 +157,9 @@ int		visit_dless(t_node *node, t_io_lists io) // <<
 		else
 			io.redir->in = STDIN_FILENO;
 		io.redir->out = pipefd[READ_END];
-		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io))
-		{
+		if (node->left && !(*G_VISIT_RULES[node->left->tok])(node->left, io))
 			dl_del_one((t_dl_node *)io.redir);
-			return (0);
-		}
+		return (0);
 	}
 	return (1);
 }
@@ -174,10 +179,8 @@ int		visit_dgreat(t_node *node, t_io_lists io) // >>
 			io.redir->in = STDOUT_FILENO;
 		io.redir->out = fd;
 		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io))
-		{
 			dl_del_one((t_dl_node *)io.redir);
-			return (0);
-		}
+		return (0);
 	}
 	return (1);
 }
@@ -200,10 +203,8 @@ int		visit_left_redi(t_node *node, t_io_lists io) // <
 			io.redir->in = STDIN_FILENO;
 		io.redir->out = fd;
 		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io))
-		{
 			dl_del_one((t_dl_node *)io.redir);
-			return (0);
-		}
+		return (0);
 	}
 	return (1);
 }
@@ -222,11 +223,10 @@ int		visit_right_redi(t_node *node, t_io_lists io) // >
 		else
 			io.redir->in = STDOUT_FILENO;
 		io.redir->out = fd;
-		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io))
-		{
-				dl_del_one((t_dl_node *)io.redir);
-				return (0);
-		}
+		if (node->left && !(*G_VISIT_RULES[node->left->tok])(node->left, io))
+			dl_del_one((t_dl_node *)io.redir);
+		return (0);
+
 	}
 	return (1);
 }
@@ -244,11 +244,9 @@ int		visit_lessand(t_node *node, t_io_lists io) // <&
 			io.redir->out = -1;
 		else
 			io.redir->out = ft_atoi(node->right->data);
-		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io))
-		{
-				dl_del_one((t_dl_node *)io.redir);
-				return (0);
-		}
+		if (node->left && !(*G_VISIT_RULES[node->left->tok])(node->left, io))
+			dl_del_one((t_dl_node *)io.redir);
+		return (0);
 	}
 	return (1);
 }
@@ -266,18 +264,11 @@ int		visit_greatand(t_node *node, t_io_lists io) // >&
 			io.redir->out = -1;
 		else
 			io.redir->out = ft_atoi(node->right->data);
-		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io))
-		{
-				dl_del_one((t_dl_node *)io.redir);
-				return (0);
-		}
+		if (node->left && !(*G_VISIT_RULES[node->left->tok])(node->left, io))
+			dl_del_one((t_dl_node *)io.redir);
+		return (0);
 	}
 	return (1);
-}
-
-int		visit_semi(t_node *node, t_io_lists io)
-{
-	return (visit(node->left) + visit(node->right));
 }
 
 int		visit_lessgreat(t_node *node, t_io_lists io) // <>
@@ -295,10 +286,9 @@ int		visit_lessgreat(t_node *node, t_io_lists io) // <>
 			io.redir->in = STDIN_FILENO;
 		io.redir->out = fd;
 		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io))
-		{
 			dl_del_one((t_dl_node *)io.redir);
-			return (0);
-		}
+		
+		return (0);
 	}
 	return (1);
 }
