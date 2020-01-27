@@ -6,13 +6,14 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/25 03:27:32 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/27 03:46:13 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include <visitor.h>
 #include <sh.h>
+#include <expansions.h>
 #include <ligne.h>
 #include <parser.h>
 #include <visitor.h>
@@ -42,7 +43,6 @@ void	free_sh(t_sh *sh)
 		free((sh->tok).data);
 	free((sh->stack.errors->ar));
 	free((sh->stack.errors));
-	// free here_docs
 	free(sh->stack.here_docs->ar);
 	free(sh->stack.here_docs);
 }
@@ -117,6 +117,7 @@ int main(int ac, char **av, char **envp)
 		{
 			if (exec_heredoc(sh.stack.here_docs))
 			{
+				process_expansions(sh.node);
 				tree_draw(sh.node, sh.f);
 				visit(sh.node);	
 			}
