@@ -6,18 +6,19 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:17:19 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/27 03:40:30 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/28 02:41:52 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ast.h>
 #include <sh.h>
+#include <expansions.h>
 #include "libft.h"
 
-char	*insert_str(char *s, int *pos, int anchor, char *str)
+char	*insert_str(char *s, size_t	*pos, size_t anchor, char *str)
 {
-	char *nw;
-	int i;
+	char	*nw;
+	size_t	i;
 	
 	i = 0;
 	nw = NULL;
@@ -43,37 +44,31 @@ char	*insert_str(char *s, int *pos, int anchor, char *str)
 	return (nw);
 }
 
-char	*expand_tilde(char *w,int *i)
+char	*expand_tilde(char *w)
 {
-	int		a;
+	size_t	a;
 	char	*home;
 	char	*new_word;
 
 	new_word = NULL;
 	home = NULL;
-	a = *i;
+	a = 0;
 	if (w[++a] == '/' || !w[a])
 	{
 		if (!(home = get_env(g_env, "HOME")))
 			home = ft_strdup("");
-		if (!(new_word = insert_str(w, i, a, home)))
+		if (!(new_word = insert_str(w, 0, a, home)))
 			exit(1);
 		free(w);
-		*i += ft_strlen(home);
 		return (new_word);
 	}
-	(*i)++;
 	return (w);
 }
 
 char	*expand_word(char *word)
 {
-	int		i;
-
-	i = 0;
-	// step 1
-	if (word[i] == '~')
-		word = expand_tilde(word, &i);
+	if (word[0] == '~')
+		word = expand_tilde(word);
 	//expand_parameter();
 	//expand_substitution();
 	//expand_arithmetic();
@@ -82,13 +77,14 @@ char	*expand_word(char *word)
 	//field splitting ?
 	//gnore step3
 	//step 4
-	//quote_removal();
+	word = quote_removal(word);
 	return (word);
 }
 
 void	process_expansions(t_node *n)
 {
 	size_t	i;
+
 	if (n == NULL)
 		return ;
 	if (n->tok == TOK_WORD)

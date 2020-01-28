@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 02:28:03 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/27 03:16:19 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/28 02:40:34 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,9 @@
 
 void	process_expansions(t_node *n);
 
+/*
+**	quote_removal.c functions
+*/
+char	*quote_removal(char *w);
 
 #endif
