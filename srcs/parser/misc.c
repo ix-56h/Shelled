@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:48 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/04 02:09:21 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/25 03:23:40 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,13 @@ t_node		*applie_7b(t_tokens *cur, char *s)
 	}
 	else
 	{
-		//check if word before = form a valid name, if yes, ASSIGMENT_WORD are the toktype
-		
-		//if ((tok.tok == TOK_WORD) && (ft_strichr(s, '=') > 0) && (cur->squote + cur->dquote) == 0)
-		if ((tmp = ft_strichr(s, '=') > 0)) // && isquoted
+		if ((tmp = ft_strichr(s, '=')) > 0) // && isquoted
 		{
-			// first character of a valid name is not a digit
 			if (!ft_isdigit(s[0]))
 				cur->tok = TOK_ASSIGNMENT_WORD;
 		}
-		//else
-		//applie rule 1
+		else 
+			applie_rule_one(s, cur);
 		return (save_node(NULL, *cur, NULL, ARGS));
 	}
 	return (NULL);

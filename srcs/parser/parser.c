@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/15 15:42:43 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/25 04:00:59 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,9 @@ t_node	*parse_program(t_sh *sh)
 		return (NULL);
 	node = NULL;
 	nod2 = NULL;
-	if ((node = parse_complete_commands(sh)))
+	if ((parse_linebreak(sh) == 1) && (node = parse_complete_commands(sh)))
 	{
-		if ((nod2 = parse_linebreak(sh)))
-			free(nod2);
-		else if (sh->tok.tok != TOK_EOF)
+		if ((parse_linebreak(sh) == 0) || (sh->tok.tok != TOK_EOF))
 			error_push(sh->stack.errors, PARSE_ERROR_NEAR, sh->tok.data);
 	}
 	else if (sh->tok.tok != TOK_EOF)
@@ -476,13 +474,10 @@ t_node	*parse_cmd_name(t_sh *sh)
 		{
 			applie_rule_one(sh->input, &sh->tok);
 			node = save_node(NULL, sh->tok, NULL, ARGS);
-			sh->tok = get_next_token(sh->input, sh->stack.errors);
 		}
 		else
-		{
 			node = applie_7b(&(sh->tok), sh->tok.data);
-			sh->tok = get_next_token(sh->input, sh->stack.errors);
-		}
+		sh->tok = get_next_token(sh->input, sh->stack.errors);
 	}
 	return(node);
 }
@@ -706,19 +701,17 @@ t_node	*parse_newline_list(t_sh *sh)
 	return (node);
 }
 
-t_node	*parse_linebreak(t_sh *sh)
+int		parse_linebreak(t_sh *sh)
 {
 	t_node		*node;
 	t_tokens	tok;
 	
 	if (!lifo_empty(sh->stack.errors))
-		return (NULL);
+		return (0);
 	node = NULL;
-	if (sh->tok.tok == TOK_NEWLINE)
-		node = parse_newline_list(sh);
-	else if (sh->tok.tok == TOK_EOF)
-		node = save_node(NULL, sh->tok, NULL, 0);
-	return (node);
+	if ((node = parse_newline_list(sh)))
+		free(node);
+	return (1);
 }
 
 t_node	*parse_separator_op(t_sh *sh)
@@ -764,11 +757,8 @@ t_node	*parse_sequential_sep(t_sh *sh)
 	if (tok.tok == TOK_SEMI)
 	{
 		sh->tok = get_next_token(sh->input, sh->stack.errors);
-		if ((node = parse_linebreak(sh)))
-		{
-			free(node);
+		if (parse_linebreak(sh))
 			node = save_node(NULL, tok, NULL, 0);
-		}
 	}
 	else if ((node = parse_newline_list(sh)))
 	{
@@ -777,40 +767,3 @@ t_node	*parse_sequential_sep(t_sh *sh)
 	}
 	return (node);
 }
-
-/*int main(int ac, char **av)
-{
-	char		*input = av[1];
-	t_tokens	tok;
-	t_node		*node = NULL;
-	t_stack		*stack;
-	t_flags		f;
-
-	f.ast_draw = 0;
-	if (!(stack = stack_creator(20, sizeof(t_staterror))))
-		return (EXIT_FAILURE);
-	if (ac < 2)
-	{
-		printf("Usage: ./21sh \"ls -la > output.txt\" [-ast=draw]\n");
-		return (EXIT_FAILURE);
-	}
-	check_param(av + 2, &f);
-	tok = get_next_token(input, stack);
-	if (lifo_empty(sh->stack.errors))
-		node = parse_program(input, &tok, stack);
-	if (!lifo_empty(sh->stack.errors))
-	{
-		print_stack_errors(stack, &tok, input);
-		free_sh(node, tok, stack);
-		return (EXIT_FAILURE);
-	}
-	else if (f.ast_draw)
-	{
-		FILE *stream = fopen("tree.dot", "w");
-		if (!stream)
-			exit(0);
-		bst_print_dot(node, stream);
-	}
-	free_sh(node, tok, stack);
-	return (EXIT_SUCCESS);
-}*/

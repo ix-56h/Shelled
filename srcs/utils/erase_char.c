@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast.h                                              :+:      :+:    :+:   */
+/*   erase_char.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/10 15:05:56 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/27 03:12:01 by niguinti         ###   ########.fr       */
+/*   Created: 2020/01/29 02:53:24 by niguinti          #+#    #+#             */
+/*   Updated: 2020/01/29 03:27:31 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AST_H
-# define AST_H
-#include <tokenizer.h>
+#include <libft.h>
 
-typedef	struct		s_node
+char	*erase_char(char *str)
 {
-	struct s_node	*left;
-	int				state; 
-	int				id; 
-	int				io;
-
-	char			**args;
-	//voir si on remplacerai pas ca par une struct
-	int				capacity;
-	int				cur_size;
-	int				cur_i;
-
-	t_toktype		tok;
-	char			*data;
-	struct s_node	*right;
-}					t_node;
-#endif
+	if (str[0] != '\0')
+		ft_strcpy(str, str + 1);
+	return (str);
+}
