@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/25 03:27:40 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/29 04:30:42 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,12 @@ char		**add_env(char **env, char *var, char *value);
 char		**del_var(char **env, char *var);
 void		free_env(char **env);
 char		*get_env(char **env, char *looking);
+
+/*
+**	utils
+*/
+
+char	*erase_char(char *str);
+char	*remove_dquotes(char *w);
+
 #endif

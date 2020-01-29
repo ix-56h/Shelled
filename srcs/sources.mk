@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/01/28 02:36:42 by niguinti         ###   ########.fr        #
+#    Updated: 2020/01/29 04:31:54 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,8 @@ C_FILES_builtins = \
 
 C_FILES_utils = \
 				double_linked_list.c \
-				# SUPPA concat loop
+				erase_char.c \
+				dquotes_remove.c \
 
 C_FILES_expansions = \
 			expansions.c \

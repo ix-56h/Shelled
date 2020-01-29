@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:17:19 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/28 02:41:52 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/29 03:32:32 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*expand_word(char *word)
 	//field splitting ?
 	//gnore step3
 	//step 4
-	word = quote_removal(word);
+	quote_removal(&word);
 	return (word);
 }
 
