@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/27 03:46:13 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 07:06:52 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	free_sh(t_sh *sh)
 
 int		init_shell(t_sh *sh, int ac, char **av, char **envp)
 {
+	g_exit = -1;
 	check_param(av, (&sh->f));
 	if (!(sh->stack.errors = lifo_creator(20, sizeof(t_staterror))))
 		return (0);
@@ -104,9 +105,6 @@ int main(int ac, char **av, char **envp)
 		sh.tok = get_next_token(sh.input, sh.stack.errors);
 		if (lifo_empty(sh.stack.errors))
 			sh.node = parse_program(&sh);
-		// pour l'exit, on va voir de peut-etre faire une global voir 
-		if (ft_strcmp(sh.input, "exit") == 0) //stop temporaire???
-			break;
 		if (!lifo_empty(sh.stack.errors))
 		{
 			print_stack_errors(sh.stack.errors, &(sh.tok), sh.input);
@@ -122,13 +120,15 @@ int main(int ac, char **av, char **envp)
 				visit(sh.node);	
 			}
 		}
+		if (g_exit != -1)
+			break;
 		free_sh(&sh);
 		re_init_sh(&sh);
 	}
 	free_historic();
 	free_sh(&sh);
 	free_env(g_env);
-	return (EXIT_SUCCESS);
+	return (g_exit == -1 ? EXIT_SUCCESS : g_exit);
 }
 
 /*int main(int ac, char **av, char **envp)

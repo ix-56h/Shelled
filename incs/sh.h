@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 05:52:27 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 07:02:55 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <ast.h>
 # define FT_PATH_MAX 256
 # define SHELL_NAME "21sh"
+
+int	g_exit;
 
 typedef	struct	s_flags
 {

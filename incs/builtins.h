@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:07:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/14 01:41:26 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/30 06:59:19 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef int	(*t_builtin)(char **, char ***);
 int         count_arg(char **argv);
 int         ft_addpath(char **argv, char ***env);
 int         ft_cd(char **argv, char ***tenv);
+int         ft_exit(char **argv, char ***tenv);
 int         ft_echo(char **argv, char ***tenv);
 int         ft_setenv(char **argv, char ***env);
 int         ft_take(char **argv, char ***env);
