@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:36 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 13:07:45 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 14:14:41 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,4 +142,5 @@ int			lex_match_dol(char *s, int *anchor, t_lifo *stack);
 */
 int			is_whitespace(char c);
 void		skip_whitespaces(char *s, int *a);
+int			command_sub_skip_whitespaces(char *s, int *anchor, t_lifo *stack);
 #endif

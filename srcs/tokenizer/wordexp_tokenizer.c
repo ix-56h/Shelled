@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:46 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 03:00:21 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 14:24:23 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 #include "libft.h"
 #include "stack.h"
 
-int			lex_sequence(char *s, int *anchor, t_lifo *stack)
+int	lex_sequence(char *s, int *anchor, t_lifo *stack)
 {
-	int				ret = 0;
+	int	ret;
 
+	ret = 0;
 	if (s[*anchor] == '\'')
 		ret = lex_match_squote(s, anchor, stack);
 	else if (s[*anchor] == '"')
@@ -31,7 +32,7 @@ int			lex_sequence(char *s, int *anchor, t_lifo *stack)
 	return (ret);
 }
 
-int			lex_match_squote(char *s, int *anchor, t_lifo *stack)
+int	lex_match_squote(char *s, int *anchor, t_lifo *stack)
 {
 	*anchor += 1;
 	while (s[*anchor] && s[*anchor] != '\'')
@@ -45,9 +46,9 @@ int			lex_match_squote(char *s, int *anchor, t_lifo *stack)
 	return (1);
 }
 
-int		lex_match_dquote(char *s, int *anchor, t_lifo *stack)
+int	lex_match_dquote(char *s, int *anchor, t_lifo *stack)
 {
-	unsigned int	esc;
+	unsigned int esc;
 
 	esc = 0;
 	*anchor += 1;
@@ -67,35 +68,25 @@ int		lex_match_dquote(char *s, int *anchor, t_lifo *stack)
 	}
 	if (s[*anchor] != '"')
 	{
-		error_push(stack, MATCH_LEX, "\""); 
+		error_push(stack, MATCH_LEX, "\"");
 		return (0);
 	}
 	*anchor += 1;
 	return (1);
 }
 
-int		lex_match_command_sub(char *s, int *anchor, t_lifo *stack)
+int	lex_match_command_sub(char *s, int *anchor, t_lifo *stack)
 {
 	char	close;
 
 	close = (s[*anchor] == '`' ? '`' : ')');
-	*anchor += 1;
-	if (is_whitespace(s[*anchor]))
-	{
-		skip_whitespaces(s, anchor);
-		if (s[*anchor] == '(')
-		{
-			if (!lex_match_command_sub(s, anchor, stack))
-				return (0);
-		}
-	}
+	if (!command_sub_skip_whitespaces(s, anchor, stack))
+		return (0);
 	while (s[*anchor] && s[*anchor] != close)
 	{
-		if (s[*anchor] == '(' || s[*anchor] == '`')
-		{
-			if (!lex_match_command_sub(s, anchor, stack))
-				return (0);
-		}
+		if ((s[*anchor] == '(' || s[*anchor] == '`')
+			&& !lex_match_command_sub(s, anchor, stack))
+			return (0);
 		if (wexp_rules[BQU][(int)(s[*anchor])])
 		{
 			if (!lex_sequence(s, anchor, stack))
@@ -113,7 +104,7 @@ int		lex_match_command_sub(char *s, int *anchor, t_lifo *stack)
 	return (1);
 }
 
-int		lex_match_dol(char *s, int *anchor, t_lifo *stack)
+int	lex_match_dol(char *s, int *anchor, t_lifo *stack)
 {
 	*anchor += 1;
 	if (s[*anchor] == '(')
@@ -126,7 +117,8 @@ int		lex_match_dol(char *s, int *anchor, t_lifo *stack)
 	else if (ft_isalpha(s[*anchor]) || s[*anchor] == '_')
 	{
 		*anchor += 1;
-		while (ft_isalpha(s[*anchor]) || s[*anchor] == '_' || ft_isdigit(s[*anchor]))
+		while (ft_isalpha(s[*anchor]) || s[*anchor] == '_'
+				|| ft_isdigit(s[*anchor]))
 			*anchor += 1;
 	}
 	return (1);
