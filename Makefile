@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2020/01/16 18:24:45 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/01/29 04:51:35 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SUB_DIRS := \
 	line_edit \
 	ast \
 	stack \
+	expansions \
 
 
 ### INCLUDE SRC MAKEFILE ###

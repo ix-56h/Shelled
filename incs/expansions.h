@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast.h                                              :+:      :+:    :+:   */
+/*   expansions.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/10 15:05:56 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/27 03:12:01 by niguinti         ###   ########.fr       */
+/*   Created: 2020/01/22 02:28:03 by niguinti          #+#    #+#             */
+/*   Updated: 2020/01/29 03:34:52 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AST_H
-# define AST_H
-#include <tokenizer.h>
+#ifndef FT_EXPANSIONS_H
+# define FT_EXPANSIONS_H
 
-typedef	struct		s_node
-{
-	struct s_node	*left;
-	int				state; 
-	int				id; 
-	int				io;
+/*
+**	expansions.c functions
+*/
 
-	char			**args;
-	//voir si on remplacerai pas ca par une struct
-	int				capacity;
-	int				cur_size;
-	int				cur_i;
+void	process_expansions(t_node *n);
 
-	t_toktype		tok;
-	char			*data;
-	struct s_node	*right;
-}					t_node;
+/*
+**	quote_removal.c functions
+*/
+void	quote_removal(char **w);
+
 #endif

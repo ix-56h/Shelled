@@ -3,9 +3,6 @@
 	*	Copy of env 
 	*	Make a generic search engine for binary / aliases (in a **char and get the value)
 	*	Execve wrapper for a user friendly usage (with visit_pipe, visit_dless etc)
-#	fix-parser
-	?	Generic FIFO queue
-	?	Here_docs with FIFO queue
 ##	Features
 	*	|
 	[
@@ -32,7 +29,11 @@ https://n-pn.fr/t/2318-c--programmation-systeme-execve-fork-et-pipe
 # IMPORTANT
 X			Check assignment_word 
 				- Need to check for the 7b rule if the current word is the first or not
-
+***
+quote removal :
+https://github.com/42sh-vite-fait/42sh-vite-fait/blob/master/src/expansion/quote_removal.c
+https://github.com/42shpimanmls/42sh/blob/master/srcs/expansion/quote_removal.c
+***
 # Important notes
 The WORD tokens shall have the word expansion rules applied to them immediately before the associated command is executed, not at the time the command is parsed.
 

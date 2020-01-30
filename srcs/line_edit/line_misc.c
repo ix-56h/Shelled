@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:22:13 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/08 23:32:14 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/19 01:15:51 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,26 +70,3 @@ int		term_can_print(t_dl_node *head, int readsize)
 	else
 		return (0);
 }
-
-/*void	handle_resize(int signo)
-{
-	t_dl_node	*last;
-	t_dl_node	*head;
-	t_line	*line;
-
-	signal(SIGWINCH, SIG_DFL);
-	head = g_for_resize.node;
-	line = g_for_resize.line;
-	term_other("ho", 1);
-	term_other(TERM_CLEAR_CUR_END, 1);
-	last = dl_get_last(head);
-	print_historique(head);
-	while (last && last->data != line)
-	{
-		cur_move_to_index(last->data, 0);
-		term_other(TERM_UP, 1);
-		last = last->prev;
-	}
-	cur_move_to_index(last->data, ((t_line *)last->data)->index);
-	signal(SIGWINCH, &handle_resize);
-}*/
