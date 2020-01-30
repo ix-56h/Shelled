@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:47:24 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/28 00:00:36 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/30 03:32:23 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <visitor.h>
 # include <tokenizer.h>
 
-int		(*G_VISIT_RULES[TOK_POSIX_MAX]) (t_node *node, t_io_lists io) = {
+int		(*G_VISIT_RULES[TOK_POSIX_MAX]) (t_node *node, t_io_lists io, int *rets) = {
 	[TOK_NAME] = visit_cmd,
 	//[TOK_ASSIGNMENT_WORD] = visit_assignment_word,
 	[TOK_LESSAND] = visit_lessand,
