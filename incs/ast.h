@@ -12,7 +12,7 @@
 
 #ifndef AST_H
 # define AST_H
-#include <tokenizer.h>
+#include "tokenizer.h"
 
 typedef	struct		s_node
 {

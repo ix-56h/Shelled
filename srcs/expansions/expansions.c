@@ -6,13 +6,13 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:17:19 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/29 03:32:32 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 13:09:26 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ast.h>
-#include <sh.h>
-#include <expansions.h>
+#include "ast.h"
+#include "sh.h"
+#include "expansions.h"
 #include "libft.h"
 
 char	*insert_str(char *s, size_t	*pos, size_t anchor, char *str)
@@ -69,14 +69,6 @@ char	*expand_word(char *word)
 {
 	if (word[0] == '~')
 		word = expand_tilde(word);
-	//expand_parameter();
-	//expand_substitution();
-	//expand_arithmetic();
-	
-	//step 2
-	//field splitting ?
-	//gnore step3
-	//step 4
 	quote_removal(&word);
 	return (word);
 }

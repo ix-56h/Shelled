@@ -15,8 +15,8 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 #include <signal.h>
-#include <parser.h>
-#include <visitor.h>
+#include "parser.h"
+#include "visitor.h"
 #include <visitor_rules.h>
 #include "stack.h"
 #include "double_linked_list.h"

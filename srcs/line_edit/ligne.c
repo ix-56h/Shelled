@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
-#include <sh.h>
+#include "sh.h"
 #include "libft.h"
 #include "ligne.h"
 

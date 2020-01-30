@@ -6,13 +6,13 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:48 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/19 06:37:49 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 13:08:27 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_TOK_RULES_H
 # define FT_TOK_RULES_H
-t_chr_class		get_chr_class[255] = {
+static t_chr_class		get_chr_class[255] = {
 	[' '] = CHR_SP,
 	['\t'] = CHR_SP,
 	[';'] = CHR_SEMI,
@@ -62,13 +62,13 @@ t_chr_class		get_chr_class[255] = {
 	['&'] = CHR_AND
 };
 
-int		ABSTRACT_TOKEN[TOK_MAX] = {
-	[TOK_REDIRECTION] = 1, // >> <<
-	[TOK_PIPE] = 1, // | ||
-	[TOK_OPERATOR] = 1 // = == &&
+static int		ABSTRACT_TOKEN[TOK_MAX] = {
+	[TOK_REDIRECTION] = 1,
+	[TOK_PIPE] = 1,
+	[TOK_OPERATOR] = 1
 };
 
-int		token_chr_rules[TOK_MAX][CHR_MAX] = {
+static int		token_chr_rules[TOK_MAX][CHR_MAX] = {
 	[TOK_SP] = {[CHR_SP] = 0,},
 	[TOK_WORD] = {
 		[CHR_WORD] = 1,
@@ -101,7 +101,7 @@ int		token_chr_rules[TOK_MAX][CHR_MAX] = {
 	[TOK_LPAREN] = {},
 };
 
-t_toktype	get_tok_type[CHR_MAX] = {
+static t_toktype	get_tok_type[CHR_MAX] = {
 	[CHR_SP] = TOK_SP,
 	[CHR_WORD] = TOK_WORD,
 	[CHR_ESCAPE] = TOK_WORD,
@@ -121,39 +121,5 @@ t_toktype	get_tok_type[CHR_MAX] = {
 	[CHR_LPAREN] = TOK_LPAREN,
 	[CHR_RPAREN] = TOK_RPAREN,
 	[CHR_NEWLINE] = TOK_NEWLINE
-};
-
-const char	DEBUG_TOKEN[TOK_MAX][30] = {
-	[TOK_SP] = "TOK_SP",
-	[TOK_WORD] = "TOK_WORD",
-	[TOK_VALIDATOR] = "TOK_VALIDATOR",
-	[TOK_AND_IF] = "TOK_AND_IF",
-	[TOK_AND] = "TOK_AND",
-	[TOK_OR_IF] = "TOK_OR_IF",
-	[TOK_LREDI] = "TOK_LREDI",
-	[TOK_RREDI] = "TOK_RREDI",
-	[TOK_DLESS] = "TOK_DLESS",
-	[TOK_IO_NUMBER] = "TOK_IO_NUMBER",
-	[TOK_DGREAT] = "TOK_DGREAT",
-	[TOK_GREATAND] = "TOK_GREATAND",
-	[TOK_ESCAPE] = "TOK_WORD",
-	[TOK_LPAREN] = "TOK_LPAREN",
-	[TOK_RPAREN] = "TOK_RPAREN",
-	[TOK_SUBSTITUTION] = "TOK_SUBSTITUTION",
-	[TOK_PIPE] = "TOK_PIPE",
-	[TOK_EOF] = "TOK_EOF"
-};
-
-const char	DEBUG_CHR[CHR_MAX][30] = {
-	[CHR_SP] = "CHR_SP",
-	[CHR_WORD] = "CHR_WORD",
-	[CHR_VALIDATOR] = "CHR_VALIDATOR",
-	//[CHR_OPERATOR] = "CHR_OPERATOR",
-	[CHR_ESCAPE] = "CHR_ESCAPE",
-	[CHR_PIPE] = "CHR_PIPE",
-	[CHR_SQUOTE] = "CHR_SQUOTE",
-	[CHR_DQUOTE] = "CHR_DQUOTE",
-	[CHR_COMMENT] = "CHR_COMMENT",
-	//[CHR_REDIRECTION] = "CHR_REDIRECTION"
 };
 #endif

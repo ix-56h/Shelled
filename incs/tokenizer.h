@@ -6,13 +6,13 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:36 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/13 17:02:13 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 13:07:45 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_TOK_H
 # define FT_TOK_H
-#include <stack.h>
+#include "stack.h"
 #include "libft.h"
 
 typedef enum	e_toktype {
@@ -105,12 +105,28 @@ typedef struct		s_tokens {
 	char			*data;
 }					t_tokens;
 
-int				get_token(char *s, t_chr_class chr_class, t_lifo *stack, t_tokens *tok);
-void			ignore_chr_class(char *s, int *i, t_chr_class chr_class);
-int				is_opening_class(t_chr_class chr_class);
-t_tokens		save_token(char *s, int anchor, t_toktype toktype);
-t_tokens		get_next_token(char *s, t_lifo *stack);
-unsigned int	get_end_exp(char *s, int *i);
+/*
+**	term_and_op_check.c
+*/
+t_toktype	check_operator(char *s, size_t len, int *i);
+t_toktype	check_pipe(char *s, size_t len, int *i);
+t_toktype	check_redirections(char *s, size_t len, int *i);
+
+/*
+**	tokenizer_misc.c
+*/
+int			is_opening_class(t_chr_class chr_class);
+t_tokens	token_error(int type, t_lifo*stack, char c);
+t_tokens	save_token(char *s, int anchor, t_toktype toktype);
+void	ignore_chr_class(char *s, int *i, t_chr_class chr_class);
+int			is_special_char(t_chr_class chr_class, t_chr_class prev_class);
+
+/*
+**	tokenizer.c
+*/
+t_toktype	get_true_toktype(char *s, t_toktype toktype, int *i);
+int		get_token(char *s, t_chr_class chr_class, t_lifo*stack, t_tokens *tok);
+t_tokens	get_next_token(char *s, t_lifo*stack);
 
 /*
 **	wordexp_tokenizer.c
