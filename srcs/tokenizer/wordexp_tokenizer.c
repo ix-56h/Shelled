@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:46 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/10 16:45:13 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 01:48:17 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,22 @@ int			lex_match_squote(char *s, int *anchor, t_lifo *stack)
 
 int		lex_match_dquote(char *s, int *anchor, t_lifo *stack)
 {
+	unsigned int	esc;
+
+	esc = 0;
 	*anchor += 1;
-	while (s[*anchor] && s[*anchor] != '"')
+	while (s[*anchor] && (s[*anchor] != '"' || esc))
 	{
-		if (wexp_rules[DQU][s[*anchor]])
+		if (s[*anchor] == '\\' && !esc)
+			esc = 1;
+		else if (wexp_rules[DQU][s[*anchor]])
 		{
 			if (!lex_sequence(s, anchor, stack))
 				return (0);
 			continue;
 		}
+		else if (s[*anchor] != '\\' && esc)
+			esc = 0;
 		*anchor += 1;
 	}
 	if (s[*anchor] != '"')
