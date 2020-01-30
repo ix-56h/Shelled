@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/19 00:57:16 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/30 03:15:17 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ static char		*search_path(t_node *cmd, char **env)
 	char			**paths;
 	int				i;
 
+	(void)env;
 	paths = get_env_path();
     i = -1;
 	if (paths)

@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:56 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/13 17:08:15 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 03:12:19 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ t_staterror		error_peek(t_lifo *stack)
 void	print_stack_errors(t_lifo *stack, t_tokens *cur, char *s)
 {
 	t_staterror err;
+	(void)cur;
+	(void)s;
 
 	while (stack->top != -1)
 	{

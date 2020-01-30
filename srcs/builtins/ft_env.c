@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:47:22 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/14 00:03:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/30 03:16:33 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	ft_env_sub(char ***tenv, char ***env, char **argv)
 {
 	t_node	node;
 	t_io_lists	io;
+	(void)tenv;
 
 	io = (t_io_lists) {NULL, NULL};
 	if ((node.data = *argv))

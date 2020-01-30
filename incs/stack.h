@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:25 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/13 17:32:40 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 03:13:45 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct	s_lifo
 {
 	int			top;
 	void		*ar;
-	unsigned	capacity;
+	int			capacity;
 }				t_lifo;
 
 typedef struct	s_fifo
@@ -35,7 +35,7 @@ typedef struct	s_fifo
 	int			front;
 	int			rear;
 	void		**ar;
-	unsigned	capacity;
+	int			capacity;
 }				t_fifo;
 
 

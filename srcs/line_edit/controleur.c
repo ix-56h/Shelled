@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:53:43 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/16 19:55:28 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/30 03:18:28 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int				read_loop(t_line **line, t_dl_node **head, char mode)
 {
 	char	buff[BUFFSIZE + 1];
 	int		readsize;
-	t_line	*tmp;
 
 	while (!!!!!!!!!!!!!!!!!!!!!!!0)
 	{

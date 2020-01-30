@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:48 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/25 03:23:40 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 03:11:19 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_node	*save_node(t_node *left, t_tokens tok, t_node *right, int id)
 
 void	applie_rule_one(char *s, t_tokens *cur)
 {
+	(void)s;
 	if (ft_strcmp(cur->data, "while") == 0)
 		cur->tok = TOK_WHILE;
 }

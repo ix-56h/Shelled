@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/25 04:00:59 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 03:02:53 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,96 +302,115 @@ t_node	*parse_term(t_sh *sh)
 
 t_node	*parse_for_clause(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_name(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_in(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_wordlist(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_case_clause(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_case_list_ns(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_case_list(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_case_item_ns(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_case_item(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_pattern(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_if_clause(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_else_part(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_while_clause(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_until_clause(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_function_definition(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_function_body(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_fname(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_brace_group(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
 t_node	*parse_do_group(t_sh *sh)
 {
+	(void)sh;
 	return (NULL);
 }
 
@@ -667,7 +686,6 @@ t_node	*parse_io_here(t_sh *sh)
 t_node	*parse_here_end(t_sh *sh)
 {
 	t_node		*node;
-	t_tokens	tok;
 	
 	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
@@ -704,7 +722,6 @@ t_node	*parse_newline_list(t_sh *sh)
 int		parse_linebreak(t_sh *sh)
 {
 	t_node		*node;
-	t_tokens	tok;
 	
 	if (!lifo_empty(sh->stack.errors))
 		return (0);

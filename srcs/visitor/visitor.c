@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/29 04:52:05 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 03:14:41 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int		exec_heredoc(t_fifo *stack)
 
 static void	ctrl_c_handler(int lel)
 {
+	(void)lel;
 	ft_putchar('\n');
 }
 
@@ -277,6 +278,7 @@ int		visit_greatand(t_node *node, t_io_lists io) // >&
 
 int		visit_semi(t_node *node, t_io_lists io)
 {
+	(void)io;
 	return (visit(node->left) + visit(node->right));
 }
 

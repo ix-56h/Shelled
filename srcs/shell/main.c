@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/27 03:46:13 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 03:16:08 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	free_sh(t_sh *sh)
 
 int		init_shell(t_sh *sh, int ac, char **av, char **envp)
 {
+	(void)ac;
 	check_param(av, (&sh->f));
 	if (!(sh->stack.errors = lifo_creator(20, sizeof(t_staterror))))
 		return (0);
@@ -93,7 +94,6 @@ int main(int ac, char **av, char **envp)
 {
 	t_sh		sh;
 	t_dl_node		*head;
-	t_line			*line;
 
 	head = NULL;
 	if (init_shell(&sh, ac, av, envp) == 0)

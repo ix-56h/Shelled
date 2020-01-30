@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:15:18 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/12/31 00:33:00 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/30 03:21:00 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	arrow_up_act(t_line **line, t_dl_node **head)
 
 	if ((historic = historic_get_next()))
 	{
-		clear_node_line(*line, *head);
+		clear_node_line(*head);
 		dl_free_whith_content(*head, *free_line);
 		*head = dup_line_node(historic);
 		print_historique(historic);
@@ -34,7 +34,7 @@ void	arrow_down_act(t_line **line, t_dl_node **head)
 
 	if (historic_on_use(0))
 	{
-		clear_node_line(*line, *head);
+		clear_node_line(*head);
 		if ((historic = historic_get_last()))
 		{
 			dl_free_whith_content(*head, *free_line);
@@ -76,7 +76,7 @@ void	arrow_right_act(t_line *line)
 {
 	t_pos	pos;
 	
-	if (line->index < ft_strlen(line->line))
+	if ((size_t)line->index < ft_strlen(line->line))
 	{
 		pos = get_cur_pos();
 		if (pos.y == get_winsize().ws_col + 1)

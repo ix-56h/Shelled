@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:35:42 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/04 19:13:41 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/30 03:22:21 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,6 @@ int				set_term_mode(void)
 
 int				init_term(void)
 {
-	struct termios	*tmp;
-	struct termios	termios;
-	char			*buff;
 	char			*term;
 
 	term = getenv("TERM");

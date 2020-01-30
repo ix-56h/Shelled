@@ -7,6 +7,7 @@
 
 static void	ctrl_c_handler(int lel)
 {
+	(void)lel;
 	ioctl(STDOUT_FILENO, TIOCSTI, "\030");
 }
 
