@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 03:36:18 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/30 04:14:15 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,16 +122,18 @@ int		visit_pipe(t_node *node, t_io_lists io, int *rets) // |
 		io.piped->fd[0] = pipefd[0];
 		io.piped->fd[1] = pipefd[1];
 		io.piped->used = 0;
-		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io, rets))
+		if ((*G_VISIT_RULES[node->left->tok])(node->left, io, rets))
 		{
-			if (!(*G_VISIT_RULES[node->right->tok])(node->right, io, rets))
-			{
-				dl_del_one((t_dl_node *)io.piped);
-				return (0);
-			}
+			close(pipefd[WRITE_END]);
+			set_used_fd(io.piped);
 		}
-		*rets = 0;
+		if (!(*G_VISIT_RULES[node->right->tok])(node->right, io, rets))
+		{
+			dl_del_one((t_dl_node *)io.piped);
+			return (0);
+		}
 		dl_del_one((t_dl_node *)io.piped);
+
 	}
 	return (1);
 }
@@ -161,6 +163,8 @@ int		visit_dless(t_node *node, t_io_lists io, int *rets) // <<
 		}
 		dl_del_one((t_dl_node *)io.redir);
 	}
+	if (rets)
+			*rets = 0;
 	return (1);
 }
 
@@ -185,6 +189,8 @@ int		visit_dgreat(t_node *node, t_io_lists io, int *rets) // >>
 		}
 		dl_del_one((t_dl_node *)io.redir);
 	}
+	if (rets)
+			*rets = 0;
 	return (1);
 }
 
@@ -212,6 +218,8 @@ int		visit_left_redi(t_node *node, t_io_lists io, int *rets) // <
 		}
 		dl_del_one((t_dl_node *)io.redir);
 	}
+	if (rets)
+			*rets = 0;
 	return (1);
 }
 
@@ -236,6 +244,8 @@ int		visit_right_redi(t_node *node, t_io_lists io, int *rets) // >
 		}
 		dl_del_one((t_dl_node *)io.redir);
 	}
+	if (rets)
+			*rets = 0;
 	return (1);
 }
 
@@ -259,6 +269,8 @@ int		visit_lessand(t_node *node, t_io_lists io, int *rets) // <&
 		}
 		dl_del_one((t_dl_node *)io.redir);
 	}
+	if (rets)
+			*rets = 0;
 	return (1);
 }
 
@@ -282,6 +294,8 @@ int		visit_greatand(t_node *node, t_io_lists io, int *rets) // >&
 		}
 		dl_del_one((t_dl_node *)io.redir);
 	}
+	if (rets)
+			*rets = 0;
 	return (1);
 }
 
@@ -311,6 +325,8 @@ int		visit_lessgreat(t_node *node, t_io_lists io, int *rets) // <>
 		}
 		dl_del_one((t_dl_node *)io.redir);
 	}
+	if (rets)
+			*rets = 0;
 	return (1);
 }
 
