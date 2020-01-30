@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/29 04:30:42 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 05:52:27 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ char		*get_env(char **env, char *looking);
 
 char	*erase_char(char *str);
 char	*remove_dquotes(char *w);
+char	*insert_str(char *s, size_t	*pos, size_t anchor, char *str);
 
 #endif

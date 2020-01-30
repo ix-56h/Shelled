@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:48 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/25 03:23:40 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 05:32:52 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_node	*save_node(t_node *left, t_tokens tok, t_node *right, int id)
 		exit(1);
 	node->cur_size = 0;
 	node->io = -1;
+	node->args = NULL;
 	if (id == ARGS)
 	{
 		if (!(node->args = ft_memalloc(sizeof(char *) * ARGS_ARR_SIZE)))

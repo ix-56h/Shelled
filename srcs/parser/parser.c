@@ -6,11 +6,12 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:20 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/25 04:00:59 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 05:53:38 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "expansions.h"
 
 t_node	*parse_program(t_sh *sh)
 {
@@ -122,7 +123,6 @@ t_node	*parse_and_or(t_sh *sh)
 	{
 		while ((nod2 = parse_pipeline(sh)))
 			node = binnode(node, nod2, nod2->left);
-			//node = binnode(node->left, node, nod2);
 		while ((tok = sh->tok).tok == TOK_AND_IF || tok.tok == TOK_OR_IF)
 		{
 			sh->tok = get_next_token(sh->input, sh->stack.errors);
@@ -675,7 +675,7 @@ t_node	*parse_here_end(t_sh *sh)
 	if (sh->tok.tok == TOK_WORD)
 	{
 		node = save_node(NULL, sh->tok, NULL, DEFAULT_ID);
-		// rule 3  -> applie quote removal for get the true delimiter
+		quote_removal(&(node->data));
 		sh->tok = get_next_token(sh->input, sh->stack.errors);
 	}
 	return(node);
