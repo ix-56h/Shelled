@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:04:37 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/19 01:25:26 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/30 04:56:59 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int		is_multiline(t_dl_node *head)
 		line = ((t_line *)head->data)->line;
 		while (line[i])
 		{
-			if (line[i] == '\\')
+			if (line[i] == '\\' && finded != '\'')
 				if (line[i + 1] != '\0')
 					i += 2;
 			if (line[i] == '"' || line[i] == '\'')
