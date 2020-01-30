@@ -12,8 +12,8 @@
 
 #ifndef FT_VISITOR_RULES_H
 # define FT_VISITOR_RULES_H
-# include <visitor.h>
-# include <tokenizer.h>
+# include "visitor.h"
+# include "tokenizer.h"
 
 int		(*G_VISIT_RULES[TOK_POSIX_MAX]) (t_node *node, t_io_lists io, int *rets) = {
 	[TOK_NAME] = visit_cmd,

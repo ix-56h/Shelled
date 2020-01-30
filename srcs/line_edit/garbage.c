@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:04:37 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/30 04:56:59 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/30 13:11:39 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int		is_multiline(t_dl_node *head)
 {
 	char	finded;
 	char	backslash;
-	int		i;
+	size_t	i;
 	char	*line;
 
 	i = 0;

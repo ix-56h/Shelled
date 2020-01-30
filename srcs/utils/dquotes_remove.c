@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ast.h>
-#include <sh.h>
+#include "ast.h"
+#include "sh.h"
 #include "libft.h"
 
 int		escape_meaning(char c)

@@ -140,7 +140,7 @@ void			ctrl_c_act(t_line **line, t_dl_node **head, char mode);
 */
 
 void			clear_line(t_line *line);
-void			clear_node_line(t_line *current, t_dl_node *head);
+void			clear_node_line(t_dl_node *head);
 void			free_line(t_line *line);
 
 /*

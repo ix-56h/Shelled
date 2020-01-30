@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:56 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 01:36:18 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 02:58:49 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 enum	e_wexp {BQU, DQU, SQU, DOL};
 
-int		wexp_rules[4][255] = {
+char		wexp_rules[4][255] = {
 	[SQU] = {},
 	[DQU] = {
 		['`'] = 1,

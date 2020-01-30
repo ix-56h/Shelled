@@ -1,12 +1,13 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
-#include <sh.h>
+#include "sh.h"
 #include "libft.h"
 #include "ligne.h"
 
 static void	ctrl_c_handler(int lel)
 {
+	(void)lel;
 	ioctl(STDOUT_FILENO, TIOCSTI, "\030");
 }
 

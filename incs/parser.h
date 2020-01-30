@@ -12,11 +12,11 @@
 
 #ifndef PARSER_H
 # define PARSER_H
-# include <ast.h>
-# include <sh.h>
-# include <tokenizer.h>
-# include <stack.h>
-# include <error_handler.h>
+# include "ast.h"
+# include "sh.h"
+# include "tokenizer.h"
+# include "stack.h"
+# include "error_handler.h"
 
 # include <stdio.h>
 # include <string.h>

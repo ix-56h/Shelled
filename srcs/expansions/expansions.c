@@ -6,13 +6,13 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:17:19 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 05:51:25 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 13:11:26 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ast.h>
-#include <sh.h>
-#include <expansions.h>
+#include "ast.h"
+#include "sh.h"
+#include "expansions.h"
 #include "libft.h"
 
 char	*expand_tilde(char *w)
@@ -40,7 +40,6 @@ char	*expand_word(char *word)
 {
 	if (word[0] == '~')
 		word = expand_tilde(word);
-
 	quote_removal(&word);
 	return (word);
 }

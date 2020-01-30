@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 04:14:15 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/01/30 13:13:12 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 #include <signal.h>
-#include <parser.h>
-#include <visitor.h>
+#include "parser.h"
+#include "visitor.h"
 #include <visitor_rules.h>
 #include "stack.h"
 #include "double_linked_list.h"
@@ -50,6 +50,7 @@ int		exec_heredoc(t_fifo *stack)
 
 static void	ctrl_c_handler(int lel)
 {
+	(void)lel;
 	ft_putchar('\n');
 }
 
@@ -301,6 +302,7 @@ int		visit_greatand(t_node *node, t_io_lists io, int *rets) // >&
 
 int		visit_semi(t_node *node, t_io_lists io, int *rets)
 {
+	(void)io;
 	return (visit(node->left) + visit(node->right));
 }
 

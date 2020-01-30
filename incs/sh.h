@@ -14,7 +14,7 @@
 # define SH_CLASS_H
 # include <sys/types.h>
 # include <pwd.h>
-# include <ast.h>
+# include "ast.h"
 # define FT_PATH_MAX 256
 # define SHELL_NAME "21sh"
 

@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:56 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/13 17:08:15 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 11:58:56 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ t_staterror		error_peek(t_lifo *stack)
 void	print_stack_errors(t_lifo *stack, t_tokens *cur, char *s)
 {
 	t_staterror err;
+	(void)cur;
+	(void)s;
 
 	while (stack->top != -1)
 	{
@@ -46,32 +48,3 @@ void	print_stack_errors(t_lifo *stack, t_tokens *cur, char *s)
 		lifo_pop(stack);
 	}
 }
-
-/*
-t_node	*parse_subshell(char *s, t_tokens *cur)
-{
-	t_node		*node;
-
-	node = NULL;
-	if (cur->tok == TOK_LPAREN)
-	{
-		*cur = get_next_token(s);
-		//if ((node = parse_compound_list(s, cur)))
-		if ((node = parse_complete_commands(s, cur)))
-		{
-			if (cur->tok == TOK_RPAREN)
-			{
-				node->id = SUBSH;
-				*cur = get_next_token(s);
-			}
-			else
-			{
-				printf("Error : subshell need to be closed\n");
-				node = NULL;
-			}
-		}
-	}
-	return (node);
-}
-
-*/
