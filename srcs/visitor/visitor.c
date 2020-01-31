@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 13:13:12 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/01 00:13:47 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int		visit_cmd(t_node *node, t_io_lists io, int *rets)
 {
 	int	ret_value;
 	int	tmp;
-	int	final_ret;
 
 	ret_value = 1;
 	signal(SIGINT, ctrl_c_handler);
@@ -303,6 +302,7 @@ int		visit_greatand(t_node *node, t_io_lists io, int *rets) // >&
 int		visit_semi(t_node *node, t_io_lists io, int *rets)
 {
 	(void)io;
+	(void)rets;
 	return (visit(node->left) + visit(node->right));
 }
 
