@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:24:12 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 12:24:13 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/31 23:34:25 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_node	*parse_sequential_sep(t_sh *sh)
 {
 	t_node		*node;
 	t_tokens	tok;
-	
+
 	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;

@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:17:24 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 12:17:24 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/31 23:44:05 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_node	*parse_redirect_list(t_sh *sh)
 {
 	t_node		*node;
 	t_node		*nod2;
-	
+
 	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;

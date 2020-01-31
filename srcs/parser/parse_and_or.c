@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:10:28 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 12:10:28 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/31 22:18:59 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,10 @@ t_node	*parse_and_or(t_sh *sh)
 
 	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
-	node = NULL;
-	nod2 = NULL;
 	if ((node = parse_pipeline(sh)))
 	{
 		while ((nod2 = parse_pipeline(sh)))
 			node = binnode(node, nod2, nod2->left);
-			//node = binnode(node->left, node, nod2);
 		while ((tok = sh->tok).tok == TOK_AND_IF || tok.tok == TOK_OR_IF)
 		{
 			sh->tok = get_next_token(sh->input, sh->stack.errors);
