@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2020/01/30 02:57:24 by niguinti         ###   ########.fr        #
+#    Updated: 2020/01/31 20:39:13 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ FT_INC_DIR = $(FT_DIR)/incs
 FT_LNK = -L$(FT_DIR) -l$(FT)
 
 ###  CC && FLAGS ###
-CC = clang
+CC = clang -g3
 DEBUG_FLAGS = -g3
 NO_WARNING ?= false
 ifeq ($(NO_WARNING), false)
