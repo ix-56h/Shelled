@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:31:37 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 13:08:02 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 14:25:59 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 
 int			is_opening_class(t_chr_class chr_class)
 {
-	if (chr_class == CHR_SQUOTE || chr_class == CHR_DQUOTE || chr_class == CHR_BQUOTE || chr_class == CHR_LPAREN)
+	if (chr_class == CHR_SQUOTE || chr_class == CHR_DQUOTE
+		|| chr_class == CHR_BQUOTE || chr_class == CHR_LPAREN)
 		return (1);
 	return (0);
 }
 
-t_tokens	token_error(int type, t_lifo*stack, char c)
+t_tokens	token_error(int type, t_lifo *stack, char c)
 {
 	t_tokens	new;
 	char		near[2];
@@ -57,7 +58,7 @@ t_tokens	save_token(char *s, int anchor, t_toktype toktype)
 	return (new);
 }
 
-void	ignore_chr_class(char *s, int *i, t_chr_class chr_class)
+void		ignore_chr_class(char *s, int *i, t_chr_class chr_class)
 {
 	if (chr_class == CHR_COMMENT)
 	{
@@ -75,7 +76,8 @@ int			is_special_char(t_chr_class chr_class, t_chr_class prev_class)
 {
 	if (prev_class == CHR_ESCAPE)
 		return (0);
-	else if (chr_class == CHR_DQUOTE || chr_class == CHR_SQUOTE || chr_class == CHR_DOL || chr_class == CHR_BQUOTE)
+	else if (chr_class == CHR_DQUOTE || chr_class == CHR_SQUOTE
+			|| chr_class == CHR_DOL || chr_class == CHR_BQUOTE)
 		return (1);
 	return (0);
 }

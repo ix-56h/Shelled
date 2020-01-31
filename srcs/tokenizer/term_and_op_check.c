@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:33:36 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 13:01:34 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 13:58:29 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,55 +59,62 @@ t_toktype	check_pipe(char *s, size_t len, int *i)
 	return (ret);
 }
 
+t_toktype	check_redirections_last_chance(char *s, size_t len, int *i)
+{
+	if (!ft_strncmp(s, ">", 1))
+	{
+		*i -= (len - 1);
+		return (TOK_RREDI);
+	}
+	return (0);
+}
+
+t_toktype	check_redirections_suit(char *s, size_t len, int *i)
+{
+	if (!ft_strncmp(s, ">&", 2))
+	{
+		*i -= (len - 2);
+		return (TOK_GREATAND);
+	}
+	else if (!ft_strncmp(s, "<>", 2))
+	{
+		*i -= (len - 2);
+		return (TOK_LESSGREAT);
+	}
+	else if (!ft_strncmp(s, ">|", 2))
+	{
+		*i -= (len - 2);
+		return (TOK_CLOBBER);
+	}
+	else if (!ft_strncmp(s, "<", 1))
+	{
+		*i -= (len - 1);
+		return (TOK_LREDI);
+	}
+	return (check_redirections_last_chance(s, len, i));
+}
+
 t_toktype	check_redirections(char *s, size_t len, int *i)
 {
-		t_toktype	ret;
-
-		ret = 0;
-		if (!ft_strcmp(s, "<<-"))
-		{
-			*i -= (len - 3);
-			ret = TOK_DLESSDASH;
-		}
-		else if (!ft_strncmp(s, "<<", 2))
-		{
-			*i -= (len - 2);
-			ret = TOK_DLESS;
-		}
-		else if (!ft_strncmp(s, ">>", 2))
-		{
-			*i -= (len - 2);
-			ret = TOK_DGREAT;
-		}
-		else if (!ft_strncmp(s, "<&", 2))
-		{
-			*i -= (len - 2);
-			ret = TOK_LESSAND;
-		}
-		else if (!ft_strncmp(s, ">&", 2))
-		{
-			*i -= (len - 2);
-			ret = TOK_GREATAND;
-		}
-		else if (!ft_strncmp(s, "<>", 2))
-		{
-			*i -= (len - 2);
-			ret = TOK_LESSGREAT;
-		}
-		else if (!ft_strncmp(s, ">|", 2))
-		{
-			*i -= (len - 2);
-			ret = TOK_CLOBBER;
-		}
-		else if (!ft_strncmp(s, "<", 1))
-		{
-			*i -= (len - 1);
-			ret = TOK_LREDI;
-		}
-		else if (!ft_strncmp(s, ">", 1))
-		{
-			*i -= (len - 1);
-			ret = TOK_RREDI;
-		}
-		return (ret);
+	if (!ft_strcmp(s, "<<-"))
+	{
+		*i -= (len - 3);
+		return (TOK_DLESSDASH);
+	}
+	else if (!ft_strncmp(s, "<<", 2))
+	{
+		*i -= (len - 2);
+		return (TOK_DLESS);
+	}
+	else if (!ft_strncmp(s, ">>", 2))
+	{
+		*i -= (len - 2);
+		return (TOK_DGREAT);
+	}
+	else if (!ft_strncmp(s, "<&", 2))
+	{
+		*i -= (len - 2);
+		return (TOK_LESSAND);
+	}
+	return (check_redirections_suit(s, len, i));
 }

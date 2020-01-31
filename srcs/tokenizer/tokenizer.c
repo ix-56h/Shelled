@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 13:08:05 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/30 14:30:38 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,21 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype, int *i)
 	return (ret);
 }
 
-int		get_token(char *s, t_chr_class chr_class, t_lifo*stack, t_tokens *tok)
+int			get_token(char *s, t_chr_class chr_class \
+			, t_lifo *stack, t_tokens *tok)
 {
-	t_chr_class	prev_class = chr_class;
-	int			anchor = 0;
-	t_toktype	toktype = get_tok_type[prev_class];
+	t_chr_class	prev_class;
+	int			anchor;
+	t_toktype	toktype;
 
-	if (is_special_char(chr_class, prev_class) && lex_sequence(s, &anchor, stack) == 0)
+	prev_class = chr_class;
+	anchor = 0;
+	toktype = get_tok_type[prev_class];
+	if (is_special_char(chr_class, prev_class)
+		&& lex_sequence(s, &anchor, stack) == 0)
 		return (anchor);
-	while (s[anchor] && (token_chr_rules[toktype][(chr_class = get_chr_class[(unsigned char)s[anchor]])]
-				|| prev_class == CHR_ESCAPE))
+	while (s[anchor] && (prev_class == CHR_ESCAPE || token_chr_rules[toktype]
+			[(chr_class = get_chr_class[(unsigned char)s[anchor]])]))
 	{
 		if (is_special_char(chr_class, prev_class))
 		{
