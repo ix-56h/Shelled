@@ -6,13 +6,13 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/01 06:27:22 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/01 06:48:24 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
-#include "tokenizer_rules.h"
-#include "error_handler.h"
+#include <tokenizer.h>
+#include <tokenizer_rules.h>
+#include <error_handler.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -40,15 +40,14 @@ int			get_token(char *s, t_gnt *g, t_lifo *stack)
 
 	anchor = 0;
 	prev_class = g->chr_class;
-	if (is_special_char(prev_class, prev_class)
+	g->toktype = get_tok_type[prev_class];
+	if (is_special_char(g->chr_class, prev_class) \
 		&& lex_sequence(s, &anchor, stack) == 0)
 		return (anchor);
-	anchor += (s[anchor] ? 1 : 0);
-	g->chr_class = get_chr_class[(unsigned char)s[anchor]];
-	while (s[anchor] && (prev_class == CHR_ESCAPE || token_chr_rules\
-[g->toktype][(g->chr_class = get_chr_class[(unsigned char)s[anchor]])]))
+	while (s[anchor] && (token_chr_rules[g->toktype][(g->chr_class = \
+get_chr_class[(unsigned char)s[anchor]])] || prev_class == CHR_ESCAPE))
 	{
-		if (is_special_char(g->chr_class, prev_class) == 1)
+		if (is_special_char(g->chr_class, prev_class))
 		{
 			if (!lex_sequence(s, &anchor, stack))
 				return (anchor);
