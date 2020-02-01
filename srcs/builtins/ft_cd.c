@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:43:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/14 01:49:18 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/01 04:58:31 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 #include "sh.h"
 #include "builtins.h"
 
-int	err_cd(char *buff, int error)
+int			err_cd(char *buff, int error)
 {
 	if (error == ERR_PATH_ACCES)
 		ft_vprintfd(STDERR_FILENO, 3, "cd: permission denied: ", buff, "\n");
 	else if (error == ERR_NO_FILE)
-		ft_vprintfd(STDERR_FILENO,3, "cd: no such file or directory: ", buff, "\n");
+		ft_vprintfd(STDERR_FILENO, 3, \
+					"cd: no such file or directory: ", buff, "\n");
 	else if (error == ERR_CD_OLDPWD)
 		ft_putendl_fd("cd: no such old path", STDERR_FILENO);
 	else if (error == ERR_CD_NOT_HOME)
@@ -27,17 +28,17 @@ int	err_cd(char *buff, int error)
 	return (error);
 }
 
-static int			no_arg(char	**oldpath, char ***tenv)
+static int	no_arg(char **oldpath, char ***tenv)
 {
-	char		*home;
+	char	*home;
 
 	home = get_env(*tenv, "HOME");
 	if (!home)
-		return(err_cd(NULL, ERR_CD_NOT_HOME));
+		return (err_cd(NULL, ERR_CD_NOT_HOME));
 	return (err_cd(NULL, change_path(home, oldpath, tenv)));
 }
 
-int					ft_cd(char **argv, char ***tenv)
+int			ft_cd(char **argv, char ***tenv)
 {
 	static char	*oldpath = NULL;
 	char		*tmp;
@@ -52,7 +53,8 @@ int					ft_cd(char **argv, char ***tenv)
 		{
 			if (ft_strcmp(tmp, "") == 0)
 				return (err_cd(NULL, ERR_CD_OLDPWD) + (int)ft_free(tmp));
-			return (err_cd(tmp, change_path(tmp, &oldpath, tenv)) + (int)ft_free(tmp));
+			return (err_cd(tmp, change_path(tmp, &oldpath, tenv)) \
+							+ (int)ft_free(tmp));
 		}
 		else
 			return (err_cd(oldpath, change_path(oldpath, &oldpath, tenv)));

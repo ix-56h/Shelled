@@ -6,14 +6,14 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:40:41 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/30 06:57:19 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/01 04:52:08 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "builtins.h"
 
-int		count_arg(char **argv)
+int			count_arg(char **argv)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int		count_arg(char **argv)
 	return (i);
 }
 
-t_builtin lookforbuiltin(char *data)
+t_builtin	lookforbuiltin(char *data)
 {
 	if (ft_strcmp(data, "addpath") == 0)
 		return (ft_addpath);

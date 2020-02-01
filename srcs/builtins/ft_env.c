@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:47:22 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/30 03:16:33 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/01 04:57:34 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ static char	*ft_strschr(const char *s, int c)
 
 static void	ft_env_sub(char ***tenv, char ***env, char **argv)
 {
-	t_node	node;
+	t_node		node;
 	t_io_lists	io;
-	(void)tenv;
 
+	(void)tenv;
 	io = (t_io_lists) {NULL, NULL};
 	if ((node.data = *argv))
 	{
