@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:56 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/01 00:40:39 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/01 06:22:32 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,11 @@ t_staterror		error_peek(t_lifo *stack)
 	return (((t_staterror*)stack->ar)[stack->top]);
 }
 
-void			print_stack_errors(t_lifo *stack, t_tokens *cur, char *s)
+void			print_stack_errors(t_lifo *stack, t_tokens *cur)
 {
 	t_staterror err;
 
 	(void)cur;
-	(void)s;
 	while (stack->top != -1)
 	{
 		err = error_peek(stack);
@@ -45,6 +44,6 @@ void			print_stack_errors(t_lifo *stack, t_tokens *cur, char *s)
 			ft_putstr("'");
 		}
 		ft_putstr("\n");
-		lifo_pop(stack);
+		stack->top--;
 	}
 }

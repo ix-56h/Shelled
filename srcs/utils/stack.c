@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:35:55 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/13 14:46:11 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/01 05:47:30 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		lifo_empty(t_lifo *stack)
 int		lifo_push(t_lifo *stack, int item)
 {
 	if (lifo_full(stack))
-		return (0);//realloc
+		return (0);
 	((int*)stack->ar)[++stack->top] = item;
 	return (1);
 }

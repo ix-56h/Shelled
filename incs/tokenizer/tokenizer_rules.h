@@ -6,12 +6,13 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:48 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/31 23:56:27 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/01 05:47:54 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_TOK_RULES_H
 # define FT_TOK_RULES_H
+
 static t_chr_class		get_chr_class[255] = {
 	[' '] = CHR_SP,
 	['\t'] = CHR_SP,

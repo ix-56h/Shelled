@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/01 02:47:15 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/01 06:04:40 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,7 @@ int main(int ac, char **av, char **envp)
 		if (lifo_empty(sh.stack.errors))
 			sh.node = parse_program(&sh);
 		if (!lifo_empty(sh.stack.errors))
-		{
-			print_stack_errors(sh.stack.errors, &(sh.tok), sh.input);
-			free_sh(&sh);
-			return (EXIT_FAILURE);
-		}
+			print_stack_errors(sh.stack.errors, &(sh.tok));
 		else
 		{
 			if (exec_heredoc(sh.stack.here_docs))
@@ -129,25 +125,3 @@ int main(int ac, char **av, char **envp)
 	free_env(g_env);
 	return (g_exit == -1 ? EXIT_SUCCESS : g_exit);
 }
-
-/*int main(int ac, char **av, char **envp)
-{
-	t_sh		sh;
-
-	if (init_shell(&sh, ac, av, envp) == 0)
-		return (EXIT_FAILURE);
-	if (lifo_empty(sh.stack))
-		sh.node = parse_program(sh.input, &(sh.tok), sh.stack);
-	if (!lifo_empty(sh.stack))
-	{
-		print_stack_errors(sh.stack, &(sh.tok), sh.input);
-		free_sh(&sh);
-		return (EXIT_FAILURE);
-	}
-	else
-		visit(sh.node);
-	tree_draw(sh.node, sh.f);
-	free_sh(&sh);
-	return (EXIT_SUCCESS);
-}
-*/
