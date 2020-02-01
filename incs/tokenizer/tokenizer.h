@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:36 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 14:14:41 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/01 00:17:00 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,13 @@ typedef struct		s_tokens {
 	char			*data;
 }					t_tokens;
 
+typedef struct		s_gnt {
+	t_chr_class		chr_class;
+	t_toktype		toktype;
+	t_tokens		token;
+	int				i;
+}					t_gnt;
+
 /*
 **	term_and_op_check.c
 */
@@ -118,14 +125,14 @@ t_toktype	check_redirections(char *s, size_t len, int *i);
 int			is_opening_class(t_chr_class chr_class);
 t_tokens	token_error(int type, t_lifo*stack, char c);
 t_tokens	save_token(char *s, int anchor, t_toktype toktype);
-void	ignore_chr_class(char *s, int *i, t_chr_class chr_class);
+void		ignore_chr_class(char *s, int *i, t_chr_class chr_class);
 int			is_special_char(t_chr_class chr_class, t_chr_class prev_class);
 
 /*
 **	tokenizer.c
 */
 t_toktype	get_true_toktype(char *s, t_toktype toktype, int *i);
-int		get_token(char *s, t_chr_class chr_class, t_lifo*stack, t_tokens *tok);
+int			get_token(char *s, t_gnt *gnt, t_lifo *stack);
 t_tokens	get_next_token(char *s, t_lifo*stack);
 
 /*

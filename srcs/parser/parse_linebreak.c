@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:22:49 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 12:23:03 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/31 23:45:01 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		parse_linebreak(t_sh *sh)
 {
 	t_node		*node;
-	
+
 	if (!lifo_empty(sh->stack.errors))
 		return (0);
 	node = NULL;

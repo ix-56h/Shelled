@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:48 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 13:08:27 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/31 23:56:27 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static t_chr_class		get_chr_class[255] = {
 	['\t'] = CHR_SP,
 	[';'] = CHR_SEMI,
 	['$'] = CHR_DOL,
-	//['\n'] = CHR_VALIDATOR,
 
 	['#'] = CHR_COMMENT,
 	['A' ... 'Z'] = CHR_WORD,

@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:16:27 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 12:16:27 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/01 00:42:15 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ t_node	*parse_cmd_word(t_sh *sh)
 		node = applie_7b(&(sh->tok), s2);
 		sh->tok = get_next_token(sh->input, sh->stack.errors);
 	}
-	return(node);
+	return (node);
 }
