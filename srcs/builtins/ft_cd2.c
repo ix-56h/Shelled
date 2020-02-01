@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 01:22:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/14 01:46:50 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/01 04:53:50 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include "sh.h"
 #include "builtins.h"
 
-char			*set_old_path(char ***tenv)
+char		*set_old_path(char ***tenv)
 {
 	char	*path;
 
 	if (!(path = malloc(FT_PATH_MAX + 1)))
-        return (NULL);
+		return (NULL);
 	path[FT_PATH_MAX] = 0;
 	if (getcwd(path, FT_PATH_MAX))
 	{
@@ -70,4 +70,3 @@ int			change_path(char *new_path, char **oldpath, char ***tenv)
 		return (ERR_NO_FILE);
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:18:09 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 12:20:55 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/01 00:39:43 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,8 @@ t_node	*parse_filename(t_sh *sh)
 	tok = sh->tok;
 	if (tok.tok == TOK_WORD)
 	{
-		//rule 2
-		// [Redirection to or from filename]
-		//The expansions specified in Redirection shall occur. As specified there, exactly one field can result (or the result is unspecified), and there are additional requirements on pathname expansion.
 		node = save_node(NULL, sh->tok, NULL, DEFAULT_ID);
 		sh->tok = get_next_token(sh->input, sh->stack.errors);
 	}
-	return(node);
+	return (node);
 }

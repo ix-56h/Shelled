@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/01 00:14:16 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/01 02:47:15 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int main(int ac, char **av, char **envp)
 		{
 			if (exec_heredoc(sh.stack.here_docs))
 			{
-				//process_expansions(sh.node);
+				process_expansions(sh.node);
 				tree_draw(sh.node, sh.f);
 				visit(sh.node);	
 			}

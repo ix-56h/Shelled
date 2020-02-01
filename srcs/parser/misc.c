@@ -6,23 +6,24 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:48 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/31 20:55:47 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/01 01:01:02 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_node	*binnode(t_node *left, t_node *mom, t_node *right)
+t_node		*binnode(t_node *left, t_node *mom, t_node *right)
 {
 	mom->left = left;
 	mom->right = right;
 	return (mom);
 }
 
-t_node	*save_node(t_node *left, t_tokens tok, t_node *right, int id)
+t_node		*save_node(t_node *left, t_tokens tok, t_node *right, int id)
 {
-	t_node	*node = NULL;
+	t_node	*node;
 
+	node = NULL;
 	if (!(node = malloc(sizeof(t_node))))
 		exit(1);
 	node->cur_size = 0;
@@ -45,7 +46,7 @@ t_node	*save_node(t_node *left, t_tokens tok, t_node *right, int id)
 	return (node);
 }
 
-void	applie_rule_one(char *s, t_tokens *cur)
+void		applie_rule_one(char *s, t_tokens *cur)
 {
 	(void)s;
 	if (ft_strcmp(cur->data, "while") == 0)
@@ -63,12 +64,13 @@ t_node		*applie_7b(t_tokens *cur, char *s)
 	}
 	else
 	{
-		if ((tmp = ft_strichr(s, '=')) > 0) // && isquoted
+		if ((tmp = ft_strichr(s, '=')) > 0\
+			&& (s[tmp - 1] != '\'' && s[tmp - 1] != '\\' && s[tmp - 1] != '"'))
 		{
 			if (!ft_isdigit(s[0]))
 				cur->tok = TOK_ASSIGNMENT_WORD;
 		}
-		else 
+		else
 			applie_rule_one(s, cur);
 		return (save_node(NULL, *cur, NULL, ARGS));
 	}

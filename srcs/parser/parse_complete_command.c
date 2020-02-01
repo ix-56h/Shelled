@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:09:43 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 12:09:48 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/01 00:41:34 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_node	*parse_complete_command(t_sh *sh)
 {
 	t_node		*node;
 	t_node		*nod2;
-	
+
 	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;

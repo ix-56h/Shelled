@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2020/01/31 20:39:13 by niguinti         ###   ########.fr        #
+#    Updated: 2020/02/01 01:03:08 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,7 +92,7 @@ $(FT): | lib_msg
 
 ### Mkdir obj ###
 $(OBJ_DIR): | mkdir_msg
-	@mkdir -p $(OBJ_DIR) $(OBJ_SUB_DIRS)
+	mkdir -p $(OBJ_DIR) $(OBJ_SUB_DIRS)
 	echo $(INC)
 
 ### Compilation ###

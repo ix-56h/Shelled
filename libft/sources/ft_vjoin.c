@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 08:47:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/09 16:41:51 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/01 04:49:05 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /*
 **  ft_vjoin whil concatenate `n' string given in argument
 **  ex: ft_vjoin(3, "This ", "is ", "a test.");
-**          whill return: "This is a test."      
+**          whill return: "This is a test."
 **  return the new malloced string
 */
 

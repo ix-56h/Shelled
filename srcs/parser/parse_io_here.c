@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:21:09 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 12:21:15 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/01/31 23:45:50 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_node	*parse_io_here(t_sh *sh)
 	t_node		*node;
 	t_node		*nod2;
 	t_tokens	tok;
-	
+
 	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
@@ -34,5 +34,5 @@ t_node	*parse_io_here(t_sh *sh)
 		else
 			error_push(sh->stack.errors, PARSE_ERROR_NEAR, tok.data);
 	}
-	return(node);
+	return (node);
 }
