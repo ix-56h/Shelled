@@ -79,10 +79,7 @@ int		is_finished(char *line)
 		else
 		{
 			if (line[i] == '|')
-			{
-				if (i - 1 >= 0 && line[i - 1] == '|')
-					return (0);
-			}
+				return (0);
 			else if (line[i] == '&')
 			{
 				if (i - 1 >= 0 && line[i - 1] == '&')
