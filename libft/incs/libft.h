@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 23:02:11 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/11 21:29:43 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/01 04:49:26 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define SECOND 0010
 # define BOTH 0111
 # undef tab
+
 typedef struct	s_tab
 {
 	char			**tab;

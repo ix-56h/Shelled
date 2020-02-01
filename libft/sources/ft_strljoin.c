@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 16:39:31 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/09 16:33:02 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/01 04:46:55 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char		*ft_dupandfree(char *s1, char *s2, char to_free)
 }
 
 /*
-**	Join `s1' at the end of `s2'. 
+**	Join `s1' at the end of `s2'.
 **	The fonciton will free `s1' or `s2' according to `to_free' with:
 **	`NONE', `FIRST', `SECOND' or `BOTH'
 **	Return the new malloced string
