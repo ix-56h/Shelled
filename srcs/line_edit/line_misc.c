@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:22:13 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/19 01:15:51 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/01 04:33:44 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "ligne.h"
 
-char	*concat_lines(t_dl_node *head)
+char	*concat_lines(t_dl_node *head, int act)
 {
 	char	*str;
 
@@ -25,8 +25,9 @@ char	*concat_lines(t_dl_node *head)
 			return (ft_strdup(((t_line *)head->data)->line));
 		while (head->next)
 		{
-			str = ft_strljoin(str, ((t_line *)head->data)->line, FIRST);	
-			str = ft_strljoin(str, "\n", FIRST);
+			str = ft_strljoin(str, ((t_line *)head->data)->line, FIRST);
+			if (act == 1 && head->next && ((t_line *)head->next->data)->no_newline == 0)
+				str = ft_strljoin(str, "\n", FIRST);
 			head = head->next;
 		}
 		str = ft_strljoin(str, ((t_line *)head->data)->line, FIRST);

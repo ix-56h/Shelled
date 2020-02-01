@@ -53,6 +53,7 @@ typedef struct	s_line
 	char		*line;
 	size_t		allocsize;
 	int			index;
+	int			no_newline;
 	t_prompt	*prompt;
 }				t_line;
 typedef struct	s_line_and_node
@@ -94,8 +95,7 @@ void			cur_move_to_index(t_line *line, int index);
 **	alloc.c
 */
 
-t_dl_node			*dup_line_node(t_dl_node *src);
-t_line			*dup_line(t_line *src);
+t_dl_node		*dup_line_node(t_dl_node *src);
 t_prompt		*dup_prompt(t_prompt *src);
 t_line			*init_line(t_line *tline, char *line, int index, t_prompt *prompt);
 t_prompt		*new_prompt(char *str);
@@ -158,7 +158,7 @@ int				get_next_word_index(t_line *line);
 int				count_row_in_line(t_line *line, t_winsize winsize);
 int				term_can_print(t_dl_node *head, int readsize);
 void			handle_resize(int signo);
-char			*concat_lines(t_dl_node *head);
+char			*concat_lines(t_dl_node *head, int act);
 
 /*
 **	test_key.c
