@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 14:33:36 by thdelmas          #+#    #+#              #
-#    Updated: 2020/02/01 01:23:08 by niguinti         ###   ########.fr        #
+#    Updated: 2020/02/02 23:53:43 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ H_FILES_tokenizer 	=	\
 H_FILES_visitor 	=	\
 						visitor.h \
 						visitor_rules.h \
+						exec.h \
 
 # SUPPA concat loop
 H_FILES += $(foreach SUB_DIR,$(SUB_DIRS),$(addprefix $(SUB_DIR)/,$(H_FILES_$(SUB_DIR))))

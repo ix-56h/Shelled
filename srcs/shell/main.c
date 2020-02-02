@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/01 06:04:40 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 23:51:45 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "expansions.h"
 #include "ligne.h"
 #include "parser.h"
+#include "exec.h"
 
 void	check_param(char **av, t_flags *f)
 {

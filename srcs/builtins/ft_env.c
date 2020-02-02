@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:47:22 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/01 04:57:34 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 23:52:54 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "builtins.h"
 #include "ast.h"
 #include "visitor.h"
+#include "exec.h"
 
 static void	printenv(char **env)
 {
