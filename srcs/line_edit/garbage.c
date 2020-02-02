@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:04:37 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/30 13:11:39 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 18:37:49 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,37 +51,22 @@ int		ft_isallprint(char *str)
 	return (1);
 }
 
-/*int		is_multiline(t_dl_node *head)
+void	sub_is_multiline(char *line, size_t *i, char *finded, char *backslash)
 {
-	char	finded;
-	char	backslash;
-	int		i;
-	char	*line;
-
-	i = 0;
-	finded = 0;
-	while (head)
+	if (line[*i] == '\\' && *finded != '\'')
+		if (line[*i + 1] != '\0')
+			*i += 2;
+	if (line[*i] == '"' || line[*i] == '\'')
 	{
-		backslash = 0;
-		line = ((t_line *)head->data)->line;
-		while (line[i])
-		{
-			if (line[i] == '"' || line[i] == '\'')
-			{
-				if (finded == 0)
-					finded = line[i];
-				else if (finded == line[i])
-					finded = 0;
-			}
-			if (i + 1 == ft_strlen(line) && line[i] == '\\')
-				backslash = 1;
-			++i;
-		}
-		i = 0;
-		head = head->next;
+		if (*finded == 0)
+			*finded = line[*i];
+		else if (*finded == line[*i])
+			*finded = 0;
 	}
-	return (finded || backslash);
-}*/
+	if (*i + 1 == ft_strlen(line) && line[*i] == '\\')
+		*backslash = 1;
+	++(*i);
+}
 
 int		is_multiline(t_dl_node *head)
 {
@@ -97,23 +82,36 @@ int		is_multiline(t_dl_node *head)
 		backslash = 0;
 		line = ((t_line *)head->data)->line;
 		while (line[i])
-		{
-			if (line[i] == '\\' && finded != '\'')
-				if (line[i + 1] != '\0')
-					i += 2;
-			if (line[i] == '"' || line[i] == '\'')
-			{
-				if (finded == 0)
-					finded = line[i];
-				else if (finded == line[i])
-					finded = 0;
-			}
-			if (i + 1 == ft_strlen(line) && line[i] == '\\')
-				backslash = 1;
-			++i;
-		}
+			sub_is_multiline(line, &i, &finded, &backslash);
 		i = 0;
 		head = head->next;
 	}
 	return (finded || backslash);
+}
+
+int		is_finished(char *line)
+{
+	int	i;
+
+	i = ft_strlen(line) - 1;
+	while (i >= 0)
+	{
+		if(line[i] == ' ')
+			i--;
+		else
+		{
+			if (line[i] == '|')
+				return (0);
+			else if (line[i] == '&')
+			{
+				if (i - 1 >= 0 && line[i - 1] == '&')
+					return (0);
+			}
+			else
+				return (1);
+		}
+		
+		--i;
+	}
+	return (1);
 }

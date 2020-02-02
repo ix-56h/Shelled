@@ -37,6 +37,8 @@
 # define READ_MODE_LINE			4
 # define READ_MODE_HEREDOC		8
 
+# define MODE_NO_NEWLINE		64
+
 typedef struct winsize t_winsize;
 typedef struct	s_pos
 {
@@ -107,6 +109,7 @@ t_prompt		*new_prompt(char *str);
 void			*ft_throw_err_free(int n, ...);
 int				ft_isallprint(char *str);
 int				is_multiline(t_dl_node *head);
+int				is_finished(char *line);
 
 /*
 **	line_edit.c
@@ -133,7 +136,7 @@ void			arrow_ctrl_down(t_line **line, t_dl_node **head);
 void			arrow_ctrl_up(t_line **line, t_dl_node **head);
 void			suppr_act(t_line *line, t_dl_node **head);
 int				ctrl_d_act(t_line **line, t_dl_node **head, char mode);
-void			ctrl_c_act(t_line **line, t_dl_node **head, char mode);
+int			ctrl_c_act(t_line **line, t_dl_node **head, char mode);
 
 /*
 **	clear.c

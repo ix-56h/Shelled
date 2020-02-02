@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:53:43 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/30 03:18:28 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 02:48:50 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,26 @@ static int		test_term_size(void)
 	return (1);
 }
 
+int				test_keys(char *buff, t_line **line, t_dl_node **head)
+{
+	if (ft_strcmp(buff, KEY_SUPR) == 0)
+	{
+		suppr_act(*line, head);
+		return (1);
+	}
+	else if (ft_strcmp(buff, KEY_HOME) == 0)
+	{
+		cur_move_to_index(*line, 0);
+		return (1);
+	}
+	else if (ft_strcmp(buff, KEY_END) == 0)
+	{
+		cur_move_to_index(*line, ft_strlen((*line)->line));
+		return (1);
+	}
+	return (0);
+}
+
 int				read_loop(t_line **line, t_dl_node **head, char mode)
 {
 	char	buff[BUFFSIZE + 1];
@@ -58,22 +78,12 @@ int				read_loop(t_line **line, t_dl_node **head, char mode)
 				write_on_line(*line, readsize, buff, head);
 			else if (ft_strcmp(buff, "\n") == 0 && break_read_loop(*head, *line))
 				break ;
-			else if (ft_strcmp(buff, KEY_SUPR) == 0)
-				suppr_act(*line, head);
-			else if (ft_strcmp(buff, KEY_HOME) == 0)
-				cur_move_to_index(*line, 0);
-			else if (ft_strcmp(buff, KEY_END) == 0)
-				cur_move_to_index(*line, ft_strlen((*line)->line));
-			else if (ft_strcmp(buff, "\030") == 0)
-			{
-				ctrl_c_act(line, head, mode);
+			else if (test_keys(buff, line, head))
+				(void)0;
+			else if (ft_strcmp(buff, "\030") == 0 && ctrl_c_act(line, head, mode))
 				break ;
-			}
-			else if (ft_strcmp(buff, "\004") == 0)
-			{
-				if (ctrl_d_act(line, head, mode))
-					break ;
-			}
+			else if (ft_strcmp(buff, "\004") == 0 && ctrl_d_act(line, head, mode))
+				break ;
 			else
 				arrow_line_action(line, buff, head, mode);
 		}

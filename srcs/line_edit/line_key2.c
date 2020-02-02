@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:32:29 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/19 01:15:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/02 02:48:02 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int		ctrl_d_act(t_line **line, t_dl_node **head, char mode)
 			free_line(*line);
 			*line = init_line(NULL, ft_strdup("exit"), 4, new_prompt(PROMPT_DEFAULT));
 			(*head)->data = *line;
-			return (1);
 		}
 	}
 	else if (mode & READ_MODE_HEREDOC)
@@ -84,10 +83,10 @@ int		ctrl_d_act(t_line **line, t_dl_node **head, char mode)
 		dl_append(head, tmp);
 		*line = tmp;
 	}
-	return (0);
+	return (1);
 }
 
-void	ctrl_c_act(t_line **line, t_dl_node **head, char mode)
+int		ctrl_c_act(t_line **line, t_dl_node **head, char mode)
 {
 	if (mode & READ_MODE_LINE)
 	{
@@ -102,4 +101,5 @@ void	ctrl_c_act(t_line **line, t_dl_node **head, char mode)
 		(*line)->line[0] = '\030';
 		(*line)->line[1] = '\0';
 	}
+	return (1);
 }
