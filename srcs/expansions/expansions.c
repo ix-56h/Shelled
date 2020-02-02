@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:17:19 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/31 20:55:38 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 04:55:31 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*expand_word(char *word)
 {
 	if (word[0] == '~')
 		word = expand_tilde(word);
+	process_expression(&word);
 	quote_removal(&word);
 	return (word);
 }
