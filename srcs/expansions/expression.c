@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 04:54:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/02 06:17:25 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 21:45:17 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*process_simple_parameter(size_t *i, char *word)
 		a++;
 	ft_bzero(expression, 128);
 	ft_strncpy(expression, word + *i, (a - *i));
+	(*i)--;
 	word[*i] = 0;
 	if (!(tmp = get_env(g_env, expression)))
 	{
