@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:29 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/21 04:10:47 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 22:04:39 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ char	*push_args(t_node *node, char *s)
 	ret = NULL;
 	if (node->cur_i == node->capacity)
 	{
-		if (!(node->args = realloc_args(node->args, node->cur_size + ARGS_ARR_SIZE)))
+		if (!(node->args = realloc_args(node->args\
+						, node->cur_size + ARGS_ARR_SIZE)))
 			exit(0);
 		free(tmp);
 		node->cur_size += ARGS_ARR_SIZE;

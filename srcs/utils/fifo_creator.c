@@ -1,42 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   insert_str.c                                       :+:      :+:    :+:   */
+/*   fifo_creator.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/30 05:50:23 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/02 22:09:02 by niguinti         ###   ########.fr       */
+/*   Created: 2020/02/02 22:12:45 by niguinti          #+#    #+#             */
+/*   Updated: 2020/02/02 22:16:02 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh.h"
+#include "parser.h"
 
-char	*insert_str(char *s, size_t *pos, size_t anchor, char *str)
+t_fifo		*fifo_creator(unsigned capacity, size_t size)
 {
-	char	*nw;
-	size_t	i;
+	t_fifo *queue;
 
-	i = 0;
-	nw = NULL;
-	if (!(nw = malloc(1 * ((ft_strlen(s) + ft_strlen(str)) - anchor))))
+	if (!(queue = malloc(sizeof(t_fifo))))
 		return (NULL);
-	while (i != *pos)
-	{
-		nw[i] = s[i];
-		i++;
-	}
-	while (*str)
-	{
-		nw[i] = *str;
-		str++;
-		i++;
-	}
-	while (s[anchor])
-	{
-		nw[i] = s[anchor];
-		i++;
-		anchor++;
-	}
-	return (nw);
+	if (!(queue->ar = malloc(capacity * size)))
+		return (NULL);
+	queue->capacity = capacity;
+	queue->front = -1;
+	queue->rear = -1;
+	return (queue);
 }
