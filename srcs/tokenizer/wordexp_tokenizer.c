@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:46 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 14:24:23 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 00:39:49 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	lex_match_dquote(char *s, int *anchor, t_lifo *stack)
 	{
 		if (s[*anchor] == '\\' && !esc)
 			esc = 1;
-		else if (wexp_rules[DQU][(int)(s[*anchor])])
+		else if (g_wexp_rules[DQU][(int)(s[*anchor])])
 		{
 			if (!lex_sequence(s, anchor, stack))
 				return (0);
@@ -87,7 +87,7 @@ int	lex_match_command_sub(char *s, int *anchor, t_lifo *stack)
 		if ((s[*anchor] == '(' || s[*anchor] == '`')
 			&& !lex_match_command_sub(s, anchor, stack))
 			return (0);
-		if (wexp_rules[BQU][(int)(s[*anchor])])
+		if (g_wexp_rules[BQU][(int)(s[*anchor])])
 		{
 			if (!lex_sequence(s, anchor, stack))
 				return (0);

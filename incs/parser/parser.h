@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:18 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/22 03:09:20 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 00:12:46 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,17 @@
 # include <stdlib.h>
 # define ARGS_ARR_SIZE 4
 
-typedef	struct	s_sh t_sh;
-
-enum			id {DEFAULT_ID, ARGS, SUBSH, PIPESEQ, PIPE, ANDOR, IO_REDIRECT, ASSIGNMENT_WORD};
+enum		e_id
+{
+	DEFAULT_ID,
+	ARGS,
+	SUBSH,
+	PIPESEQ,
+	PIPE,
+	ANDOR,
+	IO_REDIRECT,
+	ASSIGNMENT_WORD
+};
 
 char		*push_args(t_node *node, char *s);
 
@@ -88,7 +96,7 @@ t_node		*parse_wordlist(t_sh *sh);
 **	misc.c
 */
 
-void		bst_print_dot(t_node* tree, FILE* stream);
+void		bst_print_dot(t_node *tree, FILE *stream);
 t_node		*binnode(t_node *left, t_node *mom, t_node *right);
 t_node		*save_node(t_node *left, t_tokens tok, t_node *right, int id);
 void		applie_rule_one(char *s, t_tokens *cur);
@@ -97,6 +105,6 @@ t_node		*applie_7b(t_tokens *cur, char *s);
 /*
 **	free_tree.c
 */
-void deleteTree(t_node *node); 
-void delete_ast(t_node **root); 
+void		delete_tree(t_node *node);
+void		delete_ast(t_node **root);
 #endif

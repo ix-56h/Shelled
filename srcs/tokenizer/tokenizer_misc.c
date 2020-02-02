@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:31:37 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 14:25:59 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 00:39:10 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		ignore_chr_class(char *s, int *i, t_chr_class chr_class)
 	}
 	else
 	{
-		while (s[*i] && get_chr_class[(unsigned char)s[*i]] == chr_class)
+		while (s[*i] && g_get_chr_class[(unsigned char)s[*i]] == chr_class)
 			(*i)++;
 	}
 }

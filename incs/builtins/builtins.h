@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:07:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/30 06:59:19 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 02:01:30 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,17 @@
 
 typedef int	(*t_builtin)(char **, char ***);
 
-int         count_arg(char **argv);
-int         ft_addpath(char **argv, char ***env);
-int         ft_cd(char **argv, char ***tenv);
-int         ft_exit(char **argv, char ***tenv);
-int         ft_echo(char **argv, char ***tenv);
-int         ft_setenv(char **argv, char ***env);
-int         ft_take(char **argv, char ***env);
-int         ft_unsetenv(char **argv, char ***env);
-int         ft_env(char **argv, char ***tenv);
-
-t_builtin   lookforbuiltin(char *data);
-
-int		    change_path(char *new_path, char **oldpath, char ***tenv);
+int			count_arg(char **argv);
+int			ft_addpath(char **argv, char ***env);
+int			ft_cd(char **argv, char ***tenv);
+int			ft_exit(char **argv, char ***tenv);
+int			ft_echo(char **argv, char ***tenv);
+int			ft_setenv(char **argv, char ***env);
+int			ft_take(char **argv, char ***env);
+int			ft_unsetenv(char **argv, char ***env);
+int			ft_env(char **argv, char ***tenv);
+t_builtin	lookforbuiltin(char *data);
+int			change_path(char *new_path, char **oldpath, char ***tenv);
 int			set_new_path(char ***tenv, char *newpath);
 char		*set_old_path(char ***tenv);
 #endif

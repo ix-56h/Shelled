@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:56 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/01 06:22:32 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 00:22:43 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void			print_stack_errors(t_lifo *stack, t_tokens *cur)
 	while (stack->top != -1)
 	{
 		err = error_peek(stack);
-		ft_putstr(G_ERROR_MSGS_PREFIX[err.type]);
+		ft_putstr(g_error_msgs_prefix[err.type]);
 		if (err.near != NULL)
 		{
 			ft_putstr("'");

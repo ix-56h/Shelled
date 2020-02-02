@@ -6,70 +6,63 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:48 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/01 05:47:54 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 00:49:19 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_TOK_RULES_H
-# define FT_TOK_RULES_H
+#ifndef TOKENIZER_RULES_H
+# define TOKENIZER_RULES_H
 
-static t_chr_class		get_chr_class[255] = {
+static t_chr_class		g_get_chr_class[255] =
+{
 	[' '] = CHR_SP,
 	['\t'] = CHR_SP,
 	[';'] = CHR_SEMI,
 	['$'] = CHR_DOL,
-
 	['#'] = CHR_COMMENT,
-	['A' ... 'Z'] = CHR_WORD,
-	['a' ... 'z'] = CHR_WORD,
-	['0' ... '9'] = CHR_DIGIT,
+	['A'...'Z'] = CHR_WORD,
+	['a'...'z'] = CHR_WORD,
+	['0'...'9'] = CHR_DIGIT,
 	['_'] = CHR_WORD,
 	['='] = CHR_WORD,
 	[':'] = CHR_WORD,
 	['`'] = CHR_BQUOTE,
-
 	['~'] = CHR_WORD,
-
 	['/'] = CHR_WORD,
-
 	['.'] = CHR_WORD,
-
 	['['] = CHR_WORD,
 	[']'] = CHR_WORD,
 	['@'] = CHR_WORD,
 	[','] = CHR_WORD,
-	
 	['{'] = CHR_RBRACE,
 	['}'] = CHR_LBRACE,
 	['('] = CHR_LPAREN,
 	[')'] = CHR_RPAREN,
-
 	['*'] = CHR_WORD,
-
-
 	['-'] = CHR_DASH,
-
 	['\\'] = CHR_ESCAPE,
 	['\n'] = CHR_NEWLINE,
 	['<'] = CHR_LREDI,
 	['>'] = CHR_RREDI,
-
 	['|'] = CHR_PIPE,
 	['!'] = CHR_BANG,
 	['\''] = CHR_SQUOTE,
 	['"'] = CHR_DQUOTE,
-	
 	['&'] = CHR_AND
 };
 
-static int		ABSTRACT_TOKEN[TOK_MAX] = {
+static int				g_abstract_token[TOK_MAX] =
+{
 	[TOK_REDIRECTION] = 1,
 	[TOK_PIPE] = 1,
 	[TOK_OPERATOR] = 1
 };
 
-static int		token_chr_rules[TOK_MAX][CHR_MAX] = {
-	[TOK_SP] = {[CHR_SP] = 0,},
+static int				g_token_chr_rules[TOK_MAX][CHR_MAX] =
+{
+	[TOK_SP] = {
+		[CHR_SP] = 0
+	},
 	[TOK_WORD] = {
 		[CHR_WORD] = 1,
 		[CHR_DIGIT] = 1,
@@ -92,16 +85,28 @@ static int		token_chr_rules[TOK_MAX][CHR_MAX] = {
 		[CHR_DOL] = 1,
 		[CHR_DASH] = 1
 	},
-	[TOK_IO_NUMBER] = {[CHR_DIGIT] = 1,},
-	[TOK_BANG] = {[CHR_BANG] = 1,},
-	[TOK_OPERATOR] = {[CHR_AND] = 1, [CHR_SEMI] = 1},
-	[TOK_REDIRECTION] = {[CHR_RREDI] = 1,[CHR_LREDI] = 1, [CHR_PIPE] = 1, [CHR_AND] = 1},
-	[TOK_PIPE] = {[CHR_PIPE] = 1},
-	[TOK_RPAREN] = {},
-	[TOK_LPAREN] = {},
+	[TOK_IO_NUMBER] = {
+		[CHR_DIGIT] = 1
+	},
+	[TOK_BANG] = {
+		[CHR_BANG] = 1
+	},
+	[TOK_OPERATOR] = {
+		[CHR_AND] = 1,
+		[CHR_SEMI] = 1
+	},
+	[TOK_REDIRECTION] = {
+		[CHR_RREDI] = 1,
+		[CHR_LREDI] = 1,
+		[CHR_PIPE] = 1,
+		[CHR_AND] = 1
+	},
+	[TOK_PIPE] = {
+		[CHR_PIPE] = 1
+	}
 };
 
-static t_toktype	get_tok_type[CHR_MAX] = {
+static t_toktype		g_get_tok_type[CHR_MAX] = {
 	[CHR_SP] = TOK_SP,
 	[CHR_WORD] = TOK_WORD,
 	[CHR_ESCAPE] = TOK_WORD,

@@ -6,24 +6,21 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:39 by niguinti          #+#    #+#             */
-/*   Updated: 2019/12/21 04:12:58 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 00:23:22 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void deleteTree(t_node* node) 
+void delete_tree(t_node *node) 
 {
-	int		i;
+	int	i;
 
 	i= 0;
 	if (node == NULL)
 		return;
-	/* first delete both subtrees */
-	deleteTree(node->left); 
-	deleteTree(node->right); 
-
-	/* then delete the node */
+	delete_tree(node->left); 
+	delete_tree(node->right); 
 	if (node->id == ARGS)
 	{
 		while (i < node->cur_size)
@@ -44,9 +41,8 @@ void deleteTree(t_node* node)
 	node = NULL;
 } 
 
-/* Deletes a tree and sets the root as NULL */
 void delete_ast(t_node **root) 
 { 
-	deleteTree(*root);
+	delete_tree(*root);
 	*root = NULL;
 }

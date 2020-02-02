@@ -6,16 +6,16 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:36 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/01 00:17:00 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 00:21:07 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_TOK_H
-# define FT_TOK_H
-#include "stack.h"
-#include "libft.h"
+#ifndef TOKENIZER_H
+# define TOKENIZER_H
+# include "stack.h"
+# include "libft.h"
 
-typedef enum	e_toktype {
+typedef enum		e_toktype {
 	TOK_ERROR,
 	TOK_NAME,
 	TOK_IO_NUMBER,
@@ -38,9 +38,6 @@ typedef enum	e_toktype {
 	TOK_RREDI,
 	TOK_BANG,
 	TOK_EOF,
-	/*
-	**	Reserved words
-	*/
 	TOK_IF,
 	TOK_THEN,
 	TOK_ELSE,
@@ -53,9 +50,6 @@ typedef enum	e_toktype {
 	TOK_WHILE,
 	TOK_UNTIL,
 	TOK_FOR,
-	/*
-	**	Abstract token
-	*/
 	TOK_PIPE,
 	TOK_POSIX_MAX,
 	TOK_RPAREN,
@@ -69,9 +63,9 @@ typedef enum	e_toktype {
 	TOK_OPERATOR,
 	TOK_REDIRECTION,
 	TOK_MAX
-}				t_toktype;
+}					t_toktype;
 
-typedef enum	e_chr_class {
+typedef enum		e_chr_class {
 	CHR_ERROR,
 	CHR_SP,
 	CHR_DASH,
@@ -97,7 +91,7 @@ typedef enum	e_chr_class {
 	CHR_LPAREN,
 	CHR_NEWLINE,
 	CHR_MAX
-}				t_chr_class;
+}					t_chr_class;
 
 typedef struct		s_tokens {
 	t_toktype		tok;
@@ -115,39 +109,41 @@ typedef struct		s_gnt {
 /*
 **	term_and_op_check.c
 */
-t_toktype	check_operator(char *s, size_t len, int *i);
-t_toktype	check_pipe(char *s, size_t len, int *i);
-t_toktype	check_redirections(char *s, size_t len, int *i);
+t_toktype			check_operator(char *s, size_t len, int *i);
+t_toktype			check_pipe(char *s, size_t len, int *i);
+t_toktype			check_redirections(char *s, size_t len, int *i);
 
 /*
 **	tokenizer_misc.c
 */
-int			is_opening_class(t_chr_class chr_class);
-t_tokens	token_error(int type, t_lifo*stack, char c);
-t_tokens	save_token(char *s, int anchor, t_toktype toktype);
-void		ignore_chr_class(char *s, int *i, t_chr_class chr_class);
-int			is_special_char(t_chr_class chr_class, t_chr_class prev_class);
+int					is_opening_class(t_chr_class chr_class);
+t_tokens			token_error(int type, t_lifo*stack, char c);
+t_tokens			save_token(char *s, int anchor, t_toktype toktype);
+void				ignore_chr_class(char *s, int *i, t_chr_class chr_class);
+int					is_special_char(t_chr_class chr_class\
+									, t_chr_class prev_class);
 
 /*
 **	tokenizer.c
 */
-t_toktype	get_true_toktype(char *s, t_toktype toktype, int *i);
-int			get_token(char *s, t_gnt *gnt, t_lifo *stack);
-t_tokens	get_next_token(char *s, t_lifo*stack);
+t_toktype			get_true_toktype(char *s, t_toktype toktype, int *i);
+int					get_token(char *s, t_gnt *gnt, t_lifo *stack);
+t_tokens			get_next_token(char *s, t_lifo*stack);
 
 /*
 **	wordexp_tokenizer.c
 */
-int			lex_sequence(char *s, int *anchor, t_lifo *stack);
-int			lex_match_squote(char *s, int *anchor, t_lifo *stack);
-int			lex_match_dquote(char *s, int *anchor, t_lifo *stack);
-int			lex_match_command_sub(char *s, int *anchor, t_lifo *stack);
-int			lex_match_dol(char *s, int *anchor, t_lifo *stack);
+int					lex_sequence(char *s, int *anchor, t_lifo *stack);
+int					lex_match_squote(char *s, int *anchor, t_lifo *stack);
+int					lex_match_dquote(char *s, int *anchor, t_lifo *stack);
+int					lex_match_command_sub(char *s, int *anchor, t_lifo *stack);
+int					lex_match_dol(char *s, int *anchor, t_lifo *stack);
 
 /*
 **	wordexp_misc.c
 */
-int			is_whitespace(char c);
-void		skip_whitespaces(char *s, int *a);
-int			command_sub_skip_whitespaces(char *s, int *anchor, t_lifo *stack);
+int					is_whitespace(char c);
+void				skip_whitespaces(char *s, int *a);
+int					command_sub_skip_whitespaces(char *s, int *anchor\
+												, t_lifo *stack);
 #endif

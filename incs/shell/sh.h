@@ -6,19 +6,20 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 07:02:55 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 00:14:29 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SH_CLASS_H
-# define SH_CLASS_H
+#ifndef SH_H
+# define SH_H
 # include <sys/types.h>
 # include <pwd.h>
 # include "ast.h"
 # define FT_PATH_MAX 256
 # define SHELL_NAME "21sh"
 
-int	g_exit;
+int				g_exit;
+char			**g_env;
 
 typedef	struct	s_flags
 {
@@ -34,35 +35,33 @@ typedef	struct	s_sh
 	t_flags		f;
 }				t_sh;
 
-char	**g_env;
-
 /*
 **	main.c
 */
 
-void		check_param(char **av, t_flags *f);
-void		free_sh(t_sh *sh);
-int			init_shell(t_sh *sh, int ac, char **av, char **envp);
-void		tree_draw(t_node *node, t_flags f);
+void			check_param(char **av, t_flags *f);
+void			free_sh(t_sh *sh);
+int				init_shell(t_sh *sh, int ac, char **av, char **envp);
+void			tree_draw(t_node *node, t_flags f);
 
 /*
 **	env.c
 */
 
-char		**init_env(char **env);
-char		**cpy_env(char **envp);
-int			ft_edit_env(char **env, char *looking, char *value);
-char		**add_env(char **env, char *var, char *value);
-char		**del_var(char **env, char *var);
-void		free_env(char **env);
-char		*get_env(char **env, char *looking);
+char			**init_env(char **env);
+char			**cpy_env(char **envp);
+int				ft_edit_env(char **env, char *looking, char *value);
+char			**add_env(char **env, char *var, char *value);
+char			**del_var(char **env, char *var);
+void			free_env(char **env);
+char			*get_env(char **env, char *looking);
 
 /*
 **	utils
 */
 
-char	*erase_char(char *str);
-char	*remove_dquotes(char *w);
-char	*insert_str(char *s, size_t	*pos, size_t anchor, char *str);
+char			*erase_char(char *str);
+char			*remove_dquotes(char *w);
+char			*insert_str(char *s, size_t	*pos, size_t anchor, char *str);
 
 #endif
