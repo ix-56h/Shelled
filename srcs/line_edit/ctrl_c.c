@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   historique.c                                       :+:      :+:    :+:   */
+/*   ctrl_c.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/19 17:16:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 23:30:14 by akeiflin         ###   ########.fr       */
+/*   Created: 2020/02/02 23:20:55 by akeiflin          #+#    #+#             */
+/*   Updated: 2020/02/02 23:23:36 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h>
-#include "libft.h"
-#include "historique.h"
-#include "double_linked_list.h"
+#include <sys/ioctl.h>
+#include "ligne.h"
 
-int					historic_on_use(int act)
+void	ctrl_c_line_handler(int lel)
 {
-	static int on_use;
-
-	if (act == 1)
-		on_use = 1;
-	else if (act == 2)
-		on_use = 0;
-	return (on_use);
+	(void)lel;
+	ioctl(STDOUT_FILENO, TIOCSTI, "\030");
 }
 
-t_historic			**get_historic()
+int	heredoc_ctrl_c(t_dl_node *head, t_line *line)
 {
-    static t_historic *historic = NULL;
-
-    return (&historic);
+	if (ft_strcmp(line->line, "\030") == 0)
+	{
+		dl_free_with_data(head, free_line);
+		return (1);
+	}
+	return (0);
 }
-
-

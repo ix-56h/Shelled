@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:15:18 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/30 03:21:00 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 23:08:49 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	arrow_up_act(t_line **line, t_dl_node **head)
 	if ((historic = historic_get_next()))
 	{
 		clear_node_line(*head);
-		dl_free_whith_content(*head, *free_line);
+		dl_free_with_data(*head, *free_line);
 		*head = dup_line_node(historic);
 		print_historique(historic);
 		*line = dl_get_last(*head)->data;
@@ -37,7 +37,7 @@ void	arrow_down_act(t_line **line, t_dl_node **head)
 		clear_node_line(*head);
 		if ((historic = historic_get_last()))
 		{
-			dl_free_whith_content(*head, *free_line);
+			dl_free_with_data(*head, *free_line);
 			*head = dup_line_node(historic);
 			print_historique(historic);
 			*line = dl_get_last(*head)->data;
@@ -45,7 +45,7 @@ void	arrow_down_act(t_line **line, t_dl_node **head)
 		}
 		else
 		{
-			dl_free_whith_content(*head, *free_line);
+			dl_free_with_data(*head, *free_line);
 			*head = NULL;
 			dl_push(head, init_line(NULL, NULL, 0, new_prompt(PROMPT_DEFAULT)));
 			print_historique(*head);

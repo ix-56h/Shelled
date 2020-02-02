@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   historique.c                                       :+:      :+:    :+:   */
+/*   termios.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/19 17:16:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 23:30:14 by akeiflin         ###   ########.fr       */
+/*   Created: 2020/02/02 23:12:14 by akeiflin          #+#    #+#             */
+/*   Updated: 2020/02/02 23:27:23 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include "libft.h"
-#include "historique.h"
-#include "double_linked_list.h"
+#include <term.h>
+#include "ligne.h"
 
-int					historic_on_use(int act)
+void			term_other(char *str, int iter)
 {
-	static int on_use;
+	char *buff;
 
-	if (act == 1)
-		on_use = 1;
-	else if (act == 2)
-		on_use = 0;
-	return (on_use);
+	buff = tgetstr(str, NULL);
+	if (buff)
+	{
+		while (iter--)
+			tputs(buff, 1, &ft_putchar);
+	}
 }
 
-t_historic			**get_historic()
+void			cur_mov(int y, int x)
 {
-    static t_historic *historic = NULL;
+	char *buff;
 
-    return (&historic);
+	buff = tgetstr("cm", NULL);
+	tputs(tgoto(buff, y, x), 1, &ft_putchar);
 }
-
-

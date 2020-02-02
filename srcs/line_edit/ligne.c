@@ -5,22 +5,6 @@
 #include "libft.h"
 #include "ligne.h"
 
-static void	ctrl_c_handler(int lel)
-{
-	(void)lel;
-	ioctl(STDOUT_FILENO, TIOCSTI, "\030");
-}
-
-int		heredoc_ctrl_c(t_dl_node *head, t_line *line)
-{
-	if (ft_strcmp(line->line, "\030") == 0)
-	{
-		dl_free_whith_content(head, free_line);
-		return (1);
-	}
-	return (0);
-}
-
 void	init_and_read(t_line **line, t_dl_node **head, char mode, t_prompt *prompt)
 {
 	*line = init_line(NULL, NULL, 0, prompt);
@@ -42,11 +26,11 @@ char	*sub_run_heredoc(t_line **line, t_dl_node **head)
 	else
 		*head = NULL;
 	tmp_node->prev = NULL;
-	dl_free_whith_content(tmp_node, free_line);
+	dl_free_with_data(tmp_node, free_line);
 	ret = concat_lines(*head, 1);
 	if (ret)
 		ret = ft_strljoin(ret, "\n", FIRST);
-	dl_free_whith_content(*head, free_line);
+	dl_free_with_data(*head, free_line);
 	signal(SIGINT, SIG_DFL);
 	if (!ret)
 		ret = ft_strdup("");
@@ -58,7 +42,7 @@ char	*run_heredoc(char	*endstring)
 	t_dl_node		*head;
 	t_line			*line;
 	
-	signal(SIGINT, ctrl_c_handler);
+	signal(SIGINT, ctrl_c_line_handler);
 	head = NULL;
 	init_and_read(&line, &head, READ_MODE_LIMITED | READ_MODE_HEREDOC, new_prompt(PROMPT_HEREDOC));
 	if (heredoc_ctrl_c(head, line))
@@ -75,7 +59,7 @@ char	*run_heredoc(char	*endstring)
 	return (sub_run_heredoc(&line, &head));
 }
 
-void	is_finished_loop(t_line **line, t_dl_node **head)
+static void	is_finished_loop(t_line **line, t_dl_node **head)
 {
 	char	*tmp_ret;
 	
@@ -98,7 +82,7 @@ char	*run_line_edit(void)
 	t_line			*line;
 	char			*ret;
 
-	signal(SIGINT, ctrl_c_handler);
+	signal(SIGINT, ctrl_c_line_handler);
 	head = NULL;
 	init_and_read(&line, &head, READ_MODE_FULL | READ_MODE_LINE, new_prompt(PROMPT_DEFAULT));
 	while (is_multiline(head))

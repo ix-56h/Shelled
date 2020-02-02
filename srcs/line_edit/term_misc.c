@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:35:42 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/30 03:22:21 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 23:13:02 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,22 +71,4 @@ int				init_term(void)
 	return (set_term_mode());
 }
 
-void	term_other(char *str, int iter)
-{
-	char *buff;
 
-	buff = tgetstr(str, NULL);
-	if (buff)
-	{
-		while (iter--)
-			tputs(buff, 1, &ft_putchar);
-	}
-}
-
-void	cur_mov(int y, int x)
-{
-	char *buff;
-
-	buff = tgetstr("cm", NULL);
-	tputs(tgoto(buff, y, x), 1, &ft_putchar);
-}

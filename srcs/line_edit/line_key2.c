@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:32:29 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 02:48:02 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/02 23:08:49 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int		ctrl_c_act(t_line **line, t_dl_node **head, char mode)
 {
 	if (mode & READ_MODE_LINE)
 	{
-		dl_free_whith_content(*head, free_line);
+		dl_free_with_data(*head, free_line);
 		*head = NULL;
 		*line = init_line(NULL, ft_strdup(""), 0, new_prompt(PROMPT_DEFAULT));
 		dl_append(head, *line);

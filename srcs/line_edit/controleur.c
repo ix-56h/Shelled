@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:53:43 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 02:48:50 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/02 22:19:00 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int		break_read_loop(t_dl_node *head, t_line *line)
 	}
 	return (0);
 }
-
 
 static int		test_term_size(void)
 {

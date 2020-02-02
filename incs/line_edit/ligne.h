@@ -10,6 +10,7 @@
 # define PROMPT_DEFAULT			SHELL_NAME"> "
 # define PROMPT_SUBLINE			"> "
 # define PROMPT_HEREDOC			"heredoc> "
+# define PROMPT_CMD				"command> "
 
 # define KEY_UP_CODE			"\033[A"
 # define KEY_DOWN_CODE			"\033[B"
@@ -75,8 +76,6 @@ int				init_term(void);
 int				restore_term(void);
 int				set_term_mode(void);
 struct termios	*save_term(int act);
-void			term_other(char *str, int iter);
-void			cur_mov(int y, int x);
 
 /*
 **	controleur.c
@@ -172,4 +171,17 @@ int				is_ctrl_right(char *buff);
 int				is_ctrl_up(char *buff);
 int				is_ctrl_down(char *buff);
 
+/*
+**	termios.c
+*/
+
+void			term_other(char *str, int iter);
+void			cur_mov(int y, int x);
+
+/*
+**	ctrl_c.c
+*/
+
+void			ctrl_c_line_handler(int lel);
+int				heredoc_ctrl_c(t_dl_node *head, t_line *line);
 #endif

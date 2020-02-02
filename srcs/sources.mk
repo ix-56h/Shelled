@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/02/02 05:22:29 by niguinti         ###   ########.fr        #
+#    Updated: 2020/02/02 23:30:01 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,8 @@ C_FILES_line_edit = \
 					garbage.c \
 					get_things.c \
 					historique.c \
+					historique_controler.c \
+					historique_act.c \
 					ligne.c \
 					line_edit.c \
 					line_key1.c \
@@ -80,6 +82,8 @@ C_FILES_line_edit = \
 					move.c \
 					term_misc.c \
 					test_key.c \
+					ctrl_c.c \
+					termios.c \
 
 C_FILES_builtins = \
 				   ft_env.c \

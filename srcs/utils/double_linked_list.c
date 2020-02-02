@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 16:27:25 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/08 15:05:26 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/02 23:08:49 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,7 @@ void	dl_free_list(t_dl_node *head)
 	}
 }
 
-void	dl_free_whith_content(t_dl_node *head, void (*free_fonc)())
+void	dl_free_with_data(t_dl_node *head, void (*free_fonc)())
 {
 	t_dl_node	*tmp;
 

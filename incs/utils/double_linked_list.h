@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/01 20:26:34 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/07 18:27:42 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/02 23:08:49 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ t_dl_node       *dl_get_head(t_dl_node *node);
 void        	dl_del_one(t_dl_node *node);
 void        	dl_del_one_with_data(t_dl_node *node, void (*free_fonc)());
 void			dl_free_list(t_dl_node *head);
-void            dl_free_whith_content(t_dl_node *head, void (*free_fonc)());
+void            dl_free_with_data(t_dl_node *head, void (*free_fonc)());
 #endif

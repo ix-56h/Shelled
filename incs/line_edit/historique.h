@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 16:25:37 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/12/31 00:27:48 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/02 23:29:16 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,16 @@
 
 typedef t_dl_node t_historic;
 
-void			add_historic(t_dl_node *command);
+int					historic_on_use(int act);
+t_historic			**get_historic(void);
+void				add_historic(t_dl_node *command);
 t_dl_node			*historic_get_next(void);
 t_dl_node			*historic_get_last(void);
-void			historic_reset(void);
-int				historic_on_use(int act);
-void			free_historic();
+void				historic_reset(void);
+void				free_historic(void);
+t_historic			*controller_next(t_historic **historic);
+t_historic			*controller_prev(t_historic **historic, t_historic *null_node);
+t_historic			*controller_reset(t_historic **historic, t_historic **null_node);
+t_historic			*historic_controller(char act);
+
 #endif
