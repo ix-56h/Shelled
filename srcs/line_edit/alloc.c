@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:58:38 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/01 04:58:46 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/02 23:56:47 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 #include "libft.h"
 #include "ligne.h"
 
-t_dl_node			*dup_line_node(t_dl_node *src)
+t_dl_node	*dup_line_node(t_dl_node *src)
 {
 	t_dl_node	*head;
 	t_dl_node	*link;
-	t_line	*new_line;
-	t_line	*tmp_line;
+	t_line		*new_line;
+	t_line		*tmp_line;
 
 	head = NULL;
 	link = NULL;
@@ -30,7 +30,8 @@ t_dl_node			*dup_line_node(t_dl_node *src)
 	while (src)
 	{
 		tmp_line = src->data;
-		new_line = init_line(NULL, ft_strdup(tmp_line->line), ft_strlen(tmp_line->line), dup_prompt(tmp_line->prompt));
+		new_line = init_line(NULL, ft_strdup(tmp_line->line)\
+				, ft_strlen(tmp_line->line), dup_prompt(tmp_line->prompt));
 		new_line->no_newline = tmp_line->no_newline;
 		dl_append(&link, new_line);
 		if (!head)
@@ -40,7 +41,7 @@ t_dl_node			*dup_line_node(t_dl_node *src)
 	return (head);
 }
 
-t_prompt		*dup_prompt(t_prompt *src)
+t_prompt	*dup_prompt(t_prompt *src)
 {
 	t_prompt	*new_prompt;
 
@@ -52,13 +53,13 @@ t_prompt		*dup_prompt(t_prompt *src)
 	return (new_prompt);
 }
 
-t_line			*init_line(t_line *tline, char *line, int index, t_prompt *prompt)
+t_line		*init_line(t_line *tline, char *line, int index, t_prompt *prompt)
 {
 	if (!tline)
 		tline = ft_calloc(sizeof(t_line));
 	if (!tline)
 		return (NULL);
-	if(!line)
+	if (!line)
 	{
 		tline->line = ft_calloc(sizeof(char) * (BUFFSIZE + 1));
 		tline->allocsize = BUFFSIZE;
@@ -74,7 +75,7 @@ t_line			*init_line(t_line *tline, char *line, int index, t_prompt *prompt)
 	return (tline);
 }
 
-t_prompt		*new_prompt(char *str)
+t_prompt	*new_prompt(char *str)
 {
 	t_prompt *prompt;
 

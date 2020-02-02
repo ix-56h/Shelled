@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:21:43 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/30 03:17:13 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 23:58:22 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "ligne.h"
 
-void	clear_line(t_line *line)
+void			clear_line(t_line *line)
 {
 	t_pos		curpos;
 	t_winsize	termsize;
@@ -34,7 +34,7 @@ static int		min_one(int nbr)
 	return (nbr);
 }
 
-void	clear_node_line(t_dl_node *head)
+void			clear_node_line(t_dl_node *head)
 {
 	t_pos		curpos;
 	t_winsize	termsize;
@@ -48,14 +48,16 @@ void	clear_node_line(t_dl_node *head)
 	{
 		tmp_line = head->data;
 		if (nb_line == 0)
-			nb_line += (min_one(ft_strlen(tmp_line->line)) + tmp_line->prompt->size - 1) / termsize.ws_col + 1;
+			nb_line += (min_one(ft_strlen(tmp_line->line))\
+			+ tmp_line->prompt->size - 1) / termsize.ws_col + 1;
 		else
-			nb_line += (min_one(ft_strlen(tmp_line->line)) - 1) / termsize.ws_col + 1;
+			nb_line += (min_one(ft_strlen(tmp_line->line)) - 1)\
+										/ termsize.ws_col + 1;
 		head = head->next;
 	}
 	term_other(TERM_UP, nb_line - 1);
 	term_other(TERM_STARTLINE, 1);
-	term_other(TERM_CLEAR_CUR_END, 1);	
+	term_other(TERM_CLEAR_CUR_END, 1);
 }
 
 void			free_line(t_line *line)
@@ -64,7 +66,7 @@ void			free_line(t_line *line)
 	{
 		if (line->prompt)
 		{
-			if(line->prompt->str)
+			if (line->prompt->str)
 				free(line->prompt->str);
 			free(line->prompt);
 		}
