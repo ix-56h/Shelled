@@ -6,158 +6,14 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/30 03:15:17 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/02 23:57:01 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
 #include <unistd.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include "libft.h"
-#include "visitor.h"
 #include "sh.h"
-#include "ast.h"
 #include "builtins.h"
-
-void		free_tab(char **tab)
-{
-    char **head;
-
-    head = tab;
-	if (tab && *tab)
-	{
-		while (*tab)
-        {
-            free(*tab);
-            ++tab;
-        }
-		free(head);
-	}
-}
-
-int             err_exec(char *buff, int err)
-{
-    if (buff)
-    {
-        if (err == ERR_IS_FOLDER)
-            ft_vprintfd(STDERR_FILENO, 3, SHELL_NAME": is a directory: ", buff, "\n");
-        else if (err == ERR_PATH_ACCES)
-            ft_vprintfd(STDERR_FILENO, 3, SHELL_NAME": permission denied: ", buff, "\n");
-        else if (err == ERR_NO_FILE)
-            ft_vprintfd(STDERR_FILENO, 3, SHELL_NAME": no such file or directory: ", buff, "\n");
-        else if (err == ERR_CMD_NOT_FOUND)
-            ft_vprintfd(STDERR_FILENO, 3, SHELL_NAME": command not found: ", buff, "\n");
-    }
-    return (err);
-}
-
-
-char	**get_env_path(void)
-{
-	char	*path;
-	char	**paths;
-
-	path = get_env(g_env, "PATH");
-	if (path)
-	{
-		paths = ft_strsplit(path, ':');
-		return (paths);
-	}
-	else
-		return (NULL);
-}
-
-/*
-**	check if there is an error on the file
-*/
-
-static int		search_folder(t_node *cmd)
-{
-	struct stat		tmp;
-
-	if (access(cmd->data, F_OK) == 0)
-	{
-		lstat(cmd->data, &tmp);
-		if (S_ISDIR(tmp.st_mode))
-			return (ERR_IS_FOLDER);
-		if (access(cmd->data, X_OK) == -1)
-			return (ERR_PATH_ACCES);
-		return (0);
-	}
-	return (ERR_NO_FILE);
-}
-
-/*
-**	check if there is an error on the file
-*/
-
-static char		*search_path(t_node *cmd, char **env)
-{
-	char			*fullpath;
-	struct stat		tmp;
-	char			**paths;
-	int				i;
-
-	(void)env;
-	paths = get_env_path();
-    i = -1;
-	if (paths)
-	{
-		while (paths[++i])
-		{
-			fullpath = ft_vjoin(3, paths[i], "/", cmd->data);
-			lstat(fullpath, &tmp);
-			if (access(fullpath, F_OK) == 0 && S_ISREG(tmp.st_mode))
-			{
-				free_tab(paths);
-				return (fullpath);
-			}
-			fullpath = ft_free(fullpath);
-		}
-        free_tab(paths);
-	}
-	return (NULL);
-}
-
-int				test_path(t_node *cmd)
-{
-	int		ft_err;
-
-	ft_err = search_folder(cmd);
-	return (err_exec(cmd->data, ft_err));
-}
-
-/*
-**	check if there is an error on the file
-*/
-
-int				test_env(t_node *cmd, char **env, char **cmd_path)
-{
-	if ((*cmd_path = search_path(cmd, env)))
-	{
-		if (access(*cmd_path, X_OK) == 0)
-			return (0);
-		else
-			return (err_exec(cmd->data, ERR_PATH_ACCES));
-	}
-	else
-		return (err_exec(cmd->data, ERR_CMD_NOT_FOUND));
-}
-
-/*
-**	choise if my cmd is a builtin, executable or a command system
-**	return the cmd return value after execution
-*/
-
-static int		is_path(char *buff)
-{
-	if (ft_strchr(buff, '/') != NULL)
-		return (1);
-	return (0);
-}
-
-
+#include "exec.h"
 
 int				exec_with_fork(t_node *cmd, char **env, t_io_lists io, char *cmd_path)
 {
@@ -180,28 +36,6 @@ int				exec_with_fork(t_node *cmd, char **env, t_io_lists io, char *cmd_path)
 		close_used_pipe_fd(io.piped);
 		return (1);
 	}
-}
-
-int     save_and_restore_fd(int action)
-{
-    static int  fds[3] = {-1};
-
-    if (action == 0)                                //Save stdin/out/err
-    {
-        fds[STDIN_FILENO] = dup(STDIN_FILENO);
-        fds[STDOUT_FILENO] = dup(STDOUT_FILENO);
-        fds[STDERR_FILENO] = dup(STDERR_FILENO);
-    }
-    else if (action == 1)                           //Restore stdin/out/err
-    {
-        dup2(fds[STDIN_FILENO], STDIN_FILENO);
-        close(fds[STDIN_FILENO]);
-        dup2(fds[STDOUT_FILENO], STDOUT_FILENO);
-        close(fds[STDOUT_FILENO]);
-        dup2(fds[STDERR_FILENO], STDERR_FILENO);
-        close(fds[STDERR_FILENO]);
-    }
-    return (1);
 }
 
 int				exec_without_fork(t_node *cmd, char **env, t_io_lists io)

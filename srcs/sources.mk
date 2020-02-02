@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/02/02 23:30:01 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/02/03 00:35:50 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,8 +58,14 @@ C_FILES_tokenizer = \
 
 C_FILES_visitor = \
 				  visitor.c \
+				  visitor_redir.c \
+				  visitor_redir2.c \
+				  visitor_special.c \
 				  fd.c \
+				  fd2.c \
 				  exec.c \
+				  exec_misc.c \
+				  test_and_find.c \
 
 C_FILES_shell = \
 				main.c \
