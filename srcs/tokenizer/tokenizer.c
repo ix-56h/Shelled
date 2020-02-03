@@ -6,13 +6,13 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/02 00:38:46 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/03 02:59:48 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <tokenizer.h>
-#include <tokenizer_rules.h>
-#include <error_handler.h>
+#include "tokenizer.h"
+#include "tokenizer_rules.h"
+#include "error_handler.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -80,28 +80,29 @@ int			init_and_post_process(char *s, t_gnt *gnt, t_lifo *stack)
 
 t_tokens	get_next_token(char *s, t_lifo *stack)
 {
-	static t_gnt	gnt;
+	t_gnt	*gnt;
 
-	if (init_and_post_process(s, &gnt, stack) == 1)
-		return (gnt.token);
-	if (gnt.chr_class == CHR_COMMENT || gnt.chr_class == CHR_SP)
+	gnt = gnt_standalone(1);
+	if (init_and_post_process(s, gnt, stack) == 1)
+		return (gnt->token);
+	if (gnt->chr_class == CHR_COMMENT || gnt->chr_class == CHR_SP)
 	{
-		ignore_chr_class(s, &(gnt.i), gnt.chr_class);
+		ignore_chr_class(s, &(gnt->i), gnt->chr_class);
 		return (get_next_token(s, stack));
 	}
-	if (!(gnt.toktype = g_get_tok_type[gnt.chr_class]))
-		return (token_error(UNRECOGNIZED_TOKEN, stack, s[gnt.i]));
-	gnt.i += get_token(s + gnt.i, &gnt, stack);
+	if (!(gnt->toktype = g_get_tok_type[gnt->chr_class]))
+		return (token_error(UNRECOGNIZED_TOKEN, stack, s[gnt->i]));
+	gnt->i += get_token(s + gnt->i, gnt, stack);
 	if (!lifo_empty(stack))
 		return (token_error(0, stack, 0));
-	if (gnt.token.tok == TOK_WORD && (s[gnt.i] == '>' || s[gnt.i] == '<') \
-		&& (ft_isdigits(gnt.token.data)))
-		gnt.token.tok = TOK_IO_NUMBER;
-	if (g_abstract_token[gnt.token.tok] && !(gnt.token.tok = \
-				get_true_toktype(gnt.token.data, gnt.token.tok, &(gnt.i))))
+	if (gnt->token.tok == TOK_WORD && (s[gnt->i] == '>' || s[gnt->i] == '<') \
+		&& (ft_isdigits(gnt->token.data)))
+		gnt->token.tok = TOK_IO_NUMBER;
+	if (g_abstract_token[gnt->token.tok] && !(gnt->token.tok = \
+				get_true_toktype(gnt->token.data, gnt->token.tok, &(gnt->i))))
 	{
-		error_push(stack, UNRECOGNIZED_TOKEN, gnt.token.data);
+		error_push(stack, UNRECOGNIZED_TOKEN, gnt->token.data);
 		return (token_error(0, stack, 0));
 	}
-	return (gnt.token);
+	return (gnt->token);
 }

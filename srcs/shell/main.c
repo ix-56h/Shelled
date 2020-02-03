@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/02 23:51:45 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 02:48:02 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	re_init_sh(t_sh *sh)
 int main(int ac, char **av, char **envp)
 {
 	t_sh		sh;
-	t_dl_node		*head;
+	t_dl_node	*head;
 
 	head = NULL;
 	if (init_shell(&sh, ac, av, envp) == 0)
@@ -106,7 +106,10 @@ int main(int ac, char **av, char **envp)
 		if (lifo_empty(sh.stack.errors))
 			sh.node = parse_program(&sh);
 		if (!lifo_empty(sh.stack.errors))
+		{
 			print_stack_errors(sh.stack.errors, &(sh.tok));
+			gnt_standalone(0);
+		}
 		else
 		{
 			if (exec_heredoc(sh.stack.here_docs))

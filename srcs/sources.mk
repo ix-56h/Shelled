@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/02/03 00:39:32 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/02/03 02:49:09 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ C_FILES_tokenizer = \
 					tokenizer_misc.c \
 					wordexp_misc.c \
 					wordexp_tokenizer.c \
+					gnt_standalone.c \
 
 C_FILES_visitor = \
 				  visitor.c \

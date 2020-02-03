@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:36 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/02 00:21:07 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/03 02:58:06 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,4 +146,9 @@ int					is_whitespace(char c);
 void				skip_whitespaces(char *s, int *a);
 int					command_sub_skip_whitespaces(char *s, int *anchor\
 												, t_lifo *stack);
+
+/*
+**	gnt_standalone.c
+*/
+t_gnt				*gnt_standalone(size_t value);
 #endif
