@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/02/03 02:49:09 by niguinti         ###   ########.fr        #
+#    Updated: 2020/02/03 04:11:31 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -106,6 +106,8 @@ C_FILES_builtins = \
 
 C_FILES_utils = \
 				double_linked_list.c \
+				double_linked_list2.c \
+				double_linked_list3.c \
 				erase_char.c \
 				dquotes_remove.c \
 				dynamic_arrays.c \
