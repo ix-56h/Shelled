@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 05:57:42 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/03 06:37:39 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,24 @@
 #include "ligne.h"
 #include "parser.h"
 #include "exec.h"
+#include "libft.h"
 
-int		init_shell(t_sh *sh, int ac, char **av, char **envp)
+static void	add_shlvl(char ***env)
+{
+	char	*shlvl;
+	char	*tmp;
+
+	if ((shlvl = get_env(*env, "SHLVL")))
+	{
+		tmp = ft_itoa(ft_atoi(shlvl) + 1);
+		ft_edit_env(*env, "SHLVL", tmp);
+		free(tmp);
+	}
+	else
+		ft_edit_env(*env, "SHLVL", "0");
+}
+
+int			init_shell(t_sh *sh, int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
@@ -32,16 +48,17 @@ int		init_shell(t_sh *sh, int ac, char **av, char **envp)
 	if (!envp[0])
 		g_env = init_env(g_env);
 	else
+	{
 		g_env = cpy_env(envp);
-	//cpy env and add +1 to shlvl
+		add_shlvl(&g_env);
+	}
 	if (!g_env)
 		return (0);
 	init_term();
-	//signal(SIGWINCH, &handle_resize);
 	return (1);
 }
 
-void	re_init_sh(t_sh *sh)
+void		re_init_sh(t_sh *sh)
 {
 	if (!(sh->stack.errors = lifo_creator(20, sizeof(t_staterror))))
 		return ;
@@ -50,7 +67,7 @@ void	re_init_sh(t_sh *sh)
 	sh->node = NULL;
 }
 
-void	process_sh(t_sh *sh)
+void		process_sh(t_sh *sh)
 {
 	if (!lifo_empty(sh->stack.errors))
 	{
@@ -67,7 +84,7 @@ void	process_sh(t_sh *sh)
 	}
 }
 
-int		main(int ac, char **av, char **envp)
+int			main(int ac, char **av, char **envp)
 {
 	t_sh		sh;
 
