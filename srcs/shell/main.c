@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 05:22:39 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/03 05:57:42 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,6 @@
 #include "ligne.h"
 #include "parser.h"
 #include "exec.h"
-
-void	free_sh(t_sh *sh)
-{
-	size_t	i;
-
-	i = 0;
-	if (sh->input)
-		free(sh->input);
-	sh->input = NULL;
-	if (sh->node != NULL)
-		delete_ast((&sh->node));
-	if ((sh->tok).data != NULL)
-		free((sh->tok).data);
-	free((sh->stack.errors->ar));
-	free((sh->stack.errors));
-	free(sh->stack.here_docs->ar);
-	free(sh->stack.here_docs);
-}
 
 int		init_shell(t_sh *sh, int ac, char **av, char **envp)
 {
@@ -68,35 +50,37 @@ void	re_init_sh(t_sh *sh)
 	sh->node = NULL;
 }
 
-int main(int ac, char **av, char **envp)
+void	process_sh(t_sh *sh)
+{
+	if (!lifo_empty(sh->stack.errors))
+	{
+		print_stack_errors(sh->stack.errors, &(sh->tok));
+		gnt_standalone(0);
+	}
+	else
+	{
+		if (exec_heredoc(sh->stack.here_docs))
+		{
+			process_expansions(sh->node);
+			visit(sh->node);
+		}
+	}
+}
+
+int		main(int ac, char **av, char **envp)
 {
 	t_sh		sh;
-	t_dl_node	*head;
 
-	head = NULL;
 	if (init_shell(&sh, ac, av, envp) == 0)
 		return (EXIT_FAILURE);
 	while (1)
 	{
 		sh.input = run_line_edit();
 		sh.tok = get_next_token(sh.input, sh.stack.errors);
-		if (lifo_empty(sh.stack.errors))
-			sh.node = parse_program(&sh);
-		if (!lifo_empty(sh.stack.errors))
-		{
-			print_stack_errors(sh.stack.errors, &(sh.tok));
-			gnt_standalone(0);
-		}
-		else
-		{
-			if (exec_heredoc(sh.stack.here_docs))
-			{
-				process_expansions(sh.node);
-				visit(sh.node);	
-			}
-		}
+		lifo_empty(sh.stack.errors) ? sh.node = parse_program(&sh) : 0;
+		process_sh(&sh);
 		if (g_exit != -1)
-			break;
+			break ;
 		free_sh(&sh);
 		re_init_sh(&sh);
 	}

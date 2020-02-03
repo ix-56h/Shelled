@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:28:07 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/26 04:06:56 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/03 05:43:03 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**init_env(char **env)
 **	Entry filled with "\0" whill be skipped
 */
 
-char		**cpy_env(char **env)
+char	**cpy_env(char **env)
 {
 	int		len;
 	int		i;
@@ -79,7 +79,7 @@ char		**cpy_env(char **env)
 **	Return 1 or 0 if the value exist or not
 */
 
-int			ft_edit_env(char **env, char *looking, char *value)
+int		ft_edit_env(char **env, char *looking, char *value)
 {
 	char	*new_env;
 	int		i;
@@ -101,10 +101,11 @@ int			ft_edit_env(char **env, char *looking, char *value)
 
 /*
 **	Add a new entry in the env
-**	Return new env (The list a a new malloc and the previous one is already freed)
+**	Return new env (The list a a new malloc and the previous one is
+**	already freed)
 */
 
-char		**add_env(char **env, char *var, char *value)
+char	**add_env(char **env, char *var, char *value)
 {
 	size_t		i;
 	size_t		j;
@@ -133,7 +134,7 @@ char		**add_env(char **env, char *var, char *value)
 **	Return a new env
 */
 
-char		**del_var(char **env, char *var)
+char	**del_var(char **env, char *var)
 {
 	int		i;
 	char	**new_env;
@@ -152,37 +153,4 @@ char		**del_var(char **env, char *var)
 		++i;
 	}
 	return (env);
-}
-
-void		free_env(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env && env[i])
-	{
-		free(env[i]);
-		++i;
-	}
-	if (env && env[i])
-		free(env[i]);
-	free(env);
-}
-
-char		*get_env(char **env, char *looking)
-{
-	char	*res;
-	int		i;
-
-	i = 0;
-	res = NULL;
-	while (env && *env)
-	{
-		if (ft_strcmp(*env, looking) == '=')
-			break ;
-		env++;
-	}
-	if (env && *env)
-		return ((*env) + ft_strlen(looking) + 1);
-	return (NULL);
 }
