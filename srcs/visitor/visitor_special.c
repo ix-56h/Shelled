@@ -25,9 +25,9 @@ int		visit_and_if(t_node *node, t_io_lists io, int *rets)
 	if (node->left && node->right)
 	{
 		ret = -1;
-		(*G_VISIT_RULES[node->left->tok])(node->left, io, &ret);
+		(*g_visit_rules[node->left->tok])(node->left, io, &ret);
 		if (ret == 0)
-			if (!(*G_VISIT_RULES[node->right->tok])(node->right, io, rets))
+			if (!(*g_visit_rules[node->right->tok])(node->right, io, rets))
 				return (0);
 	}
 	return (1);
@@ -40,9 +40,9 @@ int		visit_or_if(t_node *node, t_io_lists io, int *rets)
 	if (node->left && node->right)
 	{
 		ret = 0;
-		(*G_VISIT_RULES[node->left->tok])(node->left, io, &ret);
+		(*g_visit_rules[node->left->tok])(node->left, io, &ret);
 		if (ret != 0)
-			if (!(*G_VISIT_RULES[node->right->tok])(node->right, io, rets))
+			if (!(*g_visit_rules[node->right->tok])(node->right, io, rets))
 				return (0);
 	}
 	return (1);
@@ -61,12 +61,12 @@ int		visit_pipe(t_node *node, t_io_lists io, int *rets)
 		io.piped->fd[0] = pipefd[0];
 		io.piped->fd[1] = pipefd[1];
 		io.piped->used = 0;
-		if ((*G_VISIT_RULES[node->left->tok])(node->left, io, rets))
+		if ((*g_visit_rules[node->left->tok])(node->left, io, rets))
 		{
 			close(pipefd[WRITE_END]);
 			set_used_fd(io.piped);
 		}
-		if (!(*G_VISIT_RULES[node->right->tok])(node->right, io, rets))
+		if (!(*g_visit_rules[node->right->tok])(node->right, io, rets))
 		{
 			dl_del_one((t_dl_node *)io.piped);
 			return (0);

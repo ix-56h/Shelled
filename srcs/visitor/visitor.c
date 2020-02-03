@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 00:37:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 03:45:11 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,11 @@ int				visit(t_node *root)
 
 	if (!root)
 		return (0);
-	if (G_VISIT_RULES[root->tok])
+	if (g_visit_rules[root->tok])
 	{
 		io = (t_io_lists){.redir = NULL, .piped = NULL};
-		if (!(*G_VISIT_RULES[root->tok])(root, io, NULL))
-		{
+		if (!(*g_visit_rules[root->tok])(root, io, NULL))
 			return (0);
-		}
 	}
 	else
 		printf("21sh: no visit function for '%s'\n", root->data);

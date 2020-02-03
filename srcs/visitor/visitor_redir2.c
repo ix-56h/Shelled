@@ -34,7 +34,7 @@ int		visit_dless(t_node *node, t_io_lists io, int *rets)
 					, malloc(sizeof(t_redir_list)), NULL);
 		io.redir->in = (node->io != -1 ? node->io : STDIN_FILENO);
 		io.redir->out = pipefd[READ_END];
-		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io, rets))
+		if (!(*g_visit_rules[node->left->tok])(node->left, io, rets))
 		{
 			dl_del_one((t_dl_node *)io.redir);
 			return (0);
@@ -61,7 +61,7 @@ int		visit_dgreat(t_node *node, t_io_lists io, int *rets)
 		else
 			io.redir->in = STDOUT_FILENO;
 		io.redir->out = fd;
-		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io, rets))
+		if (!(*g_visit_rules[node->left->tok])(node->left, io, rets))
 		{
 			dl_del_one((t_dl_node *)io.redir);
 			return (0);
