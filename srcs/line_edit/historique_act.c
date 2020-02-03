@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:29:38 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 23:31:19 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 01:02:57 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,44 @@
 #include "historique.h"
 #include "double_linked_list.h"
 
-void				add_historic(t_dl_node *command)
+void		add_historic(t_dl_node *command)
 {
-    t_historic **historic;
+	t_historic **historic;
 
-    historic = get_historic();
-    dl_push(historic, command);
+	historic = get_historic();
+	dl_push(historic, command);
 }
 
-t_dl_node				*historic_get_next(void)
+t_dl_node	*historic_get_next(void)
 {
-    t_historic *node;
+	t_historic *node;
 
-    node = historic_controller(0);
-    if (node)
-        return (node->data);
-    return (NULL);
+	node = historic_controller(0);
+	if (node)
+		return (node->data);
+	return (NULL);
 }
 
-t_dl_node				*historic_get_last(void)
+t_dl_node	*historic_get_last(void)
 {
-    t_historic *node;
+	t_historic *node;
 
-    node = historic_controller(1);
-    if (node)
-        return (node->data);
-    return (NULL);
+	node = historic_controller(1);
+	if (node)
+		return (node->data);
+	return (NULL);
 }
 
-void				historic_reset(void)
+void		historic_reset(void)
 {
-    historic_controller(2);
+	historic_controller(2);
 	historic_on_use(2);
 }
 
-
-void				free_historic()
+void		free_historic(void)
 {
 	t_historic	*head;
-	t_dl_node		*tmp;
+	t_dl_node	*tmp;
 
 	head = *get_historic();
 	tmp = head;

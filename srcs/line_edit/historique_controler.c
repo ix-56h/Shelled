@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:26:11 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 23:31:30 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 01:03:52 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 #include "historique.h"
 #include "double_linked_list.h"
 
-t_historic				*controller_next(t_historic **historic)
+t_historic	*controller_next(t_historic **historic)
 {
 	if ((*historic)->next)
 	{
 		*historic = (*historic)->next;
 		historic_on_use(1);
-		return(*historic);
+		return (*historic);
 	}
 	else
 		return (NULL);
 }
 
-t_historic				*controller_prev(t_historic **historic, t_historic *null_node)
+t_historic	*controller_prev(t_historic **historic, t_historic *null_node)
 {
 	if ((*historic)->prev)
 	{
 		*historic = (*historic)->prev;
 		historic_on_use(1);
-		return(*historic);
+		return (*historic);
 	}
 	else
 	{
@@ -42,20 +42,20 @@ t_historic				*controller_prev(t_historic **historic, t_historic *null_node)
 	}
 }
 
-t_historic				*controller_reset(t_historic **historic, t_historic **null_node)
+t_historic	*controller_reset(t_historic **historic, t_historic **null_node)
 {
 	if (*null_node)
-    	free(*null_node);
-    *null_node = NULL;
-    *historic = NULL;
+		free(*null_node);
+	*null_node = NULL;
+	*historic = NULL;
 	historic_on_use(1);
-	return(*historic);
+	return (*historic);
 }
 
-t_historic			*historic_controller(char act)
+t_historic	*historic_controller(char act)
 {
-    static t_historic *historic = NULL;
-    static t_historic *null_node = NULL;
+	static t_historic *historic = NULL;
+	static t_historic *null_node = NULL;
 
 	if (!historic)
 		historic = *get_historic();
@@ -64,7 +64,7 @@ t_historic			*historic_controller(char act)
 		if (!null_node)
 		{
 			null_node = ft_calloc(sizeof(t_historic));
-        	null_node->next = historic;
+			null_node->next = historic;
 			historic = null_node;
 		}
 		if (act == 0)
@@ -74,5 +74,5 @@ t_historic			*historic_controller(char act)
 		else if (act == 2)
 			return (controller_reset(&historic, &null_node));
 	}
-    return (NULL);
+	return (NULL);
 }

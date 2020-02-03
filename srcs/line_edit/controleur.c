@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:53:43 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 22:19:00 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 00:56:53 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "ligne.h"
 
-static int		break_read_loop(t_dl_node *head, t_line *line)
+static int	break_read_loop(t_dl_node *head, t_line *line)
 {
 	if (is_multiline(head))
 	{
@@ -32,7 +32,7 @@ static int		break_read_loop(t_dl_node *head, t_line *line)
 	return (0);
 }
 
-static int		test_term_size(void)
+static int	test_term_size(void)
 {
 	t_winsize winsize;
 
@@ -42,7 +42,7 @@ static int		test_term_size(void)
 	return (1);
 }
 
-int				test_keys(char *buff, t_line **line, t_dl_node **head)
+int			test_keys(char *buff, t_line **line, t_dl_node **head)
 {
 	if (ft_strcmp(buff, KEY_SUPR) == 0)
 	{
@@ -62,7 +62,7 @@ int				test_keys(char *buff, t_line **line, t_dl_node **head)
 	return (0);
 }
 
-int				read_loop(t_line **line, t_dl_node **head, char mode)
+int			read_loop(t_line **line, t_dl_node **head, char mode)
 {
 	char	buff[BUFFSIZE + 1];
 	int		readsize;
@@ -72,7 +72,8 @@ int				read_loop(t_line **line, t_dl_node **head, char mode)
 		ft_bzero(buff, sizeof(char) * BUFFSIZE + 1);
 		if ((readsize = read(STDIN_FILENO, buff, BUFFSIZE)) > -1)
 		{
-			while (!test_term_size());
+			while (!test_term_size())
+				;
 			if (ft_isallprint(buff) && term_can_print(*head, readsize))
 				write_on_line(*line, readsize, buff, head);
 			else if (ft_strcmp(buff, "\n") == 0 && break_read_loop(*head, *line))
@@ -91,7 +92,7 @@ int				read_loop(t_line **line, t_dl_node **head, char mode)
 	return (0);
 }
 
-void	    	arrow_line_action(t_line **line, char *buff, t_dl_node **head, char mode)
+void		arrow_line_action(t_line **line, char *buff, t_dl_node **head, char mode)
 {
 	if (ft_strcmp(buff, KEY_LEFT_CODE) == 0)
 		arrow_left_act(*line);
@@ -105,8 +106,10 @@ void	    	arrow_line_action(t_line **line, char *buff, t_dl_node **head, char mo
 		cur_move_to_index(*line, get_last_word_index(*line));
 	else if (is_ctrl_right(buff))
 		cur_move_to_index(*line, get_next_word_index(*line));
-	else if (is_ctrl_up(buff) && mode & READ_MODE_LIMITED && dl_find_data(*head, *line)->prev)
+	else if (is_ctrl_up(buff) && mode & READ_MODE_LIMITED \
+			&& dl_find_data(*head, *line)->prev)
 		arrow_ctrl_up(line, head);
-	else if (is_ctrl_down(buff) && mode & READ_MODE_LIMITED && dl_find_data(*head, *line)->next)
+	else if (is_ctrl_down(buff) && mode & READ_MODE_LIMITED \
+			&& dl_find_data(*head, *line)->next)
 		arrow_ctrl_down(line, head);
 }

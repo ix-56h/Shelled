@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:08:20 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 01:11:44 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 01:12:34 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include <stdlib.h>
 #include "libft.h"
 #include "ligne.h"
-
-
 
 void			ft_insert_in_line(char *line, char *buff, int index)
 {
