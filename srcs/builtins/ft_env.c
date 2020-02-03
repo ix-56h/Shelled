@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:47:22 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 23:52:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 05:54:51 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,37 @@ static void	ft_env_sub(char ***tenv, char ***env, char **argv)
 	free_env(*env);
 }
 
+static int	test_args(char ***argv, char ***env, char **tenv)
+{
+	char **argv2;
+
+	argv2 = *argv;
+	while (*argv2 && (*(++argv2))[0] == '-')
+	{
+		if (ft_strcmp(*argv2, "-i") == 0)
+		{
+			*env = NULL;
+			*argv = argv2;
+			return (1);
+		}
+		else
+		{
+			ft_vprint(3, "env : invalid option ", *argv, "\n");
+			return (-1);
+		}
+	}
+	*env = cpy_env(tenv);
+	++(*argv);
+	return (0);
+}
+
 int			ft_env(char **argv, char ***tenv)
 {
 	char	**env;
 	char	*value;
 
-	if (*(++argv) && ft_strcmp(*argv, "-i") == 0)
-		env = NULL;
-	else
-	{
-		env = cpy_env(*tenv);
-		--argv;
-	}
+	if (test_args(&argv, &env, *tenv) == -1)
+		return (1);
 	while (++argv)
 	{
 		if (*argv && **argv != '=' && (value = ft_strschr(*argv, '=')))
