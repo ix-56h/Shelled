@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:15:18 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 23:08:49 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 01:43:23 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	arrow_left_act(t_line *line)
 void	arrow_right_act(t_line *line)
 {
 	t_pos	pos;
-	
+
 	if ((size_t)line->index < ft_strlen(line->line))
 	{
 		pos = get_cur_pos();

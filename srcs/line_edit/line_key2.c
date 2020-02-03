@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:32:29 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 23:08:49 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 01:44:03 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,12 @@ int		ctrl_d_act(t_line **line, t_dl_node **head, char mode)
 
 	if (mode & READ_MODE_LINE)
 	{
-		if (dl_find_data(*head, *line)->prev == NULL && (*line)->line[0] == '\0')
+		if (dl_find_data(*head, *line)->prev == NULL\
+				&& (*line)->line[0] == '\0')
 		{
 			free_line(*line);
-			*line = init_line(NULL, ft_strdup("exit"), 4, new_prompt(PROMPT_DEFAULT));
+			*line = init_line(NULL, ft_strdup("exit")\
+								, 4, new_prompt(PROMPT_DEFAULT));
 			(*head)->data = *line;
 		}
 	}

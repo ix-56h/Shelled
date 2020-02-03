@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:06:53 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/12/31 00:27:48 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 01:46:07 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,17 @@ void	move_cur_on_last_line(t_dl_node *head)
 	}
 }
 
-void 	cur_move_to_index(t_line *line, int index)
+void	cur_move_to_index(t_line *line, int index)
 {
-	t_pos	cur_pos;
-	t_winsize winsize;
-	int x;
-	int y;
+	t_pos		cur_pos;
+	t_winsize	winsize;
+	int			x;
+	int			y;
 
 	cur_pos = get_cur_pos();
 	winsize = get_winsize();
-	y = cur_pos.y + (((index + line->prompt->size - 1) / winsize.ws_col) - ((line->index + line->prompt->size - 1) / winsize.ws_col)) - 1;
+	y = cur_pos.y + (((index + line->prompt->size - 1) / winsize.ws_col)\
+			- ((line->index + line->prompt->size - 1) / winsize.ws_col)) - 1;
 	if ((line->index + line->prompt->size) % winsize.ws_col == 0)
 		--y;
 	if ((index + line->prompt->size) % winsize.ws_col == 0)
@@ -54,7 +55,7 @@ void 	cur_move_to_index(t_line *line, int index)
 		term_other(TERM_END, 1);
 		term_other(TERM_SCROLL_UP, 1);
 	}
-	x = (index  + line->prompt->size) % winsize.ws_col;
+	x = (index + line->prompt->size) % winsize.ws_col;
 	line->index = index;
 	cur_mov(x, y);
 }

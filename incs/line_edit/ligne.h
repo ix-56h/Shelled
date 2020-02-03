@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ligne.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/03 01:49:03 by niguinti          #+#    #+#             */
+/*   Updated: 2020/02/03 01:54:07 by niguinti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIGNE_H
 # define LIGNE_H
 
@@ -40,16 +52,16 @@
 
 # define MODE_NO_NEWLINE		64
 
-typedef struct winsize t_winsize;
+typedef struct winsize	t_winsize;
 typedef struct	s_pos
 {
-	int	x;
-	int	y;
+	int			x;
+	int			y;
 }				t_pos;
 typedef struct	s_prompt
 {
-	char	*str;
-	int		size;
+	char		*str;
+	int			size;
 }				t_prompt;
 typedef struct	s_line
 {
@@ -62,10 +74,10 @@ typedef struct	s_line
 typedef struct	s_line_and_node
 {
 	t_dl_node	*node;
-	t_line	*line;
+	t_line		*line;
 }				t_line_and_node;
 
-char			*run_heredoc(char	*endstring);
+char			*run_heredoc(char *endstring);
 char			*run_line_edit(void);
 
 /*
@@ -82,7 +94,8 @@ struct termios	*save_term(int act);
 */
 
 int				read_loop(t_line **line, t_dl_node **head, char mode);
-void			arrow_line_action(t_line **line, char *buff, t_dl_node **head, char mode);
+void			arrow_line_action(t_line **line, char *buff\
+									, t_dl_node **head, char mode);
 
 /*
 **	move.c
@@ -98,7 +111,8 @@ void			cur_move_to_index(t_line *line, int index);
 
 t_dl_node		*dup_line_node(t_dl_node *src);
 t_prompt		*dup_prompt(t_prompt *src);
-t_line			*init_line(t_line *tline, char *line, int index, t_prompt *prompt);
+t_line			*init_line(t_line *tline, char *line, int index\
+						, t_prompt *prompt);
 t_prompt		*new_prompt(char *str);
 
 /*
@@ -115,7 +129,8 @@ int				is_finished(char *line);
 */
 
 void			ft_insert_in_line(char *line, char *buff, int index);
-void			write_on_line(t_line *line, int readsize, char *buff, t_dl_node **head);
+void			write_on_line(t_line *line, int readsize, char *buff\
+							, t_dl_node **head);
 void			print_historique(t_dl_node *historic);
 
 /*
@@ -135,7 +150,7 @@ void			arrow_ctrl_down(t_line **line, t_dl_node **head);
 void			arrow_ctrl_up(t_line **line, t_dl_node **head);
 void			suppr_act(t_line *line, t_dl_node **head);
 int				ctrl_d_act(t_line **line, t_dl_node **head, char mode);
-int			ctrl_c_act(t_line **line, t_dl_node **head, char mode);
+int				ctrl_c_act(t_line **line, t_dl_node **head, char mode);
 
 /*
 **	clear.c

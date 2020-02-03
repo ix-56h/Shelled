@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:08:20 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 01:12:34 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 01:42:56 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ void			ft_insert_in_line(char *line, char *buff, int index)
 
 static void		expend_line_alloc(t_line *line, int readsize)
 {
-	char	*new_str;
+	char		*new_str;
 	size_t		new_size;
 
 	if (readsize > BUFFSIZE)
 		new_size = line->allocsize + readsize;
 	else
-		new_size =  line->allocsize + BUFFSIZE;
+		new_size = line->allocsize + BUFFSIZE;
 	new_str = ft_calloc(sizeof(char) * (new_size + 1));
 	ft_strcpy(new_str, line->line);
 	free(line->line);
@@ -42,7 +42,8 @@ static void		expend_line_alloc(t_line *line, int readsize)
 	line->allocsize = new_size;
 }
 
-void			write_on_line(t_line *line, int readsize, char *buff, t_dl_node **head)
+void			write_on_line(t_line *line, int readsize\
+							, char *buff, t_dl_node **head)
 {
 	t_dl_node	*tmp;
 
@@ -56,7 +57,8 @@ void			write_on_line(t_line *line, int readsize, char *buff, t_dl_node **head)
 	{
 		term_other(TERM_SAVE_CUR, 1);
 		ft_putstr(&line->line[line->index]);
-		if ((ft_strlen(line->line) + line->prompt->size ) % get_winsize().ws_col == 0)
+		if ((ft_strlen(line->line) + line->prompt->size)\
+				% get_winsize().ws_col == 0)
 			ft_putchar('\n');
 		term_other(TERM_CLEAR_CUR_END, 1);
 		if ((tmp = dl_find_data(*head, line)) && tmp->next)
@@ -78,7 +80,8 @@ void			print_historique(t_dl_node *historic)
 		tmp_line = historic->data;
 		ft_putstr(tmp_line->prompt->str);
 		ft_putstr(tmp_line->line);
-		if ((ft_strlen(tmp_line->line) + tmp_line->prompt->size) % get_winsize().ws_col == 0)
+		if ((ft_strlen(tmp_line->line) + tmp_line->prompt->size)\
+				% get_winsize().ws_col == 0)
 			ft_putchar('\n');
 		if (historic->next)
 			ft_putchar('\n');

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:22:13 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/01 04:33:44 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 01:45:07 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char	*concat_lines(t_dl_node *head, int act)
 		while (head->next)
 		{
 			str = ft_strljoin(str, ((t_line *)head->data)->line, FIRST);
-			if (act == 1 && head->next && ((t_line *)head->next->data)->no_newline == 0)
+			if (act == 1\
+			&& head->next && ((t_line *)head->next->data)->no_newline == 0)
 				str = ft_strljoin(str, "\n", FIRST);
 			head = head->next;
 		}
@@ -63,7 +64,8 @@ int		term_can_print(t_dl_node *head, int readsize)
 		head = head->next;
 	}
 	tmp = head->data;
-	res += (ft_strlen(tmp->line) + tmp->prompt->size + readsize) / winsize.ws_col + 1;
+	res += (ft_strlen(tmp->line) + tmp->prompt->size + readsize)\
+			/ winsize.ws_col + 1;
 	if ((ft_strlen(tmp->line) + tmp->prompt->size) % winsize.ws_col == 0)
 		--res;
 	if (res <= winsize.ws_row)

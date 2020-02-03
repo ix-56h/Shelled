@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:35:42 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 23:13:02 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 01:46:31 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,3 @@ int				init_term(void)
 		return (-1);
 	return (set_term_mode());
 }
-
-

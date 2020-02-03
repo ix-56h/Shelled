@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 16:25:37 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 23:29:16 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 01:54:55 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include "ligne.h"
 # include "double_linked_list.h"
 
-typedef t_dl_node t_historic;
+typedef t_dl_node	t_historic;
 
 int					historic_on_use(int act);
 t_historic			**get_historic(void);
@@ -25,8 +25,9 @@ t_dl_node			*historic_get_last(void);
 void				historic_reset(void);
 void				free_historic(void);
 t_historic			*controller_next(t_historic **historic);
-t_historic			*controller_prev(t_historic **historic, t_historic *null_node);
-t_historic			*controller_reset(t_historic **historic, t_historic **null_node);
+t_historic			*controller_prev(t_historic **historic\
+									, t_historic *null_node);
+t_historic			*controller_reset(t_historic **historic\
+									, t_historic **null_node);
 t_historic			*historic_controller(char act);
-
 #endif
