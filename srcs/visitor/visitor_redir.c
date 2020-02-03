@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:59:58 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 00:31:49 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 03:30:25 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int		visit_lessgreat(t_node *node, t_io_lists io, int *rets)
 	{
 		if ((fd = open(node->right->data, (O_CREAT | O_RDWR), 0644)) == -1)
 			return (1);
-		dl_push_node((t_dl_node **)&io.redir, malloc(sizeof(t_redir_list)), NULL);
+		dl_push_node((t_dl_node **)&io.redir\
+						, malloc(sizeof(t_redir_list)), NULL);
 		if (node->io != -1)
 			io.redir->in = node->io;
 		else
@@ -40,7 +41,7 @@ int		visit_lessgreat(t_node *node, t_io_lists io, int *rets)
 		dl_del_one((t_dl_node *)io.redir);
 	}
 	if (rets)
-			*rets = 0;
+		*rets = 0;
 	return (1);
 }
 
@@ -52,14 +53,13 @@ int		visit_left_redi(t_node *node, t_io_lists io, int *rets)
 	{
 		if ((fd = open(node->right->data, O_RDONLY)) == -1)
 		{
-			ft_vprint(3, SHELL_NAME": no such file or directory: ", node->right->data, "\n");
+			ft_vprint(3, SHELL_NAME": no such file or directory: "\
+						, node->right->data, "\n");
 			return (1);
 		}
-		dl_push_node((t_dl_node **)&io.redir, malloc(sizeof(t_redir_list)), NULL);
-		if (node->io != -1)
-			io.redir->in = node->io;
-		else
-			io.redir->in = STDIN_FILENO;
+		dl_push_node((t_dl_node **)&io.redir\
+						, malloc(sizeof(t_redir_list)), NULL);
+		io.redir->in = (node->io != -1 ? node->io : STDIN_FILENO);
 		io.redir->out = fd;
 		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io, rets))
 		{
@@ -68,8 +68,7 @@ int		visit_left_redi(t_node *node, t_io_lists io, int *rets)
 		}
 		dl_del_one((t_dl_node *)io.redir);
 	}
-	if (rets)
-			*rets = 0;
+	rets ? *rets = 0 : 0;
 	return (1);
 }
 
@@ -79,9 +78,11 @@ int		visit_right_redi(t_node *node, t_io_lists io, int *rets)
 
 	if (node->left && node->right && node->right->tok == TOK_WORD)
 	{
-		if ((fd = open(node->right->data, (O_CREAT | O_WRONLY | O_TRUNC), 0644)) == -1)
+		if ((fd = open(node->right->data\
+						, (O_CREAT | O_WRONLY | O_TRUNC), 0644)) == -1)
 			return (1);
-		dl_push_node((t_dl_node **)&io.redir, malloc(sizeof(t_redir_list)), NULL);
+		dl_push_node((t_dl_node **)&io.redir\
+					, malloc(sizeof(t_redir_list)), NULL);
 		if (node->io != -1)
 			io.redir->in = node->io;
 		else
@@ -89,13 +90,13 @@ int		visit_right_redi(t_node *node, t_io_lists io, int *rets)
 		io.redir->out = fd;
 		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io, rets))
 		{
-				dl_del_one((t_dl_node *)io.redir);
-				return (0);
+			dl_del_one((t_dl_node *)io.redir);
+			return (0);
 		}
 		dl_del_one((t_dl_node *)io.redir);
 	}
 	if (rets)
-			*rets = 0;
+		*rets = 0;
 	return (1);
 }
 
@@ -103,7 +104,8 @@ int		visit_lessand(t_node *node, t_io_lists io, int *rets)
 {
 	if (node->left && node->right && node->right->tok == TOK_WORD)
 	{
-		dl_push_node((t_dl_node **)&io.redir, malloc(sizeof(t_redir_list)), NULL);
+		dl_push_node((t_dl_node **)&io.redir\
+						, malloc(sizeof(t_redir_list)), NULL);
 		if (node->io != -1)
 			io.redir->in = node->io;
 		else
@@ -114,13 +116,13 @@ int		visit_lessand(t_node *node, t_io_lists io, int *rets)
 			io.redir->out = ft_atoi(node->right->data);
 		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io, rets))
 		{
-				dl_del_one((t_dl_node *)io.redir);
-				return (0);
+			dl_del_one((t_dl_node *)io.redir);
+			return (0);
 		}
 		dl_del_one((t_dl_node *)io.redir);
 	}
 	if (rets)
-			*rets = 0;
+		*rets = 0;
 	return (1);
 }
 
@@ -128,7 +130,8 @@ int		visit_greatand(t_node *node, t_io_lists io, int *rets)
 {
 	if (node->left && node->right && node->right->tok == TOK_WORD)
 	{
-		dl_push_node((t_dl_node **)&io.redir, malloc(sizeof(t_redir_list)), NULL);
+		dl_push_node((t_dl_node **)&io.redir\
+					, malloc(sizeof(t_redir_list)), NULL);
 		if (node->io != -1)
 			io.redir->in = node->io;
 		else
@@ -139,12 +142,12 @@ int		visit_greatand(t_node *node, t_io_lists io, int *rets)
 			io.redir->out = ft_atoi(node->right->data);
 		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io, rets))
 		{
-				dl_del_one((t_dl_node *)io.redir);
-				return (0);
+			dl_del_one((t_dl_node *)io.redir);
+			return (0);
 		}
 		dl_del_one((t_dl_node *)io.redir);
 	}
 	if (rets)
-			*rets = 0;
+		*rets = 0;
 	return (1);
 }

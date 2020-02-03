@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:33:17 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 00:33:30 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 03:32:20 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ int		visit_dless(t_node *node, t_io_lists io, int *rets)
 			return (1);
 		write(pipefd[WRITE_END], str, ft_strlen(str));
 		close(pipefd[WRITE_END]);
-		dl_push_node((t_dl_node **)&io.redir, malloc(sizeof(t_redir_list)), NULL);
-		if (node->io != -1)
-			io.redir->in = node->io;
-		else
-			io.redir->in = STDIN_FILENO;
+		dl_push_node((t_dl_node **)&io.redir\
+					, malloc(sizeof(t_redir_list)), NULL);
+		io.redir->in = (node->io != -1 ? node->io : STDIN_FILENO);
 		io.redir->out = pipefd[READ_END];
 		if (!(*G_VISIT_RULES[node->left->tok])(node->left, io, rets))
 		{
@@ -53,9 +51,11 @@ int		visit_dgreat(t_node *node, t_io_lists io, int *rets)
 
 	if (node->left && node->right && node->right->tok == TOK_WORD)
 	{
-		if ((fd = open(node->right->data, (O_CREAT | O_WRONLY | O_APPEND), 0644)) == -1)
+		if ((fd = open(node->right->data\
+						, (O_CREAT | O_WRONLY | O_APPEND), 0644)) == -1)
 			return (1);
-		dl_push_node((t_dl_node **)&io.redir, malloc(sizeof(t_redir_list)), NULL);
+		dl_push_node((t_dl_node **)&io.redir\
+					, malloc(sizeof(t_redir_list)), NULL);
 		if (node->io != -1)
 			io.redir->in = node->io;
 		else
@@ -69,6 +69,6 @@ int		visit_dgreat(t_node *node, t_io_lists io, int *rets)
 		dl_del_one((t_dl_node *)io.redir);
 	}
 	if (rets)
-			*rets = 0;
+		*rets = 0;
 	return (1);
 }

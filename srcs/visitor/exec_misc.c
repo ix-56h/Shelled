@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:49:31 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 00:37:09 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 03:24:03 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,43 @@
 #include "sh.h"
 #include "builtins.h"
 
-void		free_tab(char **tab)
+void	free_tab(char **tab)
 {
-    char **head;
+	char **head;
 
-    head = tab;
+	head = tab;
 	if (tab && *tab)
 	{
 		while (*tab)
-        {
-            free(*tab);
-            ++tab;
-        }
+		{
+			free(*tab);
+			++tab;
+		}
 		free(head);
 	}
 }
 
-int         err_exec(char *buff, int err)
+int		err_exec(char *buff, int err)
 {
-    if (buff)
-    {
-        if (err == ERR_IS_FOLDER)
-            ft_vprintfd(STDERR_FILENO, 3, SHELL_NAME": is a directory: ", buff, "\n");
-        else if (err == ERR_PATH_ACCES)
-            ft_vprintfd(STDERR_FILENO, 3, SHELL_NAME": permission denied: ", buff, "\n");
-        else if (err == ERR_NO_FILE)
-            ft_vprintfd(STDERR_FILENO, 3, SHELL_NAME": no such file or directory: ", buff, "\n");
-        else if (err == ERR_CMD_NOT_FOUND)
-            ft_vprintfd(STDERR_FILENO, 3, SHELL_NAME": command not found: ", buff, "\n");
-    }
-    return (err);
+	if (buff)
+	{
+		if (err == ERR_IS_FOLDER)
+			ft_vprintfd(STDERR_FILENO, 3\
+					, SHELL_NAME": is a directory: ", buff, "\n");
+		else if (err == ERR_PATH_ACCES)
+			ft_vprintfd(STDERR_FILENO, 3\
+					, SHELL_NAME": permission denied: ", buff, "\n");
+		else if (err == ERR_NO_FILE)
+			ft_vprintfd(STDERR_FILENO, 3\
+					, SHELL_NAME": no such file or directory: ", buff, "\n");
+		else if (err == ERR_CMD_NOT_FOUND)
+			ft_vprintfd(STDERR_FILENO, 3\
+					, SHELL_NAME": command not found: ", buff, "\n");
+	}
+	return (err);
 }
 
-char        **get_env_path(void)
+char	**get_env_path(void)
 {
 	char	*path;
 	char	**paths;

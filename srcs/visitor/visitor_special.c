@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:35:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 00:35:34 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 03:32:56 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,13 @@ int		visit_or_if(t_node *node, t_io_lists io, int *rets)
 int		visit_pipe(t_node *node, t_io_lists io, int *rets)
 {
 	int	pipefd[2];
-	
+
 	if (node->left && node->right)
 	{
 		if (pipe(pipefd) == -1)
 			return (1);
-		dl_push_node((t_dl_node **)&io.piped, malloc(sizeof(t_pipe_list)), NULL);
+		dl_push_node((t_dl_node **)&io.piped\
+						, malloc(sizeof(t_pipe_list)), NULL);
 		io.piped->fd[0] = pipefd[0];
 		io.piped->fd[1] = pipefd[1];
 		io.piped->used = 0;
@@ -71,7 +72,6 @@ int		visit_pipe(t_node *node, t_io_lists io, int *rets)
 			return (0);
 		}
 		dl_del_one((t_dl_node *)io.piped);
-
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:37:06 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 23:59:13 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 03:26:26 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 **	check if there is an error on the file
 */
 
-int         search_folder(t_node *cmd)
+int		search_folder(t_node *cmd)
 {
 	struct stat		tmp;
 
@@ -39,7 +39,7 @@ int         search_folder(t_node *cmd)
 **	check if there is an error on the file
 */
 
-char		*search_path(t_node *cmd, char **env)
+char	*search_path(t_node *cmd, char **env)
 {
 	char			*fullpath;
 	struct stat		tmp;
@@ -48,7 +48,7 @@ char		*search_path(t_node *cmd, char **env)
 
 	(void)env;
 	paths = get_env_path();
-    i = -1;
+	i = -1;
 	if (paths)
 	{
 		while (paths[++i])
@@ -62,12 +62,12 @@ char		*search_path(t_node *cmd, char **env)
 			}
 			fullpath = ft_free(fullpath);
 		}
-        free_tab(paths);
+		free_tab(paths);
 	}
 	return (NULL);
 }
 
-int			test_path(t_node *cmd)
+int		test_path(t_node *cmd)
 {
 	int		ft_err;
 
@@ -79,7 +79,7 @@ int			test_path(t_node *cmd)
 **	check if there is an error on the file
 */
 
-int         test_env(t_node *cmd, char **env, char **cmd_path)
+int		test_env(t_node *cmd, char **env, char **cmd_path)
 {
 	if ((*cmd_path = search_path(cmd, env)))
 	{
@@ -97,7 +97,7 @@ int         test_env(t_node *cmd, char **env, char **cmd_path)
 **	return the cmd return value after execution
 */
 
-int         is_path(char *buff)
+int		is_path(char *buff)
 {
 	if (ft_strchr(buff, '/') != NULL)
 		return (1);

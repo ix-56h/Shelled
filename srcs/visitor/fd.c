@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 23:06:50 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/18 22:04:10 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 03:24:33 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ int		set_pipe_fd(t_pipe_list *piped)
 		{
 			if (dup2(piped->fd[READ_END], STDIN_FILENO) == -1)
 				return (EXIT_FAILURE);
-            close(piped->fd[READ_END]);
+			close(piped->fd[READ_END]);
 		}
 		if (!piped->prev && piped->used != 1)
 		{
 			if (dup2(piped->fd[WRITE_END], STDOUT_FILENO) == -1)
 				return (EXIT_FAILURE);
-            close(piped->fd[WRITE_END]);
+			close(piped->fd[WRITE_END]);
 		}
 		else if (piped->next)
 		{
 			if (dup2(piped->next->fd[WRITE_END], STDOUT_FILENO) == -1)
 				return (EXIT_FAILURE);
-            close(piped->next->fd[WRITE_END]);
+			close(piped->next->fd[WRITE_END]);
 		}
 	}
 	return (EXIT_SUCCESS);
@@ -68,7 +68,7 @@ int		close_unused_pipe_fd(t_pipe_list *piped)
 }
 
 int		set_used_fd(t_pipe_list *piped)
-{	
+{
 	if (piped)
 	{
 		if (!piped->prev && piped->used != 1)
@@ -83,7 +83,6 @@ int		set_redir_fd(t_redir_list *redir)
 {
 	if (redir)
 	{
-	//	redir = (t_redir_list *)dl_get_last((t_dl_node *)redir);
 		while (redir)
 		{
 			if (redir->out == -1)
