@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 01:49:03 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 03:56:15 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/03 05:02:41 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,10 @@ struct termios	*save_term(int act);
 */
 
 int				read_loop(t_line **line, t_dl_node **head, char mode);
+
+/*
+**	controleur2.c
+*/
 void			arrow_line_action(t_line **line, char *buff\
 									, t_dl_node **head, char mode);
 

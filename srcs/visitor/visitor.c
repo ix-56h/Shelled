@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 03:45:11 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/03 05:26:17 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,10 @@ int				visit(t_node *root)
 			return (0);
 	}
 	else
-		printf("21sh: no visit function for '%s'\n", root->data);
+	{
+		ft_putstr("21sh: no visit function for '");
+		ft_putstr(root->data);
+		ft_putstr("'\n");
+	}
 	return (1);
 }

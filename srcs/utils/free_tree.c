@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:34:39 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/02 22:06:27 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/03 05:24:32 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	delete_tree(t_node *node)
 {
-	size_t i;
+	int		i;
 
 	i = 0;
 	if (node == NULL)

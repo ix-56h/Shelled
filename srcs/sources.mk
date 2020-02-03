@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/02/03 04:11:31 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/02/03 05:17:54 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,7 @@ C_FILES_line_edit = \
 					alloc.c \
 					clear.c \
 					controleur.c \
+					controleur2.c \
 					garbage.c \
 					get_things.c \
 					historique.c \
@@ -114,7 +115,6 @@ C_FILES_utils = \
 				stack.c \
 				queue.c \
 				free_tree.c \
-				ast_draw.c \
 				fifo_creator.c \
 				lifo_creator.c \
 
