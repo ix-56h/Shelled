@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:08:20 by akeiflin          #+#    #+#             */
-/*   Updated: 2019/12/31 00:32:37 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 01:11:44 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@
 
 void			ft_insert_in_line(char *line, char *buff, int index)
 {
-	char tmp[ft_strlen(line) - index + 1]; //VLA
+	char	*tmp;
 
-	tmp[ft_strlen(line) - index] = '\0';
+	tmp = ft_calloc(sizeof(char) * (ft_strlen(line) - index + 1));
 	ft_strcpy(tmp, &line[index]);
 	ft_strcpy(&line[index], buff);
 	ft_strcpy(&line[index + ft_strlen(buff)], tmp);
+	free(tmp);
 }
 
 static void		expend_line_alloc(t_line *line, int readsize)
