@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:53:43 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 00:56:53 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/03 04:09:27 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,37 +62,47 @@ int			test_keys(char *buff, t_line **line, t_dl_node **head)
 	return (0);
 }
 
-int			read_loop(t_line **line, t_dl_node **head, char mode)
+static int		sub_read_loop(t_line **line, t_dl_node **head, char mode,
+								int readsize)
 {
 	char	buff[BUFFSIZE + 1];
+	
+	ft_bzero(buff, sizeof(char) * BUFFSIZE + 1);
+	if ((readsize = read(STDIN_FILENO, buff, BUFFSIZE)) > -1)
+	{
+		while (!test_term_size())
+			;
+		if (ft_isallprint(buff) && term_can_print(*head, readsize))
+			write_on_line(*line, readsize, buff, head);
+		else if (ft_strcmp(buff, "\n") == 0 && break_read_loop(*head, *line))
+			return (0);
+		else if (test_keys(buff, line, head))
+			(void)0;
+		else if (ft_strcmp(buff, "\030") == 0 && ctrl_c_act(line, head, mode))
+			return (0);
+		else if (ft_strcmp(buff, "\004") == 0 && ctrl_d_act(line, head, mode))
+			return (0);
+		else
+		arrow_line_action(line, buff, head, mode);
+	}
+	return (1);
+}
+
+int			read_loop(t_line **line, t_dl_node **head, char mode)
+{
 	int		readsize;
 
+	readsize = 0;
 	while (!!!!!!!!!!!!!!!!!!!!!!!0)
 	{
-		ft_bzero(buff, sizeof(char) * BUFFSIZE + 1);
-		if ((readsize = read(STDIN_FILENO, buff, BUFFSIZE)) > -1)
-		{
-			while (!test_term_size())
-				;
-			if (ft_isallprint(buff) && term_can_print(*head, readsize))
-				write_on_line(*line, readsize, buff, head);
-			else if (ft_strcmp(buff, "\n") == 0 && break_read_loop(*head, *line))
-				break ;
-			else if (test_keys(buff, line, head))
-				(void)0;
-			else if (ft_strcmp(buff, "\030") == 0 && ctrl_c_act(line, head, mode))
-				break ;
-			else if (ft_strcmp(buff, "\004") == 0 && ctrl_d_act(line, head, mode))
-				break ;
-			else
-				arrow_line_action(line, buff, head, mode);
-		}
+		if (!sub_read_loop(line, head, mode, readsize))
+			break ;
 	}
-	ft_putchar('\n');
 	return (0);
 }
 
-void		arrow_line_action(t_line **line, char *buff, t_dl_node **head, char mode)
+void		arrow_line_action(t_line **line, char *buff, t_dl_node **head,
+								char mode)
 {
 	if (ft_strcmp(buff, KEY_LEFT_CODE) == 0)
 		arrow_left_act(*line);

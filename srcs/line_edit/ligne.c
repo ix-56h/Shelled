@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ligne.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 01:04:49 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 01:07:00 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/03 04:01:52 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void			init_and_read(t_line **line, t_dl_node **head, char mode\
 	ft_putstr((*line)->prompt->str);
 	dl_append(head, *line);
 	read_loop(line, head, mode);
+	ft_putchar('\n');
 }
 
 char			*sub_run_heredoc(t_line **line, t_dl_node **head)
