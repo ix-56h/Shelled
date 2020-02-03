@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 01:49:03 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 01:54:07 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/03 03:56:15 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "sh.h"
 
 # define BUFFSIZE				512
-# define PROMPT_DEFAULT			SHELL_NAME"> "
+# define PROMPT_DEFAULT			"21sh> "
 # define PROMPT_SUBLINE			"> "
 # define PROMPT_HEREDOC			"heredoc> "
 # define PROMPT_CMD				"command> "
