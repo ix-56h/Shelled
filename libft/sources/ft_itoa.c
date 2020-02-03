@@ -6,15 +6,14 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 08:43:40 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 06:33:58 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 21:08:40 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-
-static long	ft_abs(int c)
+static long		ft_abs(int c)
 {
 	long	nb;
 
@@ -22,7 +21,7 @@ static long	ft_abs(int c)
 	return ((nb < 0) ? nb * -1 : nb);
 }
 
-static int	ft_numlen(int nb)
+static int		ft_numlen(int nb)
 {
 	long	res;
 	long	nbcp;
@@ -40,7 +39,7 @@ static int	ft_numlen(int nb)
 	return (res);
 }
 
-char	*ft_itoa(long long n)
+char			*ft_itoa(long long n)
 {
 	long long		numlen;
 	int				positive;
