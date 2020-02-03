@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:37:06 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 03:27:51 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 03:29:05 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int         search_folder(t_node *cmd)
 
 	if (access(cmd->data, F_OK) == 0)
 	{
-		lstat(cmd->data, &tmp);
+		stat(cmd->data, &tmp);
 		if (S_ISDIR(tmp.st_mode))
 			return (ERR_IS_FOLDER);
 		if (access(cmd->data, X_OK) == -1)
