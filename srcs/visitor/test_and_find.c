@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:37:06 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 03:26:26 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/03 03:36:22 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		search_folder(t_node *cmd)
 
 	if (access(cmd->data, F_OK) == 0)
 	{
-		lstat(cmd->data, &tmp);
+		stat(cmd->data, &tmp);
 		if (S_ISDIR(tmp.st_mode))
 			return (ERR_IS_FOLDER);
 		if (access(cmd->data, X_OK) == -1)
@@ -54,7 +54,7 @@ char	*search_path(t_node *cmd, char **env)
 		while (paths[++i])
 		{
 			fullpath = ft_vjoin(3, paths[i], "/", cmd->data);
-			lstat(fullpath, &tmp);
+			stat(fullpath, &tmp);
 			if (access(fullpath, F_OK) == 0 && S_ISREG(tmp.st_mode))
 			{
 				free_tab(paths);
