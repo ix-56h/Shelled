@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 04:54:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 05:25:17 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/03 22:07:27 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ char	*process_simple_parameter(size_t *i, char *word)
 	word[*i] = 0;
 	if (!(tmp = get_env(g_env, expression)))
 	{
-		new_word = ft_vjoin(3, word, "\n", word + a);
-		free(word);
+		new_word = ft_strjoinf(word, word + a, 1);
+		*i -= 1;
 	}
 	else
 	{

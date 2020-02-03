@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 17:54:14 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/12 22:06:15 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 22:05:17 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	**echo_arg(char **argv, int *arg_n)
 	while (*(++argv))
 	{
 		arg = *argv;
+		if (!(*arg))
+			continue ;
 		if (*arg && *arg != '-')
 			break ;
 		while (*(++arg))
