@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:37:06 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 23:59:13 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 03:27:51 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char		*search_path(t_node *cmd, char **env)
 		while (paths[++i])
 		{
 			fullpath = ft_vjoin(3, paths[i], "/", cmd->data);
-			lstat(fullpath, &tmp);
+			stat(fullpath, &tmp);
 			if (access(fullpath, F_OK) == 0 && S_ISREG(tmp.st_mode))
 			{
 				free_tab(paths);
