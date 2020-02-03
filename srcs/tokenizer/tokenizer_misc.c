@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:31:37 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/02 00:39:10 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/04 00:15:01 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ int			is_opening_class(t_chr_class chr_class)
 t_tokens	token_error(int type, t_lifo *stack, char c)
 {
 	t_tokens	new;
-	char		near[2];
+	char		*near;
+	char		buf[2];
 
-	near[0] = c;
-	near[1] = 0;
+	buf[0] = c;
+	buf[1] = 0;
+	near = ft_strdup(buf);
 	if (type > 0)
 		error_push(stack, type, near);
-	new.data = NULL;
+	new.data = near;
 	new.tok = TOK_ERROR;
 	return (new);
 }
