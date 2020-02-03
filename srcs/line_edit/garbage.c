@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:04:37 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 23:21:49 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 00:58:09 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int		is_finished(char *line)
 	i = ft_strlen(line) - 1;
 	while (i >= 0)
 	{
-		if(line[i] == ' ')
+		if (line[i] == ' ')
 			i--;
 		else
 		{
@@ -110,9 +110,7 @@ int		is_finished(char *line)
 			else
 				return (1);
 		}
-		
 		--i;
 	}
 	return (1);
 }
-

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:20:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 23:23:36 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 00:57:34 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ctrl_c_line_handler(int lel)
 	ioctl(STDOUT_FILENO, TIOCSTI, "\030");
 }
 
-int	heredoc_ctrl_c(t_dl_node *head, t_line *line)
+int		heredoc_ctrl_c(t_dl_node *head, t_line *line)
 {
 	if (ft_strcmp(line->line, "\030") == 0)
 	{

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ligne.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/03 01:04:49 by niguinti          #+#    #+#             */
+/*   Updated: 2020/02/03 01:07:00 by niguinti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
@@ -5,7 +17,8 @@
 #include "libft.h"
 #include "ligne.h"
 
-void	init_and_read(t_line **line, t_dl_node **head, char mode, t_prompt *prompt)
+void			init_and_read(t_line **line, t_dl_node **head, char mode\
+							, t_prompt *prompt)
 {
 	*line = init_line(NULL, NULL, 0, prompt);
 	if (mode & MODE_NO_NEWLINE)
@@ -15,9 +28,9 @@ void	init_and_read(t_line **line, t_dl_node **head, char mode, t_prompt *prompt)
 	read_loop(line, head, mode);
 }
 
-char	*sub_run_heredoc(t_line **line, t_dl_node **head)
+char			*sub_run_heredoc(t_line **line, t_dl_node **head)
 {
-	t_dl_node		*tmp_node; 
+	t_dl_node		*tmp_node;
 	char			*ret;
 
 	tmp_node = dl_find_data(*head, *line);
@@ -37,21 +50,24 @@ char	*sub_run_heredoc(t_line **line, t_dl_node **head)
 	return (ret);
 }
 
-char	*run_heredoc(char	*endstring)
+char			*run_heredoc(char *endstring)
 {
 	t_dl_node		*head;
 	t_line			*line;
-	
+
 	signal(SIGINT, ctrl_c_line_handler);
 	head = NULL;
-	init_and_read(&line, &head, READ_MODE_LIMITED | READ_MODE_HEREDOC, new_prompt(PROMPT_HEREDOC));
+	init_and_read(&line, &head, READ_MODE_LIMITED | READ_MODE_HEREDOC\
+					, new_prompt(PROMPT_HEREDOC));
 	if (heredoc_ctrl_c(head, line))
 		return (NULL);
-	while (ft_strcmp(line->line, endstring) != 0 && ft_strcmp(line->line, "\004") != 0)
+	while (ft_strcmp(line->line, endstring) != 0 \
+						&& ft_strcmp(line->line, "\004") != 0)
 	{
 		if (dl_find_data(head, line)->next)
 			move_cur_on_last_line(dl_find_data(head, line));
-		init_and_read(&line, &head, READ_MODE_LIMITED | READ_MODE_HEREDOC, new_prompt(PROMPT_HEREDOC));
+		init_and_read(&line, &head, READ_MODE_LIMITED | READ_MODE_HEREDOC\
+				, new_prompt(PROMPT_HEREDOC));
 		if (heredoc_ctrl_c(head, line))
 			return (NULL);
 	}
@@ -59,16 +75,17 @@ char	*run_heredoc(char	*endstring)
 	return (sub_run_heredoc(&line, &head));
 }
 
-static void	is_finished_loop(t_line **line, t_dl_node **head)
+static void		is_finished_loop(t_line **line, t_dl_node **head)
 {
 	char	*tmp_ret;
-	
+
 	tmp_ret = concat_lines(*head, 0);
 	while (!is_finished(tmp_ret))
 	{
 		if (dl_find_data(*head, *line)->next)
 			move_cur_on_last_line(dl_find_data(*head, *line));
-		init_and_read(line, head, READ_MODE_FULL | READ_MODE_LINE | MODE_NO_NEWLINE, new_prompt("command>"));
+		init_and_read(line, head, READ_MODE_FULL | READ_MODE_LINE\
+				| MODE_NO_NEWLINE, new_prompt("command>"));
 		free(tmp_ret);
 		tmp_ret = concat_lines(*head, 0);
 	}
@@ -76,7 +93,7 @@ static void	is_finished_loop(t_line **line, t_dl_node **head)
 		free(tmp_ret);
 }
 
-char	*run_line_edit(void)
+char			*run_line_edit(void)
 {
 	t_dl_node		*head;
 	t_line			*line;
@@ -84,12 +101,14 @@ char	*run_line_edit(void)
 
 	signal(SIGINT, ctrl_c_line_handler);
 	head = NULL;
-	init_and_read(&line, &head, READ_MODE_FULL | READ_MODE_LINE, new_prompt(PROMPT_DEFAULT));
+	init_and_read(&line, &head, READ_MODE_FULL | READ_MODE_LINE\
+					, new_prompt(PROMPT_DEFAULT));
 	while (is_multiline(head))
 	{
 		if (dl_find_data(head, line)->next)
 			move_cur_on_last_line(dl_find_data(head, line));
-		init_and_read(&line, &head, READ_MODE_FULL | READ_MODE_LINE, new_prompt(PROMPT_SUBLINE));
+		init_and_read(&line, &head, READ_MODE_FULL | READ_MODE_LINE\
+						, new_prompt(PROMPT_SUBLINE));
 	}
 	is_finished_loop(&line, &head);
 	add_historic(head);
