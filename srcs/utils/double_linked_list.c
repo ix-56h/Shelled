@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 16:27:25 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 23:53:30 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/03 03:54:51 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int		dl_insert_before(t_dl_node *head_ref, t_dl_node *next_dl_node\
 
 	if (next_dl_node == NULL)
 		return (-1);
-	if (!(new_node = calloc(sizeof(t_dl_node), sizeof(t_dl_node)))) //calloc pas garder
+	if (!(new_node = ft_calloc(sizeof(t_dl_node), sizeof(t_dl_node))))
 		return (-1);
 	new_node->data = new_data;
 	new_node->prev = next_dl_node->prev;
