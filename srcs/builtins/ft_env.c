@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:47:22 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 05:54:51 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 06:00:39 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	test_args(char ***argv, char ***env, char **tenv)
 	char **argv2;
 
 	argv2 = *argv;
-	while (*argv2 && (*(++argv2))[0] == '-')
+	while (*(++argv2) && (*argv2)[0] == '-')
 	{
 		if (ft_strcmp(*argv2, "-i") == 0)
 		{
