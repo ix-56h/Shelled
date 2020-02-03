@@ -6,14 +6,13 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 04:11:14 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 04:12:42 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 04:59:50 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
 #include "double_linked_list.h"
-
 
 /*
 **	Find a node white the same data's address than needle param

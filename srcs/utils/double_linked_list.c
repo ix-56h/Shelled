@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 16:27:25 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 04:12:40 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 04:59:16 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,3 @@ int		dl_insert_before(t_dl_node *head_ref, t_dl_node *next_dl_node\
 		head_ref = new_node;
 	return (0);
 }
-

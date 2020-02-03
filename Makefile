@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2020/02/03 03:00:35 by niguinti         ###   ########.fr        #
+#    Updated: 2020/02/03 05:33:32 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ FT_INC_DIR = $(FT_DIR)/incs
 FT_LNK = -L$(FT_DIR) -l$(FT)
 
 ###  CC && FLAGS ###
-CC = clang -g3
+CC = clang -g3 -fsanitize=address
 DEBUG_FLAGS = -g3
 NO_WARNING ?= false
 ifeq ($(NO_WARNING), false)
@@ -80,8 +80,6 @@ endif
 
 LFLAGS = -ltermcap \
 		 $(FT_LNK) \
-
-
 
 .PHONY: all clean fclean re
 

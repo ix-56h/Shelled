@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 04:54:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/02 23:16:27 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/03 05:25:17 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@
 
 char	*process_substitution(size_t *i, char *word)
 {
+	(void)i;
+	(void)word;
 	return (NULL);
 }
 
 char	*process_parameter(size_t *i, char *word)
 {
+	(void)i;
 	return (word);
 }
 

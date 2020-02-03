@@ -6,13 +6,13 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:25 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 03:13:45 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/03 05:32:27 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_STACK_H
 # define FT_STACK_H
-#include <stdlib.h>
+# include <stdlib.h>
 
 enum	e_state_error{
 	EMPTY,
@@ -38,8 +38,7 @@ typedef struct	s_fifo
 	int			capacity;
 }				t_fifo;
 
-
-typedef	struct  s_stacks
+typedef	struct	s_stacks
 {
 	t_lifo		*errors;
 	t_fifo		*here_docs;
