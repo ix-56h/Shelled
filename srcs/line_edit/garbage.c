@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:04:37 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 00:58:09 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/04 05:27:01 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		ft_isallprint(char *str)
 	return (1);
 }
 
-void	sub_is_multiline(char *line, size_t *i, char *finded, char *backslash)
+int		sub_is_multiline(char *line, size_t *i, char *finded, char *backslash)
 {
 	if (line[*i] == '\\' && *finded != '\'')
 		if (line[*i + 1] != '\0')
@@ -63,9 +63,12 @@ void	sub_is_multiline(char *line, size_t *i, char *finded, char *backslash)
 		else if (*finded == line[*i])
 			*finded = 0;
 	}
+	if (line[*i] == '#' && *finded == 0)
+		return (1);
 	if (*i + 1 == ft_strlen(line) && line[*i] == '\\')
 		*backslash = 1;
 	++(*i);
+	return (0);
 }
 
 int		is_multiline(t_dl_node *head)
@@ -82,7 +85,10 @@ int		is_multiline(t_dl_node *head)
 		backslash = 0;
 		line = ((t_line *)head->data)->line;
 		while (line[i])
-			sub_is_multiline(line, &i, &finded, &backslash);
+		{
+			if (sub_is_multiline(line, &i, &finded, &backslash))
+				return (0);
+		}
 		i = 0;
 		head = head->next;
 	}
