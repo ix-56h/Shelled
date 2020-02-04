@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 01:04:49 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/04 04:12:23 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/04 05:31:33 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char			*run_line_edit(void)
 	{
 		if (dl_find_data(head, line)->next)
 			move_cur_on_last_line(dl_find_data(head, line));
-		init_and_read(&line, &head, READ_MODE_FULL | READ_MODE_LINE\
+		init_and_read(&line, &head, READ_MODE_LIMITED | READ_MODE_LINE\
 						, new_prompt(PROMPT_SUBLINE));
 	}
 	is_finished_loop(&line, &head);
