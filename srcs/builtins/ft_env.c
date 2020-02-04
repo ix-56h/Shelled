@@ -6,16 +6,18 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:47:22 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 06:00:39 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/04 06:56:30 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/wait.h>
 #include "libft.h"
 #include "sh.h"
 #include "builtins.h"
 #include "ast.h"
 #include "visitor.h"
 #include "exec.h"
+
 
 static void	printenv(char **env)
 {
@@ -29,82 +31,93 @@ static void	printenv(char **env)
 	}
 }
 
-static char	*ft_strschr(const char *s, int c)
+static int	test_args(char ***argv)
 {
-	if (s && *s)
+	int	catch;
+
+	catch = 0;
+	while ((*++(*argv)))
 	{
-		while (*s)
+		if ((**argv)[0] == '-')
 		{
-			if (*s == (char)c)
-				return ((char *)s);
-			s++;
-		}
-		if (*s == (char)c)
-			return ((char *)s);
-	}
-	return (NULL);
-}
-
-static void	ft_env_sub(char ***tenv, char ***env, char **argv)
-{
-	t_node		node;
-	t_io_lists	io;
-
-	(void)tenv;
-	io = (t_io_lists) {NULL, NULL};
-	if ((node.data = *argv))
-	{
-		node.args = argv;
-		exec_cmd(&node, *env, io);
-	}
-	else
-		printenv(*env);
-	free_env(*env);
-}
-
-static int	test_args(char ***argv, char ***env, char **tenv)
-{
-	char **argv2;
-
-	argv2 = *argv;
-	while (*(++argv2) && (*argv2)[0] == '-')
-	{
-		if (ft_strcmp(*argv2, "-i") == 0)
-		{
-			*env = NULL;
-			*argv = argv2;
-			return (1);
-		}
-		else
-		{
-			ft_vprint(3, "env : invalid option ", *argv, "\n");
-			return (-1);
-		}
-	}
-	*env = cpy_env(tenv);
-	++(*argv);
-	return (0);
-}
-
-int			ft_env(char **argv, char ***tenv)
-{
-	char	**env;
-	char	*value;
-
-	if (test_args(&argv, &env, *tenv) == -1)
-		return (1);
-	while (++argv)
-	{
-		if (*argv && **argv != '=' && (value = ft_strschr(*argv, '=')))
-		{
-			*value = 0;
-			++value;
-			if (!ft_edit_env(env, *argv, value))
-				env = add_env(env, *argv, value);
+			catch = 1;
+			if (ft_strcmp(**argv, "-i") != 0)
+			{
+				ft_vprint(3, "env : invalid option ", **argv, "\n");
+				return (-1);
+			}
 		}
 		else
 			break ;
 	}
-	ft_env_sub(tenv, &env, argv);
+	return ((catch) ? 1 : 0);
+}
+
+static char	**set_nenv(char ***argv, char **ienv)
+{
+	char	*item;
+
+	while ((*(*argv)))
+	{
+		if ((item = ft_strchr(**argv, '=')))
+		{
+			item[0] = '\0';
+			if (!ienv)
+				ienv = add_env(NULL, **argv, item + 1);
+			else
+			{
+				if (!ft_edit_env(ienv, **argv, item + 1))
+					ienv = add_env(ienv, **argv, item + 1);
+			}
+		}
+		else
+			break ;
+		++(*argv);
+	}
+	if (!ienv)
+	{
+		ienv = ft_calloc(sizeof(char *));
+		*ienv = NULL;
+	}
+	return (ienv);
+}
+
+static int	exec_it(char **env, char **argv)
+{
+	t_node		node;
+	t_io_lists	io;
+	int			ret;
+
+	ret = 0;
+	io = (t_io_lists) {NULL, NULL};
+	node.data = *argv;
+	node.args = argv;
+	exec_cmd(&node, env, io);
+	if (!lookforbuiltin(*argv))
+		wait(&ret);
+	return (ret);
+}
+
+int		ft_env(char **argv, char ***tenv)
+{
+	int		test_arg_value;
+	char	**n_env;
+	int		ret;
+
+	ret = 0;
+	if (count_arg(argv) == 0)
+		printenv(*tenv);
+	else
+	{
+		if ((test_arg_value = test_args(&argv)) == 1)
+			n_env = set_nenv(&argv, NULL);
+		else
+			n_env = set_nenv(&argv, cpy_env(*tenv));
+		if (!*argv)
+			printenv(n_env);
+		else
+			ret = exec_it(n_env, argv);
+		free_env(n_env);
+	}
 	return (0);
 }
