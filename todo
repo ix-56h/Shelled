@@ -1,8 +1,3 @@
-#	FIX-visitor
-	*	Make a generic realloc
-	*	Copy of env 
-	*	Make a generic search engine for binary / aliases (in a **char and get the value)
-
 # IMPORTANT
 X			Check assignment_word 
 				- Need to check for the 7b rule if the current word is the first or not
@@ -13,12 +8,43 @@ cat /etc/passwd | tr : # | tr -s abcdefghijklmnopqrstuvwxyz| cut -c 2 | grep -e 
  c -e d -e e -e f -e g -e h -e i -e j -e k -e l -e m -e n -e o -e p -e q -e r -e s -e \
 t -e u -e v -e w -e x -e y -e z |sort|uniq -c
 
-#		FOR 42sh
+#		FOR 42sh 
 
-?			Subshell
-			* (Not necessary) parse all others functions (cases, functions if etc) for parse him correctly in 42sh
+Chaque built-in doit avoir au minimum les options dictées par le standard POSIX, (sauf pour set et unset)
+Builtins:
+-	type 
+-	export
+-- Job control
+	- fg
+	- jobs 
+	- bg
+
+Exp:
+-	${}
+	- handle special parameters like "?"
+
+Operator:
+-	&
+
+Variable definition name=value
+
+Partie modulaire :
+-	Les inhibiteurs”(double quote),’(simple quote) et\(backslash)
+-	Les commandes groupées et sous-shell :
+-	La substitution de commande $()
+-	La gestion des alias via les built-ins alias et unalias
+-	Le built-intestavec les opérateurs suivants :-b,-c,-d,-e,-f,-g,-L,-p,-r,-S,-s,-u,-w,-x,-z,=,!=,-eq,-ne,-ge,-lt,-le,!
+	- Ainsi que la possibilité d’un simple opérande, sans opérateur
+-	L’expansion du tilde et les formats supplémentaires des paramètres :
+	-	${parameter:-word}
+	-	${parameter:=word}
+	-	${parameter:?word}
+	-	${parameter:+word}
+	-	${#parameter}
+	-	${parameter%}
+	-	${parameter%%}
+	-	${parameter#}
+	-	${parameter##}
 
 X			Error handling for parser :
 			1 : (echo a) (echo b)
-
-
