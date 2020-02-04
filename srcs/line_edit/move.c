@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:06:53 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/04 03:43:31 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/04 04:35:44 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	move_cur_on_last_line(t_dl_node *head)
 	{
 		while ((head = head->next))
 		{
-			cur_move_to_index(head->data, ft_strlen(((t_line *)head->data)->line));
+			cur_move_to_index(head->data, \
+							ft_strlen(((t_line *)head->data)->line));
 			term_other(TERM_DOWN, 1);
 		}
 	}
