@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:47:22 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/04 06:56:30 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/04 07:13:05 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static int	exec_it(char **env, char **argv)
 	io = (t_io_lists) {NULL, NULL};
 	node.data = *argv;
 	node.args = argv;
-	exec_cmd(&node, env, io);
+	ret = exec_cmd(&node, env, io);
 	if (!lookforbuiltin(*argv))
 		wait(&ret);
 	return (ret);

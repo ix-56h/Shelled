@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 05:26:17 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/04 07:11:53 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ int				visit_cmd(t_node *node, t_io_lists io, int *rets)
 	if (node->tok == TOK_WORD)
 	{
 		restore_term();
-		exec_cmd(node, NULL, io);
+		tmp = exec_cmd(node, NULL, io);
+		if (rets)
+			*rets = tmp;
 		if ((io.piped && !io.piped->next && io.piped->used == 1) || !io.piped)
 		{
 			tmp = 1;

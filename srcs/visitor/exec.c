@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 03:23:05 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/04 07:10:56 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,17 @@ int		exec_with_fork(t_node *cmd, char **env, t_io_lists io, char *cmd_path)
 int		exec_without_fork(t_node *cmd, char **env, t_io_lists io)
 {
 	t_builtin	exec_builtin;
+	int			ret;
 
+	ret = 0;
 	save_and_restore_fd(0);
 	set_pipe_fd(io.piped);
 	set_redir_fd(io.redir);
 	exec_builtin = lookforbuiltin(cmd->data);
-	exec_builtin(cmd->args, ((env) ? &env : &g_env));
+	ret = exec_builtin(cmd->args, ((env) ? &env : &g_env));
 	close_used_pipe_fd(io.piped);
 	save_and_restore_fd(1);
-	return (1);
+	return (ret);
 }
 
 int		exec_cmd(t_node *cmd, char **env, t_io_lists io)
@@ -64,7 +66,7 @@ int		exec_cmd(t_node *cmd, char **env, t_io_lists io)
 	else if (is_path(cmd->data))
 	{
 		if ((err = test_path(cmd)) == 0)
-			exec_with_fork(cmd, env, io, NULL);
+			err = exec_with_fork(cmd, env, io, NULL);
 	}
 	else
 	{
