@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:32:29 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 01:44:03 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/04 03:57:26 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int		ctrl_d_act(t_line **line, t_dl_node **head, char mode)
 			*line = init_line(NULL, ft_strdup("exit")\
 								, 4, new_prompt(PROMPT_DEFAULT));
 			(*head)->data = *line;
+			return (1);
 		}
 	}
 	else if (mode & READ_MODE_HEREDOC)
@@ -84,8 +85,9 @@ int		ctrl_d_act(t_line **line, t_dl_node **head, char mode)
 		tmp = init_line(NULL, ft_strdup("\004"), 0, NULL);
 		dl_append(head, tmp);
 		*line = tmp;
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int		ctrl_c_act(t_line **line, t_dl_node **head, char mode)

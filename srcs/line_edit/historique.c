@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 17:16:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 01:01:24 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/04 04:10:55 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,22 @@ t_historic			**get_historic(void)
 	static t_historic *historic = NULL;
 
 	return (&historic);
+}
+
+void				trim_and_add_historic(t_dl_node **head)
+{
+	char	*tmp;
+	char	*tmp_trimed;
+
+	tmp = concat_lines(*head, 1);
+	tmp_trimed = ft_strtrim(tmp);
+	if (ft_strcmp(tmp_trimed, "\0") != 0)
+		add_historic(*head);
+	else
+	{
+		dl_free_with_data(*head, free_line);
+		*head = NULL;
+	}
+	free(tmp);
+	free(tmp_trimed);
 }

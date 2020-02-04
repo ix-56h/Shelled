@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 16:25:37 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 01:54:55 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/04 03:44:54 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,5 @@ t_historic			*controller_prev(t_historic **historic\
 t_historic			*controller_reset(t_historic **historic\
 									, t_historic **null_node);
 t_historic			*historic_controller(char act);
+void				trim_and_add_historic(t_dl_node **head);
 #endif
