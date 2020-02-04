@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:31:37 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/04 00:15:01 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/04 05:15:16 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,19 @@ t_tokens	save_token(char *s, int anchor, t_toktype toktype)
 
 void		ignore_chr_class(char *s, int *i, t_chr_class chr_class)
 {
+	unsigned int	esc;
+
+	esc = 0;
 	if (chr_class == CHR_COMMENT)
 	{
-		while (s[*i] && s[*i] != '\n')
+		while (s[*i] && (s[*i] != '\n' || esc == 1))
+		{
+			if (s[*i] == '\\' && !esc)
+				esc = 1;
+			else if (esc == 1)
+				esc = 0;
 			(*i)++;
+		}
 	}
 	else
 	{
