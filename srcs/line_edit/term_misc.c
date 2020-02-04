@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:35:42 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 01:46:31 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/04 06:17:11 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,14 @@ int				init_term(void)
 
 	term = getenv("TERM");
 	if (!term || ft_strcmp(term, "xterm-256color") != 0)
-		return (-1);
+	{
+		ft_putstr("The terminal must be xterm-256color\n");
+		exit(1);
+	}
 	if (!isatty(STDIN_FILENO))
-		return (-1);
+	{
+		ft_putstr("Only interactive mode allowed\n");
+		exit(1);
+	}
 	return (set_term_mode());
 }
