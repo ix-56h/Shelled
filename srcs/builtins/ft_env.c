@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:47:22 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/04 07:13:05 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/05 01:13:33 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include "ast.h"
 #include "visitor.h"
 #include "exec.h"
-
 
 static void	printenv(char **env)
 {
@@ -98,7 +97,7 @@ static int	exec_it(char **env, char **argv)
 	return (ret);
 }
 
-int		ft_env(char **argv, char ***tenv)
+int			ft_env(char **argv, char ***tenv)
 {
 	int		test_arg_value;
 	char	**n_env;
