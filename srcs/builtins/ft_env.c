@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:47:22 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/05 01:13:33 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/05 18:11:02 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,13 +110,15 @@ int			ft_env(char **argv, char ***tenv)
 	{
 		if ((test_arg_value = test_args(&argv)) == 1)
 			n_env = set_nenv(&argv, NULL);
-		else
+		else if (test_arg_value == 0)
+		{			
 			n_env = set_nenv(&argv, cpy_env(*tenv));
-		if (!*argv)
-			printenv(n_env);
-		else
-			ret = exec_it(n_env, argv);
-		free_env(n_env);
+			if (!*argv)
+				printenv(n_env);
+			else
+				ret = exec_it(n_env, argv);
+			free_env(n_env);
+		}
 	}
 	return (0);
 }
