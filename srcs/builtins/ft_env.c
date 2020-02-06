@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:47:22 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/06 08:52:07 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/06 21:57:46 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,5 @@ int			ft_env(char **argv, char ***tenv)
 			free_env(n_env);
 		}
 	}
-	return (0);
+	return (ret);
 }
