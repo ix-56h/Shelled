@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 01:22:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/01 04:53:50 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/07 20:18:44 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ int			set_new_path(char ***tenv, char *newpath)
 
 	if (chdir(newpath) == 0)
 	{
-		path = malloc(FT_PATH_MAX + 1);
-		path[FT_PATH_MAX] = 0;
+		path = ft_calloc(FT_PATH_MAX + 1);
 		getcwd(path, FT_PATH_MAX);
 		ft_edit_env(*tenv, "PWD", path);
 		path = ft_free(path);
