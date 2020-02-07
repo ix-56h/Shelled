@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:43:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/07 18:38:15 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/07 19:01:34 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,37 @@ static int	no_arg(char **oldpath, char ***tenv)
 	return (err_cd(NULL, change_path(home, oldpath, tenv)));
 }
 
+static int	arg_last(char ***tenv, char **oldpath)
+{
+	char	*tmp;
+
+	if ((tmp = ft_strdup(get_env(*tenv, "OLDPWD"))))
+	{
+		if (ft_strcmp(tmp, "") == 0)
+		{
+			ft_free(tmp);
+			tmp = *oldpath;
+			if (tmp == NULL)
+				return (err_cd(NULL, ERR_CD_OLDPWD));
+			return (err_cd(tmp, change_path(tmp, oldpath, tenv)));
+		}
+		return (err_cd(tmp, change_path(tmp, oldpath, tenv)) \
+						+ (int)ft_free(tmp));
+	}
+	else
+		return (err_cd(*oldpath, change_path(*oldpath, oldpath, tenv)));
+}
+
 int			ft_cd(char **argv, char ***tenv)
 {
 	static char	*oldpath = NULL;
-	char		*tmp;
 	int			argc;
 
 	argc = count_arg(argv);
 	if (argc == 0)
 		no_arg(&oldpath, tenv);
 	else if (ft_strcmp(argv[1], "-") == 0)
-	{
-		if ((tmp = ft_strdup(get_env(*tenv, "OLDPWD"))))
-		{
-			if (ft_strcmp(tmp, "") == 0)
-			{
-				ft_free(tmp);
-				tmp = oldpath;
-				if (tmp == NULL)
-					return (err_cd(NULL, ERR_CD_OLDPWD));
-				return (err_cd(tmp, change_path(tmp, &oldpath, tenv)));
-			}
-			return (err_cd(tmp, change_path(tmp, &oldpath, tenv)) \
-							+ (int)ft_free(tmp));
-		}
-		else
-			return (err_cd(oldpath, change_path(oldpath, &oldpath, tenv)));
-	}
+		return (arg_last(tenv, &oldpath));
 	else
 		return (err_cd(argv[1], change_path(argv[1], &oldpath, tenv)));
 	return (0);
