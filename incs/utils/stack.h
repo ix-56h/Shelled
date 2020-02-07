@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:25 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 05:32:27 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/07 18:35:25 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ enum	e_state_error{
 	UNEXPECTED_EOF,
 	UNEXPECTED_TOKEN,
 	UNRECOGNIZED_TOKEN,
-	PARSE_ERROR_NEAR
+	PARSE_ERROR
 };
 
 typedef struct	s_lifo

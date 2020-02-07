@@ -1,6 +1,7 @@
 # IMPORTANT
 X			Check assignment_word 
 				- Need to check for the 7b rule if the current word is the first or not
+X			Need to review the AST from multiple line command (like ls \n pwd \n \n \n \n lol \n test)
 # OTHERS
 
 X			check for this command

@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:23:34 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/31 23:34:53 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/07 16:30:32 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ t_node	*parse_separator(t_sh *sh)
 		return (NULL);
 	node = NULL;
 	if ((node = parse_separator_op(sh)))
-		return (node);
+	{
+		if (parse_linebreak(sh))
+			return (node);
+	}
 	else if ((node = parse_newline_list(sh)))
 		return (node);
 	return (node);
