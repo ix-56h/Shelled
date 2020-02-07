@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:43:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/07 19:01:34 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/07 19:27:58 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,9 @@ static int	arg_last(char ***tenv, char **oldpath)
 		if (ft_strcmp(tmp, "") == 0)
 		{
 			ft_free(tmp);
-			tmp = *oldpath;
+			tmp = ft_strdup(*oldpath);
 			if (tmp == NULL)
-				return (err_cd(NULL, ERR_CD_OLDPWD));
-			return (err_cd(tmp, change_path(tmp, oldpath, tenv)));
+				return (err_cd(NULL, ERR_CD_OLDPWD) + (int)ft_free(tmp));
 		}
 		return (err_cd(tmp, change_path(tmp, oldpath, tenv)) \
 						+ (int)ft_free(tmp));
