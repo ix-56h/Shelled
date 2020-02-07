@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:43:46 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/01 04:58:31 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/07 18:38:15 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,13 @@ int			ft_cd(char **argv, char ***tenv)
 		if ((tmp = ft_strdup(get_env(*tenv, "OLDPWD"))))
 		{
 			if (ft_strcmp(tmp, "") == 0)
-				return (err_cd(NULL, ERR_CD_OLDPWD) + (int)ft_free(tmp));
+			{
+				ft_free(tmp);
+				tmp = oldpath;
+				if (tmp == NULL)
+					return (err_cd(NULL, ERR_CD_OLDPWD));
+				return (err_cd(tmp, change_path(tmp, &oldpath, tenv)));
+			}
 			return (err_cd(tmp, change_path(tmp, &oldpath, tenv)) \
 							+ (int)ft_free(tmp));
 		}
