@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 02:59:48 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/07 15:49:54 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int			get_token(char *s, t_gnt *g, t_lifo *stack)
 
 	anchor = 0;
 	prev_class = g->chr_class;
-	g->toktype = g_get_tok_type[prev_class];
+	if ((g->toktype = g_get_tok_type[prev_class]))
+		anchor++;
 	if (is_special_char(g->chr_class, prev_class) \
 		&& lex_sequence(s, &anchor, stack) == 0)
 		return (anchor);
