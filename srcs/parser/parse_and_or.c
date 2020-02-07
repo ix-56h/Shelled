@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:10:28 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/01 06:19:05 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/07 18:35:56 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_node	*parse_and_or(t_sh *sh)
 			else
 			{
 				node = save_node(node, tok, nod2, 0);
-				error_push(sh->stack.errors, PARSE_ERROR_NEAR, tok.data);
+				error_push(sh->stack.errors, PARSE_ERROR, tok.data);
 				return (node);
 			}
 		}

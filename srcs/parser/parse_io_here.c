@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:21:09 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/31 23:45:50 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/07 18:37:11 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_node	*parse_io_here(t_sh *sh)
 			fifo_insert(sh->stack.here_docs, node);
 		}
 		else
-			error_push(sh->stack.errors, PARSE_ERROR_NEAR, tok.data);
+			error_push(sh->stack.errors, PARSE_ERROR, tok.data);
 	}
 	return (node);
 }
