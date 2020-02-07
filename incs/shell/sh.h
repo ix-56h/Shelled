@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 05:57:56 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/07 15:00:35 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,13 @@ char			**del_var(char **env, char *var);
 
 void			free_env(char **env);
 char			*get_env(char **env, char *looking);
+
+/*
+**	init.c
+*/
+
+int				init_shell(t_sh *sh, int ac, char **av, char **envp);
+void			re_init_sh(t_sh *sh);
 
 /*
 **	utils

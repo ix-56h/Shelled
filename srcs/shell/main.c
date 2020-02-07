@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 06:37:39 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/07 15:00:02 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,54 +18,6 @@
 #include "parser.h"
 #include "exec.h"
 #include "libft.h"
-
-static void	add_shlvl(char ***env)
-{
-	char	*shlvl;
-	char	*tmp;
-
-	if ((shlvl = get_env(*env, "SHLVL")))
-	{
-		tmp = ft_itoa(ft_atoi(shlvl) + 1);
-		ft_edit_env(*env, "SHLVL", tmp);
-		free(tmp);
-	}
-	else
-		ft_edit_env(*env, "SHLVL", "0");
-}
-
-int			init_shell(t_sh *sh, int ac, char **av, char **envp)
-{
-	(void)ac;
-	(void)av;
-	g_exit = -1;
-	if (!(sh->stack.errors = lifo_creator(20, sizeof(t_staterror))))
-		return (0);
-	if (!(sh->stack.here_docs = fifo_creator(20, sizeof(t_node*))))
-		return (0);
-	sh->node = NULL;
-	g_env = NULL;
-	if (!envp[0])
-		g_env = init_env(g_env);
-	else
-	{
-		g_env = cpy_env(envp);
-		add_shlvl(&g_env);
-	}
-	if (!g_env)
-		return (0);
-	init_term();
-	return (1);
-}
-
-void		re_init_sh(t_sh *sh)
-{
-	if (!(sh->stack.errors = lifo_creator(20, sizeof(t_staterror))))
-		return ;
-	if (!(sh->stack.here_docs = fifo_creator(20, sizeof(t_node*))))
-		return ;
-	sh->node = NULL;
-}
 
 void		process_sh(t_sh *sh)
 {

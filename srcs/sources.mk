@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/02/03 06:00:17 by niguinti         ###   ########.fr        #
+#    Updated: 2020/02/07 14:50:35 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,7 @@ C_FILES_shell = \
 				main.c \
 				env.c \
 				env2.c \
+				init.c \
 
 C_FILES_line_edit = \
 					alloc.c \
