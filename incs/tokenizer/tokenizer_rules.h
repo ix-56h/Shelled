@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:48 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/07 15:46:01 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/07 16:19:38 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static int				g_token_chr_rules[TOK_MAX][CHR_MAX] =
 	},
 	[TOK_PIPE] = {
 		[CHR_PIPE] = 1
-	},
+	}
 };
 
 static t_toktype		g_get_tok_type[CHR_MAX] = {

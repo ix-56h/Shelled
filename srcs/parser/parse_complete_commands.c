@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:09:19 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/01 06:20:04 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/07 18:02:10 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,21 @@ t_node	*parse_complete_commands(t_sh *sh)
 	nod2 = NULL;
 	if ((node = parse_complete_command(sh)))
 	{
-		while ((nod2 = parse_complete_command(sh)))
-			node = binnode(node->left, node, nod2);
 		if ((nod2 = parse_newline_list(sh)))
-		{
 			free(nod2);
-			if ((nod2 = parse_complete_command(sh)))
-				node = binnode(node, nod2, NULL);
-			else
+		while ((nod2 = parse_complete_command(sh)))
+		{
+			node = binnode(node, nod2, nod2->left);
+			if ((nod2 = parse_newline_list(sh)))
 			{
-				error_push(sh->stack.errors, PARSE_ERROR_NEAR, sh->tok.data);
-				return (node);
+				free(nod2);
+				if ((nod2 = parse_complete_command(sh)))
+					node = binnode(node, nod2, nod2->right);
+				else
+				{
+					error_push(sh->stack.errors, PARSE_ERROR_NEAR, sh->tok.data);
+					return (node);
+				}
 			}
 		}
 	}
