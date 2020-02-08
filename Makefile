@@ -66,7 +66,7 @@ FT_INC_DIR = $(FT_DIR)/incs
 FT_LNK = -L$(FT_DIR) -l$(FT)
 
 ###  CC && FLAGS ###
-CC = clang
+CC = clang -g
 DEBUG_FLAGS = -g3
 NO_WARNING ?= false
 ifeq ($(NO_WARNING), false)
