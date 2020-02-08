@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 23:06:50 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 03:24:33 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/08 23:46:54 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,20 @@ int		close_used_pipe_fd(t_pipe_list *piped)
 	if (piped)
 	{
 		if (piped->used == 1)
+		{
 			close(piped->fd[READ_END]);
+			piped->fd[READ_END] = -2;
+		}
 		if (!piped->prev && piped->used != 1)
+		{
 			close(piped->fd[WRITE_END]);
+			piped->fd[WRITE_END] = -2;
+		}
 		else if (piped->next)
+		{
 			close(piped->next->fd[WRITE_END]);
+			piped->next->fd[WRITE_END] = -2;
+		}
 	}
 	return (EXIT_SUCCESS);
 }
@@ -58,11 +67,20 @@ int		close_unused_pipe_fd(t_pipe_list *piped)
 	if (piped)
 	{
 		if (piped->used == 1)
+		{
 			close(piped->fd[WRITE_END]);
+			piped->fd[WRITE_END] = -2;
+		}
 		if (!piped->prev && piped->used != 1)
+		{
 			close(piped->fd[READ_END]);
+			piped->fd[READ_END] = -2;
+		}
 		else if (piped->next)
+		{
 			close(piped->next->fd[READ_END]);
+			piped->next->fd[READ_END] = -2;
+		}
 	}
 	return (EXIT_SUCCESS);
 }
@@ -86,10 +104,14 @@ int		set_redir_fd(t_redir_list *redir)
 		while (redir)
 		{
 			if (redir->out == -1)
+			{
 				close(redir->in);
+				redir->in = -2;
+			}
 			else if (dup2(redir->out, redir->in) == -1)
 				return (EXIT_FAILURE);
 			close(redir->out);
+			redir->out = -2;
 			redir = redir->next;
 		}
 	}

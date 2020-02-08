@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/07 17:21:58 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/08 23:16:22 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int				exec_with_fork(t_node *cmd, char **env, t_io_lists io,
 	{
 		set_pipe_fd(io.piped);
 		close_unused_pipe_fd(io.piped);
-		close_all_redir(io);
+		//close_all_redir(io);
 		set_redir_fd(io.redir);
 		execve(program, cmd->args, ((env) ? env : g_env));
 		exit(1);
