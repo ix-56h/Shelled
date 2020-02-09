@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 17:54:14 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 22:05:17 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/09 02:27:54 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ int		ft_echo(char **argv, char ***tenv)
 	}
 	if (!arg_n)
 		ft_putchar('\n');
-	return (1);
+	return (0);
 }

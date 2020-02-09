@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 06:57:57 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/01 04:52:48 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/09 02:28:47 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ int		ft_exit(char **argv, char ***tenv)
 	g_exit = 0;
 	if (argv[1])
 		g_exit = ft_atoi(argv[1]);
-	return (1);
+	return (g_exit);
 }
