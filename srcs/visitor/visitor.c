@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/04 07:11:53 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/09 21:38:32 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,15 @@ int				exec_heredoc(t_fifo *stack)
 static void		ctrl_c_handler(int lel)
 {
 	(void)lel;
-	ft_putchar('\n');
 }
 
 int				visit_cmd(t_node *node, t_io_lists io, int *rets)
 {
 	int	ret_value;
 	int	tmp;
+	int	ctrlc;
 
+	ctrlc = 0;
 	ret_value = 1;
 	signal(SIGINT, ctrl_c_handler);
 	if (node->tok == TOK_WORD)
@@ -68,6 +69,8 @@ int				visit_cmd(t_node *node, t_io_lists io, int *rets)
 			tmp = 1;
 			while (tmp > 0)
 				tmp = wait(&ret_value);
+			if (ret_value == 2)
+				ft_putchar('\n');
 			if (rets)
 				*rets = ret_value;
 		}

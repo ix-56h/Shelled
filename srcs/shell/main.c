@@ -6,11 +6,10 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/07 15:00:02 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/09 20:09:26 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
 #include "visitor.h"
 #include "sh.h"
 #include "expansions.h"
@@ -42,6 +41,7 @@ int			main(int ac, char **av, char **envp)
 
 	if (init_shell(&sh, ac, av, envp) == 0)
 		return (EXIT_FAILURE);
+	init_singal();
 	while (1)
 	{
 		sh.input = run_line_edit();

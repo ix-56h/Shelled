@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/07 15:00:35 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/09 20:08:43 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,10 @@ char			*insert_str(char *s, size_t	*pos, size_t anchor, char *str);
 */
 
 void			free_sh(t_sh *sh);
+
+/*
+**	signal.c
+*/
+void     		init_singal(void);
+
 #endif
