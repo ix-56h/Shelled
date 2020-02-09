@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/08 23:16:22 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/09 17:46:46 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "builtins.h"
 #include "exec.h"
 
-static void		close_all_redir(t_io_lists io)
+static void		close_all_pipe(t_io_lists io)
 {
 	t_pipe_list	*piped;
 
@@ -41,7 +41,7 @@ int				exec_with_fork(t_node *cmd, char **env, t_io_lists io,
 	{
 		set_pipe_fd(io.piped);
 		close_unused_pipe_fd(io.piped);
-		//close_all_redir(io);
+		close_all_pipe(io);
 		set_redir_fd(io.redir);
 		execve(program, cmd->args, ((env) ? env : g_env));
 		exit(1);
