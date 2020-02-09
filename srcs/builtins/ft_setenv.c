@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 17:38:03 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/01/09 21:42:16 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/09 02:29:17 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int					ft_setenv(char **argv, char ***env)
 	else
 	{
 		ft_putendl("setenv: Too many arguments.");
-		return (-1);
+		return (1);
 	}
-	return (1);
+	return (0);
 }
