@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2020/02/10 11:09:38 by niguinti         ###   ########.fr        #
+#    Updated: 2020/02/10 15:20:18 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,10 +59,13 @@ OBJ = $(addprefix $(OBJ_DIR)/,$(O_FILES))
 INC = $(addprefix $(INC_DIR)/,$(H_FILES))
 
 ### Lib ###
+PRINTF = printf
+PRINTF_DIR = ./$(PRINTF)
+PRINTF_INC_DIR = $(PRINTF_DIR)/includes
 FT = ft
 FT_DIR = ./lib$(FT)
 FT_INC_DIR = $(FT_DIR)/incs
-FT_LNK = -L$(FT_DIR) -l$(FT)
+FT_LNK = -L$(FT_DIR) -l$(FT) -L$(PRINTF_DIR) -lprintf
 
 ###  CC && FLAGS ###
 CC = clang -g
@@ -70,11 +73,11 @@ DEBUG_FLAGS = -g3
 NO_WARNING ?= false
 ifeq ($(NO_WARNING), false)
 CFLAGS = \
-		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR)) \
+		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR) $(PRINTF_INC_DIR))\
 		 -Wall -Werror -Wextra
 else
 CFLAGS = \
-		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR))
+		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR) $(PRINTF_INC_DIR)) 
 endif
 
 LFLAGS = -ltermcap \
@@ -86,6 +89,7 @@ all: init $(FT) $(NAME) bye_msg
 ### Lib compil ###
 $(FT): | lib_msg
 	@make -sC $(FT_DIR)
+	@make -sC $(PRINTF_DIR)
 
 ### Mkdir obj ###
 $(OBJ_DIR): | mkdir_msg
@@ -101,7 +105,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC) $(MAKEFILE_LIST) | compil_msg
 
 ### Link ###
 .ONESHELL:
-$(NAME): init $(OBJ_DIR) $(OBJ) $(INC) $(MAKEFILE_LIST) $(FT_DIR)/libft.a | link_msg
+$(NAME): init $(OBJ_DIR) $(OBJ) $(INC) $(MAKEFILE_LIST) $(FT_DIR)/libft.a $(PRINTF_DIR)/libprintf.a | link_msg
 	@echo "$(YELLOW)\t- Building $(RESET)$(NAME) $(YELLOW)...$(RESET) \c"
 	@$(CC) $(OBJ) $(LFLAGS) -o $(NAME)
 	@echo "$(GREEN)***   Project $(NAME) successfully compiled   ***\n$(RESET)"
@@ -110,14 +114,20 @@ $(NAME): init $(OBJ_DIR) $(OBJ) $(INC) $(MAKEFILE_LIST) $(FT_DIR)/libft.a | link
 $(FT)_clean: | lib_msg
 	@make -C $(FT_DIR) clean
 
-clean: $(FT)_clean | clean_msg
+$(PRINTF)_clean: | lib_msg
+	@make -C $(PRINTF_DIR) clean
+
+clean: $(FT)_clean $(PRINTF)_clean | clean_msg
 	@echo "$(GREEN)***   Deleting all object from $(NAME)   ...   ***\n$(RESET)"
 	$(RM) -rf $(OBJ_DIR)
 
 $(FT)_fclean: | lib_msg
 	@make -C $(FT_DIR) fclean
 
-fclean: $(FT)_fclean | fclean_msg
+$(PRINTF)_fclean: | lib_msg
+	@make -C $(PRINTF_DIR) fclean
+
+fclean: $(FT)_fclean $(PRINTF)_fclean | fclean_msg
 	@echo "$(GREEN)***   Deleting executable file from $(NAME)   ...   ***\n$(RESET)"
 	$(RM) -rf $(OBJ_DIR)
 	$(RM) -rf $(NAME).dSYM

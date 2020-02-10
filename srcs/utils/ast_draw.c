@@ -6,26 +6,29 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 11:55:00 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/10 11:16:41 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/10 15:37:25 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
 #include "parser.h"
 #include <stdio.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
-void	bst_print_dot_null(char *data, void *key, int nullcount, FILE *stream)
+void	bst_print_dot_null(char *data, void *key, int nullcount, int stream)
 {
-	fprintf(stream, "    null%d [shape=point];\n", nullcount);
-	fprintf(stream, "    \"%s_%p\" -> null%d;\n", data, key, nullcount);
+	ft_dprintf(stream, "    null%d [shape=point];\n", nullcount);
+	ft_dprintf(stream, "    \"%s_%p\" -> null%d;\n", data, key, nullcount);
 }
 
-void	bst_print_dot_aux(t_node *node, FILE *stream)
+void	bst_print_dot_aux(t_node *node, int stream)
 {
 	static int nullcount = 0;
 
 	if (node->left)
 	{
-		fprintf(stream, "    \"%s_%p\" -> \"%s_%p\";\n", node->data\
+		ft_dprintf(stream, "    \"%s_%p\" -> \"%s_%p\";\n", node->data\
 				, node, node->left->data, node->left);
 		bst_print_dot_aux(node->left, stream);
 	}
@@ -33,7 +36,7 @@ void	bst_print_dot_aux(t_node *node, FILE *stream)
 		bst_print_dot_null(node->data, node, nullcount++, stream);
 	if (node->right)
 	{
-		fprintf(stream, "    \"%s_%p\" -> \"%s_%p\";\n", node->data\
+		ft_dprintf(stream, "    \"%s_%p\" -> \"%s_%p\";\n", node->data\
 				, node, node->right->data, node->right);
 		bst_print_dot_aux(node->right, stream);
 	}
@@ -41,26 +44,26 @@ void	bst_print_dot_aux(t_node *node, FILE *stream)
 		bst_print_dot_null(node->data, node, nullcount++, stream);
 }
 
-void	bst_print_dot(t_node *tree, FILE *stream)
+void	bst_print_dot(t_node *tree, int stream)
 {
-	fprintf(stream, "digraph BST {\n");
-	fprintf(stream, "    node [fontname=\"Arial\"];\n");
+	ft_dprintf(stream, "digraph BST {\n");
+	ft_dprintf(stream, "    node [fontname=\"Arial\"];\n");
 	if (!tree)
-		fprintf(stream, "\n");
+		ft_dprintf(stream, "\n");
 	else if (!tree->right && !tree->left)
-		fprintf(stream, "    \"%s_%p\";\n", tree->data, tree);
+		ft_dprintf(stream, "    \"%s_%p\";\n", tree->data, tree);
 	else
 		bst_print_dot_aux(tree, stream);
-	fprintf(stream, "}\n");
+	ft_dprintf(stream, "}\n");
 }
 
 void	tree_draw(t_node *node)
 {
-	FILE *stream;
+	int stream;
 
-	stream = fopen("tree.dot", "w");
+	stream = open("tree.dot", O_WRONLY | O_CREAT);
 	if (!stream)
 		exit(0);
 	bst_print_dot(node, stream);
-	fclose(stream);
+	close(stream);
 }
