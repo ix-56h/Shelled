@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:59:58 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/10 02:10:32 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/10 16:05:30 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,9 @@ int		visit_lessand(t_node *node, t_io_lists io, int *rets)
 {
 	if (node->left && node->right && node->right->tok == TOK_WORD)
 	{
+		if (ft_isallnum(node->right->data)
+				|| ft_strcmp(node->right->data, "-") == 0)
+			return (err_exec(node->right->data, ERR_REDIR));
 		dl_push_node((t_dl_node **)&io.redir\
 						, malloc(sizeof(t_redir_list)), NULL);
 		if (node->io != -1)
@@ -131,6 +134,9 @@ int		visit_greatand(t_node *node, t_io_lists io, int *rets)
 {
 	if (node->left && node->right && node->right->tok == TOK_WORD)
 	{
+		if (ft_isallnum(node->right->data)
+				|| ft_strcmp(node->right->data, "-") == 0)
+			return (err_exec(node->right->data, ERR_REDIR));
 		dl_push_node((t_dl_node **)&io.redir\
 					, malloc(sizeof(t_redir_list)), NULL);
 		if (node->io != -1)
