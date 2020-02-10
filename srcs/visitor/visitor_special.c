@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:35:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 03:32:56 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/10 02:36:13 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@
 int		visit_and_if(t_node *node, t_io_lists io, int *rets)
 {
 	int ret;
+	int err;
 
 	if (node->left && node->right)
 	{
 		ret = -1;
-		(*g_visit_rules[node->left->tok])(node->left, io, &ret);
-		if (ret == 0)
+		err = (*g_visit_rules[node->left->tok])(node->left, io, &ret);
+		if (ret == 0 && err == 0)
 			if (!(*g_visit_rules[node->right->tok])(node->right, io, rets))
 				return (0);
 	}
@@ -36,12 +37,13 @@ int		visit_and_if(t_node *node, t_io_lists io, int *rets)
 int		visit_or_if(t_node *node, t_io_lists io, int *rets)
 {
 	int ret;
+	int err;
 
 	if (node->left && node->right)
 	{
 		ret = 0;
-		(*g_visit_rules[node->left->tok])(node->left, io, &ret);
-		if (ret != 0)
+		err = (*g_visit_rules[node->left->tok])(node->left, io, &ret);
+		if (ret != 0 || err != 0)
 			if (!(*g_visit_rules[node->right->tok])(node->right, io, rets))
 				return (0);
 	}
