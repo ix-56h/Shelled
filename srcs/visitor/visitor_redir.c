@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:59:58 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/10 16:05:30 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/10 16:17:00 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 #include "ligne.h"
 #include "builtins.h"
 #include "exec.h"
+
+/*
+**	<>
+*/
 
 int		visit_lessgreat(t_node *node, t_io_lists io, int *rets)
 {
@@ -46,6 +50,10 @@ int		visit_lessgreat(t_node *node, t_io_lists io, int *rets)
 	return (1);
 }
 
+/*
+**	<
+*/
+
 int		visit_left_redi(t_node *node, t_io_lists io, int *rets)
 {
 	int		fd;
@@ -72,6 +80,10 @@ int		visit_left_redi(t_node *node, t_io_lists io, int *rets)
 	rets ? *rets = 0 : 0;
 	return (1);
 }
+
+/*
+**	>
+*/
 
 int		visit_right_redi(t_node *node, t_io_lists io, int *rets)
 {
@@ -101,6 +113,10 @@ int		visit_right_redi(t_node *node, t_io_lists io, int *rets)
 	return (1);
 }
 
+/*
+**	<&
+*/
+
 int		visit_lessand(t_node *node, t_io_lists io, int *rets)
 {
 	if (node->left && node->right && node->right->tok == TOK_WORD)
@@ -129,6 +145,10 @@ int		visit_lessand(t_node *node, t_io_lists io, int *rets)
 		*rets = 0;
 	return (1);
 }
+
+/*
+**	>&
+*/
 
 int		visit_greatand(t_node *node, t_io_lists io, int *rets)
 {

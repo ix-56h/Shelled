@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:33:17 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/10 02:09:43 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/10 16:17:22 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 #include "builtins.h"
 #include "ligne.h"
 #include "exec.h"
+
+/*
+**	<<
+*/
 
 int		visit_dless(t_node *node, t_io_lists io, int *rets)
 {
@@ -45,6 +49,10 @@ int		visit_dless(t_node *node, t_io_lists io, int *rets)
 	(rets) ? *rets = 0 : 0;
 	return (1);
 }
+
+/*
+**	>>
+*/
 
 int		visit_dgreat(t_node *node, t_io_lists io, int *rets)
 {
