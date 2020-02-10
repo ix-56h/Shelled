@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 11:55:00 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/10 15:37:25 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/10 16:16:22 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	tree_draw(t_node *node)
 {
 	int stream;
 
-	stream = open("tree.dot", O_WRONLY | O_CREAT);
+	stream = open("tree.dot", (O_CREAT | O_RDWR), 0644);
 	if (!stream)
 		exit(0);
 	bst_print_dot(node, stream);

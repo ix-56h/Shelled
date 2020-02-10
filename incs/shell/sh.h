@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/10 15:38:27 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/10 16:25:06 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef	struct	s_sh
 void			check_param(char **av, t_args *f);
 int				init_shell(t_sh *sh, int ac, char **av, char **envp);
 void			process_sh(t_sh *sh);
+void			check_args(t_sh *sh, int ac, char **av);
 
 /*
 **	env.c
@@ -85,6 +86,6 @@ void			free_sh(t_sh *sh);
 /*
 **	signal.c
 */
-void     		init_singal(void);
+void     		init_signal(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 20:01:04 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/09 23:01:25 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/10 16:42:33 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static void	signal_handler(int n)
 	exit(n);
 }
 
-void		init_singal(void)
+void		init_signal(void)
 {
 	int		i;
 
 	i = 0;
-    signal(SIGTSTP, usless);
+	signal(SIGTSTP, usless);
 	while (++i <= 15)
 		signal(i, &signal_handler);
 	signal(24, &signal_handler);

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/10 11:14:42 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/10 16:42:14 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,22 @@
 #include "parser.h"
 #include "exec.h"
 #include "libft.h"
+
+void		check_args(t_sh *sh, int ac, char **av)
+{
+	if (ac < 2)
+		return ;
+	ac--;
+	while (ac > 0)
+	{
+		if (av[ac] && av[ac][0] == '-')
+		{
+			if (ft_strcmp(av[ac], "--ast_draw") == 0)
+				sh->f.ast_draw = 1;
+		}
+		ac--;
+	}
+}
 
 void		process_sh(t_sh *sh)
 {
@@ -30,7 +46,8 @@ void		process_sh(t_sh *sh)
 		if (exec_heredoc(sh->stack.here_docs))
 		{
 			process_expansions(sh->node);
-			tree_draw(sh->node);
+			if (sh->f.ast_draw)
+				tree_draw(sh->node);
 			visit(sh->node);
 		}
 	}
@@ -40,9 +57,10 @@ int			main(int ac, char **av, char **envp)
 {
 	t_sh		sh;
 
+	sh.f.ast_draw = 0;
 	if (init_shell(&sh, ac, av, envp) == 0)
 		return (EXIT_FAILURE);
-	init_singal();
+	init_signal();
 	while (1)
 	{
 		sh.input = run_line_edit();
