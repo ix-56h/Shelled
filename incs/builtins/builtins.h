@@ -6,19 +6,20 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:07:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 02:01:30 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/10 02:05:10 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# define ERR_IS_FOLDER       1
-# define ERR_PATH_ACCES      2
-# define ERR_NO_FILE         3
-# define ERR_CMD_NOT_FOUND   4
-# define ERR_CD_OLDPWD       5
-# define ERR_CD_NOT_HOME     6
+# define ERR_IS_FOLDER			1
+# define ERR_PATH_ACCES			2
+# define ERR_NO_FILE			3
+# define ERR_CMD_NOT_FOUND		4
+# define ERR_CD_OLDPWD			5
+# define ERR_CD_NOT_HOME		6
+# define ERR_REDIR				7
 
 typedef int	(*t_builtin)(char **, char ***);
 

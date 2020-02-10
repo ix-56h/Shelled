@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:59:58 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 03:30:25 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/10 02:10:32 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "parser.h"
 #include "visitor.h"
 #include "ligne.h"
+#include "builtins.h"
 #include "exec.h"
 
 int		visit_lessgreat(t_node *node, t_io_lists io, int *rets)
@@ -25,7 +26,7 @@ int		visit_lessgreat(t_node *node, t_io_lists io, int *rets)
 	if (node->left && node->right && node->right->tok == TOK_WORD)
 	{
 		if ((fd = open(node->right->data, (O_CREAT | O_RDWR), 0644)) == -1)
-			return (1);
+			return (err_exec(node->right->data, ERR_REDIR));
 		dl_push_node((t_dl_node **)&io.redir\
 						, malloc(sizeof(t_redir_list)), NULL);
 		if (node->io != -1)
@@ -80,7 +81,7 @@ int		visit_right_redi(t_node *node, t_io_lists io, int *rets)
 	{
 		if ((fd = open(node->right->data\
 						, (O_CREAT | O_WRONLY | O_TRUNC), 0644)) == -1)
-			return (1);
+			return (err_exec(node->right->data, ERR_REDIR));
 		dl_push_node((t_dl_node **)&io.redir\
 					, malloc(sizeof(t_redir_list)), NULL);
 		if (node->io != -1)

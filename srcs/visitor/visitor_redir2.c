@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:33:17 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 03:32:20 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/10 02:09:43 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <sys/wait.h>
 #include "parser.h"
 #include "visitor.h"
+#include "builtins.h"
 #include "ligne.h"
 #include "exec.h"
 
@@ -53,7 +54,7 @@ int		visit_dgreat(t_node *node, t_io_lists io, int *rets)
 	{
 		if ((fd = open(node->right->data\
 						, (O_CREAT | O_WRONLY | O_APPEND), 0644)) == -1)
-			return (1);
+			return (err_exec(node->right->data, ERR_REDIR));
 		dl_push_node((t_dl_node **)&io.redir\
 					, malloc(sizeof(t_redir_list)), NULL);
 		if (node->io != -1)

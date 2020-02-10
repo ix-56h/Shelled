@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:49:31 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 03:24:03 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/10 02:08:57 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ int		err_exec(char *buff, int err)
 		else if (err == ERR_CMD_NOT_FOUND)
 			ft_vprintfd(STDERR_FILENO, 3\
 					, SHELL_NAME": command not found: ", buff, "\n");
+		else if (err == ERR_REDIR)
+			ft_vprintfd(STDERR_FILENO, 3\
+					, SHELL_NAME": redirection error: ", buff, "\n");
 	}
 	return (err);
 }
