@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/09 21:38:32 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/10 01:31:10 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,31 +49,35 @@ static void		ctrl_c_handler(int lel)
 	(void)lel;
 }
 
-int				visit_cmd(t_node *node, t_io_lists io, int *rets)
+void			wait_and_ret(int tmp, t_io_lists io, int *rets)
 {
 	int	ret_value;
-	int	tmp;
+
+	ret_value = 1;
+	if (rets)
+		*rets = tmp;
+	if ((io.piped && !io.piped->next && io.piped->used == 1) || !io.piped)
+	{
+		tmp = 1;
+		while (tmp > 0)
+			tmp = wait(&ret_value);
+		if (ret_value == 2)
+			ft_putchar('\n');
+		if (rets)
+			*rets = ret_value;
+	}
+}
+
+int				visit_cmd(t_node *node, t_io_lists io, int *rets)
+{
 	int	ctrlc;
 
 	ctrlc = 0;
-	ret_value = 1;
 	signal(SIGINT, ctrl_c_handler);
 	if (node->tok == TOK_WORD)
 	{
 		restore_term();
-		tmp = exec_cmd(node, NULL, io);
-		if (rets)
-			*rets = tmp;
-		if ((io.piped && !io.piped->next && io.piped->used == 1) || !io.piped)
-		{
-			tmp = 1;
-			while (tmp > 0)
-				tmp = wait(&ret_value);
-			if (ret_value == 2)
-				ft_putchar('\n');
-			if (rets)
-				*rets = ret_value;
-		}
+		wait_and_ret(exec_cmd(node, NULL, io), io, rets);
 		set_used_fd(io.piped);
 		set_term_mode();
 	}
