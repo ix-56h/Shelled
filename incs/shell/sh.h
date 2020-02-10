@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/09 20:08:43 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/10 11:15:42 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef	struct	s_sh
 
 void			check_param(char **av, t_flags *f);
 int				init_shell(t_sh *sh, int ac, char **av, char **envp);
-void			tree_draw(t_node *node, t_flags f);
 void			process_sh(t_sh *sh);
 
 /*
@@ -75,6 +74,7 @@ void			re_init_sh(t_sh *sh);
 char			*erase_char(char *str);
 char			*remove_dquotes(char *w);
 char			*insert_str(char *s, size_t	*pos, size_t anchor, char *str);
+void			tree_draw(t_node *node);
 
 /*
 **	utils/free_sh.h

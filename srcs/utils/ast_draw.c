@@ -6,11 +6,12 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 11:55:00 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 05:20:21 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/10 11:16:41 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include <stdio.h>
 
 void	bst_print_dot_null(char *data, void *key, int nullcount, FILE *stream)
 {
@@ -53,16 +54,13 @@ void	bst_print_dot(t_node *tree, FILE *stream)
 	fprintf(stream, "}\n");
 }
 
-void	tree_draw(t_node *node, t_flags f)
+void	tree_draw(t_node *node)
 {
 	FILE *stream;
 
 	stream = fopen("tree.dot", "w");
-	if (f.ast_draw)
-	{
-		if (!stream)
-			exit(0);
-		bst_print_dot(node, stream);
-		fclose(stream);
-	}
+	if (!stream)
+		exit(0);
+	bst_print_dot(node, stream);
+	fclose(stream);
 }

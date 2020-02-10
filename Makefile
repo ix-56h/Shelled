@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2020/02/05 03:38:51 by niguinti         ###   ########.fr        #
+#    Updated: 2020/02/10 11:09:38 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,6 @@ SUB_DIRS := \
 	ast \
 	stack \
 	expansions \
-
 
 ### INCLUDE SRC MAKEFILE ###
 include $(SRC_DIR)/sources.mk

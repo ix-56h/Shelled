@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/02/09 20:10:12 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/02/10 11:09:22 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -121,6 +121,7 @@ C_FILES_utils = \
 				fifo_creator.c \
 				lifo_creator.c \
 				free_sh.c \
+				ast_draw.c \
 
 C_FILES_expansions = \
 					 expansions.c \

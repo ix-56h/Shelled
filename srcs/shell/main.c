@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/09 20:09:26 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/10 11:14:42 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void		process_sh(t_sh *sh)
 		if (exec_heredoc(sh->stack.here_docs))
 		{
 			process_expansions(sh->node);
+			tree_draw(sh->node);
 			visit(sh->node);
 		}
 	}
