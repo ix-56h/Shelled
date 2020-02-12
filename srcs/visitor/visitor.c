@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/12 02:59:15 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/12 23:59:11 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int				exec_heredoc(t_fifo *stack)
 			{
 				free(node->right->data);
 				node->right->data = str;
+				node->right->tok = TOK_HERE;
 			}
 			else
 				err = 1;

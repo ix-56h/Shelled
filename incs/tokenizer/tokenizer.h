@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:36 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 02:58:06 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/12 23:59:04 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef enum		e_toktype {
 	TOK_VALIDATOR,
 	TOK_OPERATOR,
 	TOK_REDIRECTION,
+	TOK_HERE,
 	TOK_MAX
 }					t_toktype;
 
