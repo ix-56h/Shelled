@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:08:20 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 01:42:56 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/11 19:27:01 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,22 @@ static void		expend_line_alloc(t_line *line, int readsize)
 	line->allocsize = new_size;
 }
 
+static int		iterm_fix(t_line *line)
+{
+	if (get_env(g_env, "LC_TERMINAL") && 
+			ft_strcmp(get_env(g_env, "LC_TERMINAL"), "iTerm2") == 0)
+	{
+		if ((ft_strlen(line->line) + line->prompt->size)\
+				% get_winsize().ws_col == 0)
+		{
+			term_other(TERM_UP, 1);
+			cur_move_to_index(line, line->index);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 void			write_on_line(t_line *line, int readsize\
 							, char *buff, t_dl_node **head)
 {
@@ -67,7 +83,8 @@ void			write_on_line(t_line *line, int readsize\
 			print_historique(tmp->next);
 		}
 		term_other(TERM_CLEAR_CUR_END, 1);
-		term_other(TERM_LOAD_CUR, 1);
+		if (!iterm_fix(line))
+				term_other(TERM_LOAD_CUR, 1);
 	}
 }
 
