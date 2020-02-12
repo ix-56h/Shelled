@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/10 01:31:10 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/12 02:59:15 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void			wait_and_ret(int tmp, t_io_lists io, int *rets)
 			tmp = wait(&ret_value);
 		if (ret_value == 2)
 			ft_putchar('\n');
-		if (rets)
+		if (rets && *rets == 0)
 			*rets = ret_value;
 	}
 }
