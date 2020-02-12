@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 14:49:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/07 14:59:15 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/10 16:31:59 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ static void	test_fd(void)
 
 int			init_shell(t_sh *sh, int ac, char **av, char **envp)
 {
-	(void)ac;
-	(void)av;
 	g_exit = -1;
 	test_fd();
 	if (!(sh->stack.errors = lifo_creator(20, sizeof(t_staterror))))
@@ -73,6 +71,7 @@ int			init_shell(t_sh *sh, int ac, char **av, char **envp)
 	}
 	if (!g_env)
 		return (0);
+	check_args(sh, ac, av);
 	init_term();
 	return (1);
 }

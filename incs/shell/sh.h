@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/09 20:08:43 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/10 16:25:06 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 int				g_exit;
 char			**g_env;
 
-typedef	struct	s_flags
+typedef	struct	s_args
 {
 	unsigned	ast_draw:1;
-}				t_flags;
+}				t_args;
 
 typedef	struct	s_sh
 {
@@ -32,17 +32,17 @@ typedef	struct	s_sh
 	t_node		*node;
 	t_tokens	tok;
 	t_stacks	stack;
-	t_flags		f;
+	t_args		f;
 }				t_sh;
 
 /*
 **	main.c
 */
 
-void			check_param(char **av, t_flags *f);
+void			check_param(char **av, t_args *f);
 int				init_shell(t_sh *sh, int ac, char **av, char **envp);
-void			tree_draw(t_node *node, t_flags f);
 void			process_sh(t_sh *sh);
+void			check_args(t_sh *sh, int ac, char **av);
 
 /*
 **	env.c
@@ -75,6 +75,7 @@ void			re_init_sh(t_sh *sh);
 char			*erase_char(char *str);
 char			*remove_dquotes(char *w);
 char			*insert_str(char *s, size_t	*pos, size_t anchor, char *str);
+void			tree_draw(t_node *node);
 
 /*
 **	utils/free_sh.h
@@ -85,6 +86,6 @@ void			free_sh(t_sh *sh);
 /*
 **	signal.c
 */
-void     		init_singal(void);
+void     		init_signal(void);
 
 #endif
