@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 23:02:11 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/10 16:03:02 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/12 02:47:53 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,5 @@ void			*ft_free(void *alloced);
 char			*ft_vjoin(int n, ...);
 void			ft_vprint(int n, ...);
 void			ft_vprintfd(int fd, int n, ...);
-int				ft_isallnum(char *str);
+int				ft_isalldigit(char *str);
 #endif

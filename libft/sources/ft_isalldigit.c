@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isallnum.c                                      :+:      :+:    :+:   */
+/*   ft_isalldigit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 16:01:31 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/10 16:02:43 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/12 02:45:55 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isallnum(char *str)
+int	ft_isalldigit(char *str)
 {
 	while (*str)
 	{
-		if (ft_isalnum(*str) != 1)
+		if (ft_isdigit(*str) != 1)
 			return (0);
 		++str;
 	}
