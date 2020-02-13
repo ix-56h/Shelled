@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:31:37 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/06 11:02:46 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/14 00:32:55 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ t_tokens	token_error(int type, t_lifo *stack, char c)
 	char		*near;
 	char		buf[2];
 
+	near = NULL;
 	buf[0] = c;
 	buf[1] = 0;
-	near = ft_strdup(buf);
+	if (!(near = ft_strdup(buf)))
+		exit(2);
 	if (type > 0)
 		error_push(stack, type, near);
 	new.data = near;

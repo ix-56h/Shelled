@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:21:09 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/07 18:37:11 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/14 00:43:33 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_node	*parse_io_here(t_sh *sh)
 	nod2 = NULL;
 	if (sh->tok.tok == TOK_DLESS || sh->tok.tok == TOK_DLESSDASH)
 	{
+		tok = sh->tok;
 		node = save_node(NULL, sh->tok, NULL, DEFAULT_ID);
 		sh->tok = get_next_token(sh->input, sh->stack.errors);
 		if ((nod2 = parse_here_end(sh)))
