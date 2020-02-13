@@ -6,13 +6,14 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/12 02:59:15 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/13 06:57:18 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include "builtins.h"
 #include "parser.h"
 #include "visitor.h"
 #include "ligne.h"
@@ -49,7 +50,7 @@ static void		ctrl_c_handler(int lel)
 	(void)lel;
 }
 
-void			wait_and_ret(int tmp, t_io_lists io, int *rets)
+void			wait_and_ret(int tmp, t_io_lists io, int *rets, t_node *node)
 {
 	int	ret_value;
 
@@ -63,7 +64,7 @@ void			wait_and_ret(int tmp, t_io_lists io, int *rets)
 			tmp = wait(&ret_value);
 		if (ret_value == 2)
 			ft_putchar('\n');
-		if (rets && *rets == 0)
+		if (rets && *rets == 0 && !lookforbuiltin(node->data))
 			*rets = ret_value;
 	}
 }
@@ -77,7 +78,7 @@ int				visit_cmd(t_node *node, t_io_lists io, int *rets)
 	if (node->tok == TOK_WORD)
 	{
 		restore_term();
-		wait_and_ret(exec_cmd(node, NULL, io), io, rets);
+		wait_and_ret(exec_cmd(node, NULL, io), io, rets, node);
 		set_used_fd(io.piped);
 		set_term_mode();
 	}
