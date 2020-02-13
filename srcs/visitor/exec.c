@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/12 02:54:45 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/13 06:55:16 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io)
 	cmd_path = NULL;
 	err = 0;
 	if (lookforbuiltin(cmd->data))
-		exec_without_fork(cmd, env, io);
+		err = exec_without_fork(cmd, env, io);
 	else if (is_path(cmd->data))
 	{
 		if ((err = test_path(cmd)) == 0)
