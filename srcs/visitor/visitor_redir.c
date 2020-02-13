@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:59:58 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/12 02:49:05 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/14 00:09:38 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		visit_lessgreat(t_node *node, t_io_lists io, int *rets)
 	if (node->left && node->right && node->right->tok == TOK_WORD)
 	{
 		if ((fd = open(node->right->data, (O_CREAT | O_RDWR), 0644)) == -1)
-			return (err_exec(node->right->data, ERR_REDIR));
+			return (err_exec(node->right->data, ERR_PATH_ACCES));
 		dl_push_node((t_dl_node **)&io.redir\
 						, malloc(sizeof(t_redir_list)), NULL);
 		if (node->io != -1)
@@ -61,11 +61,7 @@ int		visit_left_redi(t_node *node, t_io_lists io, int *rets)
 	if (node->left && node->right && node->right->tok == TOK_WORD)
 	{
 		if ((fd = open(node->right->data, O_RDONLY)) == -1)
-		{
-			ft_vprint(3, SHELL_NAME": no such file or directory: "\
-						, node->right->data, "\n");
-			return (1);
-		}
+			return (err_exec(node->right->data, ERR_NO_FILE));
 		dl_push_node((t_dl_node **)&io.redir\
 						, malloc(sizeof(t_redir_list)), NULL);
 		io.redir->in = (node->io != -1 ? node->io : STDIN_FILENO);
@@ -93,7 +89,7 @@ int		visit_right_redi(t_node *node, t_io_lists io, int *rets)
 	{
 		if ((fd = open(node->right->data\
 						, (O_CREAT | O_WRONLY | O_TRUNC), 0644)) == -1)
-			return (err_exec(node->right->data, ERR_REDIR));
+			return (err_exec(node->right->data, ERR_PATH_ACCES));
 		dl_push_node((t_dl_node **)&io.redir\
 					, malloc(sizeof(t_redir_list)), NULL);
 		if (node->io != -1)

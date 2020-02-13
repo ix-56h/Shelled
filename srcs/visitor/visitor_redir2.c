@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:33:17 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/10 16:17:22 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/14 00:07:14 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		visit_dgreat(t_node *node, t_io_lists io, int *rets)
 	{
 		if ((fd = open(node->right->data\
 						, (O_CREAT | O_WRONLY | O_APPEND), 0644)) == -1)
-			return (err_exec(node->right->data, ERR_REDIR));
+			return (err_exec(node->right->data, ERR_PATH_ACCES));
 		dl_push_node((t_dl_node **)&io.redir\
 					, malloc(sizeof(t_redir_list)), NULL);
 		if (node->io != -1)
