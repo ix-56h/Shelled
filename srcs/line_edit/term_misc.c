@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:35:42 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/04 06:17:11 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/15 17:19:30 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,34 @@ struct termios	*save_term(int act)
 	return (&save);
 }
 
-int				restore_term(void)
+struct termios	*save_initialised_term(int act)
+{
+	static struct termios	save;
+	char					*term;
+
+	term = getenv("TERM");
+	if (act == 1)
+	{
+		if (term == NULL)
+			return (NULL);
+		if (tgetent(NULL, term) < 0)
+			return (NULL);
+		if (tcgetattr(STDIN_FILENO, &save) == -1)
+			return (NULL);
+	}
+	return (&save);
+}
+
+int				restore_term(int act)
 {
 	struct termios	*termios;
 
-	if ((termios = save_term(0)) == NULL)
-		return (-1);
+	if (act == 1)
+		if ((termios = save_term(0)) == NULL)
+			return (-1);
+	if (act == 2)
+		if ((termios = save_initialised_term(0)) == NULL)
+			return (-1);
 	if (tcsetattr(STDIN_FILENO, 0, termios) == -1)
 		return (-1);
 	return (1);
@@ -56,6 +78,7 @@ int				set_term_mode(void)
 	termios.c_lflag &= ~(ICANON | ECHO);
 	if (tcsetattr(STDIN_FILENO, 0, &termios) == -1)
 		return (-4);
+	save_initialised_term(1);
 	return (1);
 }
 

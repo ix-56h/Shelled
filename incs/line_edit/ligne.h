@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ligne.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 01:49:03 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 05:02:41 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/15 17:19:49 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ char			*run_line_edit(void);
 */
 
 int				init_term(void);
-int				restore_term(void);
+int				restore_term(int);
 int				set_term_mode(void);
 struct termios	*save_term(int act);
-
+struct termios	*save_initialised_term(int act);
 /*
 **	controleur.c
 */

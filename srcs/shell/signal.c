@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 20:01:04 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/10 16:42:33 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/15 17:20:02 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	usless(int n)
 
 static void	signal_handler(int n)
 {
-	restore_term();
+	restore_term(1);
 	exit(n);
 }
 

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/13 06:58:28 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/15 17:20:16 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ int				visit_cmd(t_node *node, t_io_lists io, int *rets)
 	signal(SIGINT, ctrl_c_handler);
 	if (node->tok == TOK_WORD)
 	{
-		restore_term();
+		restore_term(1);
 		wait_and_ret(exec_cmd(node, NULL, io), io, rets, node);
 		set_used_fd(io.piped);
-		set_term_mode();
+		restore_term(2);
 	}
 	signal(SIGINT, SIG_DFL);
 	return (0);
