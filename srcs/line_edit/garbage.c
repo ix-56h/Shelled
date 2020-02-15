@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:04:37 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/04 05:27:01 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/15 17:14:12 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,10 @@ int		is_finished(char *line)
 	while (i >= 0)
 	{
 		if (line[i] == ' ')
-			i--;
+			--i;
 		else
 		{
-			if (line[i] == '|')
+			if (line[i] == '|' && ((i >= 1 && line[i - 1] != '\\') || i == 0))
 				return (0);
 			else if (line[i] == '&')
 			{
@@ -115,8 +115,8 @@ int		is_finished(char *line)
 			}
 			else
 				return (1);
+			--i;
 		}
-		--i;
 	}
 	return (1);
 }
