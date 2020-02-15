@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/10 16:25:06 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/15 04:50:34 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,5 @@ void			free_sh(t_sh *sh);
 /*
 **	signal.c
 */
-void     		init_signal(void);
-
+void			init_signal(void);
 #endif
