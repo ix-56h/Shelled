@@ -1,38 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansions.h                                       :+:      :+:    :+:   */
+/*   index_end_squote.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/22 02:28:03 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/16 02:50:38 by niguinti         ###   ########.fr       */
+/*   Created: 2020/02/16 02:40:29 by niguinti          #+#    #+#             */
+/*   Updated: 2020/02/16 02:41:47 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_EXPANSIONS_H
-# define FT_EXPANSIONS_H
-
-/*
-**	expansions.c functions
-*/
-
-void	process_expansions(t_node *n);
-
-/*
-**	quote_removal.c functions
-*/
-char	*find_squotes_end(char *w);
-int		find_quotes(char *s);
-void	quote_removal(char **w);
-
-/*
-**	expression.c functions
-*/
-void	process_expression(char **w);
-
-/*
-**	utils/index_end_squote.c
-*/
-int		index_end_squote(char *w, int i);
-#endif
+int		index_end_squote(char *w, int i)
+{
+	i++;
+	while (w[i] && w[i] != '\'')
+		i++;
+	if (w[i] && w[i] == '\'')
+		i++;
+	return (i);
+}

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 04:54:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 22:07:27 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/16 02:46:51 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,28 +57,42 @@ char	*process_simple_parameter(size_t *i, char *word)
 	return (new_word);
 }
 
+int		check_dol(size_t *i, char **w)
+{
+	*i += 1;
+	if (!(*w)[*i] || (*w)[*i] == ' ' || (*w)[*i] == '\n' || (*w)[*i] == '\t')
+		return (2);
+	if ((*w)[*i] == '{')
+		*w = process_parameter(i, *w);
+	else if (ft_isalpha((*w)[*i]) || (*w)[*i] == '_')
+		*w = process_simple_parameter(i, *w);
+	else if ((*w)[*i] == '(')
+		*w = process_substitution(i, *w);
+	return (0);
+}
+
 void	process_expression(char **w)
 {
-	size_t	i;
+	size_t			i;
+	unsigned int	quoted;
 
 	i = 0;
+	quoted = 0;
 	if (!w || !*w)
 		exit(1);
 	while ((*w)[i])
 	{
-		if ((*w)[i] == '$')
+		if ((*w)[i] == '"' && quoted == 2)
+			quoted = 0;
+		else if ((*w)[i] == '"' && quoted == 0)
+			quoted = 2;
+		else if ((*w)[i] == '\'' && quoted == 0)
 		{
-			i++;
-			if (!(*w)[i] || (*w)[i] == ' ' || (*w)[i] == '\n' \
-				|| (*w)[i] == '\t')
-				break ;
-			if ((*w)[i] == '{')
-				*w = process_parameter(&i, *w);
-			else if (ft_isalpha((*w)[i]) || (*w)[i] == '_')
-				*w = process_simple_parameter(&i, *w);
-			else if ((*w)[i] == '(')
-				*w = process_substitution(&i, *w);
+			i = index_end_squote(*w, i);
+			continue ;
 		}
+		else if ((*w)[i] == '$' && check_dol(&i, w) == 2)
+			break ;
 		i++;
 	}
 }

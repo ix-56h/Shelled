@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/02/10 11:09:22 by niguinti         ###   ########.fr        #
+#    Updated: 2020/02/16 02:42:07 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,6 +109,7 @@ C_FILES_builtins = \
 				   builtin_misc.c \
 
 C_FILES_utils = \
+				index_end_squote.c \
 				double_linked_list.c \
 				double_linked_list2.c \
 				double_linked_list3.c \
