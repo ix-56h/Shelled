@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:04:37 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/15 17:14:12 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/16 15:37:21 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,13 @@ int		ft_isallprint(char *str)
 int		sub_is_multiline(char *line, size_t *i, char *finded, char *backslash)
 {
 	if (line[*i] == '\\' && *finded != '\'')
+	{
 		if (line[*i + 1] != '\0')
+		{
 			*i += 2;
+			return (0);
+		}	
+	}
 	if (line[*i] == '"' || line[*i] == '\'')
 	{
 		if (*finded == 0)
