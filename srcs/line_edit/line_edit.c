@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:08:20 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/11 19:27:01 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/16 15:47:48 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void		expend_line_alloc(t_line *line, int readsize)
 
 static int		iterm_fix(t_line *line)
 {
-	if (get_env(g_env, "LC_TERMINAL") && 
+	if (get_env(g_env, "LC_TERMINAL") &&
 			ft_strcmp(get_env(g_env, "LC_TERMINAL"), "iTerm2") == 0)
 	{
 		if ((ft_strlen(line->line) + line->prompt->size)\
@@ -84,7 +84,7 @@ void			write_on_line(t_line *line, int readsize\
 		}
 		term_other(TERM_CLEAR_CUR_END, 1);
 		if (!iterm_fix(line))
-				term_other(TERM_LOAD_CUR, 1);
+			term_other(TERM_LOAD_CUR, 1);
 	}
 }
 

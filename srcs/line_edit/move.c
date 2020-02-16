@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:06:53 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/11 19:32:38 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/16 15:47:55 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	move_cur_on_newline(t_line *line)
 	if ((line->index + line->prompt->size) % winsize.ws_col == 0)
 	{
 		term_other(TERM_DOWN, 1);
-		if (get_env(g_env, "LC_TERMINAL") && 
+		if (get_env(g_env, "LC_TERMINAL") &&
 			ft_strcmp(get_env(g_env, "LC_TERMINAL"), "iTerm2") == 0)
 			term_other(TERM_STARTLINE, 1);
 		else

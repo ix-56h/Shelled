@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 23:06:50 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/09 17:44:50 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/16 15:48:16 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,6 @@ int		set_redir_fd(t_redir_list *redir)
 			}
 			else if (dup2(redir->out, redir->in) == -1)
 				return (EXIT_FAILURE);
-			//close(redir->out);
-			//redir->out = -2;
 			redir = redir->next;
 		}
 	}
