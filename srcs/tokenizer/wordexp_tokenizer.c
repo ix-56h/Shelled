@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:46 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/02 00:39:49 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/21 14:51:43 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	lex_match_dquote(char *s, int *anchor, t_lifo *stack)
 				return (0);
 			continue;
 		}
-		else if (s[*anchor] != '\\' && esc)
+		else if (esc)
 			esc = 0;
 		*anchor += 1;
 	}
