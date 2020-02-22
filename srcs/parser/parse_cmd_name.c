@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:16:09 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/01 00:57:19 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/22 02:41:44 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_node	*parse_cmd_name(t_sh *sh)
 	node = NULL;
 	if (sh->tok.tok == TOK_WORD)
 	{
-		if (!strchr(sh->tok.data, '='))
+		if (!ft_strchr(sh->tok.data, '='))
 		{
 			applie_rule_one(sh->input, &sh->tok);
 			node = save_node(NULL, sh->tok, NULL, ARGS);
