@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:36 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/12 23:59:04 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/24 16:22:28 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef enum		e_toktype {
 	TOK_POSIX_MAX,
 	TOK_RPAREN,
 	TOK_LPAREN,
+	TOK_RBRACE,
+	TOK_LBRACE,
 	TOK_ESCAPE,
 	TOK_SUBSTITUTION,
 	TOK_NEWLINE,

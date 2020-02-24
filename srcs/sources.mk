@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/02/16 02:42:07 by niguinti         ###   ########.fr        #
+#    Updated: 2020/02/24 16:23:14 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ C_FILES_parser = \
 				 parse_scripting_part2.c \
 				 parse_scripting_part3.c \
 				 parse_scripting_part4.c \
+				 parse_brace_group.c \
 				 parse_separator.c \
 				 parse_separator_op.c \
 				 parse_sequential_sep.c \

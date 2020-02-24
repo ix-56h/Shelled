@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:48 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/24 13:53:59 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/24 16:27:02 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static t_chr_class		g_get_chr_class[255] =
 	[']'] = CHR_WORD,
 	['@'] = CHR_WORD,
 	[','] = CHR_WORD,
-	['{'] = CHR_RBRACE,
-	['}'] = CHR_LBRACE,
+	['{'] = CHR_LBRACE,
+	['}'] = CHR_RBRACE,
 	[')'] = CHR_RPAREN,
 	['('] = CHR_LPAREN,
 	['*'] = CHR_WORD,
@@ -126,6 +126,8 @@ static t_toktype		g_get_tok_type[CHR_MAX] = {
 	[CHR_SEMI] = TOK_OPERATOR,
 	[CHR_LPAREN] = TOK_LPAREN,
 	[CHR_RPAREN] = TOK_RPAREN,
+	[CHR_LBRACE] = TOK_LBRACE,
+	[CHR_RBRACE] = TOK_RBRACE,
 	[CHR_NEWLINE] = TOK_NEWLINE
 };
 #endif

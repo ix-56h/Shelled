@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/07 16:12:27 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/24 16:26:04 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+
+int			is_grouping_tok(t_toktype t)
+{
+	if (t == TOK_LPAREN || t == TOK_RPAREN
+		|| t == TOK_RBRACE || t == TOK_LBRACE)
+		return (1);
+	return (0);
+}
 
 t_toktype	get_true_toktype(char *s, t_toktype toktype, int *i)
 {
@@ -57,7 +65,7 @@ g_get_chr_class[(unsigned char)s[anchor]])] || prev_class == CHR_ESCAPE))
 		prev_class = g->chr_class;
 		anchor++;
 	}
-	g->toktype == TOK_LPAREN || g->toktype == TOK_RPAREN ? (anchor += 1) : 0;
+	is_grouping_tok(g->toktype) ? (anchor += 1) : 0;
 	g->token = save_token(s, anchor, g->toktype);
 	return (anchor);
 }
