@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 18:53:43 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 05:03:35 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/24 18:07:28 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	sub_read_loop(t_line **line, t_dl_node **head, char mode\
 	char	buff[BUFFSIZE + 1];
 
 	ft_bzero(buff, sizeof(char) * BUFFSIZE + 1);
-	if ((readsize = read(STDIN_FILENO, buff, BUFFSIZE)) > -1)
+	if ((readsize = read(STDIN_FILENO, buff, BUFFSIZE)) > -1 && ft_strlen(buff))
 	{
 		while (!test_term_size())
 			;
