@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:48 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/15 04:51:36 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/24 13:53:59 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static t_chr_class		g_get_chr_class[255] =
 	[','] = CHR_WORD,
 	['{'] = CHR_RBRACE,
 	['}'] = CHR_LBRACE,
+	[')'] = CHR_RPAREN,
+	['('] = CHR_LPAREN,
 	['*'] = CHR_WORD,
 	['-'] = CHR_DASH,
 	['\\'] = CHR_ESCAPE,
@@ -46,7 +48,8 @@ static t_chr_class		g_get_chr_class[255] =
 	['!'] = CHR_BANG,
 	['\''] = CHR_SQUOTE,
 	['"'] = CHR_DQUOTE,
-	['&'] = CHR_AND
+	['&'] = CHR_AND,
+	['?'] = CHR_WORD
 };
 
 static int				g_abstract_token[TOK_MAX] =
