@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:18 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 05:17:42 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/24 16:20:55 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ enum		e_id
 	DEFAULT_ID,
 	ARGS,
 	SUBSH,
+	GRP,
 	PIPESEQ,
 	PIPE,
 	ANDOR,

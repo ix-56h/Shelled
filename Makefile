@@ -6,12 +6,12 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2020/02/10 15:20:18 by niguinti         ###   ########.fr        #
+#    Updated: 2020/02/24 16:56:04 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := 21sh
-PROJECT := 21SH
+NAME := 42sh
+PROJECT := 42SH
 AUTHORS := Niguinti
 
 RM = /bin/rm
