@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 01:49:03 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/16 15:49:16 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/24 16:55:27 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "sh.h"
 
 # define BUFFSIZE				512
-# define PROMPT_DEFAULT			"21sh> "
+# define PROMPT_DEFAULT			"42sh> "
 # define PROMPT_SUBLINE			"> "
 # define PROMPT_HEREDOC			"heredoc> "
 # define PROMPT_CMD				"command> "

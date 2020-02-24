@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/15 04:50:34 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/24 16:55:39 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <pwd.h>
 # include "ast.h"
 # define FT_PATH_MAX 256
-# define SHELL_NAME "21sh"
+# define SHELL_NAME "42sh"
 
 int				g_exit;
 char			**g_env;

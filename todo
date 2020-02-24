@@ -30,7 +30,6 @@ Operator:
 Variable definition name=value
 
 Partie modulaire :
--	Les inhibiteurs”(double quote),’(simple quote) et\(backslash)
 -	Les commandes groupées et sous-shell :
 -	La substitution de commande $()
 -	La gestion des alias via les built-ins alias et unalias
