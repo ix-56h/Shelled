@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:35:42 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/15 17:19:30 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/25 14:59:21 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int				restore_term(int act)
 	if (act == 2)
 		if ((termios = save_initialised_term(0)) == NULL)
 			return (-1);
+	if (act == 3)
+		termios->c_lflag &= ~(ICANON | ECHO);
 	if (tcsetattr(STDIN_FILENO, 0, termios) == -1)
 		return (-1);
 	return (1);
