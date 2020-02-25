@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:46 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/21 14:51:43 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/25 17:38:03 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,8 @@ int	lex_match_command_sub(char *s, int *anchor, t_lifo *stack)
 	char	close;
 
 	close = (s[*anchor] == '`' ? '`' : ')');
-	if (!command_sub_skip_whitespaces(s, anchor, stack))
-		return (0);
 	while (s[*anchor] && s[*anchor] != close)
 	{
-		if ((s[*anchor] == '(' || s[*anchor] == '`')
-			&& !lex_match_command_sub(s, anchor, stack))
-			return (0);
 		if (g_wexp_rules[BQU][(int)(s[*anchor])])
 		{
 			if (!lex_sequence(s, anchor, stack))
@@ -109,7 +104,9 @@ int	lex_match_dol(char *s, int *anchor, t_lifo *stack)
 	*anchor += 1;
 	if (s[*anchor] == '(')
 	{
-		if (lex_match_command_sub(s, anchor, stack))
+		if (is_arithmetic(s + *anchor + 1))
+			ignore_arithmetic(s, anchor);
+		else if (lex_match_command_sub(s, anchor, stack))
 			skip_whitespaces(s, anchor);
 		else
 			return (0);

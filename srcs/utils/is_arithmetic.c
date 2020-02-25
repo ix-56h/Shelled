@@ -1,45 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wordexp_misc.c                                     :+:      :+:    :+:   */
+/*   is_arithmetic.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/19 06:36:38 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/25 17:38:05 by niguinti         ###   ########.fr       */
+/*   Created: 2020/02/25 17:18:51 by niguinti          #+#    #+#             */
+/*   Updated: 2020/02/25 17:21:45 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include <stdio.h>
 
-int		ignore_arithmetic(char *s, int *a)
+int		is_arithmetic(char *w)
 {
-	while (s[*a])
+	size_t	i;
+
+	i = 1;
+	while (w[i] && i < 3)
 	{
-		if (s[*a] == '(')
-		{
-			while (s[*a] && s[*a] != ')')
-				(*a)++;
-			if (s[*a] != ')')
-				return (0);
-			(*a)++;
-		}
-		else if (s[*a] == ')')
+		if (w[i] == '(')
 			return (1);
-		(*a)++;
+		i++;
 	}
 	return (0);
-}
-
-int		is_whitespace(char c)
-{
-	if (c == ' ' || c == '\t')
-		return (1);
-	return (0);
-}
-
-void	skip_whitespaces(char *s, int *a)
-{
-	while (s[*a] && is_whitespace(s[*a]))
-		(*a)++;
 }

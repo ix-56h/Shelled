@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:36 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/24 16:22:28 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/25 17:28:28 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,11 +147,15 @@ int					lex_match_dol(char *s, int *anchor, t_lifo *stack);
 */
 int					is_whitespace(char c);
 void				skip_whitespaces(char *s, int *a);
-int					command_sub_skip_whitespaces(char *s, int *anchor\
-												, t_lifo *stack);
+int					ignore_arithmetic(char *s, int *a);
 
 /*
 **	gnt_standalone.c
 */
 t_gnt				*gnt_standalone(size_t value);
+
+/*
+**	utils/is_arithmetic.c
+*/
+int					is_arithmetic(char *w);
 #endif

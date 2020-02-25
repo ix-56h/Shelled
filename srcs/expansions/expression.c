@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 04:54:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/25 16:33:47 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/25 16:56:06 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		check_dol(size_t *i, char **w)
 		*w = process_parameter(i, *w);
 	else if (ft_isalpha((*w)[*i]) || (*w)[*i] == '_')
 		*w = process_simple_parameter(i, *w);
-	else if ((*w)[*i] == '(')
+	else if ((*w)[*i] == '(' && !is_arithmetic((*w) + *i))
 		*w = process_substitution(i, *w);
 	return (0);
 }
