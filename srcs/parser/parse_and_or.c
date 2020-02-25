@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:10:28 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/07 18:35:56 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/25 12:02:55 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ t_node	*parse_and_or(t_sh *sh)
 		return (NULL);
 	if ((node = parse_pipeline(sh)))
 	{
-		while ((nod2 = parse_pipeline(sh)))
-			node = binnode(node, nod2, nod2->left);
 		while ((tok = sh->tok).tok == TOK_AND_IF || tok.tok == TOK_OR_IF)
 		{
 			sh->tok = get_next_token(sh->input, sh->stack.errors);

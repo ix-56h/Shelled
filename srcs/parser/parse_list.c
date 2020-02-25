@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:10:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/01/30 12:10:10 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/25 12:09:48 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ t_node	*parse_list(t_sh *sh)
 			{
 				free(nod2->data);
 				free(nod2);
+				error_push(sh->stack.errors, PARSE_ERROR, sh->tok.data);
+				return (node);
 			}
 		}
 	}
