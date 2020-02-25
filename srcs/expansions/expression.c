@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 04:54:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/25 15:02:54 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/25 16:33:47 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 #include "sh.h"
 #include "expansions.h"
 #include "libft.h"
-
-char	*process_substitution(size_t *i, char *word)
-{
-	(void)i;
-	(void)word;
-	return (NULL);
-}
 
 char	*process_parameter(size_t *i, char *word)
 {
