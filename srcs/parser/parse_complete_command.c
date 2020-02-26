@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 12:09:43 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/26 06:05:08 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/26 07:06:41 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ t_node	*parse_complete_command(t_sh *sh)
 	{
 		if ((nod2 = parse_separator_op(sh)))
 		{
-			binnode(node->right, nod2, NULL);
-			node = binnode(node->left, node, nod2);
+			//binnode(node->right->left, node->right, nod2);
+			node = binnode(node, nod2, nod2->left);
 		}
 	}
 	return (node);
