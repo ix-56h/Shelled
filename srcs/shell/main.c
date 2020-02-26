@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/25 14:59:30 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/26 19:28:36 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void		process_sh(t_sh *sh)
 			process_expansions(sh->node);
 			if (sh->f.ast_draw)
 				tree_draw(sh->node);
-			visit(sh->node);
+			visit(sh->node, &g_job_head);
+			clean_job();
 		}
 	}
 }
@@ -60,6 +61,7 @@ int			main(int ac, char **av, char **envp)
 	sh.f.ast_draw = 0;
 	if (init_shell(&sh, ac, av, envp) == 0)
 		return (EXIT_FAILURE);
+	g_job_head = NULL;
 	init_signal();
 	while (1)
 	{

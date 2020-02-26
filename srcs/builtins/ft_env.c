@@ -91,7 +91,7 @@ static int	exec_it(char **env, char **argv)
 	io = (t_io_lists) {NULL, NULL};
 	node.data = *argv;
 	node.args = argv;
-	ret = exec_cmd(&node, env, io);
+	ret = exec_cmd(&node, env, io, NULL); //job a revoir
 	if (!lookforbuiltin(*argv))
 		wait(&ret);
 	return (ret);

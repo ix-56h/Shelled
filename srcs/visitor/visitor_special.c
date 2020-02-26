@@ -18,7 +18,7 @@
 #include "ligne.h"
 #include "exec.h"
 
-int		visit_and_if(t_node *node, t_io_lists io, int *rets)
+int		visit_and_if(t_node *node, t_io_lists io, t_job **job)
 {
 	int ret;
 	int err;
@@ -26,15 +26,15 @@ int		visit_and_if(t_node *node, t_io_lists io, int *rets)
 	if (node->left && node->right)
 	{
 		ret = -1;
-		err = (*g_visit_rules[node->left->tok])(node->left, io, &ret);
+		err = (*g_visit_rules[node->left->tok])(node->left, io, job);
 		if (ret == 0 && err == 0)
-			if (!(*g_visit_rules[node->right->tok])(node->right, io, rets))
+			if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
 				return (0);
 	}
 	return (1);
 }
 
-int		visit_or_if(t_node *node, t_io_lists io, int *rets)
+int		visit_or_if(t_node *node, t_io_lists io, t_job **job)
 {
 	int ret;
 	int err;
@@ -42,15 +42,15 @@ int		visit_or_if(t_node *node, t_io_lists io, int *rets)
 	if (node->left && node->right)
 	{
 		ret = 0;
-		err = (*g_visit_rules[node->left->tok])(node->left, io, &ret);
+		err = (*g_visit_rules[node->left->tok])(node->left, io, job);
 		if (ret != 0 || err != 0)
-			if (!(*g_visit_rules[node->right->tok])(node->right, io, rets))
+			if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
 				return (0);
 	}
 	return (1);
 }
 
-int		visit_pipe(t_node *node, t_io_lists io, int *rets)
+int		visit_pipe(t_node *node, t_io_lists io, t_job **job)
 {
 	int	pipefd[2];
 
@@ -58,17 +58,16 @@ int		visit_pipe(t_node *node, t_io_lists io, int *rets)
 	{
 		if (pipe(pipefd) == -1)
 			return (1);
-		dl_push_node((t_dl_node **)&io.piped\
-						, malloc(sizeof(t_pipe_list)), NULL);
+		dl_push_node((t_dl_node **)&io.piped, ft_calloc(sizeof(t_pipe_list)));
 		io.piped->fd[0] = pipefd[0];
 		io.piped->fd[1] = pipefd[1];
 		io.piped->used = 0;
-		if ((*g_visit_rules[node->left->tok])(node->left, io, rets))
+		if ((*g_visit_rules[node->left->tok])(node->left, io, job))
 		{
 			close(pipefd[WRITE_END]);
 			set_used_fd(io.piped);
 		}
-		if (!(*g_visit_rules[node->right->tok])(node->right, io, rets))
+		if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
 		{
 			dl_del_one((t_dl_node *)io.piped);
 			return (0);
@@ -78,9 +77,8 @@ int		visit_pipe(t_node *node, t_io_lists io, int *rets)
 	return (1);
 }
 
-int		visit_semi(t_node *node, t_io_lists io, int *rets)
+int		visit_semi(t_node *node, t_io_lists io, t_job **job)
 {
 	(void)io;
-	(void)rets;
-	return (visit(node->left) + visit(node->right));
+	return (visit(node->left, job) + visit(node->right, job));
 }

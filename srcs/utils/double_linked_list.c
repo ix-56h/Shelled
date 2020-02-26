@@ -60,9 +60,8 @@ int		dl_append(t_dl_node **head_ref, void *new_data)
 	return (0);
 }
 
-int		dl_push_node(t_dl_node **head_ref, t_dl_node *new_node, void *new_data)
+int		dl_push_node(t_dl_node **head_ref, t_dl_node *new_node)
 {
-	new_node->data = new_data;
 	new_node->next = *head_ref;
 	new_node->prev = NULL;
 	if (*head_ref != NULL)
@@ -71,22 +70,16 @@ int		dl_push_node(t_dl_node **head_ref, t_dl_node *new_node, void *new_data)
 	return (0);
 }
 
-int		dl_append_node(t_dl_node **head_ref, t_dl_node *new_node\
-		, void *new_data)
+int		dl_append_node(t_dl_node **head_ref, t_dl_node *new_node)
 {
 	t_dl_node	*nav_node;
 
 	nav_node = *head_ref;
 	while (nav_node && nav_node->next)
 		nav_node = nav_node->next;
-	if (!(new_node = ft_calloc(sizeof(t_dl_node))))
-		return (-1);
-	new_node->data = new_data;
+	new_node->prev = nav_node;
 	if (nav_node)
-	{
 		nav_node->next = new_node;
-		new_node->prev = nav_node;
-	}
 	else
 		*head_ref = new_node;
 	return (0);

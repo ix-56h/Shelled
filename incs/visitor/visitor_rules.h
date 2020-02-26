@@ -15,8 +15,8 @@
 # include "visitor.h"
 # include "tokenizer.h"
 
-int		(*g_visit_rules[TOK_POSIX_MAX]) (t_node *node\
-		, t_io_lists io, int *rets) =
+int		(*g_visit_rules[TOK_POSIX_MAX]) (t_node *node, t_io_lists io,
+			t_job **job) =
 {
 	[TOK_NAME] = visit_cmd,
 	[TOK_ASSIGNMENT_WORD] = NULL,

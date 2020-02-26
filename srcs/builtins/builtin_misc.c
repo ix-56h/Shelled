@@ -44,5 +44,7 @@ t_builtin	lookforbuiltin(char *data)
 		return (ft_env);
 	else if (ft_strcmp(data, "exit") == 0)
 		return (ft_exit);
+	else if (ft_strcmp(data, "djob") == 0)
+		return (ft_debug_job);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/24 16:55:10 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/24 21:43:19 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,57 +46,24 @@ int				exec_heredoc(t_fifo *stack)
 	return ((err) ? 0 : 1);
 }
 
-static void		ctrl_c_handler(int lel)
+int				visit_cmd(t_node *node, t_io_lists io, t_job **job)
 {
-	(void)lel;
-}
-
-void			wait_and_ret(int tmp, t_io_lists io, int *rets, t_node *node)
-{
-	int	ret_value;
-
-	ret_value = 1;
-	if (rets)
-		*rets = tmp;
-	if ((io.piped && !io.piped->next && io.piped->used == 1) || !io.piped)
-	{
-		tmp = 1;
-		while (tmp > 0)
-			tmp = wait(&ret_value);
-		if (ret_value == 2)
-			ft_putchar('\n');
-		if (rets && *rets == 0 && !lookforbuiltin(node->data))
-			*rets = ret_value;
-	}
-}
-
-int				visit_cmd(t_node *node, t_io_lists io, int *rets)
-{
-	int	ctrlc;
-
-	ctrlc = 0;
-	signal(SIGINT, ctrl_c_handler);
-	if (node->tok == TOK_WORD)
-	{
-		restore_term(1);
-		wait_and_ret(exec_cmd(node, NULL, io), io, rets, node);
-		set_used_fd(io.piped);
-		restore_term(2);
-	}
-	signal(SIGINT, SIG_DFL);
+	exec_command(node, &io, job);
 	return (0);
 }
 
-int				visit(t_node *root)
+int				visit(t_node *root, t_job **job)
 {
 	t_io_lists io;
-
+	
 	if (!root)
 		return (0);
 	if (g_visit_rules[root->tok])
 	{
 		io = (t_io_lists){.redir = NULL, .piped = NULL};
-		if (!(*g_visit_rules[root->tok])(root, io, NULL))
+		dl_append_node(job, ft_calloc(sizeof(t_process)));
+		t_job * last_job = dl_get_last(*job);
+		if (!(*g_visit_rules[root->tok])(root, io, &last_job))
 			return (0);
 	}
 	else

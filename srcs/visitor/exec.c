@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/13 06:55:16 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/26 19:39:55 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,13 @@
 #include "builtins.h"
 #include "exec.h"
 
-static void		close_all_pipe(t_io_lists io)
-{
-	t_pipe_list	*piped;
 
-	piped = io.piped;
-	while (piped)
-	{
-		close(piped->fd[0]);
-		close(piped->fd[1]);
-		piped = piped->next;
-	}
-}
 
 int				exec_with_fork(t_node *cmd, char **env, t_io_lists io,
-					char *cmd_path)
+					t_job *job)
 {
-	char	*program;
 	int		pid;
 
-	program = (cmd_path) ? cmd_path : cmd->data;
 	if ((pid = fork()) == -1)
 		return (0);
 	else if (pid == 0)
@@ -43,17 +30,17 @@ int				exec_with_fork(t_node *cmd, char **env, t_io_lists io,
 		close_unused_pipe_fd(io.piped);
 		close_all_pipe(io);
 		set_redir_fd(io.redir);
-		execve(program, cmd->args, ((env) ? env : g_env));
+		execve(cmd->data, cmd->args, ((env) ? env : g_env));
 		exit(1);
 	}
 	else
 	{
 		close_used_pipe_fd(io.piped);
-		return (1);
+		return (pid);
 	}
 }
 
-int				exec_without_fork(t_node *cmd, char **env, t_io_lists io)
+int				exec_builtin_no_fork(t_node *cmd, char **env, t_io_lists io)
 {
 	t_builtin	exec_builtin;
 	int			ret;
@@ -69,27 +56,62 @@ int				exec_without_fork(t_node *cmd, char **env, t_io_lists io)
 	return (ret);
 }
 
-int				exec_cmd(t_node *cmd, char **env, t_io_lists io)
+int				exec_builtin_fork(t_node *cmd, char **env, t_io_lists io)
 {
-	int		err;
-	char	*cmd_path;
+	int		pid;
+	int		return_value;
 
-	cmd_path = NULL;
-	err = 0;
-	if (lookforbuiltin(cmd->data))
-		err = exec_without_fork(cmd, env, io);
-	else if (is_path(cmd->data))
+	if ((pid = fork()) == -1)
+		return (0);
+	else if (pid == 0)
 	{
-		if ((err = test_path(cmd)) == 0)
-			err = exec_with_fork(cmd, env, io, NULL);
+		set_pipe_fd(io.piped);
+		close_unused_pipe_fd(io.piped);
+		close_all_pipe(io);
+		set_redir_fd(io.redir);
+		return_value = lookforbuiltin(cmd->data)(cmd->args,
+			((env) ? &env : &g_env));
+		exit(return_value);
 	}
 	else
 	{
-		if ((err = test_env(cmd, env, &cmd_path)) == 0)
-		{
-			exec_with_fork(cmd, env, io, cmd_path);
-			ft_free(cmd_path);
-		}
+		close_used_pipe_fd(io.piped);
+		return (pid);
+	}
+}
+
+int				builtin_controler(t_node *cmd, char **env, t_io_lists io, t_job *jobs)
+{
+	int		pid;
+	int		return_value;
+
+	if (io.piped)
+		pid = exec_builtin_fork(cmd, env, io);
+	else
+	{
+		pid = -1;
+		return_value = exec_builtin_no_fork(cmd, env, io);
+		//add job pour la return value
+	}
+	return (pid);
+}
+
+int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
+{
+	int		err;
+
+	err = 0; //separer err et pid
+	if (lookforbuiltin(cmd->data))
+		err = builtin_controler(cmd, env, io, job);
+	else if (is_path(cmd->data))
+	{
+		if ((err = test_path(cmd)) == 0)
+			err = exec_with_fork(cmd, env, io, job);
+	}
+	else
+	{
+		if ((err = test_env(cmd, env)) == 0)
+			err = exec_with_fork(cmd, env, io, job);
 	}
 	return (err);
 }

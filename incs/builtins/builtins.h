@@ -32,6 +32,7 @@ int			ft_setenv(char **argv, char ***env);
 int			ft_take(char **argv, char ***env);
 int			ft_unsetenv(char **argv, char ***env);
 int			ft_env(char **argv, char ***tenv);
+int			ft_debug_job(char **argv, char ***tenv);
 t_builtin	lookforbuiltin(char *data);
 int			change_path(char *new_path, char **oldpath, char ***tenv);
 int			set_new_path(char ***tenv, char *newpath);

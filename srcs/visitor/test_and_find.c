@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:37:06 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 03:36:22 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/26 19:40:01 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,18 @@ int		test_path(t_node *cmd)
 **	check if there is an error on the file
 */
 
-int		test_env(t_node *cmd, char **env, char **cmd_path)
+int		test_env(t_node *cmd, char **env)
 {
-	if ((*cmd_path = search_path(cmd, env)))
+	char	*cmd_path;
+
+	if ((cmd_path = search_path(cmd, env)))
 	{
-		if (access(*cmd_path, X_OK) == 0)
+		if (access(cmd_path, X_OK) == 0)
+		{
+			free(cmd->data);
+			cmd->data = cmd_path;
 			return (0);
+		}
 		else
 			return (err_exec(cmd->data, ERR_PATH_ACCES));
 	}
