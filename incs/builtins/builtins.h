@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:07:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/10 02:05:10 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/26 22:57:50 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int			ft_take(char **argv, char ***env);
 int			ft_unsetenv(char **argv, char ***env);
 int			ft_env(char **argv, char ***tenv);
 int			ft_debug_job(char **argv, char ***tenv);
+int			ft_return(char **argv, char ***tenv);
 t_builtin	lookforbuiltin(char *data);
 int			change_path(char *new_path, char **oldpath, char ***tenv);
 int			set_new_path(char ***tenv, char *newpath);

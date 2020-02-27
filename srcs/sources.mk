@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/02/26 19:29:11 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/02/26 22:54:19 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -117,6 +117,7 @@ C_FILES_builtins = \
 				   ft_exit.c \
 				   builtin_misc.c \
 				   ft_debug_job.c \
+				   ft_return.c \
 
 C_FILES_utils = \
 				index_end_squote.c \

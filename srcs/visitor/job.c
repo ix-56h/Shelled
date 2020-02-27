@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/26 19:30:38 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/26 23:16:13 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int			job_is_finish(t_job *job)
 	process = (t_process*)job->data;
 	while (process)
 	{
-		if (process->is_finish == 0)
+		if (process->is_finish == 0 && process->pid != UNUSED_JOB)
 			return (0);
 		process = process->next;
 	}
@@ -62,7 +62,7 @@ void		clean_job(void)
 	while (nav)
 	{
 		next = nav->next;
-		if (job_is_finish(nav) && nav->next)
+		if (job_is_finish(nav) && nav->next && nav->next->next)
 		{
 			if (head == nav)
 				g_job_head = next;

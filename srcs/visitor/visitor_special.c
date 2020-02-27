@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:35:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/10 02:36:13 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/27 01:24:05 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,32 @@
 
 int		visit_and_if(t_node *node, t_io_lists io, t_job **job)
 {
-	int ret;
-	int err;
-
+	int			err;
+	t_process	*process;
+	
 	if (node->left && node->right)
 	{
-		ret = -1;
 		err = (*g_visit_rules[node->left->tok])(node->left, io, job);
-		if (ret == 0 && err == 0)
-			if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
-				return (0);
+		process = (t_process *)(*job)->data;
+		if (process->pid != ERR_JOB && process->ret == 0)
+			if (err == 0)
+				if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
+					return (0);
 	}
 	return (1);
 }
 
 int		visit_or_if(t_node *node, t_io_lists io, t_job **job)
 {
-	int ret;
-	int err;
+	t_process	*process;
+	int			err;
 
 	if (node->left && node->right)
 	{
-		ret = 0;
 		err = (*g_visit_rules[node->left->tok])(node->left, io, job);
-		if (ret != 0 || err != 0)
+		process = (t_process *)(*job)->data;
+		
+		if (process->pid == ERR_JOB || process->ret != 0 || err != 0)
 			if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
 				return (0);
 	}

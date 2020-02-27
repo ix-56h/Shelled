@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/26 19:28:21 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/27 00:38:11 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void		ctrl_c_handler(int lel)
 	ft_putchar('\n');
 }
 
-void			wait_and_ret(t_node *node, t_io_lists io, t_job *job, int pid)
+void			wait_and_ret(t_node *node, t_io_lists io, t_job *job)
 {
 	int			ret_value;
 	int			ret_pid;
@@ -46,28 +46,25 @@ void			wait_and_ret(t_node *node, t_io_lists io, t_job *job, int pid)
 			else if (ret_pid != -1)
 				ft_dprintf(2, SHELL_NAME": error unknow wait pid: %i\n", ret_pid);
 		}
-		/*if (ret_value == 2)
-			ft_putchar('\n');*/
 	}
 }
 
 int	exec_command(t_node *node, t_io_lists *io, t_job **job)
 {
 	int	ctrlc;
-	int	pid;
+	int	err;
 
 	ctrlc = 0;
 	signal(SIGINT, ctrl_c_handler);
-	signal(SIGTSTP, SIG_DFL);
 	if (node->tok == TOK_WORD)
 	{
 		restore_term(1);
-		dl_append_node((t_dl_node **)&(*job)->data, (t_dl_node *)create_process(-10));
-		pid = exec_cmd(node, NULL, *io, *job);
-		wait_and_ret(node, *io, *job, pid);
+		dl_append_node((t_dl_node **)&(*job)->data, (t_dl_node *)create_process(UNUSED_JOB));
+		err = exec_cmd(node, NULL, *io, *job);
+		wait_and_ret(node, *io, *job);
 		set_used_fd(io->piped);
 		restore_term(2);
 	}
 	signal(SIGINT, SIG_DFL);
-	return (0);	
+	return (err);	
 }

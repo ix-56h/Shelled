@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:46:14 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/26 19:31:36 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/27 01:01:18 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define FT_VISITOR_H
 # define WRITE_END 1
 # define READ_END 0
+# define UNUSED_JOB		-10
+# define BUILTIN_JOB	-2
+# define ERR_JOB		-20
 # include "ast.h"
 # include "tokenizer.h"
 # include "double_linked_list.h"
