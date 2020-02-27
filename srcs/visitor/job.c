@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/26 23:16:13 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/27 15:34:02 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ void		clean_job(void)
 		if (job_is_finish(nav) && nav->next && nav->next->next)
 		{
 			if (head == nav)
+			{
 				g_job_head = next;
+				head = g_job_head;
+			}
 			dl_free_list(nav->data);
 			dl_del_one(nav);
 		}
