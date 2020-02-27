@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/02/25 17:21:13 by niguinti         ###   ########.fr        #
+#    Updated: 2020/02/27 16:30:36 by ezonda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -131,5 +131,9 @@ C_FILES_expansions = \
 					 quote_removal.c \
 					 expression.c \
 					 substitution.c \
+					 parameter_expansions.c \
+					 parameter_expansions2.c \
+					 expansions_utils.c \
+					 dispatch_expansions.c \
 
 C_FILES += $(foreach SUB_DIR,$(SUB_DIRS),$(addprefix $(SUB_DIR)/,$(C_FILES_$(SUB_DIR))))

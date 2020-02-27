@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 04:54:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/25 16:56:06 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/02/27 16:35:19 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,17 @@
 #include "expansions.h"
 #include "libft.h"
 
+#include <stdio.h>
+
 char	*process_parameter(size_t *i, char *word)
 {
-	(void)i;
+	char	*modifier;
+
+	modifier = get_expansion_format(i, word);
+	if (!modifier)
+		word = process_simple_parameter(i, remove_brace(word));
+	else
+		ft_dispatch_exp(word, modifier);
 	return (word);
 }
 
