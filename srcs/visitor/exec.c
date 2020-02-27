@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/27 01:06:22 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/27 01:36:04 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int				exec_builtin_fork(t_node *cmd, char **env, t_io_lists io, t_job *job)
 int				builtin_controler(t_node *cmd, char **env, t_io_lists io, t_job *job)
 {
 	int		err;
-	int		return_value;
 
 	if (io.piped)
 		err = exec_builtin_fork(cmd, env, io, job);

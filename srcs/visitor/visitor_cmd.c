@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/27 00:38:11 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/27 01:37:51 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void		ctrl_c_handler(int lel)
 	ft_putchar('\n');
 }
 
-void			wait_and_ret(t_node *node, t_io_lists io, t_job *job)
+void			wait_and_ret(t_io_lists io, t_job *job)
 {
 	int			ret_value;
 	int			ret_pid;
@@ -56,15 +56,12 @@ int	exec_command(t_node *node, t_io_lists *io, t_job **job)
 
 	ctrlc = 0;
 	signal(SIGINT, ctrl_c_handler);
-	if (node->tok == TOK_WORD)
-	{
-		restore_term(1);
-		dl_append_node((t_dl_node **)&(*job)->data, (t_dl_node *)create_process(UNUSED_JOB));
-		err = exec_cmd(node, NULL, *io, *job);
-		wait_and_ret(node, *io, *job);
-		set_used_fd(io->piped);
-		restore_term(2);
-	}
+	restore_term(1);
+	dl_append_node((t_dl_node **)&(*job)->data, (t_dl_node *)create_process(UNUSED_JOB));
+	err = exec_cmd(node, NULL, *io, *job);
+	wait_and_ret(*io, *job);
+	set_used_fd(io->piped);
+	restore_term(2);
 	signal(SIGINT, SIG_DFL);
 	return (err);	
 }

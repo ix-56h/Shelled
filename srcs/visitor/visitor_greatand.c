@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 19:29:41 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/24 21:42:06 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/27 01:38:22 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 int	exec_great_and(t_node *node, t_io_lists *io, t_job **job)
 {
+	(void)job;
 	if (!ft_isalldigit(node->right->data)
 			&& ft_strcmp(node->right->data, "-") != 0)
 		return (err_exec(node->right->data, ERR_REDIR));

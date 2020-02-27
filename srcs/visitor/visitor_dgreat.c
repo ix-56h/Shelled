@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 21:33:37 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/26 19:27:30 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/27 01:39:04 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	exec_dgreat(t_node *node, t_io_lists *io, t_job **job)
 {
 	int	fd;
 
+	(void)job;
 	if ((fd = open(node->right->data,
 				(O_CREAT | O_WRONLY | O_APPEND), 0644)) == -1)
 		return (err_exec(node->right->data, ERR_PATH_ACCES));

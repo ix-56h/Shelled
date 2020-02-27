@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 21:33:37 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/24 21:41:44 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/27 01:38:57 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	exec_dless(t_node *node, t_io_lists *io, t_job **job)
 	int		pipefd[2];
 	char	*str;
 
+	(void)job;
 	str = node->right->data;
 	if (pipe(pipefd) == -1)
 		return (1);

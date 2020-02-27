@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:59:58 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/14 00:09:38 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/02/27 01:35:57 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ int		visit_lessgreat(t_node *node, t_io_lists io, t_job **job)
 		}
 		dl_del_one((t_dl_node *)io.redir);
 	}*/
+	(void)node;
+	(void)io;
+	(void)job;
 	return (1);
 }
 
@@ -74,8 +77,6 @@ int		visit_left_redi(t_node *node, t_io_lists io, t_job **job)
 
 int		visit_right_redi(t_node *node, t_io_lists io, t_job **job)
 {
-	int		fd;
-
 	if (node->left && node->right && node->right->tok == TOK_WORD)
 	{
 		exec_right_redi(node, &io, job);
