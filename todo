@@ -13,6 +13,9 @@ Builtins:
 	- jobs 
 	- bg
 
+- set
+- unset
+
 Exp:
 -	${}
 	- handle special parameters like "?"
