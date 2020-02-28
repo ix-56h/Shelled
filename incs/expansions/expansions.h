@@ -6,17 +6,16 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 02:28:03 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/27 16:00:15 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/28 16:35:36 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_EXPANSIONS_H
 # define FT_EXPANSIONS_H
 
-
 typedef char	*t_format_ft(char *, char *);
 
-typedef enum	e_exp_mod{
+typedef enum	e_exp_mod{ // useless now
 	MOD_USE_DEFAULT,
 	MOD_ASSIGN_DEFAULT,
 	MOD_INDICATE_ERROR,
@@ -87,12 +86,11 @@ char	*remove_large_prefix(char *param, char *word);
 char	*remove_brace(char *word);
 char	*get_expansion_format(size_t *i, char *word);
 char	*error_test(char *param, char *word);
-char	*get_param_and_word(char *word, char *mod, int act);
 
 /*
 **	dispatch_expansions.c
 */
-void	ft_dispatch_exp(char *full_word, char *mod);
+char	*dispatch_exp(char *full_word, char *mod);
 
 #endif
 

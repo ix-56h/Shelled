@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:43:38 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/27 16:01:53 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/28 16:35:39 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,9 @@ char	*remove_brace(char *word)	// a chier should be REMAKE
 
 char	*error_test(char *param, char *word)
 {
-	printf("\nUNRECOGNIZED\n");
 	(void)param;
 	(void)word;
-	return (NULL);
-}
-
-char	*get_param_and_word(char *word, char *mod, int act)
-{
-	char	*str;
-
-	(void)act;
-	(void)str;
-	printf("\nword : |%s|\n", word);
-	printf("\nmod : |%s|\n", mod);
-	return (NULL);
+	return (ft_strdup("unrecognized modifier"));
 }
 
 char	*get_mod_type(char *word, size_t i, int act)
@@ -63,7 +51,10 @@ char	*get_mod_type(char *word, size_t i, int act)
 	if (act == 1)
 		str[1] = ft_isalnum(word[i + 1]) ? '\0' : word[i + 1];
 	else if (act == 2)
+	{
+		printf("\n-HERE- word[i + 1] : |%c|\n", word[i + 1]);
 		str[1] = word[i + 1] == '%' ? word[i + 1] : '\0';
+	}
 	else if (act == 3)
 		str[1] = word[i + 1] == '#' ? word[i + 1] : '\0';
 	str[2] = '\0';
@@ -76,16 +67,19 @@ char	*get_expansion_format(size_t *i, char *word)
 	char	*modifier;
 
 	a = *i;
+	if (word[a + 1] == '#')
+		a++;
 	modifier = NULL;
+	printf("\n&word : |%s|- %zu\n", &word[a], a);
 	while (word[a])
 	{
 		a++;
 		if (word[a] == ':')
-			modifier = get_mod_type(word, a, 1);
+			return (modifier = get_mod_type(word, a, 1));
 		else if (word[a] == '%')
-			modifier = get_mod_type(word, a, 2);
+			return (modifier = get_mod_type(word, a, 2));
 		else if (word[a] == '#')
-			modifier = get_mod_type(word, a, 3);
+			return (modifier = get_mod_type(word, a, 3));
 	}
 	return (modifier);
 }
