@@ -24,9 +24,6 @@ Exp:
 -	${}
 	- handle special parameters like "?"
 
-Operator:
--	&
-
 Variable definition name=value
 
 Partie modulaire :
@@ -45,6 +42,3 @@ Partie modulaire :
 	-	${parameter%%}
 	-	${parameter#}
 	-	${parameter##}
-
-X			Error handling for parser :
-			1 : (echo a) (echo b)
