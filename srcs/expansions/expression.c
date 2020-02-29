@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 04:54:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/28 13:57:53 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/29 12:59:21 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,12 @@ char	*process_parameter(size_t *i, char *word)
 	if (!modifier)
 		new_word = process_simple_parameter(i, remove_brace(word));
 	else
+	{
 		new_word = dispatch_exp(word, modifier);
-	printf("\nfinal word : |%s|\n", new_word);
+		if (new_word[0] == '$')
+			new_word = process_simple_parameter(i, new_word);
+	}
+	printf("\nfinal word 3: |%s|\n", new_word);
 	return (new_word);
 }
 
