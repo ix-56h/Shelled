@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 12:19:58 by ezonda            #+#    #+#             */
-/*   Updated: 2020/03/01 14:39:24 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/01 17:11:29 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,8 @@ void			init_set(char **av)
 	g_set = NULL;
 	if (g_env)
 		g_set = cpy_env(g_env);
-	sort_set();
 	add_info_params(av);
 	add_info_id();
 	get_sysname();
+	sort_set();
 }

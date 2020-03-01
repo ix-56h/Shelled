@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2020/02/24 16:56:04 by niguinti         ###   ########.fr        #
+#    Updated: 2020/03/01 15:49:28 by ezonda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ FT_INC_DIR = $(FT_DIR)/incs
 FT_LNK = -L$(FT_DIR) -l$(FT) -L$(PRINTF_DIR) -lprintf
 
 ###  CC && FLAGS ###
-CC = clang -g -fsanitize=address
+CC = clang -g# -fsanitize=address
 DEBUG_FLAGS = -g3
 NO_WARNING ?= false
 ifeq ($(NO_WARNING), false)
