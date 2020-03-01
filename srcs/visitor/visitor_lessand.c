@@ -6,14 +6,14 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 19:52:04 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/27 01:38:50 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/02 00:21:53 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include "parser.h"
-#include "visitor.h"
 #include "builtins.h"
+#include "job.h"
+#include "visitor_misc.h"
 #include "exec.h"
 
 int	exec_less_and(t_node *node, t_io_lists *io, t_job **job)

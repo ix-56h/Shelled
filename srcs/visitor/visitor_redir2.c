@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:33:17 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/14 00:07:14 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/02 00:23:19 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 #include <sys/wait.h>
 #include "parser.h"
 #include "visitor.h"
-#include "builtins.h"
-#include "ligne.h"
-#include "exec.h"
 
 /*
 **	<<

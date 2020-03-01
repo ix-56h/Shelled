@@ -6,19 +6,12 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/24 21:43:19 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/02 00:18:36 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/wait.h>
-#include "builtins.h"
-#include "parser.h"
-#include "visitor.h"
 #include "ligne.h"
-#include "exec.h"
-#include "visitor_rules.h"
+#include "visitor.h"
 
 int				exec_heredoc(t_fifo *stack)
 {

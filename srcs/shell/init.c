@@ -6,12 +6,11 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 14:49:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/10 16:31:59 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/02 00:04:05 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/stat.h>
-#include "visitor.h"
 #include "sh.h"
 #include "ligne.h"
 #include "libft.h"

@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:14:52 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/25 17:19:05 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/02 00:04:52 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "visitor.h"
-#include "sh.h"
-#include "expansions.h"
-#include "ligne.h"
-#include "parser.h"
-#include "exec.h"
+#include <stdlib.h>
 #include "libft.h"
+#include "visitor_misc.h"
 
 char	*exec_substitution(char *tmp)
 {

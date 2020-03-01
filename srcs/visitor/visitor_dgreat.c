@@ -6,15 +6,16 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 21:33:37 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/27 01:39:04 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/02 00:19:15 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <fcntl.h>
-#include "parser.h"
 #include "builtins.h"
 #include "exec.h"
+#include "double_linked_list.h"
+#include "job.h"
 
 int	exec_dgreat(t_node *node, t_io_lists *io, t_job **job)
 {
