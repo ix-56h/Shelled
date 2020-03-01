@@ -6,11 +6,18 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 05:41:47 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 05:42:24 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:07:04 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
+
+void	add_set(char *var, char *value)
+{
+	if (ft_edit_env(g_set, var, value))
+		return ;
+	g_set = add_env(g_set, var, value);
+}
 
 void	free_env(char **env)
 {

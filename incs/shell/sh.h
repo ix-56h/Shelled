@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/24 16:55:39 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:30:31 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 int				g_exit;
 char			**g_env;
+char			**g_set;
 
 typedef	struct	s_args
 {
@@ -60,6 +61,7 @@ char			**del_var(char **env, char *var);
 
 void			free_env(char **env);
 char			*get_env(char **env, char *looking);
+void			add_set(char *var, char *value);
 
 /*
 **	init.c
@@ -67,6 +69,7 @@ char			*get_env(char **env, char *looking);
 
 int				init_shell(t_sh *sh, int ac, char **av, char **envp);
 void			re_init_sh(t_sh *sh);
+void			init_set(char **av);
 
 /*
 **	utils
