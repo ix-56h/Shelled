@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:14:52 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/01 05:18:00 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/01 05:55:29 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,19 @@ char	*exec_substitution(char *tmp)
 	if (!lifo_empty(sh.stack.errors))
 	{
 		print_stack_errors(sh.stack.errors, &sh.tok);
-		return (ft_strdup("FAILED"));
+		return (ft_strdup("ERROR ON PARSING OF SUBSTITUTION"));
 	}
+	process_expansions(sh.node);
+	//need to pipe output to a buffer
+	visit(sh.node, &g_job_head);
 	tree_draw(sh.node);
-	return (ft_strdup("COMMAND"));
+	free(sh.stack.errors->ar);
+	free(sh.stack.errors);
+	if (sh.node != NULL)
+		delete_ast(&sh.node);
+	if ((sh.tok).data != NULL)
+		free((sh.tok).data);
+	return (ft_strdup("NEED TO GET STDOUT OF SUBSTITUTION"));
 }
 
 char	*process_substitution(size_t *i, char *word)
@@ -50,7 +59,7 @@ char	*process_substitution(size_t *i, char *word)
 	{
 		if (!(nw = ft_memalloc((sizeof(char) * y))))
 			exit(1);
-		ft_strncpy(nw, word + *i, y - 1);
+		ft_strncpy(nw, word + *i + 1, y - 2);
 		tmp = exec_substitution(nw);
 		free(nw);
 		word[*i - 1] = 0;
