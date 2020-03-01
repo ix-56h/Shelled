@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 23:02:11 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/12 02:47:53 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/01 12:28:54 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,5 @@ char			*ft_vjoin(int n, ...);
 void			ft_vprint(int n, ...);
 void			ft_vprintfd(int fd, int n, ...);
 int				ft_isalldigit(char *str);
+size_t			ft_tablen(char **tab);
 #endif

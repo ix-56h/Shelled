@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 14:49:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/02 00:04:05 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/02 00:34:23 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int			init_shell(t_sh *sh, int ac, char **av, char **envp)
 	if (!g_env)
 		return (0);
 	check_args(sh, ac, av);
+	init_set(av);
 	init_term();
 	return (1);
 }

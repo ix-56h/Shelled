@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/26 19:28:36 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/01 13:11:55 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int			main(int ac, char **av, char **envp)
 	free_historic();
 	free_sh(&sh);
 	free_env(g_env);
+	free_env(g_set);
 	restore_term(3);
 	return (g_exit == -1 ? EXIT_SUCCESS : g_exit);
 }
