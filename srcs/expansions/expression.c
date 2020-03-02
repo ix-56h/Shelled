@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 04:54:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/29 12:59:21 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/02 15:59:52 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ char	*process_parameter(size_t *i, char *word)
 	char	*modifier;
 	char	*new_word;
 
+	g_test = 0;
 	new_word = NULL;
 	modifier = get_expansion_format(i, word);
+	printf("\nlength mod : %d\n", g_test);
 	if (!modifier)
 		new_word = process_simple_parameter(i, remove_brace(word));
 	else
@@ -32,7 +34,7 @@ char	*process_parameter(size_t *i, char *word)
 		if (new_word[0] == '$')
 			new_word = process_simple_parameter(i, new_word);
 	}
-	printf("\nfinal word 3: |%s|\n", new_word);
+	return (g_test == 1 ? ft_itoa(ft_strlen(new_word)) : new_word);
 	return (new_word);
 }
 
@@ -51,7 +53,7 @@ char	*process_simple_parameter(size_t *i, char *word)
 	ft_strncpy(expression, word + *i, (a - *i));
 	(*i)--;
 	word[*i] = 0;
-	if (!(tmp = get_env(g_env, expression)))
+	if (!(tmp = get_env(g_set, expression)))
 	{
 		new_word = ft_strjoinf(word, word + a, 1);
 		*i -= 1;

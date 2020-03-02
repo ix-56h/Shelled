@@ -6,14 +6,18 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 02:28:03 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/28 16:35:36 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/02 14:38:21 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_EXPANSIONS_H
 # define FT_EXPANSIONS_H
 
+# include "sh.h"
+
 typedef char	*t_format_ft(char *, char *);
+
+int			g_test;
 
 typedef enum	e_exp_mod{ // useless now
 	MOD_USE_DEFAULT,

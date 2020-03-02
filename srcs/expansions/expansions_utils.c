@@ -6,11 +6,12 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:43:38 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/28 16:35:39 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/02 15:58:34 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "expansions.h"
 
 #include <stdio.h>
 
@@ -26,6 +27,8 @@ char	*remove_brace(char *word)	// a chier should be REMAKE
 	while (word[i] != '}')
 	{
 		if (word[i] == '{')
+			i++;
+		if (word[i] == '#' && i == 2)
 			i++;
 		new_word[j] = word[i];
 		i++;
@@ -51,10 +54,7 @@ char	*get_mod_type(char *word, size_t i, int act)
 	if (act == 1)
 		str[1] = ft_isalnum(word[i + 1]) ? '\0' : word[i + 1];
 	else if (act == 2)
-	{
-		printf("\n-HERE- word[i + 1] : |%c|\n", word[i + 1]);
 		str[1] = word[i + 1] == '%' ? word[i + 1] : '\0';
-	}
 	else if (act == 3)
 		str[1] = word[i + 1] == '#' ? word[i + 1] : '\0';
 	str[2] = '\0';
@@ -67,10 +67,12 @@ char	*get_expansion_format(size_t *i, char *word)
 	char	*modifier;
 
 	a = *i;
-	if (word[a + 1] == '#')
-		a++;
 	modifier = NULL;
-	printf("\n&word : |%s|- %zu\n", &word[a], a);
+	if (word[a + 1] == '#')
+	{
+		g_test = 1;
+		a++;
+	}
 	while (word[a])
 	{
 		a++;

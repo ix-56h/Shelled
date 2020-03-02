@@ -6,13 +6,13 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:17:19 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/25 15:02:03 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/02 14:36:10 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
-#include "sh.h"
 #include "expansions.h"
+#include "sh.h"
 #include "libft.h"
 
 char	*expand_tilde(char *w)

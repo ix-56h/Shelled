@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:40:56 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/29 12:59:22 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/02 14:20:32 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 char	*use_default_value(char *param, char *word)
 {
-	if (get_env(g_env, param))
+	if (get_env(g_set, param))
 		return (ft_strjoinf("$", param, 2));
 	else
 		return (word);
@@ -26,36 +26,37 @@ char	*use_default_value(char *param, char *word)
 
 char	*assign_default_value(char *param, char *word)
 {
-	printf("\nHERE 2\n");
-	printf("\nparam : |%s|\n", param);
-	printf("\nword : |%s|\n", word);
-	return (ft_strdup("- assign default value -"));
+	if (get_env(g_set, param))
+		return (ft_strjoinf("$", param, 2));
+	else
+		add_set(param, word);
+	return (word);
 }
 
 char	*indicate_error(char *param, char *word)
 {
-	if (get_env(g_env, param))
+	if (get_env(g_set, param))
 		return (ft_strjoinf("$", param, 2));
-	else
+	if (!word[0])
 	{
-		if (!word[0])
-			printf("\nparam UNSET / NULL\n");
-		else
-			printf("\nerror : %s\n", word);
-		return (ft_strdup(""));
+		ft_putstr_fd("42sh: ", 2);
+		ft_putstr_fd(param, 2);
+		ft_putstr_fd(": parameter null or not set", 2);
 	}
-	return (ft_strdup("- indicate error -"));
+	else
+		return (word);
+	return (ft_strdup(""));
 }
 
 char	*use_alternative_value(char *param, char *word)
 {
-	if (!get_env(g_env, param))
+	if (!get_env(g_set, param))
 		return (ft_strdup(""));
 	else
 		return (word);
 }
 
-char	*show_string_length(char *param, char *word)	// MOD_LENGTH hors enum
+char	*show_string_length(char *param, char *word)   // MOD_LENGTH hors enum
 {
 	printf("\nSTRING LENGTH\n");
 	printf("\nparam : |%s|\n", param);

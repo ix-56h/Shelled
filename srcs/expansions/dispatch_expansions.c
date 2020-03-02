@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:49:53 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/29 09:31:20 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/02 15:59:21 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ static char		*get_param(char *full_word, char *mod)
 	while (full_word[i] != '{')
 		i++;
 	i += 1;
+	if (full_word[i] == '#')
+		i++;
 	len = i;
 	while (full_word[len] != mod[0])
 		len++;
@@ -89,10 +91,7 @@ char			*dispatch_exp(char *full_word, char *mod)
 	while (++i < MOD_MAX)
 	{
 		if (ft_strcmp(mod, g_dispatch_string[i].s) == 0)
-		{
 			new_word = g_dispatch_string[i].ft(parameter, word);
-			printf("\nnew_word : |%s|\n", new_word);
-		}
 	}
 	return (new_word);
 }
