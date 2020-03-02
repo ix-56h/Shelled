@@ -6,11 +6,12 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:35:19 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 03:25:18 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/02 00:07:34 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include "visitor_misc.h"
 
 int		save_and_restore_fd(int action)
 {
@@ -32,4 +33,17 @@ int		save_and_restore_fd(int action)
 		close(fds[STDERR_FILENO]);
 	}
 	return (1);
+}
+
+void	close_all_pipe(t_io_lists io)
+{
+	t_pipe_list	*piped;
+
+	piped = io.piped;
+	while (piped)
+	{
+		close(piped->fd[0]);
+		close(piped->fd[1]);
+		piped = piped->next;
+	}
 }

@@ -1,31 +1,21 @@
 # IMPORTANT
 X			Check assignment_word 
 				- Need to check for the 7b rule if the current word is the first or not
-X			Need to review the AST from multiple line command (like ls \n pwd \n \n \n \n lol \n test)
-# OTHERS
-
-X			check for this command
-cat /etc/passwd | tr : # | tr -s abcdefghijklmnopqrstuvwxyz| cut -c 2 | grep -e a -e b -e\
- c -e d -e e -e f -e g -e h -e i -e j -e k -e l -e m -e n -e o -e p -e q -e r -e s -e \
-t -e u -e v -e w -e x -e y -e z |sort|uniq -c
 
 #		FOR 42sh 
 
 Chaque built-in doit avoir au minimum les options dictées par le standard POSIX, (sauf pour set et unset)
 Builtins:
--	type 
+-	type
 -	export
 -- Job control
 	- fg
-	- jobs 
+	- jobs
 	- bg
 
 Exp:
 -	${}
 	- handle special parameters like "?"
-
-Operator:
--	&
 
 Variable definition name=value
 
@@ -45,6 +35,3 @@ Partie modulaire :
 	-	${parameter%%}
 	-	${parameter#}
 	-	${parameter##}
-
-X			Error handling for parser :
-			1 : (echo a) (echo b)

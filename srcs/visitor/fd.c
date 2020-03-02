@@ -6,12 +6,12 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 23:06:50 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/16 15:48:16 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/02 00:07:41 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include "visitor.h"
+#include "visitor_misc.h"
 
 int		set_pipe_fd(t_pipe_list *piped)
 {

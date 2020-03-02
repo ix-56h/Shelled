@@ -3,6 +3,7 @@
 a.out
 *.a
 21sh
+42sh
 *.o
 tree.dot
 tree.png

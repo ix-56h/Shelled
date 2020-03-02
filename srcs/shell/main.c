@@ -48,7 +48,8 @@ void		process_sh(t_sh *sh)
 			process_expansions(sh->node);
 			if (sh->f.ast_draw)
 				tree_draw(sh->node);
-			visit(sh->node);
+			visit(sh->node, &g_job_head);
+			clean_job();
 		}
 	}
 }
@@ -60,6 +61,7 @@ int			main(int ac, char **av, char **envp)
 	sh.f.ast_draw = 0;
 	if (init_shell(&sh, ac, av, envp) == 0)
 		return (EXIT_FAILURE);
+	g_job_head = NULL;
 	init_signal();
 	while (1)
 	{
@@ -75,6 +77,7 @@ int			main(int ac, char **av, char **envp)
 	free_historic();
 	free_sh(&sh);
 	free_env(g_env);
+	free_env(g_set);
 	restore_term(3);
 	return (g_exit == -1 ? EXIT_SUCCESS : g_exit);
 }

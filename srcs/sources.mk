@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/02/27 16:30:36 by ezonda           ###   ########.fr        #
+#    Updated: 2020/03/01 12:23:06 by ezonda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,14 @@ C_FILES_visitor = \
 				  exec.c \
 				  exec_misc.c \
 				  test_and_find.c \
+				  visitor_cmd.c \
+				  visitor_greatand.c \
+				  visitor_leftredi.c \
+				  visitor_rightredi.c \
+				  visitor_lessand.c \
+				  visitor_dless.c \
+				  visitor_dgreat.c \
+				  job.c \
 
 C_FILES_shell = \
 				main.c \
@@ -75,6 +83,7 @@ C_FILES_shell = \
 				env2.c \
 				init.c \
 				signal.c \
+				set.c \
 
 C_FILES_line_edit = \
 					alloc.c \
@@ -108,6 +117,10 @@ C_FILES_builtins = \
 				   ft_echo.c \
 				   ft_exit.c \
 				   builtin_misc.c \
+				   ft_debug_job.c \
+				   ft_return.c \
+				   ft_set.c \
+				   ft_unset.c \
 
 C_FILES_utils = \
 				index_end_squote.c \

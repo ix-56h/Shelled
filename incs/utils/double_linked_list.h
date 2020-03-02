@@ -22,10 +22,9 @@ typedef struct	s_dl_node
 
 int				dl_push(t_dl_node **head_ref, void *new_data);
 int				dl_append(t_dl_node **head_ref, void *new_data);
-int				dl_push_node(t_dl_node **head_ref\
-				, t_dl_node *new_node, void *new_data);
-int				dl_insert_before(t_dl_node *head_ref, t_dl_node *next_dl_node\
-				, void *new_data);
+int				dl_push_node(t_dl_node **head_ref, t_dl_node *new_node);
+int				dl_append_node(t_dl_node **head_ref, t_dl_node *new_node);
+int				dl_insert_before(t_dl_node *head_ref, t_dl_node *next_dl_node, void *new_data);
 t_dl_node		*dl_find_data(t_dl_node *haystack, void *needle);
 t_dl_node		*dl_get_last(t_dl_node *head);
 t_dl_node		*dl_get_head(t_dl_node *node);
