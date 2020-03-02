@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:46:14 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/01 23:54:23 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/02 00:52:00 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "visitor_misc.h"
 # include "job.h"
 
+int						visit_assign_word(t_node *node, t_io_lists io, t_job **job);
 int						visit_cmd(t_node *node, t_io_lists io, t_job **job);
 int						visit_or_if(t_node *node, t_io_lists io, t_job **job);
 int						visit_and_if(t_node *node, t_io_lists io, t_job **job);
