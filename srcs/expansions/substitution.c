@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:14:52 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/01 05:55:29 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/03 02:02:10 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ char	*exec_substitution(char *tmp)
 		return (0);
 	sh.node = NULL;
 	sh.input = tmp;
+	//need to fork here
 	sh.tok = get_next_token(sh.input, sh.stack.errors);
 	lifo_empty(sh.stack.errors) ? sh.node = parse_command(&sh) : 0;
 	if (!lifo_empty(sh.stack.errors))
 	{
+		gnt_standalone(0);
 		print_stack_errors(sh.stack.errors, &sh.tok);
 		return (ft_strdup("ERROR ON PARSING OF SUBSTITUTION"));
 	}
