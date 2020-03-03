@@ -6,13 +6,12 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 21:26:18 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/27 01:38:28 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/02 00:19:36 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <fcntl.h>
-#include "parser.h"
 #include "builtins.h"
 #include "exec.h"
 

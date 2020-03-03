@@ -6,16 +6,14 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/27 01:37:51 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/02 00:08:33 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/wait.h>
-#include "builtins.h"
-#include "parser.h"
-#include "visitor.h"
+#include "visitor_misc.h"
 #include "ligne.h"
 #include "exec.h"
 #include "ft_printf.h"

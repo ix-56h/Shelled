@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 23:28:41 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/27 01:41:56 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/02 00:00:06 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "sh.h"
 #include "builtins.h"
 #include "ft_printf.h"
-#include "visitor.h"
+#include "job.h"
 
 int		ft_debug_job(char **argv, char ***tenv)
 {

@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/02/26 22:54:19 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/03/01 12:23:06 by ezonda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,6 +83,7 @@ C_FILES_shell = \
 				env2.c \
 				init.c \
 				signal.c \
+				set.c \
 
 C_FILES_line_edit = \
 					alloc.c \
@@ -118,6 +119,8 @@ C_FILES_builtins = \
 				   builtin_misc.c \
 				   ft_debug_job.c \
 				   ft_return.c \
+				   ft_set.c \
+				   ft_unset.c \
 
 C_FILES_utils = \
 				index_end_squote.c \

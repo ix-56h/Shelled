@@ -6,17 +6,17 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:35:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/27 01:24:05 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/02 01:13:08 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <fcntl.h>
-#include <sys/wait.h>
 #include "parser.h"
 #include "visitor.h"
 #include "ligne.h"
 #include "exec.h"
+#include "builtins.h"
+#include "ft_printf.h"
 
 int		visit_and_if(t_node *node, t_io_lists io, t_job **job)
 {
@@ -83,4 +83,30 @@ int		visit_semi(t_node *node, t_io_lists io, t_job **job)
 {
 	(void)io;
 	return (visit(node->left, job) + visit(node->right, job));
+}
+
+int		visit_assign_word(t_node *node, t_io_lists io, t_job **job)
+{
+	char	*item;
+	char	*value;
+	char	*data;
+
+	(void)io;
+	(void)job;
+	data = ft_strdup(node->data);
+	if ((value = ft_strchr(data, '=')))
+	{
+		if (ft_strlen(data) > 1)
+		{
+			value[0] = '\0';
+			value = &value[1];
+			item = data;
+			add_set(item, value);
+			free(data);
+			return (0);
+		}
+	}
+	ft_dprintf(2, SHELL_NAME": Assignement word error: %s\n", node->data);
+	free(data);
+	return (1);
 }

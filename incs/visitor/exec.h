@@ -6,14 +6,14 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:38:41 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/26 19:34:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/01 23:49:15 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 # include "ast.h"
-# include "visitor.h"
+# include "visitor_misc.h"
 
 int		set_pipe_fd(t_pipe_list *piped);
 int		close_used_pipe_fd(t_pipe_list *piped);

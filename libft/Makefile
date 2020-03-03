@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/20 19:34:49 by niguinti          #+#    #+#              #
-#    Updated: 2020/02/12 02:52:08 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/03/01 12:28:17 by ezonda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC			=	ft_atoi.c         ft_islower.c      ft_memcpy.c       ft_putendl.c      
 				ft_isdigit.c      ft_memcmp.c       ft_putchar_fd.c   ft_size_digit.c   ft_strclr.c       ft_striteri.c     ft_strncat.c      ft_strrev.c       ft_toupper.c	\
 				ft_isdigits.c	  ft_strichr.c		ft_calloc.c		  ft_strljoin.c  	ft_strreplace.c   ft_free.c			ft_vjoin.c 		  ft_vprint.c		ft_vprintfd.c   \
 				ft_itoa.c		  ft_isalldigit.c																																	\
+				ft_tablen.c
 				
 # Some tricks in order to get the makefile doing his job the way I want (Can't be changed)
 

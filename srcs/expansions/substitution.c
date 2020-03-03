@@ -3,41 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:14:52 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/03 02:02:10 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/03 03:42:24 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "visitor.h"
-#include "sh.h"
-#include "expansions.h"
-#include "ligne.h"
-#include "parser.h"
-#include "exec.h"
 #include "libft.h"
+#include "sh.h"
+#include "parser.h"
+#include "visitor.h"
 
+#include <stdlib.h>
 char	*exec_substitution(char *tmp)
 {
 	t_sh		sh;
-	
+	char		*nw;
+
 	if (!(sh.stack.errors = lifo_creator(20, sizeof(t_staterror))))
 		return (0);
 	sh.node = NULL;
 	sh.input = tmp;
-	//need to fork here
 	sh.tok = get_next_token(sh.input, sh.stack.errors);
 	lifo_empty(sh.stack.errors) ? sh.node = parse_command(&sh) : 0;
 	if (!lifo_empty(sh.stack.errors))
 	{
-		gnt_standalone(0);
 		print_stack_errors(sh.stack.errors, &sh.tok);
-		return (ft_strdup("ERROR ON PARSING OF SUBSTITUTION"));
+		return (ft_strdup(""));
 	}
-	process_expansions(sh.node);
-	//need to pipe output to a buffer
-	visit(sh.node, &g_job_head);
+	nw = substitution_wrapper(sh.node);
+	nw = ft_strtrimf(nw);
 	tree_draw(sh.node);
 	free(sh.stack.errors->ar);
 	free(sh.stack.errors);
@@ -45,7 +41,7 @@ char	*exec_substitution(char *tmp)
 		delete_ast(&sh.node);
 	if ((sh.tok).data != NULL)
 		free((sh.tok).data);
-	return (ft_strdup("NEED TO GET STDOUT OF SUBSTITUTION"));
+	return (nw);
 }
 
 char	*process_substitution(size_t *i, char *word)
@@ -57,6 +53,8 @@ char	*process_substitution(size_t *i, char *word)
 	y = *i;
 	while (word[y] && word[y] != ')')
 		y++;
+	if (!word[y])
+		return (0);
 	if (word[y] == ')')
 	{
 		if (!(nw = ft_memalloc((sizeof(char) * y))))
