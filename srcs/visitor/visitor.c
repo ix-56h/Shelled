@@ -6,10 +6,12 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/02 00:57:15 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/03 03:20:51 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <sys/wait.h>
 #include "ligne.h"
 #include "visitor.h"
 #include "visitor_rules.h"
@@ -67,4 +69,47 @@ int				visit(t_node *root, t_job **job)
 		ft_putstr("'\n");
 	}
 	return (1);
+}
+
+
+char			*substitution_wrapper(t_node *root)
+{
+	int		pipefd[2];
+	char	*ret;
+	int		stdout_save;
+	char	buff[BUFFSIZE + 1];
+	int		pid;
+	t_job	*tmp;
+
+	tmp = NULL;
+	if (pipe(pipefd) != -1)
+	{
+		stdout_save = dup(STDOUT_FILENO);
+		dup2(pipefd[WRITE_END], STDOUT_FILENO);
+		close(pipefd[WRITE_END]);
+		if ((pid = fork()) == -1)
+		{
+			close(pipefd[READ_END]);
+			dup2(stdout_save, STDOUT_FILENO);
+			return (NULL);
+		}
+		else if (pid == 0)
+		{
+			close(pipefd[READ_END]);
+			visit(root, &tmp);
+			exit(0);
+		}
+		dup2(stdout_save, STDOUT_FILENO);
+		wait(NULL);
+		ft_bzero(buff, sizeof(char) * (BUFFSIZE + 1));
+		ret = ft_strdup("");
+		while (read(pipefd[READ_END], buff, BUFFSIZE) > 0)
+		{
+			ret = ft_strjoinf(ret, buff, 1);
+			ft_bzero(buff, sizeof(char) * (BUFFSIZE + 1));
+		}
+		close(pipefd[READ_END]);
+		return (ret);
+	}
+	return (NULL);
 }

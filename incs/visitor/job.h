@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/02 00:00:22 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/03 03:17:38 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ t_process	*create_process(pid_t pid);
 t_process	*find_process_by_pid(t_process *process, pid_t pid);
 int			job_is_finish(t_job *job);
 void		clean_job(void);
-
+void		free_all_job(t_job *job);
 #endif

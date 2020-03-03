@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/02 00:07:47 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/03 03:17:23 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,9 @@ void		clean_job(void)
 		}
 		nav = next;
 	}
+}
+
+void		free_all_job(t_job *job)
+{
+	dl_free_with_data(job, dl_free_list);
 }

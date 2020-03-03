@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/01 13:11:55 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/03 03:08:41 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void		process_sh(t_sh *sh)
 			process_expansions(sh->node);
 			if (sh->f.ast_draw)
 				tree_draw(sh->node);
-			visit(sh->node, &g_job_head);
+			//visit(sh->node, &g_job_head);
+			substitution_wrapper(sh->node);
 			clean_job();
 		}
 	}
