@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/03 03:20:51 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/03 05:26:24 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 #include "visitor.h"
 #include "visitor_rules.h"
 
+
+#include "sh.h"
+#include "parser.h"
 int				exec_heredoc(t_fifo *stack)
 {
 	t_node	*node;
@@ -72,7 +75,7 @@ int				visit(t_node *root, t_job **job)
 }
 
 
-char			*substitution_wrapper(t_node *root)
+char			*substitution_wrapper(char *str)
 {
 	int		pipefd[2];
 	char	*ret;
@@ -95,8 +98,31 @@ char			*substitution_wrapper(t_node *root)
 		}
 		else if (pid == 0)
 		{
+			//
+			t_sh		sh;
+			if (!(sh.stack.errors = lifo_creator(20, sizeof(t_staterror))))
+				return (0);
+			sh.node = NULL;
+			sh.input = str;
+			sh.tok = get_next_token(sh.input, sh.stack.errors);
+			lifo_empty(sh.stack.errors) ? sh.node = parse_command(&sh) : 0;
+			if (!lifo_empty(sh.stack.errors))
+			{
+				print_stack_errors(sh.stack.errors, &sh.tok);
+				return (ft_strdup(""));
+			}
+			//
 			close(pipefd[READ_END]);
-			visit(root, &tmp);
+			visit(sh.node, &tmp);
+			//
+			tree_draw(sh.node);
+			free(sh.stack.errors->ar);
+			free(sh.stack.errors);
+			if (sh.node != NULL)
+				delete_ast(&sh.node);
+			if ((sh.tok).data != NULL)
+				free((sh.tok).data);
+			//
 			exit(0);
 		}
 		dup2(stdout_save, STDOUT_FILENO);

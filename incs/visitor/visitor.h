@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:46:14 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/03 02:50:32 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/03 05:23:31 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int						visit_right_redi(t_node *node, t_io_lists io,
 int						visit_semi(t_node *node, t_io_lists io, t_job **job);
 int						visit(t_node *root, t_job **job);
 
-char			*substitution_wrapper(t_node *root);
+char			*substitution_wrapper(char *tmp);
 
 int	exec_great_and(t_node *node, t_io_lists *io, t_job **job);
 int	exec_less_and(t_node *node, t_io_lists *io, t_job **job);
