@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:14:52 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/03 06:49:13 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/04 20:10:42 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,15 @@ char	*process_substitution(size_t *i, char *word, char occur)
 	size_t	y;
 	char	*tmp;
 	char	*nw;
+	size_t	x;
 
+	x = 0;
 	(*i)++;
 	y = *i;
 	while (word[y] && word[y] != occur)
 		y++;
 	if (!word[y])
-		return (0);
+		return (word);
 	if (word[y] == occur && y > (*i + 1))
 	{
 		y -= *i;
@@ -44,9 +46,12 @@ char	*process_substitution(size_t *i, char *word, char occur)
 			exit(1);
 		ft_strncpy(nw, word + *i, y);
 		tmp = exec_substitution(nw);
+		x = ft_strlen(tmp);
 		free(nw);
-		word[*i - (occur == '`' ? 1 : 2)] = 0;
-		nw = ft_vjoin(3, word, tmp, word + *i + y + 1);
+		*i -= (occur == '`' ? 1 : 2);
+		word[*i] = 0;
+		nw = ft_vjoin(3, word, tmp, word + *i + y + (occur == '`' ? 2 : 3));
+		*i += x;
 		free(tmp);
 		free(word);
 	}
