@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/03 05:26:24 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/04 21:40:09 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,13 @@ char			*substitution_wrapper(char *str)
 		dup2(stdout_save, STDOUT_FILENO);
 		wait(NULL);
 		ft_bzero(buff, sizeof(char) * (BUFFSIZE + 1));
-		ret = ft_strdup("");
+		ret = NULL;
 		while (read(pipefd[READ_END], buff, BUFFSIZE) > 0)
 		{
-			ret = ft_strjoinf(ret, buff, 1);
+			if (ret)
+				ret = ft_strjoinf(ret, buff, 1);
+			else
+				ret = ft_strdup(buff);
 			ft_bzero(buff, sizeof(char) * (BUFFSIZE + 1));
 		}
 		close(pipefd[READ_END]);
