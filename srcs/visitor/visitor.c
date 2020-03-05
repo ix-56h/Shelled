@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/04 21:40:09 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/05 02:03:54 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,8 @@ char			*substitution_wrapper(char *str)
 				print_stack_errors(sh.stack.errors, &sh.tok);
 				return (ft_strdup(""));
 			}
-			//
 			close(pipefd[READ_END]);
 			visit(sh.node, &tmp);
-			//
-			tree_draw(sh.node);
 			free(sh.stack.errors->ar);
 			free(sh.stack.errors);
 			if (sh.node != NULL)

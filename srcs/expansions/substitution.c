@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:14:52 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/04 20:10:42 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/05 02:04:24 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ char	*process_substitution(size_t *i, char *word, char occur)
 		y++;
 	if (!word[y])
 		return (word);
-	if (word[y] == occur && y > (*i + 1))
+	if (word[y] == occur && y > (*i))
 	{
 		y -= *i;
-		if (!(nw = ft_memalloc((sizeof(char) * y + 1))))
+		if (!(nw = ft_memalloc((sizeof(char) * (y + 1)))))
 			exit(1);
 		ft_strncpy(nw, word + *i, y);
 		tmp = exec_substitution(nw);
