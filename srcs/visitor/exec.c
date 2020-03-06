@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/06 16:33:42 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/06 20:10:19 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int				exec_with_fork(t_node *cmd, char **env, t_io_lists io,
 {
 	pid_t		pid;
 	t_process	*process;
+	int			return_value;
 
 	if ((pid = fork()) == -1)
 		return (1);
@@ -31,6 +32,12 @@ int				exec_with_fork(t_node *cmd, char **env, t_io_lists io,
 		close_unused_pipe_fd(io.piped);
 		close_all_pipe(io);
 		set_redir_fd(io.redir);
+		if (lookforbuiltin(cmd->data))
+		{
+			return_value = lookforbuiltin(cmd->data)(cmd->args,
+			((env) ? &env : &g_env));
+			exit(return_value);
+		}
 		execve(cmd->data, cmd->args, ((env) ? env : g_env));
 		exit(1);
 	}
@@ -95,7 +102,7 @@ int				builtin_controler(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	int		err;
 
 	if (io.piped)
-		err = exec_builtin_fork(cmd, env, io, job);
+		err = exec_with_fork(cmd, env, io, job);
 	else
 		err = exec_builtin_no_fork(cmd, env, io, job);
 	return (err);
