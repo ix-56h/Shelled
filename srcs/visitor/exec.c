@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/06 20:10:19 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/06 20:49:10 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ int				exec_with_fork(t_node *cmd, char **env, t_io_lists io,
 		close_used_pipe_fd(io.piped);
 		process = find_process_by_pid(job->list, UNUSED_JOB);
 		process->pid = pid;
+		if (!io.piped || (io.piped && !io.piped->prev))
+		{
+			setpgid(pid, pid);
+			job->pgid = pid;
+		}
+		else
+			setpgid(pid, job->pgid);
 		return (0);
 	}
 }
@@ -68,33 +75,6 @@ int				exec_builtin_no_fork(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	process->ret = ret;
 	process->is_finish = 1;
 	return (0);
-}
-
-int				exec_builtin_fork(t_node *cmd, char **env, t_io_lists io, t_job *job)
-{
-	int		pid;
-	int		return_value;
-	t_process	*process;
-
-	if ((pid = fork()) == -1)
-		return (1);
-	else if (pid == 0)
-	{
-		set_pipe_fd(io.piped);
-		close_unused_pipe_fd(io.piped);
-		close_all_pipe(io);
-		set_redir_fd(io.redir);
-		return_value = lookforbuiltin(cmd->data)(cmd->args,
-			((env) ? &env : &g_env));
-		exit(return_value);
-	}
-	else
-	{
-		close_used_pipe_fd(io.piped);
-		process = find_process_by_pid(job->list, UNUSED_JOB);
-		process->pid = pid;
-		return (0);
-	}
 }
 
 int				builtin_controler(t_node *cmd, char **env, t_io_lists io, t_job *job)

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 23:28:41 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/06 16:59:30 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/06 20:48:44 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		ft_debug_job(char **argv, char ***tenv)
 		process = job->list;
 		if (process)
 		{
-			ft_printf("job[%i]:\n", i);
+			ft_printf("job[%i] pgid %i :\n", i, job->pgid);
 			while (process)
 			{
 				if (process->pid == BUILTIN_JOB)
