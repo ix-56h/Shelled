@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/27 01:36:04 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/06 16:33:42 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int				exec_with_fork(t_node *cmd, char **env, t_io_lists io,
 	else
 	{
 		close_used_pipe_fd(io.piped);
-		process = find_process_by_pid(job->data, UNUSED_JOB);
+		process = find_process_by_pid(job->list, UNUSED_JOB);
 		process->pid = pid;
 		return (0);
 	}
@@ -56,7 +56,7 @@ int				exec_builtin_no_fork(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	ret = exec_builtin(cmd->args, ((env) ? &env : &g_env));
 	close_used_pipe_fd(io.piped);
 	save_and_restore_fd(1);
-	process = find_process_by_pid(job->data, UNUSED_JOB);
+	process = find_process_by_pid(job->list, UNUSED_JOB);
 	process->pid = BUILTIN_JOB;
 	process->ret = ret;
 	process->is_finish = 1;
@@ -84,7 +84,7 @@ int				exec_builtin_fork(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	else
 	{
 		close_used_pipe_fd(io.piped);
-		process = find_process_by_pid(job->data, UNUSED_JOB);
+		process = find_process_by_pid(job->list, UNUSED_JOB);
 		process->pid = pid;
 		return (0);
 	}
@@ -118,7 +118,7 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 		if ((err = test_env(cmd, env)) == 0)
 			err = exec_with_fork(cmd, env, io, job);
 		else
-			find_process_by_pid(job->data, UNUSED_JOB)->pid = ERR_JOB;
+			find_process_by_pid(job->list, UNUSED_JOB)->pid = ERR_JOB;
 	}
 	return (err);
 }

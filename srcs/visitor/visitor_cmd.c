@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/02 00:08:33 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/06 16:57:50 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,19 @@ void			wait_and_ret(t_io_lists io, t_job *job)
 	if ((io.piped && !io.piped->next && io.piped->used == 1) || !io.piped)
 	{
 		ret_pid = 1;
-		while (ret_pid > 0)
+		tmp_process = (t_process *)dl_get_head((t_dl_node *)job->list);
+		while (tmp_process)
 		{
-			ret_pid = waitpid(-1, &ret_value, WUNTRACED);
-			if ((tmp_process = find_process_by_pid(job->data, ret_pid)))
+			if (tmp_process->pid > 0)
 			{
-				tmp_process->is_finish = 1;
+				ret_pid = waitpid(tmp_process->pid, &ret_value, WUNTRACED);
+				if (!WIFSTOPPED(ret_value))
+					tmp_process->is_finish = 1;
+				else
+					tmp_process->is_stopped = 1;
 				tmp_process->ret = ret_value;
 			}
-			else if (ret_pid != -1)
-				ft_dprintf(2, SHELL_NAME": error unknow wait pid: %i\n", ret_pid);
+			tmp_process = tmp_process->next;
 		}
 	}
 }
@@ -55,7 +58,7 @@ int	exec_command(t_node *node, t_io_lists *io, t_job **job)
 	ctrlc = 0;
 	signal(SIGINT, ctrl_c_handler);
 	restore_term(1);
-	dl_append_node((t_dl_node **)&(*job)->data, (t_dl_node *)create_process(UNUSED_JOB));
+	dl_append_node((t_dl_node **)&(*job)->list, (t_dl_node *)create_process(UNUSED_JOB));
 	err = exec_cmd(node, NULL, *io, *job);
 	wait_and_ret(*io, *job);
 	set_used_fd(io->piped);
