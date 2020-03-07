@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 04:13:25 by ezonda            #+#    #+#             */
-/*   Updated: 2020/03/07 04:13:27 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/07 04:53:00 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,13 @@ char	*remove_large_prefix(char *param, char *word);
 char	*remove_brace(char *word);
 char	*get_expansion_format(char *word);
 char	*error_test(char *param, char *word);
+
+/*
+**	manage_brace.c
+*/
+int		check_braces(char *word, size_t *a);
+char	*get_first_part(char *word);
+char	*get_last_part(char *word, size_t *a);
 
 /*
 **	dispatch_expansions.c

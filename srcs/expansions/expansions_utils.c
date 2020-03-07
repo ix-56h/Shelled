@@ -6,16 +6,14 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:43:38 by ezonda            #+#    #+#             */
-/*   Updated: 2020/03/06 01:26:14 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/07 04:55:54 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "expansions.h"
 
-#include <stdio.h>
-
-char	*remove_brace(char *word)	// a chier should be REMAKE
+char	*remove_brace(char *word)
 {
 	int		i;
 	int		j;
