@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 02:28:03 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/02 14:38:21 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/06 01:22:38 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 
 typedef char	*t_format_ft(char *, char *);
 
-int			g_test;
+int			g_length_mod;
+int g_test;
 
 typedef enum	e_exp_mod{ // useless now
 	MOD_USE_DEFAULT,
@@ -88,7 +89,7 @@ char	*remove_large_prefix(char *param, char *word);
 **	expansions_utils.c
 */
 char	*remove_brace(char *word);
-char	*get_expansion_format(size_t *i, char *word);
+char	*get_expansion_format(char *word);
 char	*error_test(char *param, char *word);
 
 /*

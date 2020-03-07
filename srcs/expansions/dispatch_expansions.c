@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:49:53 by ezonda            #+#    #+#             */
-/*   Updated: 2020/03/02 15:59:21 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/07 03:04:09 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ t_exp_param		g_dispatch_string[MOD_MAX] = 	// ajouter au .h ?
 	{ MOD_INDICATE_ERROR, ":?", indicate_error },			// 3
 	{ MOD_USE_ALTERNATIVE, ":+", use_alternative_value },	// 4
 	{ MOD_RM_SMALL_SUFFIX, "%", remove_small_suffix },		// 5
-	{ MOD_RM_LARGE_SUFFIX, "%%", remove_large_suffix },		// 6
+	{ MOD_RM_LARGE_SUFFIX, "%%", remove_small_suffix },		// 6
 	{ MOD_RM_SMALL_PREFIX, "#", remove_small_prefix },		// 7
-	{ MOD_RM_LARGE_PREFIX, "##", remove_large_prefix },		// 8
+	{ MOD_RM_LARGE_PREFIX, "##", remove_small_prefix },		// 8
 	{ MOD_ERROR, ":", error_test }							// 9
 };
 
@@ -39,16 +39,20 @@ static char		*get_word(char *full_word, char *mod)
 
 	i = 0;
 	j = 0;
+	word = NULL;
 	index = mod[1] ? 1 : 0;
 	while (full_word[i] != mod[index])
 		i++;
-	i += 1;
+	if (mod[1] && (full_word[i] == '#' || full_word[i] == '%'))
+		i += 2;
+	else
+		i += 1;
 	len = i;
-	while (full_word[len] != '}')
+	while (full_word && full_word[len] != '}')
 		len++;
 	len -= i;
 	word = ft_strnew(len);
-	while (full_word[i] != '}')
+	while (full_word[i] && full_word[i] != '}')
 		word[j++] = full_word[i++];
 	return (word);
 }

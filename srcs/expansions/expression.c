@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 04:54:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/02 15:59:52 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/07 02:30:13 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,118 @@
 
 #include <stdio.h>
 
+char	*get_last_part(char *word, size_t *k)
+{
+	size_t i;
+	size_t j;
+	char	tmp[256];
+	char	*new_word;
+
+	j = *k;
+	i = 0;
+	if (g_test == 1)
+		return (ft_strdup(""));
+	while (word[j])
+		tmp[i++] = word[j++];
+	tmp[i] = '\0';
+	new_word = ft_strdup(tmp);
+	g_test = 1;
+	return (new_word);
+}
+
+char	*get_first_part(char *word)
+{
+	size_t i;
+	size_t j;
+	size_t len;
+	char *new_word;
+
+	i = 0;
+	j = 0;
+	while (word[i])
+	{
+		if (word[i] == '$' && word[i + 1] == '{')
+			break;
+		i++;
+	}
+	len = i;
+	new_word = ft_strnew(len);
+	i = 0;
+	while (word[j] && i < len)
+		new_word[j++] = word[i++];
+	return (new_word);
+}
+
+int		check_braces(char *word, size_t *j)
+{
+	size_t i = 0;
+	int obrace = 0;
+	int cbrace = 0;
+
+	if (word[2] == '}')
+	{
+		ft_putstr_fd("42sh: bad substitution 1", 2);
+		return (0);
+	}
+	while (word[i])
+	{
+		if (word[i] == '$' && word[i + 1] == '{')
+		{
+			i++;
+			obrace++;
+		}
+		else if ((word[i] == '{' && word[i - 1] != '$')/* || word[i] == '{'*/)
+		{
+			ft_putstr_fd("42sh: bad substitution 1", 2);
+			return (0);
+		}
+		i++;
+	}
+	i = 0;
+	while (word[i])
+	{
+		if (word[i] == '}')
+			cbrace++;
+		if (obrace == cbrace)
+			break;
+		i++;
+	}
+	*j = i + 1;
+	return (1);
+}
+
 char	*process_parameter(size_t *i, char *word)
 {
 	char	*modifier;
 	char	*new_word;
+	char	*first;
+	char	*last;
 
-	g_test = 0;
 	new_word = NULL;
-	modifier = get_expansion_format(i, word);
-	printf("\nlength mod : %d\n", g_test);
+	if (!check_braces(word, i))
+		return (ft_strdup(""));
+	modifier = get_expansion_format(word);
+	first = get_first_part(word);
+	last = get_last_part(word, i);
+	if (last[0] == '$')
+		process_expression(&last);
 	if (!modifier)
-		new_word = process_simple_parameter(i, remove_brace(word));
+	{
+		new_word = remove_brace(word);
+		process_expression(&new_word);
+	}
 	else
 	{
 		new_word = dispatch_exp(word, modifier);
-		if (new_word[0] == '$')
-			new_word = process_simple_parameter(i, new_word);
+		if (first[0])
+			new_word = ft_strjoinf(first, new_word, 2);
 	}
-	return (g_test == 1 ? ft_itoa(ft_strlen(new_word)) : new_word);
+	if (last[0])
+		new_word = ft_strjoinf(new_word, last, 1);
+	free(first);
+	free(last);
+	free(modifier);
+	free(word);
 	return (new_word);
 }
 

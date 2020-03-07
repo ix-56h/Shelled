@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:43:38 by ezonda            #+#    #+#             */
-/*   Updated: 2020/03/02 15:58:34 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/06 01:26:14 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,24 @@ char	*remove_brace(char *word)	// a chier should be REMAKE
 {
 	int		i;
 	int		j;
+	char	test[255];
 	char	*new_word;
 
 	i = 0;
 	j = 0;
-	new_word = ft_strnew(ft_strlen(word) - 2);
-	while (word[i] != '}')
+//	new_word = ft_strnew(ft_strlen(word) - 2);
+	while (word[i] && word[i] != '}')
 	{
 		if (word[i] == '{')
 			i++;
 		if (word[i] == '#' && i == 2)
 			i++;
-		new_word[j] = word[i];
+		test[j] = word[i];
 		i++;
 		j++;
 	}
-	new_word[j] = '\0';
+	test[j] = '\0';
+	new_word = ft_strdup(test);
 	return (new_word);
 }
 
@@ -61,19 +63,19 @@ char	*get_mod_type(char *word, size_t i, int act)
 	return (str);
 }
 
-char	*get_expansion_format(size_t *i, char *word)
+char	*get_expansion_format(char *word)
 {
 	size_t	a;
 	char	*modifier;
 
-	a = *i;
+	a = 1;
 	modifier = NULL;
 	if (word[a + 1] == '#')
 	{
-		g_test = 1;
+		g_length_mod = 1;
 		a++;
 	}
-	while (word[a])
+	while (word[a] && word[a] != '}')
 	{
 		a++;
 		if (word[a] == ':')
