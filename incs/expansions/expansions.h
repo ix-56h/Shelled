@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/22 02:28:03 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/06 01:22:38 by ezonda           ###   ########.fr       */
+/*   Created: 2020/03/07 04:13:25 by ezonda            #+#    #+#             */
+/*   Updated: 2020/03/07 04:13:27 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*process_simple_parameter(size_t *i, char *word);
 /*
 **	substitution.c functions
 */
-char	*process_substitution(size_t *i, char *word);
+char	*process_substitution(size_t *i, char *word, char occur);
 
 /*
 **	utils/index_end_squote.c

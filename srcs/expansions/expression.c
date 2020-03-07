@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expression.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/02 04:54:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/07 02:30:13 by ezonda           ###   ########.fr       */
+/*   Created: 2020/03/07 04:14:56 by ezonda            #+#    #+#             */
+/*   Updated: 2020/03/07 04:14:57 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,11 +167,20 @@ int		check_dol(size_t *i, char **w)
 	if (!(*w)[*i] || (*w)[*i] == ' ' || (*w)[*i] == '\n' || (*w)[*i] == '\t')
 		return (2);
 	if ((*w)[*i] == '{')
+	{
 		*w = process_parameter(i, *w);
+		return (1);
+	}
 	else if (ft_isalpha((*w)[*i]) || (*w)[*i] == '_')
+	{
 		*w = process_simple_parameter(i, *w);
+		return (1);
+	}
 	else if ((*w)[*i] == '(' && !is_arithmetic((*w) + *i))
-		*w = process_substitution(i, *w);
+	{
+		*w = process_substitution(i, *w, ')');
+		return (1);
+	}
 	return (0);
 }
 
@@ -195,7 +204,12 @@ void	process_expression(char **w)
 			i = index_end_squote(*w, i);
 			continue ;
 		}
-		else if ((*w)[i] == '$' && check_dol(&i, w) == 2)
+		else if ((*w)[i] == '`')
+		{
+			*w = process_substitution(&i, *w, '`');
+			break ;
+		}
+		else if ((*w)[i] == '$' && check_dol(&i, w) == 1)
 			break ;
 		i++;
 	}
