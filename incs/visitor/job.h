@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/06 16:58:04 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:21:21 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef	struct			s_process
 	char				is_finish;
 	char				is_stopped;
 	int					ret;
+	int					status;
 }						t_process;
 typedef	struct			s_job
 {

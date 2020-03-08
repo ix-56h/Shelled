@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/03 03:45:59 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:52:05 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,51 @@
 #include "parser.h"
 #include "exec.h"
 #include "libft.h"
+
+pid_t shell_pgid;
+int shell_terminal;
+int shell_is_interactive;
+
+
+/* Make sure the shell is running interactively as the foreground job
+   before proceeding. */
+
+void
+init_shell2 ()
+{
+
+  /* See if we are running interactively.  */
+  shell_terminal = 0;
+  shell_is_interactive = isatty (shell_terminal);
+
+  if (shell_is_interactive)
+    {
+      /* Loop until we are in the foreground.  */
+      while (tcgetpgrp (shell_terminal) != (shell_pgid = getpgrp ()))
+        kill (- shell_pgid, SIGTTIN);
+
+      /* Ignore interactive and job-control signals.  */
+      signal (SIGINT, SIG_IGN);
+      signal (SIGQUIT, SIG_IGN);
+      signal (SIGTSTP, SIG_IGN);
+      signal (SIGTTIN, SIG_IGN);
+      signal (SIGTTOU, SIG_IGN);
+      signal (SIGCHLD, SIG_IGN);
+
+      /* Put ourselves in our own process group.  */
+      shell_pgid = getpid ();
+      if (setpgid (shell_pgid, shell_pgid) < 0)
+        {
+          perror ("Couldn't put the shell in its own process group");
+          exit (1);
+        }
+
+      /* Grab control of the terminal.  */
+      tcsetpgrp (shell_terminal, shell_pgid);
+
+    }
+}
+
 
 void		check_args(t_sh *sh, int ac, char **av)
 {
@@ -59,6 +104,7 @@ int			main(int ac, char **av, char **envp)
 	t_sh		sh;
 
 	sh.f.ast_draw = 0;
+	init_shell2();
 	if (init_shell(&sh, ac, av, envp) == 0)
 		return (EXIT_FAILURE);
 	g_job_head = NULL;
