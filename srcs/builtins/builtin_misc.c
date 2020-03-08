@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:40:41 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/01 14:42:28 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/06 20:11:50 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ t_builtin	lookforbuiltin(char *data)
 		return (ft_take);
 	else if (ft_strcmp(data, "unsetenv") == 0)
 		return (ft_unsetenv);
-	else if (ft_strcmp(data, "env") == 0)
-		return (ft_env);
 	else if (ft_strcmp(data, "exit") == 0)
 		return (ft_exit);
 	else if (ft_strcmp(data, "djob") == 0)
