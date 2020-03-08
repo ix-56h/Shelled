@@ -6,11 +6,12 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/06 20:10:19 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:57:28 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdio.h>
 #include "sh.h"
 #include "builtins.h"
 #include "exec.h"
@@ -46,6 +47,17 @@ int				exec_with_fork(t_node *cmd, char **env, t_io_lists io,
 		close_used_pipe_fd(io.piped);
 		process = find_process_by_pid(job->list, UNUSED_JOB);
 		process->pid = pid;
+		//Ca decone ici
+		perror(NULL);
+		if (!io.piped || (io.piped && !io.piped->prev))
+		{
+			setpgid(pid, pid);
+			job->pgid = pid;
+		}
+		else
+			setpgid(pid, job->pgid);
+		perror(NULL);
+		//et ca fini la
 		return (0);
 	}
 }
