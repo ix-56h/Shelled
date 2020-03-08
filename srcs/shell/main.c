@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/08 18:52:05 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:10:16 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ init_shell2 ()
       signal (SIGTSTP, SIG_IGN);
       signal (SIGTTIN, SIG_IGN);
       signal (SIGTTOU, SIG_IGN);
-      signal (SIGCHLD, SIG_IGN);
+ //     signal (SIGCHLD, SIG_IGN);
 
       /* Put ourselves in our own process group.  */
       shell_pgid = getpid ();

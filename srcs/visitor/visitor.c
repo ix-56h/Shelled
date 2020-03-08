@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/05 02:03:54 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:06:41 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char			*substitution_wrapper(char *str)
 			exit(0);
 		}
 		dup2(stdout_save, STDOUT_FILENO);
-		wait(NULL);
+	//	wait(NULL);
 		ft_bzero(buff, sizeof(char) * (BUFFSIZE + 1));
 		ret = NULL;
 		while (read(pipefd[READ_END], buff, BUFFSIZE) > 0)

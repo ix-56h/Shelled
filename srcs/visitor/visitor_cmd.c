@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/08 19:18:57 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:33:06 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ mark_process_status (pid_t pid, int status)
   t_job *j;
   t_process *p;
 
-
+	dprintf(2, "pid = %d\n", pid);
   if (pid > 0)
     {
       /* Update the record for the process.  */
@@ -74,6 +74,7 @@ int job_is_stopped (t_job *j)
   for (p = j->list; p; p = p->next)
     if (!p->is_finish && !p->is_stopped)
       return 0;
+//	dprintf(2, "stopped\n");
   return 1;
 }
 
@@ -96,8 +97,8 @@ void wait_for_job (t_job *j)
 
   do
     pid = waitpid (WAIT_ANY, &status, WUNTRACED);
-  while (!mark_process_status (pid, status)
-         && !job_is_stopped (j)
+  while (!mark_process_status (pid, status) // wait until every process is completed or stopped
+         && !job_is_stopped (j)	
          && !job_is_completed (j));
 }
 
@@ -109,26 +110,13 @@ void			wait_and_ret(t_io_lists io, t_job *job)
 	int			ret_value;
 	int			ret_pid;
 	t_process	*tmp_process;
+	int status;
 
 	if ((io.piped && !io.piped->next && io.piped->used == 1) || !io.piped)
 	{
-		put_job_in_foreground(job, 0);
-		wait_for_job(job);
-		// ret_pid = 1;
-		// tmp_process = (t_process *)dl_get_head((t_dl_node *)job->list);
-		// while (tmp_process)
-		// {
-		// 	if (tmp_process->pid > 0)
-		// 	{
-		// 		ret_pid = waitpid(tmp_process->pid, &ret_value, WUNTRACED);
-		// 		if (!WIFSTOPPED(ret_value))
-		// 			tmp_process->is_finish = 1;
-		// 		else
-		// 			tmp_process->is_stopped = 1;
-		// 		tmp_process->ret = ret_value;
-		// 	}
-		// 	tmp_process = tmp_process->next;
-		// }
+		// if this is the last process, put the whole job in foreground and wait for it
+		// we need to check if this is a builtin or not
+		put_job_in_foreground(job, 0); 
 	}
 }
 
@@ -142,7 +130,6 @@ int	exec_command(t_node *node, t_io_lists *io, t_job **job)
 	restore_term(1);
 	dl_append_node((t_dl_node **)&(*job)->list, (t_dl_node *)create_process(UNUSED_JOB));
 	err = exec_cmd(node, NULL, *io, *job);
-//	wait_for_job(*job);
 	wait_and_ret(*io, *job);
 	set_used_fd(io->piped);
 	restore_term(2);
