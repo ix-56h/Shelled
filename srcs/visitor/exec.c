@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/08 20:29:32 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/09 00:24:31 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,7 @@
 #include "sh.h"
 #include "builtins.h"
 #include "exec.h"
-
-pid_t shell_pgid;
-void wait_for_job (t_job *j);
-
-void put_job_in_foreground (t_job *j, int cont)
-{
-  /* Put the job into the foreground.  */
-  tcsetpgrp (0, j->pgid);
-
-
-  /* Send the job a continue signal, if necessary.  */
-  if (cont)
-    {
-      restore_term(1);
-      if (kill (- j->pgid, SIGCONT) < 0)
-        perror ("kill (SIGCONT)");
-    }
-
-
-  /* Wait for it to report.  */
-  wait_for_job (j);
-
-  /* Put the shell back in the foreground.  */
-  tcsetpgrp (0, shell_pgid);
-
-  /* Restore the shell’s terminal modes.  */
-  restore_term(2);
-}
+#include <sys/wait.h>
 
 int				exec_with_fork(t_node *cmd, char **env, t_io_lists io,
 					t_job *job)
@@ -63,8 +36,6 @@ int				exec_with_fork(t_node *cmd, char **env, t_io_lists io,
 		}
 		else
 			setpgid(pid, job->pgid);
-		dprintf(2, "pgid = %d\n", job->pgid);
-		tcsetpgrp (STDIN_FILENO, job->pgid);
 		set_pipe_fd(io.piped);
 		close_unused_pipe_fd(io.piped);
 		close_all_pipe(io);
@@ -118,33 +89,6 @@ int				exec_builtin_no_fork(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	process->ret = ret;
 	process->is_finish = 1;
 	return (0);
-}
-
-int				exec_builtin_fork(t_node *cmd, char **env, t_io_lists io, t_job *job)
-{
-	int		pid;
-	int		return_value;
-	t_process	*process;
-
-	if ((pid = fork()) == -1)
-		return (1);
-	else if (pid == 0)
-	{
-		set_pipe_fd(io.piped);
-		close_unused_pipe_fd(io.piped);
-		close_all_pipe(io);
-		set_redir_fd(io.redir);
-		return_value = lookforbuiltin(cmd->data)(cmd->args,
-			((env) ? &env : &g_env));
-		exit(return_value);
-	}
-	else
-	{
-		close_used_pipe_fd(io.piped);
-		process = find_process_by_pid(job->list, UNUSED_JOB);
-		process->pid = pid;
-		return (0);
-	}
 }
 
 int				builtin_controler(t_node *cmd, char **env, t_io_lists io, t_job *job)

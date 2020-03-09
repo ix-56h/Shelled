@@ -3,13 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/08 20:10:16 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/09 00:10:05 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <sys/wait.h>
 #include "visitor.h"
 #include "sh.h"
 #include "expansions.h"
@@ -18,47 +20,32 @@
 #include "exec.h"
 #include "libft.h"
 
-pid_t shell_pgid;
-int shell_terminal;
-int shell_is_interactive;
-
-
-/* Make sure the shell is running interactively as the foreground job
-   before proceeding. */
-
-void
-init_shell2 ()
+void		init_shell_job(void)
 {
+	int	shell_is_interactive;
+	int	shell_terminal;
 
-  /* See if we are running interactively.  */
-  shell_terminal = 0;
-  shell_is_interactive = isatty (shell_terminal);
-
-  if (shell_is_interactive)
-    {
-      /* Loop until we are in the foreground.  */
-      while (tcgetpgrp (shell_terminal) != (shell_pgid = getpgrp ()))
-        kill (- shell_pgid, SIGTTIN);
-
-      /* Ignore interactive and job-control signals.  */
-      signal (SIGINT, SIG_IGN);
-      signal (SIGQUIT, SIG_IGN);
-      signal (SIGTSTP, SIG_IGN);
-      signal (SIGTTIN, SIG_IGN);
-      signal (SIGTTOU, SIG_IGN);
- //     signal (SIGCHLD, SIG_IGN);
-
-      /* Put ourselves in our own process group.  */
-      shell_pgid = getpid ();
-      if (setpgid (shell_pgid, shell_pgid) < 0)
-        {
-          perror ("Couldn't put the shell in its own process group");
-          exit (1);
+	shell_terminal = 0;
+	shell_is_interactive = isatty(shell_terminal);
+	if (shell_is_interactive)
+	{
+    	while (tcgetpgrp(shell_terminal) != (g_shell_pgid = getpgrp()))
+		{
+    		kill(-g_shell_pgid, SIGTTIN);
+		}
+		signal (SIGINT, SIG_IGN);
+    	signal (SIGQUIT, SIG_IGN);
+    	signal (SIGTSTP, SIG_IGN);
+    	signal (SIGTTIN, SIG_IGN);
+    	signal (SIGTTOU, SIG_IGN);
+		//signal (SIGCHLD, SIG_IGN);
+    	g_shell_pgid = getpid ();
+    	if (setpgid (g_shell_pgid, g_shell_pgid) < 0)
+    	{
+        	ft_putstr_fd("Couldn't put the shell in its own process group", STDERR_FILENO);
+    		exit(1);
         }
-
-      /* Grab control of the terminal.  */
-      tcsetpgrp (shell_terminal, shell_pgid);
-
+    	tcsetpgrp (shell_terminal, g_shell_pgid);
     }
 }
 
@@ -104,7 +91,7 @@ int			main(int ac, char **av, char **envp)
 	t_sh		sh;
 
 	sh.f.ast_draw = 0;
-	init_shell2();
+	init_shell_job();
 	if (init_shell(&sh, ac, av, envp) == 0)
 		return (EXIT_FAILURE);
 	g_job_head = NULL;

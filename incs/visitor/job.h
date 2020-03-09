@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/08 18:21:21 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/09 01:33:31 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,9 @@ t_process	*find_process_by_pid(t_process *process, pid_t pid);
 int			job_is_finish(t_job *job);
 void		clean_job(void);
 void		free_all_job(t_job *job);
+int			mark_process_status(pid_t pid, int status);
+int			job_is_stopped(t_job *j);
+int			job_is_completed(t_job *j);
+void		wait_for_job(t_job *j);
+void		put_job_in_foreground(t_job *j, int cont);
 #endif
