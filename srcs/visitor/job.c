@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/09 01:41:12 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/09 03:17:30 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void		clean_job(void)
 				g_job_head = next;
 				head = g_job_head;
 			}
-			dl_free_list((t_dl_node *)nav->list);
+			dl_free_with_data((t_dl_node *)nav->list, free);
 			dl_del_one((t_dl_node *)nav);
 		}
 		nav = next;
@@ -109,6 +109,7 @@ int			mark_process_status(pid_t pid, int status)
     					p->is_finish = 1;
 						if (WIFSIGNALED(status))
         					ft_dprintf(3, "%d: Terminated by signal %d.\n", (int)pid, WTERMSIG(p->status));
+						p->ret = status;
         			}
         			return (0);
         		}
