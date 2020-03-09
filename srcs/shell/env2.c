@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 05:41:47 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/01 13:07:04 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/09 00:01:32 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,6 @@ void	free_env(char **env)
 
 char	*get_env(char **env, char *looking)
 {
-	char	*res;
-	int		i;
-
-	i = 0;
-	res = NULL;
 	while (env && *env)
 	{
 		if (ft_strcmp(*env, looking) == '=')

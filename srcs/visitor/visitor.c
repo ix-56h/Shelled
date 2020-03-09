@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/05 02:03:54 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/08 23:50:20 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,16 @@ int				visit_cmd(t_node *node, t_io_lists io, t_job **job)
 
 int				visit(t_node *root, t_job **job)
 {
-	t_io_lists io;
-	
+	t_io_lists	io;
+	t_job		*last_job;
+
 	if (!root)
 		return (0);
 	if (g_visit_rules[root->tok])
 	{
 		io = (t_io_lists){.redir = NULL, .piped = NULL};
-		dl_append_node(job, ft_calloc(sizeof(t_process)));
-		t_job * last_job = dl_get_last(*job);
+		dl_append_node((t_dl_node **)job, ft_calloc(sizeof(t_process)));
+		last_job = (t_job *)dl_get_last((t_dl_node *)*job);
 		if (!(*g_visit_rules[root->tok])(root, io, &last_job))
 			return (0);
 	}
@@ -123,7 +124,7 @@ char			*substitution_wrapper(char *str)
 			exit(0);
 		}
 		dup2(stdout_save, STDOUT_FILENO);
-		wait(NULL);
+	//	wait(NULL);
 		ft_bzero(buff, sizeof(char) * (BUFFSIZE + 1));
 		ret = NULL;
 		while (read(pipefd[READ_END], buff, BUFFSIZE) > 0)

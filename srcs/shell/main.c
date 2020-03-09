@@ -6,10 +6,12 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/03 03:45:59 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/09 00:10:05 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <sys/wait.h>
 #include "visitor.h"
 #include "sh.h"
 #include "expansions.h"
@@ -17,6 +19,36 @@
 #include "parser.h"
 #include "exec.h"
 #include "libft.h"
+
+void		init_shell_job(void)
+{
+	int	shell_is_interactive;
+	int	shell_terminal;
+
+	shell_terminal = 0;
+	shell_is_interactive = isatty(shell_terminal);
+	if (shell_is_interactive)
+	{
+    	while (tcgetpgrp(shell_terminal) != (g_shell_pgid = getpgrp()))
+		{
+    		kill(-g_shell_pgid, SIGTTIN);
+		}
+		signal (SIGINT, SIG_IGN);
+    	signal (SIGQUIT, SIG_IGN);
+    	signal (SIGTSTP, SIG_IGN);
+    	signal (SIGTTIN, SIG_IGN);
+    	signal (SIGTTOU, SIG_IGN);
+		//signal (SIGCHLD, SIG_IGN);
+    	g_shell_pgid = getpid ();
+    	if (setpgid (g_shell_pgid, g_shell_pgid) < 0)
+    	{
+        	ft_putstr_fd("Couldn't put the shell in its own process group", STDERR_FILENO);
+    		exit(1);
+        }
+    	tcsetpgrp (shell_terminal, g_shell_pgid);
+    }
+}
+
 
 void		check_args(t_sh *sh, int ac, char **av)
 {
@@ -59,6 +91,7 @@ int			main(int ac, char **av, char **envp)
 	t_sh		sh;
 
 	sh.f.ast_draw = 0;
+	init_shell_job();
 	if (init_shell(&sh, ac, av, envp) == 0)
 		return (EXIT_FAILURE);
 	g_job_head = NULL;
