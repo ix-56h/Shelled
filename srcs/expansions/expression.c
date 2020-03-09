@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 04:14:56 by ezonda            #+#    #+#             */
-/*   Updated: 2020/03/07 04:47:49 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/09 04:56:10 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,37 +15,49 @@
 #include "expansions.h"
 #include "libft.h"
 
-char	*process_parameter(size_t *i, char *word)
+char	*test_parameter(t_exp_data *exp, char *word)
 {
-	char	*modifier;
+	int		i;
 	char	*new_word;
-	char	*first;
-	char	*last;
 
+	i = 1;
 	new_word = NULL;
-	if (!check_braces(word, i))
-		return (ft_strdup(""));
-	modifier = get_expansion_format(word);
-	first = get_first_part(word);
-	last = get_last_part(word, i);
-	if (last[0] == '$')
-		process_expression(&last);
-	if (!modifier)
+	if (exp->last[0] == '$')
+		process_expression(&exp->last);
+	if (!exp->modifier)
 	{
 		new_word = remove_brace(word);
+		while (new_word[i++])
+			if (parameter_error(new_word[i], new_word))
+				return (ft_strdup(""));
 		process_expression(&new_word);
 	}
 	else
 	{
-		new_word = dispatch_exp(word, modifier);
-		if (first[0])
-			new_word = ft_strjoinf(first, new_word, 2);
+		new_word = dispatch_exp(word, exp->modifier);
+		if (exp->first[0])
+			new_word = ft_strjoinf(exp->first, new_word, 2);
 	}
-	if (last[0])
-		new_word = ft_strjoinf(new_word, last, 1);
-	free(first);
-	free(last);
-	free(modifier);
+	if (exp->last[0])
+		new_word = ft_strjoinf(new_word, exp->last, 1);
+	return (new_word);
+}
+
+char	*process_parameter(size_t *i, char *word)
+{
+	t_exp_data	exp;
+	char		*new_word;
+
+	new_word = NULL;
+	if (!check_braces(word, i))
+		return (ft_strdup(""));
+	exp.modifier = get_expansion_format(word);
+	exp.first = get_first_part(word);
+	exp.last = get_last_part(word, i);
+	new_word = test_parameter(&exp, word);
+	free(exp.first);
+	free(exp.last);
+	free(exp.modifier);
 	free(word);
 	return (new_word);
 }

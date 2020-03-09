@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 17:22:53 by ezonda            #+#    #+#             */
-/*   Updated: 2020/03/07 01:03:41 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/09 03:17:17 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char		*remove_small_suffix(char *param, char *word)
 		param = ft_strjoinf("$", param, 2);
 		process_expression(&param);
 		i = ft_strlen(param) - 1;
-		while (i > 0)
+		while (i-- > 0)
 		{
 			if (param[i] == word[0] && look_for_pattern(param, word, i, 1))
 			{
@@ -86,8 +86,9 @@ char		*remove_small_suffix(char *param, char *word)
 				free(word);
 				return (param);
 			}
-			i--;
 		}
+		free(word);
+		return (param);
 	}
 	free(word);
 	param = ft_strjoinf("$", param, 2);
@@ -106,7 +107,7 @@ char		*remove_small_prefix(char *param, char *word)
 			process_expression(&word);
 		param = ft_strjoinf("$", param, 2);
 		process_expression(&param);
-		while (param[i])
+		while (param[i++])
 		{
 			if (param[i] == word[0] && look_for_pattern(param, word, i, 2))
 			{
@@ -114,8 +115,9 @@ char		*remove_small_prefix(char *param, char *word)
 				free(word);
 				return (param);
 			}
-			i++;
 		}
+		free(word);
+		return (param);
 	}
 	free(word);
 	param = ft_strjoinf("$", param, 2);

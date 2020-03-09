@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:40:56 by ezonda            #+#    #+#             */
-/*   Updated: 2020/03/07 04:56:31 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/09 00:52:26 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*use_default_value(char *param, char *word)
 	}
 	else
 	{
-		while (word[0] =='$' && word[1])
+		while (word[0] == '$' && word[1])
 		{
 			word = ft_strjoinf(word, "}", 1);
 			process_expression(&word);

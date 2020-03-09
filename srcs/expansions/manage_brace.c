@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 04:47:24 by ezonda            #+#    #+#             */
-/*   Updated: 2020/03/07 04:54:27 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/09 04:02:30 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 char	*get_last_part(char *word, size_t *a)
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
 	char	tmp[256];
 	char	*new_word;
 
@@ -34,17 +34,17 @@ char	*get_last_part(char *word, size_t *a)
 
 char	*get_first_part(char *word)
 {
-	size_t i;
-	size_t j;
-	size_t len;
-	char *new_word;
+	size_t	i;
+	size_t	j;
+	size_t	len;
+	char	*new_word;
 
 	i = 0;
 	j = 0;
 	while (word[i])
 	{
 		if (word[i] == '$' && word[i + 1] == '{')
-			break;
+			break ;
 		i++;
 	}
 	len = i;
@@ -57,10 +57,13 @@ char	*get_first_part(char *word)
 
 int		check_braces(char *word, size_t *a)
 {
-	size_t i = 0;
-	int obrace = 0;
-	int cbrace = 0;
+	size_t i;
+	size_t obrace;
+	size_t cbrace;
 
+	i = 0;
+	obrace = 0;
+	cbrace = 0;
 	if (word[2] == '}')
 	{
 		ft_putstr_fd("42sh: bad substitution", 2);
@@ -73,11 +76,6 @@ int		check_braces(char *word, size_t *a)
 			i++;
 			obrace++;
 		}
-		else if ((word[i] == '{' && word[i - 1] != '$')/* || word[i] == '{'*/)
-		{
-			ft_putstr_fd("42sh: bad substitution", 2);
-			return (0);
-		}
 		i++;
 	}
 	i = 0;
@@ -86,7 +84,7 @@ int		check_braces(char *word, size_t *a)
 		if (word[i] == '}')
 			cbrace++;
 		if (obrace == cbrace)
-			break;
+			break ;
 		i++;
 	}
 	*a = i + 1;

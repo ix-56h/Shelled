@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:43:38 by ezonda            #+#    #+#             */
-/*   Updated: 2020/03/07 04:55:54 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/09 04:01:18 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,36 @@ char	*remove_brace(char *word)
 {
 	int		i;
 	int		j;
-	char	test[255];
+	char	tmp[256];
 	char	*new_word;
 
 	i = 0;
 	j = 0;
-//	new_word = ft_strnew(ft_strlen(word) - 2);
 	while (word[i] && word[i] != '}')
 	{
 		if (word[i] == '{')
 			i++;
 		if (word[i] == '#' && i == 2)
 			i++;
-		test[j] = word[i];
+		tmp[j] = word[i];
 		i++;
 		j++;
 	}
-	test[j] = '\0';
-	new_word = ft_strdup(test);
+	tmp[j] = '\0';
+	new_word = ft_strdup(tmp);
 	return (new_word);
+}
+
+int		parameter_error(char c, char *word)
+{
+	if (c == '$' || c == '{')
+	{
+		ft_putstr_fd("42sh: bad substitution", 2);
+		if (word)
+			free(word);
+		return (1);
+	}
+	return (0);
 }
 
 char	*error_modifier(char *param, char *word)
