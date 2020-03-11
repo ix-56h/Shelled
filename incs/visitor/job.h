@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/09 03:09:51 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/11 18:46:05 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef	struct			s_process
 {
 	struct s_process	*next;
 	struct s_process	*prev;
-	char				*command;
+	char				**command;
 	pid_t				pid;
 	char				is_finish;
 	char				is_stopped;

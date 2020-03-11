@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/09 03:13:25 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/11 18:46:23 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	exec_command(t_node *node, t_io_lists *io, t_job **job)
 	signal(SIGINT, ctrl_c_handler);
 	restore_term(1);
 	dl_append_node((t_dl_node **)&(*job)->list, (t_dl_node *)create_process(UNUSED_JOB));
-	find_process_by_pid((*job)->list, UNUSED_JOB)->command = ft_strdup(node->data);
+	find_process_by_pid((*job)->list, UNUSED_JOB)->command = cpy_env(node->args);
 	err = exec_cmd(node, NULL, *io, *job);
 	if ((*job)->list->pid != BUILTIN_JOB)
 		if ((io->piped && !io->piped->next && io->piped->used == 1) || !io->piped)
