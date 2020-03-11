@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:26:01 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 01:00:22 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/08 23:56:23 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,13 @@ t_pos			get_cur_pos(void)
 	t_pos	pos;
 	char	buff[20];
 	int		i;
-	int		readsize;
 
 	ft_bzero(buff, 20);
 	while (!test_pos(buff))
 	{
 		ft_bzero(buff, sizeof(char) * 20);
 		write(1, "\033[6n", 4);
-		readsize = read(0, buff, 19);
+		read(0, buff, 19);
 	}
 	i = 2;
 	pos.y = ft_atoi(&buff[i]);

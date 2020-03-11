@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:21:43 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/02 23:58:22 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/08 23:57:07 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,11 @@ static int		min_one(int nbr)
 
 void			clear_node_line(t_dl_node *head)
 {
-	t_pos		curpos;
 	t_winsize	termsize;
 	t_line		*tmp_line;
 	int			nb_line;
 
 	termsize = get_winsize();
-	curpos = get_cur_pos();
 	nb_line = 0;
 	while (head)
 	{

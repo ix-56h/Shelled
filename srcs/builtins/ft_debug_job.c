@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 23:28:41 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/02 00:00:06 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/09 03:15:10 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		ft_debug_job(char **argv, char ***tenv)
 	job = g_job_head;
 	while (job)
 	{
-		process = job->data;
+		process = job->list;
 		if (process)
 		{
 			ft_printf("job[%i]:\n", i);
@@ -40,8 +40,10 @@ int		ft_debug_job(char **argv, char ***tenv)
 					ft_printf("\tpid: unused\t");
 				else
 					ft_printf("\tpid: %i\t", process->pid);
-				ft_printf("\tret: %i\t", process->ret);
-				ft_printf("\tfinish: %i\n", (int)process->is_finish);
+				ft_printf("cmd: %s  ", process->command);
+				ft_printf("ret: %i    ", process->ret);
+				ft_printf("finish: %i   ", (int)process->is_finish);
+				ft_printf("stoped: %i   \n", (int)process->is_stopped);
 				process = process->next;
 			}
 			++i;

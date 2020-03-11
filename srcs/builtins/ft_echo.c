@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 17:54:14 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/09 02:27:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/09 00:00:21 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,8 @@ char	**echo_arg(char **argv, int *arg_n)
 int		ft_echo(char **argv, char ***tenv)
 {
 	int		arg_n;
-	char	**env;
 
-	env = *tenv;
+	(void)tenv;
 	arg_n = 0;
 	argv = echo_arg(argv, &arg_n);
 	while (*argv)

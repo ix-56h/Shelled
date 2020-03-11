@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/01 13:30:31 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/03/08 23:39:34 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # define SHELL_NAME "42sh"
 
 int				g_exit;
+pid_t			g_shell_pgid;
+
 char			**g_env;
 char			**g_set;
 

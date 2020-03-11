@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_sh.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 05:49:19 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 06:00:48 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/08 23:57:19 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	free_sh(t_sh *sh)
 {
-	size_t	i;
-
-	i = 0;
 	if (sh->input)
 		free(sh->input);
 	sh->input = NULL;

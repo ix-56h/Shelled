@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/03/11 18:47:24 by niguinti         ###   ########.fr        #
+#    Updated: 2020/03/11 18:57:56 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,7 +108,6 @@ C_FILES_line_edit = \
 					termios.c \
 
 C_FILES_builtins = \
-				   ft_env.c \
 				   ft_setenv.c \
 				   ft_take.c \
 				   ft_unsetenv.c \

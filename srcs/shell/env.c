@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:28:07 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/03 05:43:03 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/09 00:01:39 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,7 @@ char	**cpy_env(char **env)
 int		ft_edit_env(char **env, char *looking, char *value)
 {
 	char	*new_env;
-	int		i;
 
-	i = 0;
 	while (env && *env)
 	{
 		if (ft_strcmp(*env, looking) == '=')

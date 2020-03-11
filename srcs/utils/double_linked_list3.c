@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 04:11:14 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/03 04:59:50 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/08 23:57:35 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,8 @@
 t_dl_node	*dl_find_data(t_dl_node *haystack, void *needle)
 {
 	t_dl_node	*tmp;
-	t_dl_node	*result;
 
 	tmp = haystack;
-	result = NULL;
 	while (tmp)
 	{
 		if (tmp->data == needle)

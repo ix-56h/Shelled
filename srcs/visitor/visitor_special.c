@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:35:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/02 01:13:08 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/06 16:32:34 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		visit_and_if(t_node *node, t_io_lists io, t_job **job)
 	if (node->left && node->right)
 	{
 		err = (*g_visit_rules[node->left->tok])(node->left, io, job);
-		process = (t_process *)(*job)->data;
+		process = (t_process *)(*job)->list;
 		if (process->pid != ERR_JOB && process->ret == 0)
 			if (err == 0)
 				if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
@@ -43,7 +43,7 @@ int		visit_or_if(t_node *node, t_io_lists io, t_job **job)
 	if (node->left && node->right)
 	{
 		err = (*g_visit_rules[node->left->tok])(node->left, io, job);
-		process = (t_process *)(*job)->data;
+		process = (t_process *)(*job)->list;
 		
 		if (process->pid == ERR_JOB || process->ret != 0 || err != 0)
 			if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
