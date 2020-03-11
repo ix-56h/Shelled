@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/09 03:09:51 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/09 17:34:51 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ typedef	struct			s_job
 	struct s_job		*prev;
 	t_process			*list;
 	pid_t				pgid;
+	char				is_notified;
+	int					number;
+	char				*line;
 }						t_job;
 
 t_job					*g_job_head;
@@ -50,4 +53,5 @@ int			job_is_stopped(t_job *j);
 int			job_is_completed(t_job *j);
 void		wait_for_job(t_job *j);
 void		put_job_in_foreground(t_job *j, int cont);
+void 		do_job_notification (void);
 #endif
