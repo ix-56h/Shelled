@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 04:54:10 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/05 02:02:44 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/07 04:08:27 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,7 @@ void	process_expression(char **w)
 			break ;
 		}
 		else if ((*w)[i] == '$' && check_dol(&i, w) == 1)
-		{
-			//process_ifs();
 			break ;
-		}
 		i++;
 	}
 }
