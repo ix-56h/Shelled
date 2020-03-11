@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:46 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/11 18:50:15 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/11 22:51:48 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "wexp_rules.h"
 #include "libft.h"
 #include "stack.h"
-#include "ft_printf.h"
+
 int	lex_match_parameter(char *s, int *anchor, t_lifo *stack)
 {
 	while (s[*anchor] && s[*anchor] != '}')
@@ -117,7 +117,12 @@ int	lex_match_dol(char *s, int *anchor, t_lifo *stack)
 			return (0);
 	}
 	else if (s[*anchor] == '{')
-		lex_match_parameter(s, anchor, stack);
+	{
+		if (lex_match_parameter(s, anchor, stack))
+			skip_whitespaces(s, anchor);
+		else
+			return (0);
+	}
 	else if (ft_isalpha(s[*anchor]) || s[*anchor] == '_')
 	{
 		*anchor += 1;
