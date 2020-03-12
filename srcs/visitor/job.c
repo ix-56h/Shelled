@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/12 04:32:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/12 04:46:48 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		free_all_process(t_process *process)
 {
 	t_process	*next;
 
-	while (process)
+	while (process->prev)
 		process = process->prev;
 	while (process)
 	{
@@ -97,7 +97,7 @@ void		free_all_job(t_job *job)
 {
 	t_job	*next;
 
-	while (job)
+	while (job->prev)
 		job = job->prev;
 	while (job)
 	{
