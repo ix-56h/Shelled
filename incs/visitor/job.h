@@ -6,7 +6,11 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2020/03/11 19:19:33 by mguerrea         ###   ########.fr       */
+=======
+/*   Updated: 2020/03/12 04:14:47 by akeiflin         ###   ########.fr       */
+>>>>>>> remotes/origin/feature-visitor
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +58,8 @@ int			job_is_completed(t_job *j);
 void		wait_for_job(t_job *j);
 void		put_job_in_foreground(t_job *j, int cont);
 void 		do_job_notification (void);
+t_job		*create_job(void);
+int			get_next_job_count(void);
+char		*cut_command(char *cmd, char act);
+
 #endif

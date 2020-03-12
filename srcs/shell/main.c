@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/12 15:41:05 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:41:53 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void		check_args(t_sh *sh, int ac, char **av)
 
 void		process_sh(t_sh *sh)
 {
+	char	*cmd;
+
 	if (!lifo_empty(sh->stack.errors))
 	{
 		print_stack_errors(sh->stack.errors, &(sh->tok));
@@ -80,7 +82,9 @@ void		process_sh(t_sh *sh)
 			process_expansions(sh->node);
 			if (sh->f.ast_draw)
 				tree_draw(sh->node);
-			visit(sh->node, &g_job_head);
+			cmd = ft_strdup(sh->input);
+			visit(sh->node, &g_job_head, cmd);
+			free(cmd);
 			clean_job();
 		}
 	}
