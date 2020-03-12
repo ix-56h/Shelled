@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 23:28:41 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/11 18:46:41 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/11 20:39:55 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,16 @@ int		ft_debug_job(char **argv, char ***tenv)
 {
 	t_job		*job;
 	t_process	*process;
-	int			i;
 
 	(void)argv;
 	(void)tenv;
-	i = 0;
 	job = g_job_head;
 	while (job)
 	{
 		process = job->list;
 		if (process)
 		{
-			ft_printf("job[%i]:\n", i);
+			ft_printf("job[%i]:  %s\n", job->number, job->line);
 			while (process)
 			{
 				if (process->pid == BUILTIN_JOB)
@@ -47,7 +45,6 @@ int		ft_debug_job(char **argv, char ***tenv)
 				ft_printf("stoped: %i   \n", (int)process->is_stopped);
 				process = process->next;
 			}
-			++i;
 		}
 		job = job->next;
 	}
