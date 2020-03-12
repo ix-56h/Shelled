@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visitor_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/12 04:15:14 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:54:24 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	exec_command(t_node *node, t_io_lists *io, t_job **job)
 	err = exec_cmd(node, NULL, *io, *job);
 	if ((io->piped && !io->piped->next && io->piped->used == 1) || !io->piped)
 	{
-		if ((*job)->list->pid != BUILTIN_JOB)
+		if ((*job)->list->pid != BUILTIN_JOB && (*job)->list->pid != ERR_JOB)
 			put_job_in_foreground(*job, 0);
 		(*job)->line = cut_command(io->cmd, 0);
 	}

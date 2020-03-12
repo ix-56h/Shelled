@@ -6,11 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2020/03/11 19:19:33 by mguerrea         ###   ########.fr       */
-=======
-/*   Updated: 2020/03/12 04:14:47 by akeiflin         ###   ########.fr       */
->>>>>>> remotes/origin/feature-visitor
+/*   Updated: 2020/03/12 15:43:36 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
