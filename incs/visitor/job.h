@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/12 04:14:47 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/14 17:25:01 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ int			mark_process_status(pid_t pid, int status);
 int			job_is_stopped(t_job *j);
 int			job_is_completed(t_job *j);
 void		wait_for_job(t_job *j);
+void		wait_for_job_background(t_job *job);
 void		put_job_in_foreground(t_job *j, int cont);
+void		put_job_in_background(t_job *job, int cont);
 t_job		*create_job(void);
 int			get_next_job_count(void);
 char		*cut_command(char *cmd, char act);

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/13 01:05:34 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/14 17:24:16 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,6 +212,16 @@ void		wait_for_job(t_job *job)
 		pid = waitpid (WAIT_ANY, &status, WUNTRACED);
 }
 
+void		wait_for_job_background(t_job *job)
+{
+	int		status;
+	pid_t	pid;
+
+    pid = waitpid(WAIT_ANY, &status, WNOHANG);
+	while (!mark_process_status(pid, status) && !job_is_stopped(job) && !job_is_completed(job))
+		pid = waitpid (WAIT_ANY, &status, WNOHANG);
+}
+
 void		put_job_in_foreground(t_job *job, int cont)
 {
 	tcsetpgrp(0, job->pgid);
@@ -222,6 +232,19 @@ void		put_job_in_foreground(t_job *job, int cont)
 			perror("kill (SIGCONT)"); //attention fonction interdite
     }
 	wait_for_job(job);
+	tcsetpgrp(0, g_shell_pgid);
+	restore_term(2);
+}
+
+void		put_job_in_background(t_job *job, int cont)
+{
+	if (cont)
+	{
+    	restore_term(1);
+    	if (kill(-job->pgid, SIGCONT) < 0)
+			perror("kill (SIGCONT)"); //attention fonction interdite
+    }
+	wait_for_job_background(job);
 	tcsetpgrp(0, g_shell_pgid);
 	restore_term(2);
 }

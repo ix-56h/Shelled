@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/12 04:15:14 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/14 17:29:35 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,12 @@ int	exec_command(t_node *node, t_io_lists *io, t_job **job)
 	if ((io->piped && !io->piped->next && io->piped->used == 1) || !io->piped)
 	{
 		if ((*job)->list->pid != BUILTIN_JOB)
-			put_job_in_foreground(*job, 0);
+		{
+			if (io->background)
+				put_job_in_background(*job, 0);
+			else
+				put_job_in_foreground(*job, 0);
+		}
 		(*job)->line = cut_command(io->cmd, 0);
 	}
 	set_used_fd(io->piped);
