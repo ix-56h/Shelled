@@ -1,27 +1,36 @@
 # IMPORTANT
-X			Error handler
 X			Check assignment_word 
 				- Need to check for the 7b rule if the current word is the first or not
-X			Rewrite tokenizer and process tokens as described in , don't forget all process during tokenization and after (alias, expansion etc):
-			https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_03
-X			need to solve $a$($a)
 
-# Important notes
-The WORD tokens shall have the word expansion rules applied to them immediately before the associated command is executed, not at the time the command is parsed.
+#		FOR 42sh 
 
+Chaque built-in doit avoir au minimum les options dictées par le standard POSIX, (sauf pour set et unset)
+Builtins:
+-	type
+-	export
+-- Job control
+	- fg
+	- jobs
+	- bg
 
-# OTHERS
-O			Redirections like ">> toto ls"
-O			Quotes
-?			Subshell
-X			need see 7b rule in misc.c
-X			here documents
+Exp:
+-	${}
+	- handle special parameters like "?"
 
+Variable definition name=value
 
-X			Why not try to use binary mask for squote and dquote struct, with a definem, i could check if is a quoted word like : IS_QUOTED(cur->quoted) or IS_DQUOTED(cur->quoted) or IS_SQUOTE(cur->quoted) (not really usefull)
-X			check for this command
-cat /etc/passwd | tr : # | tr -s abcdefghijklmnopqrstuvwxyz| cut -c 2 | grep -e a -e b -e\
- c -e d -e e -e f -e g -e h -e i -e j -e k -e l -e m -e n -e o -e p -e q -e r -e s -e \
-t -e u -e v -e w -e x -e y -e z |sort|uniq -c
-
-
+Partie modulaire :
+-	Les commandes groupées et sous-shell :
+-	La gestion des alias via les built-ins alias et unalias
+-	Le built-in test avec les opérateurs suivants :-b,-c,-d,-e,-f,-g,-L,-p,-r,-S,-s,-u,-w,-x,-z,=,!=,-eq,-ne,-ge,-lt,-le,!
+	- Ainsi que la possibilité d’un simple opérande, sans opérateur
+-	L’expansion du tilde et les formats supplémentaires des paramètres :
+	-	${parameter:-word}
+	-	${parameter:=word}
+	-	${parameter:?word}
+	-	${parameter:+word}
+	-	${#parameter}
+	-	${parameter%}
+	-	${parameter%%}
+	-	${parameter#}
+	-	${parameter##}

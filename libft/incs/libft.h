@@ -3,18 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niguinti <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 23:02:11 by niguinti          #+#    #+#             */
-/*   Updated: 2019/08/14 18:14:05 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/01 12:28:54 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # define BUFF_SIZE 1024
-
 # include <string.h>
+# define NONE 0000
+# define FIRST 0001
+# define SECOND 0010
+# define BOTH 0111
+# undef tab
 
 typedef struct	s_tab
 {
@@ -45,7 +49,7 @@ void			*ft_memcpy(void *dst, const void *src, size_t n);
 void			ft_memdel(void **ap);
 void			*ft_memmove(void *dst, const void *src, size_t len);
 void			*ft_memset(void *b, int c, size_t len);
-void			ft_putchar(char c);
+int				ft_putchar(int c);
 void			ft_putchar_fd(char c, int fd);
 void			ft_putendl(const char *s);
 void			ft_putendl_fd(const char *s, int fd);
@@ -89,4 +93,13 @@ int				ft_tolower(int c);
 int				ft_toupper(int c);
 char			*ft_itoa_base(int value, int base, int caps);
 int				ft_nbrlen_base(long long n, int base);
+void			*ft_calloc(size_t size);
+char			*ft_strljoin(char *s1, char *s2, char to_free);
+char			*ft_strreplace(char *str, char *to_find, char *replace_str);
+void			*ft_free(void *alloced);
+char			*ft_vjoin(int n, ...);
+void			ft_vprint(int n, ...);
+void			ft_vprintfd(int fd, int n, ...);
+int				ft_isalldigit(char *str);
+size_t			ft_tablen(char **tab);
 #endif
