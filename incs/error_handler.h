@@ -18,5 +18,5 @@
 **	parse_error.c
 */
 void		print_stack_errors(t_lifo *stack, t_tokens *cur);
-int			error_push(t_lifo *stack, int type, char *near);
+int			error_push(t_lifo *stack, int type, char *trace, char *near);
 #endif
