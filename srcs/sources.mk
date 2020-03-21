@@ -112,8 +112,8 @@ C_FILES_builtins = \
 				   ft_unsetenv.c \
 				   ft_addpath.c \
 				   ft_cd.c \
-				   ft_cd2.c \
-				   ft_cd3.c \
+					 ft_cd2.c \
+					 ft_cd3.c \
 				   ft_echo.c \
 				   ft_exit.c \
 				   builtin_misc.c \
@@ -121,6 +121,7 @@ C_FILES_builtins = \
 				   ft_return.c \
 				   ft_set.c \
 				   ft_unset.c \
+					 ft_type.c \
 
 C_FILES_utils = \
 				index_end_squote.c \

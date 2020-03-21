@@ -50,7 +50,7 @@ t_builtin	lookforbuiltin(char *data)
 		return (ft_set);
 	else if (ft_strcmp(data, "unset") == 0)
 		return (ft_unset);
-/*	else if (ft_strcmp(data, "type") == 0)
-		return (ft_type);*/
+	else if (ft_strcmp(data, "type") == 0)
+		return (ft_type);
 	return (NULL);
 }

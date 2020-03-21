@@ -25,6 +25,8 @@
 # define ERR_CD_NOT_HOME		6
 # define ERR_REDIR				7
 
+struct dirent	*diread;
+struct stat *st;
 
 typedef int	(*t_builtin)(char **, char ***);
 

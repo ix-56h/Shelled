@@ -14,8 +14,6 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-struct stat st;
-
 int   error_cd(int error_mod, char *path)
 {
 	if (error_mod == 1)
