@@ -17,6 +17,8 @@
 int		ft_unsetenv(char **argv, char ***env)
 {
 	int		i;
+	int		index;
+
 
 	i = count_arg(argv);
 	if (i == 0)
@@ -24,7 +26,10 @@ int		ft_unsetenv(char **argv, char ***env)
 		ft_putendl("unsetenv: Too few arguments.");
 		return (1);
 	}
-	else if (i >= 1)
-		*env = del_var(*env, argv[1]);
+	index = 0;
+	if (ft_strcmp(argv[1], "--") == 0)
+		index = 1;
+	while (++index <= i)
+		*env = del_var(*env, argv[index]);
 	return (0);
 }
