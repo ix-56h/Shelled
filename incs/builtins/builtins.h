@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:07:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/23 13:25:06 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/23 15:30:31 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ int			set_new_path(char ***tenv, char *newpath);
 char		*set_old_path(char ***tenv);
 int			ft_bg(char **argv, char ***tenv);
 int			ft_jobs(char **argv, char ***tenv);
+int			ft_fg(char **argv, char ***tenv);
 
 #endif

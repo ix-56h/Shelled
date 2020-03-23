@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 17:45:12 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/03/23 13:28:20 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/23 15:21:55 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,7 @@ mark_job_as_running (t_job *j)
   j->is_notified = 0;
 }
 
-
-/* Continue the job J.  */
-
-void
-continue_job (t_job *j, int foreground)
+void continue_job (t_job *j, int foreground)
 {
   mark_job_as_running (j);
   if (foreground)
@@ -65,6 +61,16 @@ t_job *find_job_bg(t_job *job)
 	return (job);
 }
 
+t_job *find_job_by_number(int nb)
+{
+	t_job *job;
+
+	job = g_job_head;
+	while (job && job->number != nb)
+		job = job->next;
+	return (job);
+}
+
 int ft_bg(char **argv, char ***tenv)
 {
 	t_job *job;
@@ -75,11 +81,7 @@ int ft_bg(char **argv, char ***tenv)
 	if (argv[1] == NULL) // find last job
 		job = find_job_bg(job);
 	else
-	{
-		number = ft_atoi(argv[1]);
-		while (job && job->number != number)
-			job = job->next;
-	}
+		job = find_job_by_number(ft_atoi(argv[1]));
 	if (!job)
 		ft_putendl_fd("bg: no such job", 2);
 	else if (job_is_stopped(job))

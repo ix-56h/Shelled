@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/12 16:17:26 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/23 15:38:53 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ t_job		*create_job(void);
 int			get_next_job_count(void);
 char		*cut_command(char *cmd, char act);
 void		free_job(t_job	*job);
+t_job		*find_job_by_number(int nb);
 
 #endif

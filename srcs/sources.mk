@@ -6,7 +6,7 @@
 #    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/03/09 17:37:29 by mguerrea         ###   ########.fr        #
+#    Updated: 2020/03/23 15:31:17 by mguerrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -147,5 +147,6 @@ C_FILES_expansions = \
 C_FILES_jobs = \
 				bg.c \
 				jobs.c \
+				fg.c \
 
 C_FILES += $(foreach SUB_DIR,$(SUB_DIRS),$(addprefix $(SUB_DIR)/,$(C_FILES_$(SUB_DIR))))

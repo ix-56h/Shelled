@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:40:41 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/11 19:34:43 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/23 15:31:05 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ t_builtin	lookforbuiltin(char *data)
 		return (ft_bg);
 	else if (ft_strcmp(data, "jobs") == 0)
 		return (ft_jobs);
+	else if (ft_strcmp(data, "fg") == 0)
+		return(ft_fg);
 	return (NULL);
 }
