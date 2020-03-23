@@ -122,6 +122,8 @@ C_FILES_builtins = \
 				   ft_set.c \
 				   ft_unset.c \
 					 ft_type.c \
+					 ft_alias.c \
+					 ft_unalias.c \
 
 C_FILES_utils = \
 				index_end_squote.c \

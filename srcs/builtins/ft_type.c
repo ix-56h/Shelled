@@ -27,11 +27,11 @@ int    binaire_type(char *arg, char **path_s)
     {
       if (ft_strcmp(arg, diread->d_name) == 0)
       {
-        ft_putstr_fd(arg, 2);
-        ft_putstr_fd(" is ", 2);
-        ft_putstr_fd(path_s[cpt], 2);
-        ft_putchar_fd('/', 2);
-        ft_putendl_fd(arg, 2);
+        ft_putstr_fd(arg, 1);
+        ft_putstr_fd(" is ", 1);
+        ft_putstr_fd(path_s[cpt], 1);
+        ft_putchar_fd('/', 1);
+        ft_putendl_fd(arg, 1);
         closedir(dir);
         return (1);
       }
@@ -45,8 +45,8 @@ int    builtin_type(char *arg)
 {
   if (lookforbuiltin(arg) != NULL)
   {
-    ft_putstr_fd(arg, 2);
-    ft_putstr_fd(" is a 42sh builtin\n", 2);
+    ft_putstr_fd(arg, 1);
+    ft_putstr_fd(" is a 42sh builtin\n", 1);
     return (1);
   }
   return (0);

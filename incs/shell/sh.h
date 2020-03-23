@@ -24,6 +24,7 @@ pid_t			g_shell_pgid;
 
 char			**g_env;
 char			**g_set;
+char			**g_alias;
 
 typedef	struct	s_args
 {

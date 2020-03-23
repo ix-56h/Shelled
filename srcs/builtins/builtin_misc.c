@@ -26,6 +26,21 @@ int			count_arg(char **argv)
 	return (i);
 }
 
+t_builtin lookforbuiltin_v2(char *data)
+{
+	if (ft_strcmp(data, "set") == 0)
+		return (ft_set);
+	else if (ft_strcmp(data, "unset") == 0)
+		return (ft_unset);
+	else if (ft_strcmp(data, "type") == 0)
+		return (ft_type);
+	else if (ft_strcmp(data, "alias") == 0)
+		return (ft_alias);
+	else if (ft_strcmp(data, "unalias") == 0)
+		return (ft_unalias);
+	return (NULL);
+}
+
 t_builtin	lookforbuiltin(char *data)
 {
 	if (ft_strcmp(data, "addpath") == 0)
@@ -46,11 +61,5 @@ t_builtin	lookforbuiltin(char *data)
 		return (ft_debug_job);
 	else if (ft_strcmp(data, "return") == 0)
 		return (ft_return);
-	else if (ft_strcmp(data, "set") == 0)
-		return (ft_set);
-	else if (ft_strcmp(data, "unset") == 0)
-		return (ft_unset);
-	else if (ft_strcmp(data, "type") == 0)
-		return (ft_type);
-	return (NULL);
+	return (lookforbuiltin_v2(data));
 }

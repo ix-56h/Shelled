@@ -43,6 +43,8 @@ int			ft_return(char **argv, char ***tenv);
 int			ft_set(char **argv, char ***set);
 int			ft_unset(char **argv, char ***set);
 int     ft_type(char **args, char ***tenv);
+int     ft_alias(char **args, char ***alias);
+int     ft_unalias(char **args, char ***alias);
 t_builtin	lookforbuiltin(char *data);
 int			change_path(char *new_path, char **oldpath, char ***tenv);
 int			set_new_path(char ***tenv, char *newpath);
