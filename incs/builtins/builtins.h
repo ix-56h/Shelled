@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:07:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/11 19:32:36 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/23 13:25:06 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 # define ERR_CD_OLDPWD			5
 # define ERR_CD_NOT_HOME		6
 # define ERR_REDIR				7
-# define ERR_NO_JOB				8
-# define ERR_ALREADY_BG			9
 
 typedef int	(*t_builtin)(char **, char ***);
 

@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/12 15:41:53 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/23 14:04:40 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int			main(int ac, char **av, char **envp)
 	init_signal();
 	while (1)
 	{
+		do_job_notification();
 		sh.input = run_line_edit();
 		sh.tok = get_next_token(sh.input, sh.stack.errors);
 		lifo_empty(sh.stack.errors) ? sh.node = parse_program(&sh) : 0;

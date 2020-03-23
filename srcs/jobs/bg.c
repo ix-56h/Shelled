@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 17:45:12 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/03/11 19:51:05 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/23 13:28:20 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,8 @@ int ft_bg(char **argv, char ***tenv)
 
 	(void)tenv;
 	job = g_job_head;
-	if (argv[1] == NULL) // find last jobs
-	{
+	if (argv[1] == NULL) // find last job
 		job = find_job_bg(job);
-	}
 	else
 	{
 		number = ft_atoi(argv[1]);
@@ -83,10 +81,13 @@ int ft_bg(char **argv, char ***tenv)
 			job = job->next;
 	}
 	if (!job)
-		return (ERR_NO_JOB);
-	if (job_is_stopped(job))
+		ft_putendl_fd("bg: no such job", 2);
+	else if (job_is_stopped(job))
+	{
 		continue_job(job, 0);
+		ft_printf("[%d] %s\n", job->number, job->line);
+	}
 	else
-		return (ERR_ALREADY_BG);
+		ft_putendl_fd("bg: job already in background", 2);
 	return (0);
 }

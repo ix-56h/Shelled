@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/12 04:46:48 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/23 14:35:30 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ int			mark_process_status(pid_t pid, int status)
 		return(-1);
 	else
 	{
+		perror("waitpid:");
 		ft_dprintf(3, "waitpid err\n");
 		return(-1);
 	}

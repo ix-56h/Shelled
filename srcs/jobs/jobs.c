@@ -6,27 +6,48 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:31:50 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/03/12 15:58:12 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/23 15:06:42 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 #include "job.h"
+#include "stdio.h"
+
+int shall_we_wait(void)
+{
+	t_job *job;
+
+	job = g_job_head;
+	if (job == NULL || job->pgid == 0)
+		return (0);
+	
+	while (job)
+	{
+		if (!job_is_completed(job) && job->pgid != 0)
+			return (1);
+		job = job->next;
+	}
+	return (0);
+}
 
 void update_status (void)
 {
 	int status;
 	pid_t pid;
 
-	do
+	if (shall_we_wait())
+	{
 		pid = waitpid (WAIT_ANY, &status, WUNTRACED|WNOHANG);
-	while (!mark_process_status (pid, status));
+	while (!mark_process_status (pid, status) && shall_we_wait())
+		pid = waitpid (WAIT_ANY, &status, WUNTRACED|WNOHANG);
+	}
 }
 
 void
 format_job_info (t_job *j, const char *status)
 {
-	fprintf (2, "%ld (%s): %s\n", (long)j->pgid, status, "j->command");
+	ft_printf("\n[%d]\t %s \t %s\n", j->number, status, j->line);
 }
 
 void do_job_notification (void)
@@ -36,7 +57,6 @@ void do_job_notification (void)
 
 	/* Update status information for child processes.  */
 	update_status ();
-
 	jlast = NULL;
 	for (j = g_job_head; j; j = jnext)
 		{
@@ -50,7 +70,7 @@ void do_job_notification (void)
 					jlast->next = jnext;
 				else
 					g_job_head = jnext;
-		//    free_job (j);
+		   		free_job (j);
 			}
 
 			/* Notify the user about stopped jobs,
@@ -67,6 +87,16 @@ void do_job_notification (void)
 		}
 }
 
+char *get_job_status(t_job *job)
+{
+	if (job_is_completed(job))
+			return("Done");
+	else if (job_is_stopped(job))
+			return("Stopped");
+	else
+			return("Running");
+}
+
 int ft_jobs(char **argv, char ***tenv)
 {
 	t_job *job;
@@ -74,33 +104,20 @@ int ft_jobs(char **argv, char ***tenv)
 	int i;
 
 	job = g_job_head;
+	update_status();
 	while (job)
 	{
-	//	if (job->pgid != 0)
-	//	{
-		ft_putnbr(job->number);
-		ft_putstr("\t");
-		ft_putnbr(job->pgid);
-		ft_putstr("\t");
-		process = job->list;
-		while (process)
+		if (job->pgid != 0)
 		{
-			i = -1;
-			while(process->command[++i])
-			{
-				ft_putstr(process->command[i]);
-				ft_putstr(" ");
-			}
-			process = process->next;
+			if (argv[1] == NULL)
+				ft_printf("[%d]\t %s \t\t %s\n", job->number,
+					get_job_status(job), job->line);
+			else if (ft_strcmp(argv[1], "-l") == 0)
+				ft_printf("[%d]\t %d %s \t\t %s\n", job->number, job->pgid,
+					get_job_status(job), job->line);
+			else if (ft_strcmp(argv[1], "-p") == 0)
+				ft_printf("%d\n", job->pgid);
 		}
-		
-		if (job_is_completed(job))
-			ft_putendl("COMPLETED");
-		else if (job_is_stopped(job))
-			ft_putendl("STOPPED");
-		else
-			ft_putendl("RUNNING");
-	//	}
 		job = job->next;
 	}
 	return (0);
