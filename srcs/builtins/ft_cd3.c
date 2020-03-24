@@ -17,13 +17,20 @@
 
 int add_old_pwd(char ***tenv, int flags, char *pwd, char *old_pwd)
 {
+	char *new_old;
+	char *new_pwd;
+
 	if (!old_pwd)
 		return (1);
+	new_old = ft_strdup(old_pwd);
+	new_pwd = ft_strdup(pwd);
 	if (flags == 3 || flags == 4)
-		old_pwd = ft_strjoinf("/", ft_get_link(old_pwd), 2);
-	ft_edit_env(*tenv, "PWD", old_pwd);
-	ft_edit_env(*tenv, "OLDPWD", pwd);
-	chdir(old_pwd);
+		new_old = ft_strjoinf("/", ft_get_link(new_old), 2);
+	ft_edit_env(*tenv, "PWD", new_old);
+	ft_edit_env(*tenv, "OLDPWD", new_pwd);
+	chdir(new_old);
+	free(new_old);
+	free(new_pwd);
 	return (0);
 }
 
