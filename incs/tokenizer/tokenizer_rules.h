@@ -34,6 +34,7 @@ static t_chr_class		g_get_chr_class[255] =
 	[']'] = CHR_WORD,
 	['@'] = CHR_WORD,
 	[','] = CHR_WORD,
+	['%'] = CHR_WORD,
 	['{'] = CHR_LBRACE,
 	['}'] = CHR_RBRACE,
 	[')'] = CHR_RPAREN,
