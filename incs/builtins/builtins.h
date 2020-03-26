@@ -43,14 +43,14 @@ int			ft_return(char **argv, char ***tenv);
 int			ft_set(char **argv, char ***set);
 int			ft_unset(char **argv, char ***set);
 int     ft_type(char **args, char ***tenv);
-int     ft_alias(char **args, char ***alias);
-int     ft_unalias(char **args, char ***alias);
+int     ft_alias(char **args, char ***env);
+int     ft_unalias(char **args, char ***env);
 t_builtin	lookforbuiltin(char *data);
 int			change_path(char *new_path, char **oldpath, char ***tenv);
 int			set_new_path(char ***tenv, char *newpath);
 char		*set_old_path(char ***tenv);
 
-/* cd function */
+/* cd functions */
 int     error_cd(int error_mod, char *path);
 char	  *ft_get_link(char *pathname);
 int		  ft_is_dir(char *s);
@@ -60,11 +60,12 @@ int     add_old_pwd(char ***tenv, int flags, char *pwd, char *old_pwd);
 int     check_dir(char *add_to_path, int flags);
 void    update_env(char ***tenv, char *pwd, char *old_pwd, char *add_to_path);
 
-/*  alias function */
+/*  alias functions */
 char    *get_name(char *arg);
 char    *get_value(char *arg);
 void    sort_alias(void);
 void    show_alias(void);
 void    show_this_alias(char *arg);
+void    error_alias(char *arg);
 
 #endif

@@ -15,6 +15,13 @@
 #include "libft.h"
 #include "ft_printf.h"
 
+void  error_alias(char *arg)
+{
+  ft_putstr_fd("42sh: alias: ", 2);
+  ft_putstr_fd(arg, 2);
+  ft_putstr_fd(": not found\n", 2);
+}
+
 void  show_this_alias(char *arg)
 {
   int cpt;
@@ -34,9 +41,7 @@ void  show_this_alias(char *arg)
   }
   if ((name = get_value(arg)) == NULL)
   {
-    ft_putstr_fd("42sh: alias: ", 2);
-    ft_putstr_fd(arg, 2);
-    ft_putstr_fd(": not found\n", 2);
+    error_alias(arg);
   }
   free(name);
 }
