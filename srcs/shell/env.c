@@ -43,7 +43,7 @@ char	**init_env(char **env)
 
 /*
 **	Copy and realloc all the `env'
-**	Entry filled with "\0" whill be skipped
+**	Entry filled with "\0" will be skipped
 */
 
 char	**cpy_env(char **env)

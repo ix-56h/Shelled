@@ -124,6 +124,8 @@ C_FILES_builtins = \
 					 ft_type.c \
 					 ft_alias.c \
 					 ft_unalias.c \
+					 alias_tools.c \
+					 alias_print.c \
 
 C_FILES_utils = \
 				index_end_squote.c \

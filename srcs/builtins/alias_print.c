@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unalias.c                                       :+:      :+:    :+:   */
+/*   ft_alias.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jebrocho <jebrocho@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -15,9 +15,37 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-int   ft_unalias(char **args, char ***alias)
+void  show_this_alias(char *arg)
 {
-  (void)args;
-  (void)alias;
-  return (0);
+  int cpt;
+  char *name;
+
+  cpt = -1;
+  while (g_alias[++cpt])
+  {
+    name = get_name(g_alias[cpt]);
+    if (ft_strcmp(arg, name) == 0)
+    {
+      ft_putendl_fd(g_alias[cpt], 1);
+      free(name);
+      return ;
+    }
+    free(name);
+  }
+  if ((name = get_value(arg)) == NULL)
+  {
+    ft_putstr_fd("42sh: alias: ", 2);
+    ft_putstr_fd(arg, 2);
+    ft_putstr_fd(": not found\n", 2);
+  }
+  free(name);
+}
+
+void  show_alias(void)
+{
+  int ind;
+
+  ind = -1;
+  while (g_alias[++ind])
+    ft_putendl_fd(g_alias[ind], 1);
 }
