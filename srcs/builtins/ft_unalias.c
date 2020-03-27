@@ -20,25 +20,73 @@
     mod = 1 : not found
 */
 
-int unalias_error(int mod)
+int unalias_error(int mod, char *arg)
 {
   if (mod == 0)
     ft_putstr_fd("unalias: usage: unalias [-a] name [name ...]", 2);
+  else if (mod == 1)
+  {
+    ft_putstr_fd("42sh: alias: ", 2);
+    ft_putstr_fd(arg, 2);
+    ft_putstr_fd(": not found\n", 2);
+  }
+  return (1);
+}
+
+int  del_all(void)
+{
+  int cpt;
+  char *name;
+
+  cpt = ft_tablen(g_alias) - 1;
+  while (cpt > -1)
+  {
+    name = get_name(g_alias[cpt]);
+    g_alias = del_var(g_alias, name);
+    free(name);
+    cpt--;
+  }
+  return (0);
+}
+
+int del_alias(char *arg)
+{
+  int cpt;
+  char *name;
+
+  cpt = -1;
+  while (g_alias[++cpt])
+  {
+    name = get_name(g_alias[cpt]);
+    if (ft_strcmp(name, arg) == 0)
+    {
+      g_alias = del_var(g_alias, name);
+      free(name);
+      return (2);
+    }
+    free(name);
+  }
   return (1);
 }
 
 int   ft_unalias(char **args, char ***env)
 {
-/*  int cpt;
+  int cpt;
+  int opt;
 
   cpt = 0;
+  opt = 0;
   if (ft_tablen(args) == 1)
-    return (unalias_error(1));
+    return (unalias_error(0, NULL));
   while (args[++cpt])
   {
-
-  }*/
-  (void)args;
+    if (ft_strcmp("-a", args[cpt]) == 0 && opt == 0)
+      return (del_all());
+    if (ft_strcmp("--", args[cpt]) == 0 || cpt == 1)
+      opt = 1;
+    if (opt == 1)
+      unalias_error(del_alias(args[cpt]), args[cpt]);
+  }
   (void)env;
   return (0);
 }

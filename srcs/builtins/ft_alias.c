@@ -86,6 +86,8 @@ int   ft_alias(char **args, char ***env)
   int opt;
 
   (void)env;
+  if (!g_alias)
+    i = 0;
   cpt = 0;
   while (args[++cpt])
   {
@@ -102,8 +104,6 @@ int   ft_alias(char **args, char ***env)
     if (opt == 1)
       show_this_alias(args[cpt]);
   }
-  if (cpt == 1)
-    show_alias();
-  sort_alias();
+  dispatch_show(cpt);
   return (0);
 }

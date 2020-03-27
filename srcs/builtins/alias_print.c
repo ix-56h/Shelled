@@ -40,9 +40,7 @@ void  show_this_alias(char *arg)
     free(name);
   }
   if ((name = get_value(arg)) == NULL)
-  {
     error_alias(arg);
-  }
   free(name);
 }
 
@@ -50,7 +48,16 @@ void  show_alias(void)
 {
   int ind;
 
+  if (!g_alias)
+    return ;
   ind = -1;
   while (g_alias[++ind])
     ft_putendl_fd(g_alias[ind], 1);
+}
+
+void  dispatch_show(int cpt)
+{
+  if (cpt == 1)
+    show_alias();
+  sort_alias();
 }
