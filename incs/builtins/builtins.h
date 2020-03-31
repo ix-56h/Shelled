@@ -46,6 +46,7 @@ int     ft_type(char **args, char ***tenv);
 int     ft_alias(char **args, char ***env);
 int     ft_unalias(char **args, char ***env);
 t_builtin	lookforbuiltin(char *data);
+
 int			change_path(char *new_path, char **oldpath, char ***tenv);
 int			set_new_path(char ***tenv, char *newpath);
 char		*set_old_path(char ***tenv);

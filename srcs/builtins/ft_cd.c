@@ -15,7 +15,7 @@
 #include "ft_printf.h"
 #include "libft.h"
 
-int  step_arg(char **args, int *start)
+int		step_arg(char **args, int *start)
 {
 	int cpt;
 	int flags;
@@ -42,10 +42,10 @@ int  step_arg(char **args, int *start)
 	return (5);
 }
 
-int  step_to_do(char **args, char ***tenv, int *start)
+int		step_to_do(char **args, char ***tenv, int *start)
 {
-	int i;
-	char *path;
+	int		i;
+	char	*path;
 
 	i = ft_tablen(args);
 	if (i == 1)
@@ -67,7 +67,7 @@ no flag -> flags = 5
 */
 
 
-int form_path(char *add_to_path, char ***tenv, char flags)
+int		form_path(char *add_to_path, char ***tenv, char flags)
 {
 	char *old_pwd;
 	char *pwd;
@@ -95,11 +95,11 @@ int form_path(char *add_to_path, char ***tenv, char flags)
 	return (0);
 }
 
-int  new_dir(char **args, char ***tenv, int flags, int start)
+int		new_dir(char **args, char ***tenv, int flags, int start)
 {
-	char *add_to_path;
-	char *save;
-	int error;
+	char	*add_to_path;
+	char	*save;
+	int		error;
 
 	if (ft_strcmp(args[start], "--") == 0)
 		add_to_path = ft_strdup(args[++start]);
@@ -123,7 +123,7 @@ int  new_dir(char **args, char ***tenv, int flags, int start)
    error not a directory : 5
    */
 
-int ft_cd(char **args, char ***tenv)
+int		ft_cd(char **args, char ***tenv)
 {
 	int i;
 	int start;

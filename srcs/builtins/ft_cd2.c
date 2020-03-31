@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-int   error_cd(int error_mod, char *path)
+int		error_cd(int error_mod, char *path)
 {
 	if (error_mod == 1)
 		ft_putstr_fd("42sh: cd: OLDPWD not set\n", 2);
@@ -58,7 +58,7 @@ void	rm_dir(char *s)
 		s[++j] = '\0';
 }
 
-char *add_dir(char *pwd, char *new)
+char	*add_dir(char *pwd, char *new)
 {
 	pwd = ft_strjoinf(pwd, "/", 1);
 	pwd = ft_strjoinf(pwd, new, 1);
@@ -85,7 +85,7 @@ void	concat_pwd(char *str, char c)
 	str[j] = '\0';
 }
 
-char *new_path(char *add_to_path, char *pwd, int flags)
+char	*new_path(char *add_to_path, char *pwd, int flags)
 {
 	char **arg;
 	char *save;

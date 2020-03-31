@@ -89,7 +89,7 @@ void		process_sh(t_sh *sh)
 		}
 	}
 }
-
+#include <stdio.h>
 int			main(int ac, char **av, char **envp)
 {
 	t_sh		sh;
@@ -115,6 +115,7 @@ int			main(int ac, char **av, char **envp)
 	free_sh(&sh);
 	free_env(g_env);
 	free_env(g_set);
+	free_env(g_alias);
 	restore_term(3);
 	return (g_exit == -1 ? EXIT_SUCCESS : g_exit);
 }

@@ -15,7 +15,7 @@
 #include "sh.h"
 #include "ft_printf.h"
 
-int add_old_pwd(char ***tenv, int flags, char *pwd, char *old_pwd)
+int		add_old_pwd(char ***tenv, int flags, char *pwd, char *old_pwd)
 {
 	char *new_old;
 	char *new_pwd;
@@ -34,7 +34,7 @@ int add_old_pwd(char ***tenv, int flags, char *pwd, char *old_pwd)
 	return (0);
 }
 
-int check_dir(char *add_to_path, int flags)
+int		check_dir(char *add_to_path, int flags)
 {
 	DIR *dir;
 
@@ -77,7 +77,7 @@ char	*ft_get_link(char *pathname)
 	return (ft_strdup(buff));
 }
 
-void  update_env(char ***tenv, char *pwd, char *old_pwd, char *add_to_path)
+void	update_env(char ***tenv, char *pwd, char *old_pwd, char *add_to_path)
 {
 	if (!old_pwd)
 		*tenv = add_env(*tenv, "OLDPWD", pwd);
