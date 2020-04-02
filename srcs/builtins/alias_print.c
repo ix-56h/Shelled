@@ -15,11 +15,26 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-void		error_alias(char *arg)
+/*
+**  mod = 0 : print error not good alias name to print
+**  mod = 1 : name error not conform alias name
+*/
+
+int		error_alias(char *arg, int mod)
 {
-	ft_putstr_fd("42sh: alias: ", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putstr_fd(": not found\n", 2);
+	if (mod == 0)
+	{
+		ft_putstr_fd("42sh: alias: ", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd(": not found\n", 2);
+	}
+	else if (mod == 1)
+	{
+		ft_putstr_fd("42sh: alias: \'", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putendl_fd("\': invalid alias name", 2);
+	}
+	return (0);
 }
 
 void		show_this_alias(char *arg)
@@ -40,7 +55,7 @@ void		show_this_alias(char *arg)
 		free(name);
 	}
 	if ((name = get_value(arg)) == NULL)
-		error_alias(arg);
+		error_alias(arg, 0);
 	free(name);
 }
 

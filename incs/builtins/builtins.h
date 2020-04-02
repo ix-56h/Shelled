@@ -67,6 +67,6 @@ char    *get_value(char *arg);
 void    sort_alias(void);
 void    show_this_alias(char *arg);
 void    dispatch_show(int cpt);
-void    error_alias(char *arg);
+int		  error_alias(char *arg, int mod);
 
 #endif

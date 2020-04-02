@@ -40,6 +40,7 @@ int				ft_isdigit(int c);
 int				ft_isdigits(char *c);
 int				ft_islower(int c);
 int				ft_isprint(int c);
+int				ft_isportable(int c);
 char			*ft_itoa(long long int n);
 void			*ft_memalloc(size_t size);
 void			*ft_memccpy(void *dst, const void *src, int c, size_t n);

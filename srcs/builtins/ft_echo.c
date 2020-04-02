@@ -35,7 +35,6 @@ char	**echo_arg(char **argv, int *arg_n)
 	}
 	return (argv);
 }
-
 int		ft_echo(char **argv, char ***tenv)
 {
 	int		arg_n;

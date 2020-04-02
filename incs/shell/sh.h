@@ -93,5 +93,17 @@ void			free_sh(t_sh *sh);
 /*
 **	signal.c
 */
+
 void			init_signal(void);
+
+/*
+**  alias.c
+*/
+
+char 			*add_alias(char *input);
+char    	*print_alias(char *alias, char *input, int cpt);
+char    	*get_after(char *input, int cpt);
+char    	*get_before(char *input, int cpt);
+char    	*get_value_by_name(char *name);
+
 #endif

@@ -84,6 +84,9 @@ C_FILES_shell = \
 				init.c \
 				signal.c \
 				set.c \
+				alias.c \
+				alias_get.c \
+				alias_print.c \
 
 C_FILES_line_edit = \
 					alloc.c \
