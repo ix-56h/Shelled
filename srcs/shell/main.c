@@ -89,7 +89,7 @@ void		process_sh(t_sh *sh)
 		}
 	}
 }
-#include <stdio.h>
+
 int			main(int ac, char **av, char **envp)
 {
 	t_sh		sh;

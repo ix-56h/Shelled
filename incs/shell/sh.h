@@ -102,6 +102,7 @@ void			init_signal(void);
 
 char 			*add_alias(char *input);
 char    	*print_alias(char *alias, char *input, int cpt);
+void 			rm_first_space(char *input);
 char    	*get_after(char *input, int cpt);
 char    	*get_before(char *input, int cpt);
 char    	*get_value_by_name(char *name);

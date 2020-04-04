@@ -39,6 +39,18 @@ char *alloc_check(char *input, int cpt)
   return (alias);
 }
 
+int  ignore_args_n_sep(char *input, int cpt)
+{
+  while (input[cpt] != ';' \
+        && input [cpt] != '|' \
+        && (input[cpt] != '&' && input[cpt + 1] != '&') \
+        && (input[cpt] != '|' && input[cpt + 1] != '|') \
+        && input[cpt])
+    cpt++;
+  cpt++;
+  return (cpt);
+}
+
 char      *check_alias(char *input, int *cpt)
 {
   char *alias;
@@ -47,6 +59,7 @@ char      *check_alias(char *input, int *cpt)
     return (input);
   input = print_alias(alias, input, *cpt);
   *cpt += ft_strlen(alias);
+  *cpt = ignore_args_n_sep(input, *cpt);
   while (input[*cpt] == ' ' && input[*cpt])
     *cpt += 1;
   *cpt -= 1;
@@ -70,8 +83,11 @@ char *add_alias(char *input)
   cpt = -1;
   if (!g_alias)
     return (input);
+  rm_first_space(input);
   while (input[++cpt])
   {
+    if (input[cpt] == ' ' || input[cpt] == '\t' || input[cpt] == '\n')
+      cpt = ignore_args_n_sep(input, cpt);
     if (input[cpt] == '\'' || input[cpt] == '\"')
       cpt = ignore_quotes(input, input[cpt], cpt);
     if (input[cpt] != ' ' && input[cpt])

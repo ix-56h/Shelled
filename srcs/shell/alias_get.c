@@ -39,6 +39,8 @@ char    *get_before(char *input, int cpt)
   char *before;
 
   id = 0;
+  if (cpt == 0)
+    return (NULL);
   while (id < cpt)
     id++;
   if (!(before = (char*)malloc(sizeof(char) * (id + 1))))
