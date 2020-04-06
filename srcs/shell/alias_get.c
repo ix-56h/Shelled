@@ -61,6 +61,8 @@ char    *get_after(char *input, int cpt)
   int id;
 
   id = ft_strlen(input);
+  if (cpt == id)
+    return (NULL);
   if (!(after = (char*)malloc(sizeof(char) * (id - cpt + 1))))
     return (NULL);
   id = 0;

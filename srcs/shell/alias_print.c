@@ -39,6 +39,50 @@ char *print_no_before(char *value, char *after)
   return (input);
 }
 
+
+char *new_input(char *alias_v, char *input, int *cpt, int len_n)
+{
+  char *after;
+  char *before;
+  char *new_input;
+
+  ft_printf("input : |%s|, char cpt : |%c|, cpt : %d     -> new_input 1\n", input, input[*cpt], *cpt);
+  ft_printf("alias_v : |%s|\n", alias_v);
+  getchar();
+
+  after = get_after(input, *cpt + len_n);
+  before = get_before(input, *cpt);
+
+  ft_printf("input : |%s|, char cpt : |%c|, cpt : %d     -> new_input 2\n", input, input[*cpt], *cpt);
+  ft_printf("before : |%s|, after : |%s|\n", before, after);
+  getchar();
+
+  if (!after && !before)
+  {
+    write(1, "a", 1);
+    new_input = ft_strdup(alias_v);
+  }
+  else if (*cpt == 0)
+  {
+    write(1, "b", 1);
+    new_input = print_no_before(alias_v, after);
+  }
+  else if (ft_strlen(input) == (size_t)(*cpt + len_n))
+  {
+    write(1, "c", 1);
+    new_input = print_no_after(before, alias_v);
+  }
+  else
+  {
+    write(1, "d", 1);
+    new_input = print_before_and_after(before, alias_v, after);
+  }
+  *cpt += ft_strlen(alias_v);
+  free(input);
+  return (new_input);
+}
+
+/*
 char    *print_alias(char *alias, char *input, int cpt)
 {
   char *before;
@@ -66,7 +110,7 @@ char    *print_alias(char *alias, char *input, int cpt)
   }
   return (input);
 }
-
+*/
 void rm_first_space(char *input)
 {
   int cpt;
