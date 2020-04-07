@@ -29,24 +29,24 @@ void		init_shell_job(void)
 	shell_is_interactive = isatty(shell_terminal);
 	if (shell_is_interactive)
 	{
-    	while (tcgetpgrp(shell_terminal) != (g_shell_pgid = getpgrp()))
+		while (tcgetpgrp(shell_terminal) != (g_shell_pgid = getpgrp()))
 		{
-    		kill(-g_shell_pgid, SIGTTIN);
+			kill(-g_shell_pgid, SIGTTIN);
 		}
 		signal (SIGINT, SIG_IGN);
-    	signal (SIGQUIT, SIG_IGN);
-    	signal (SIGTSTP, SIG_IGN);
-    	signal (SIGTTIN, SIG_IGN);
-    	signal (SIGTTOU, SIG_IGN);
+		signal (SIGQUIT, SIG_IGN);
+		signal (SIGTSTP, SIG_IGN);
+		signal (SIGTTIN, SIG_IGN);
+		signal (SIGTTOU, SIG_IGN);
 		//signal (SIGCHLD, SIG_IGN);
-    	g_shell_pgid = getpid ();
-    	if (setpgid (g_shell_pgid, g_shell_pgid) < 0)
-    	{
-        	ft_putstr_fd("Couldn't put the shell in its own process group", STDERR_FILENO);
-    		exit(1);
-        }
-    	tcsetpgrp (shell_terminal, g_shell_pgid);
-    }
+		g_shell_pgid = getpid ();
+		if (setpgid (g_shell_pgid, g_shell_pgid) < 0)
+		{
+			ft_putstr_fd("Couldn't put the shell in its own process group", STDERR_FILENO);
+			exit(1);
+		}
+		tcsetpgrp (shell_terminal, g_shell_pgid);
+	}
 }
 
 
@@ -90,6 +90,16 @@ void		process_sh(t_sh *sh)
 	}
 }
 
+void		free_all(t_sh *sh)
+{
+	free_historic();
+	free_sh(sh);
+	free_env(g_env);
+	free_env(g_set);
+	free_env(g_alias);
+	restore_term(3);
+}
+
 int			main(int ac, char **av, char **envp)
 {
 	t_sh		sh;
@@ -112,11 +122,12 @@ int			main(int ac, char **av, char **envp)
 		free_sh(&sh);
 		re_init_sh(&sh);
 	}
-	free_historic();
+	free_all(&sh);
+/*	free_historic();
 	free_sh(&sh);
 	free_env(g_env);
 	free_env(g_set);
 	free_env(g_alias);
-	restore_term(3);
+	restore_term(3);*/
 	return (g_exit == -1 ? EXIT_SUCCESS : g_exit);
 }
