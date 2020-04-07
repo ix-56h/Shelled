@@ -80,34 +80,12 @@ char *get_command(char *input, int cpt)
   return (alias_n);
 }
 
-/*
-char *new_input(char *alias_v, char *input, int *cpt, int len_n)
-{
-  char *after;
-  char *before;
-  char *new_input;
-
-  after = get_after(input, *cpt + len_n);
-  before = get_before(input, *cpt);
-  if (cpt == 0)
-    new_input = print_no_before(alias_v, after);
-  else if (ft_strlen(input) == (*cpt + len_n))
-    new_input = print_no_after(before, alias_v);
-  else
-    new_input = print_before_and_after(before, alias_v, after);
-  *cpt += ft_strlen(alias_v);
-  free(input);
-  return (new_input);
-}*/
-
 void ignore_args_n_op(char *input, int *cpt)
 {
   t_toktype op;
   char *name;
   size_t l;
 
-  ft_printf("input : |%s|, char cpt : |%c|, cpt : %d    -> ignore 1\n", input, input[*cpt], *cpt);
-  getchar();
   while (input[*cpt])
   {
     while (input[*cpt] == ' ' && input[*cpt])
@@ -118,19 +96,10 @@ void ignore_args_n_op(char *input, int *cpt)
         || (op = check_operator(name, l, cpt)) != 0
         || (op = check_pipe(name, l, cpt)) != 0)
     {
-      ft_printf("input : |%s|, char cpt : |%c|, cpt : %d    -> ignore 2\n", input, input[*cpt], *cpt);
-      getchar();
       *cpt += ft_strlen(name);
-
-      ft_printf("input : |%s|, char cpt : |%c|, cpt : %d    -> ignore 3\n", input, input[*cpt], *cpt);
-      getchar();
-
       while (input[*cpt] == ' ' && input[*cpt])
         *cpt += 1;
       *cpt -= 1;
-      ft_printf("input : |%s|, char cpt : |%c|, cpt : %d    -> ignore 4\n", input, input[*cpt], *cpt);
-      getchar();
-
       free(name);
       return ;
     }
@@ -151,55 +120,16 @@ char *add_alias(char *input)
   cpt = -1;
   while (input[++cpt])
   {
-    ft_printf("input : |%s|, char cpt : |%c|, cpt : %d     -> 1\n", input, input[cpt], cpt);
-    getchar();
-
     alias_n = get_command(input, cpt);  //  return the word where cpt start
-
-    ft_printf("input : |%s|, char cpt : |%c|, cpt : %d     -> 2\n", input, input[cpt], cpt);
-    ft_printf("command : |%s|\n", alias_n);
-    getchar();
-
     if (alias_n)
     {
       len_n = ft_strlen(alias_n);   // save len alias name for add cpt if no new_input
-
-
       if ((alias_n = test_alias(alias_n)))  // test if alias_n is an alias if its true return the value esle return NULL
-      {
-        ft_printf("input : |%s|, char cpt : |%c|, cpt : %d     -> 3\n", input, input[cpt], cpt);
-        ft_printf("alias_n : |%s|\n", alias_n);
-        getchar();
-
         input = new_input(alias_n, input, &cpt, len_n);  // modify input whith the alias value add the len to cpt
-
-        ft_printf("input : |%s|, char cpt : |%c|, cpt : %d     -> 4\n", input, input[cpt], cpt);
-        getchar();
-
-      }
       else
         cpt += len_n;  // add len of word command if not aliases
-
-      ft_printf("input : |%s|, char cpt : |%c|, cpt : %d     -> 5\n", input, input[cpt], cpt);
-      getchar();
-
     }
-
-    ft_printf("input : |%s|, char cpt : |%c|, cpt : %d     -> 6\n", input, input[cpt], cpt);
-    getchar();
-
     ignore_args_n_op(input, &cpt);  // cpt is place to the end of command name
-
-//    free(alias_n);
-
-/*  if (input[cpt] == ' ' || input[cpt] == '\t' || input[cpt] == '\n')
-      cpt = ignore_args_n_op(input, cpt);
-    if (input[cpt] == '\'' || input[cpt] == '\"')
-      cpt = ignore_quotes(input, input[cpt], cpt);
-    if (input[cpt] != ' ' && input[cpt])
-      input = check_alias(input, &cpt);
-    if (input[cpt] == '\0')
-      break ;*/
   }
   return (input);
 }
