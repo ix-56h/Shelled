@@ -123,11 +123,5 @@ int			main(int ac, char **av, char **envp)
 		re_init_sh(&sh);
 	}
 	free_all(&sh);
-/*	free_historic();
-	free_sh(&sh);
-	free_env(g_env);
-	free_env(g_set);
-	free_env(g_alias);
-	restore_term(3);*/
 	return (g_exit == -1 ? EXIT_SUCCESS : g_exit);
 }
