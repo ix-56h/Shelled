@@ -101,12 +101,15 @@ void			init_signal(void);
 */
 
 char 			*add_alias(char *input);
-//char    	*print_alias(char *alias, char *input, int cpt);
+char  		*recursive_alias(char *alias_v, char **alias_cpy);
 
 char 			*new_input(char *alias_v, char *input, int *cpt, int len_n);
 void 			rm_first_space(char *input);
 char    	*get_after(char *input, int cpt);
 char    	*get_before(char *input, int cpt);
 char    	*get_value_by_name(char *name);
+char 			*get_next_word(char *input, int cpt);
+int 			ignore_args_n_op(char *input, int *cpt);
+int  			get_len(char *input, int cpt);
 
 #endif

@@ -38,6 +38,8 @@ t_builtin lookforbuiltin_v2(char *data)
 		return (ft_alias);
 	else if (ft_strcmp(data, "unalias") == 0)
 		return (ft_unalias);
+	else if (ft_strcmp(data, "test") == 0)
+		return (ft_test);
 	return (NULL);
 }
 

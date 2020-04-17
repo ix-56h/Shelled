@@ -100,6 +100,7 @@ void		free_all(t_sh *sh)
 	restore_term(3);
 }
 
+#include <stdio.h>
 int			main(int ac, char **av, char **envp)
 {
 	t_sh		sh;
@@ -114,6 +115,7 @@ int			main(int ac, char **av, char **envp)
 	{
 		sh.input = run_line_edit();
 		sh.input = add_alias(sh.input);
+		printf("input : %s\n", sh.input);
 		sh.tok = get_next_token(sh.input, sh.stack.errors);
 		lifo_empty(sh.stack.errors) ? sh.node = parse_program(&sh) : 0;
 		process_sh(&sh);

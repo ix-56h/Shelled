@@ -87,6 +87,7 @@ C_FILES_shell = \
 				alias.c \
 				alias_get.c \
 				alias_print.c \
+				alias_recursive.c \
 
 C_FILES_line_edit = \
 					alloc.c \
@@ -125,6 +126,7 @@ C_FILES_builtins = \
 				   ft_set.c \
 				   ft_unset.c \
 					 ft_type.c \
+					 ft_test.c \
 					 ft_alias.c \
 					 ft_unalias.c \
 					 alias_tools.c \

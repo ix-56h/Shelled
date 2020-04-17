@@ -24,6 +24,7 @@ H_FILES_utils 		= 	\
 
 H_FILES_builtins 	= 	\
 						builtins.h \
+						test_builtins.h \
 
 H_FILES_line_edit 	= 	\
 						ligne.h \
