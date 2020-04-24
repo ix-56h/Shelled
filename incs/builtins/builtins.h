@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <sys/stat.h>
 # include <dirent.h>
+# include <unistd.h>
 
 # define ERR_IS_FOLDER			1
 # define ERR_PATH_ACCES			2
@@ -26,7 +27,7 @@
 # define ERR_REDIR				7
 
 struct dirent	*diread;
-struct stat *st;
+struct stat st;
 
 typedef int	(*t_builtin)(char **, char ***);
 
@@ -48,10 +49,6 @@ int     ft_unalias(char **args, char ***env);
 int     ft_test(char **args, char ***env);
 t_builtin	lookforbuiltin(char *data);
 
-int			change_path(char *new_path, char **oldpath, char ***tenv);
-int			set_new_path(char ***tenv, char *newpath);
-char		*set_old_path(char ***tenv);
-
 /* cd functions */
 int     error_cd(int error_mod, char *path);
 char	  *ft_get_link(char *pathname);
@@ -69,5 +66,12 @@ void    sort_alias(void);
 void    show_this_alias(char *arg);
 void    dispatch_show(int cpt);
 int		  error_alias(char *arg, int mod);
+
+/*  test functions */
+
+int  error_test(char *arg_err, int mod);
+char *apply_path(char *arg);
+int  init_integer(char **args);
+
 
 #endif

@@ -21,7 +21,7 @@ SRC_DIR := ./srcs
 OBJ_DIR := ./.obj
 
 INC_DIR := ./incs
-			
+
 ### SUB FILES ###
 SUB_DIRS := \
 	error_handler \
@@ -30,6 +30,7 @@ SUB_DIRS := \
 	visitor \
 	shell \
 	builtins \
+	builtins/test \
 	utils \
 	line_edit \
 	ast \
@@ -68,7 +69,7 @@ FT_INC_DIR = $(FT_DIR)/incs
 FT_LNK = -L$(FT_DIR) -l$(FT) -L$(PRINTF_DIR) -lprintf
 
 ###  CC && FLAGS ###
-CC = gcc -g #-fsanitize=address 
+CC = gcc -g #-fsanitize=address
 DEBUG_FLAGS = -g3
 NO_WARNING ?= false
 ifeq ($(NO_WARNING), false)
@@ -77,7 +78,7 @@ CFLAGS = \
 		 -Wall -Werror -Wextra
 else
 CFLAGS = \
-		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR) $(PRINTF_INC_DIR)) 
+		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR) $(PRINTF_INC_DIR))
 endif
 
 LFLAGS = -ltermcap \
