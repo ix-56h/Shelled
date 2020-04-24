@@ -29,6 +29,7 @@
 struct dirent	*diread;
 struct stat st;
 
+
 typedef int	(*t_builtin)(char **, char ***);
 
 int			count_arg(char **argv);
@@ -48,6 +49,7 @@ int     ft_alias(char **args, char ***env);
 int     ft_unalias(char **args, char ***env);
 int     ft_test(char **args, char ***env);
 t_builtin	lookforbuiltin(char *data);
+
 
 /* cd functions */
 int     error_cd(int error_mod, char *path);

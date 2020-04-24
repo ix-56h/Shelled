@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef TEST_BUILTINS
+# define TEST_BUILTINS
+
 typedef struct s_operands
 {
   char *operand;
@@ -74,3 +77,5 @@ const t_operand g_operand[] = {
   {"!",   test_reverse, 1, 0}, // expression -> to check
   {NULL, NULL, -1, -1}
 };
+
+#endif
