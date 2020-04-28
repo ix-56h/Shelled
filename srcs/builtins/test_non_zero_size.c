@@ -10,17 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
-#include "ft_printf.h"
+#include "libft.h"
 
 int test_non_zero_size(char *s1, char *s2)
 {
-  if (ft_strlen(s1) > 0)
-  {
-    ft_printf("-n | true\n");
-    return (0);
-  }
   (void)s2;
-  ft_printf("-n | false\n");
+  if (ft_strlen(s1) > 0)
+    return (0);
   return (1);
 }

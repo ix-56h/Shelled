@@ -11,16 +11,11 @@
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "ft_printf.h"
 
 int test_write(char *s1, char *s2)
 {
   (void)s2;
   if (access(s1, W_OK) == 0)
-  {
-    ft_printf("-w | true\n");
     return (0);
-  }
-  ft_printf("-w | false\n");
   return (1);
 }

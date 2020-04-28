@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "builtins.h"
-#include "ft_printf.h"
 
 int   test_algebraically_equal(char *s1, char *s2)
 {
@@ -22,10 +20,6 @@ int   test_algebraically_equal(char *s1, char *s2)
   i1 = ft_atoi(s1);
   i2 = ft_atoi(s2);
   if (i1 == i2)
-  {
-    ft_printf("-eq | true\n");
     return (0);
-  }
-  ft_printf("-eq | false\n");
   return (1);
 }

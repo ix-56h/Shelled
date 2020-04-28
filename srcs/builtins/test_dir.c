@@ -10,18 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "builtins.h"
-#include "ft_printf.h"
 
 int test_dir(char *s1, char *s2)
 {
-  if (stat(s1, &st) < 0)
-  {
-    ft_printf("dir | flase not a path\n");
-    return (1);
-  }
-  ft_printf("dir | true\n");
   (void)s2;
+  if (stat(s1, &st) < 0)
+    return (1);
   return (0);
 }

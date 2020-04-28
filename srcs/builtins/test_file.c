@@ -11,21 +11,13 @@
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "ft_printf.h"
 
 int test_file(char *s1, char *s2)
 {
-  if (stat(s1, &st) < 0)
-  {
-    ft_printf("file | false path\n");
-    return (1);
-  }
-  if (S_ISREG(st.st_mode))
-  {
-    ft_printf("file | true\n");
-    return (0);
-  }
-  ft_printf("file | false not a file\n");
   (void)s2;
+  if (stat(s1, &st) < 0)
+    return (1);
+  if (S_ISREG(st.st_mode))
+    return (0);
   return (1);
 }

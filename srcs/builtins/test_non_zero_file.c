@@ -11,21 +11,13 @@
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "ft_printf.h"
 
 int test_non_zero_file(char *s1, char *s2)
 {
-  if (stat(s1, &st) < 0)
-  {
-    ft_printf("zero size file | false path\n");
-    return (1);
-  }
-  if (st.st_size > 0)
-  {
-    ft_printf("zero size file | true\n");
-    return (0);
-  }
-  ft_printf("zero size file | false not a zero size file\n");
   (void)s2;
+  if (stat(s1, &st) < 0)
+    return (1);
+  if (st.st_size > 0)
+    return (0);
   return (1);
 }

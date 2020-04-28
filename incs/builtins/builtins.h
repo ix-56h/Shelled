@@ -29,7 +29,6 @@
 struct dirent	*diread;
 struct stat st;
 
-
 typedef int	(*t_builtin)(char **, char ***);
 
 int			count_arg(char **argv);
@@ -73,7 +72,8 @@ int		  error_alias(char *arg, int mod);
 
 int  error_test(char *arg_err, int mod);
 char *apply_path(char *arg);
-int  init_integer(char **args);
+int  init_integer(char **args, size_t p_size);
+int  simple_operand(char **args);
 
 
 #endif

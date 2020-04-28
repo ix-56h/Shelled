@@ -15,7 +15,7 @@
 
 typedef struct s_operands
 {
-  char *operand;
+  char *ope;
   int  (*func_op)(char *s1, char *s2);
   int  is_unary;
   int  is_pathname;
@@ -74,7 +74,7 @@ const t_operand g_operand[] = {
   {"-gt", test_greater, 0, 0}, // interger
   {"-lt", test_less, 0, 0}, //integer
   {"-le", test_less_or_equal, 0, 0}, // integer
-  {"!",   test_reverse, 1, 0}, // expression -> to check
+  {"n",   test_reverse, 1, 0}, // expression -> to check
   {NULL, NULL, -1, -1}
 };
 

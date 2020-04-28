@@ -35,19 +35,64 @@ char *apply_path(char *arg)
   return (arg);
 }
 
-int init_integer(char **args)
+int init_integer(char **args, size_t p_size)
 {
   size_t cpt;
 
   cpt = 0;
-  while (args[1][cpt] >= '0' && args[1][cpt] <= '9' && args[1][cpt])
+  while (args[1 + p_size][cpt] >= '0'
+        && args[1 + p_size][cpt] <= '9'
+        && args[1 + p_size][cpt])
     cpt++;
-  if (cpt != ft_strlen(args[1]))
-    return (error_test(args[1], 3));
+  if (cpt != ft_strlen(args[1 + p_size]))
+    return (error_test(args[1 + p_size], 3));
   cpt = 0;
-  while (args[3][cpt] >= '0' && args[3][cpt] <= '9' && args[3][cpt])
+  while (args[3 + p_size][cpt] >= '0'
+        && args[3 + p_size][cpt] <= '9'
+        && args[3 + p_size][cpt])
     cpt++;
-  if (cpt != ft_strlen(args[3]))
-    return (error_test(args[3], 3));
+  if (cpt != ft_strlen(args[3 + p_size]))
+    return (error_test(args[3 + p_size], 3));
   return (0);
+}
+
+int  simple_operand(char **args)
+{
+  if (ft_strlen(args[1]) == 0)
+  {
+    ft_printf("simple | false\n");
+    return (1);
+  }
+  ft_printf("simple | true\n");
+  return (0);
+}
+
+/*
+**  mod = 0 : arguments > 4 -> test too many arguments
+**  mod = 1 : no binary operand && arguments == 2 -> test unary expected  --> need only one arg
+**  mod = 2 : no binary operand && arguments == 3 -> test binary expected
+**  mod = 3 : for integer binary operand -> one of operand not an integer
+*/
+
+int  error_test(char *arg_err, int mod)
+{
+  ft_putstr_fd("42sh: test: ", 2);
+  if (mod == 0)
+    ft_putstr_fd("too many arguments\n", 2);
+  if (mod == 1)
+  {
+    ft_putstr_fd(arg_err, 2);
+    ft_putstr_fd(": unary operator expected\n", 2);
+  }
+  if (mod == 2)
+  {
+    ft_putstr_fd(arg_err, 2);
+    ft_putstr_fd(": binary operator expected\n", 2);
+  }
+  if (mod == 3)
+  {
+    ft_putstr_fd(arg_err, 2);
+    ft_putstr_fd(": integer expression expected\n", 2);
+  }
+  return (2);
 }

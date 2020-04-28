@@ -11,16 +11,11 @@
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "ft_printf.h"
 
 int test_read(char *s1, char *s2)
 {
   (void)s2;
   if (access(s1, R_OK) == 0)
-  {
-    ft_printf("-r | true\n");
     return (0);
-  }
-  ft_printf("-r | false\n");
   return (1);
 }

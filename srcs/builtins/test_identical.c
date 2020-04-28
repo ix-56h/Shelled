@@ -11,15 +11,10 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "ft_printf.h"
 
 int test_identical(char *s1, char *s2)
 {
   if (ft_strcmp(s1, s2) == 0)
-  {
-    ft_printf("= | true\n");
     return (0);
-  }
-  ft_printf("= | false\n");
   return (1);
 }
