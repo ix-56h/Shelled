@@ -69,11 +69,9 @@ void    dispatch_show(int cpt);
 int		  error_alias(char *arg, int mod);
 
 /*  test functions */
-
 int  error_test(char *arg_err, int mod);
 char *apply_path(char *arg);
 int  init_integer(char **args, size_t p_size);
 int  simple_operand(char **args);
-
 
 #endif

@@ -114,7 +114,7 @@ int  ft_test(char **args, char ***env)
   cpt = 0;
   while (args[cpt])
     cpt++;
-  if (!ft_strcmp(args[1], "n"))
+  if (!ft_strcmp(args[1], "!"))
     return (do_reverse(args, cpt));
   if (cpt == 4)
     return (check_binary(args, 0));
