@@ -73,6 +73,73 @@ int		check_dol(size_t *i, char **w)
 	return (0);
 }
 
+#include <stdio.h>
+
+char	*param_arob(void)
+{
+	int		i;
+	int		j;
+	char	*param;
+	char	*word;
+
+	i = 0;
+	j = 0;
+	param = get_env(g_set, "@");
+	word = ft_strnew(0);
+	while (!ft_isdigit(param[i]) && param[i] != ')')
+		i++;
+	if (param[i] == ')')
+		return (word);
+	while (param[i] && param[i + 1] != ')')
+	{
+		word[j] = param[i];
+		j++;
+		i++;
+	}
+	return (word);
+}
+
+char	*param_hash(void)
+{
+//	int		i;
+//	int		count;
+	char	*param;
+
+//	i = 0;
+//	count = 0;
+	param = ft_strdup(get_env(g_set, "#"));
+/*	while (param[i])
+	{
+		if (ft_isalnum(param[i]))
+			count++;
+		i++;
+	}*/
+	return (param);
+}
+
+void	test(char **w)
+{
+	if ((*w)[1] == '?')
+		printf("\nINTER\n");
+	else if ((*w)[1] == '-')
+		printf("\nDASH\n");
+	else if ((*w)[1] == '0')
+		printf("\nZERO\n");
+	else if ((*w)[1] == '*')
+		printf("\nASTE\n");
+	else if ((*w)[1] == '$')
+		printf("\nDOL\n");
+	else if ((*w)[1] == '@')
+		*w = param_arob();
+	else if ((*w)[1] == '!')
+		printf("\nBANG\n");
+	else if ((*w)[1] == '#')
+	{
+		*w = param_hash();
+		printf("\nHERE\n");
+	}
+}
+
 void	process_expression(char **w)
 {
 	size_t			i;
@@ -82,6 +149,11 @@ void	process_expression(char **w)
 	quoted = 0;
 	if (!w || !*w)
 		exit(1);
+	if (ft_strlen(*w) == 2 && (*w)[i] == '$')
+	{
+		test(w);
+	//	return ;
+	}
 	while ((*w)[i])
 	{
 		if ((*w)[i] == '"' && quoted == 2)

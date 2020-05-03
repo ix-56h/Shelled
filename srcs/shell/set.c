@@ -113,6 +113,12 @@ static void		get_sysname(void)
 	ft_strdel(&tmp);
 }
 
+void			add_special_param(void)
+{
+	add_set("@", "( )");
+	add_set("#", "0");
+}
+
 void			init_set(char **av)
 {
 	g_set = NULL;
@@ -120,6 +126,7 @@ void			init_set(char **av)
 		g_set = cpy_env(g_env);
 	add_info_params(av);
 	add_info_id();
+	add_special_param();
 	get_sysname();
 	sort_set();
 }
