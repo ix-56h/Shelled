@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:31:50 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/03/23 15:23:10 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/03 12:52:30 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,20 @@ char *get_job_status(t_job *job)
 			return("Running");
 }
 
+void print_job_info(t_job *job, char *arg)
+{
+	if (job->pgid == 0)
+		ft_printf("jobs: no such jobs\n");
+	else if (arg == NULL)
+		ft_printf("[%d]\t %s \t\t %s\n", job->number,
+					get_job_status(job), job->line);
+	else if (ft_strcmp(arg, "-l") == 0)
+		ft_printf("[%d]\t %d %s \t\t %s\n", job->number, job->pgid,
+					get_job_status(job), job->line);
+	else if (ft_strcmp(arg, "-p") == 0)
+		ft_printf("%d\n", job->pgid);
+}
+
 int ft_jobs(char **argv, char ***tenv)
 {
 	t_job *job;
@@ -105,20 +119,20 @@ int ft_jobs(char **argv, char ***tenv)
 
 	job = g_job_head;
 	update_status();
+	if (argv[1] && argv[1][0] != '-' && (job = find_job_by_number(ft_atoi(argv[1]))))
+		print_job_info(job, NULL);
+	else if (argv[1] && argv[2] && argv[2][0] != '-' && (job = find_job_by_number(ft_atoi(argv[2]))))
+		print_job_info(job, argv[1]);
+	else if (job == NULL)
+		ft_printf("jobs: no such jobs\n");
+	else
+	{
 	while (job)
 	{
 		if (job->pgid != 0)
-		{
-			if (argv[1] == NULL)
-				ft_printf("[%d]\t %s \t\t %s\n", job->number,
-					get_job_status(job), job->line);
-			else if (ft_strcmp(argv[1], "-l") == 0)
-				ft_printf("[%d]\t %d %s \t\t %s\n", job->number, job->pgid,
-					get_job_status(job), job->line);
-			else if (ft_strcmp(argv[1], "-p") == 0)
-				ft_printf("%d\n", job->pgid);
-		}
+			print_job_info(job, argv[1]);
 		job = job->next;
+	}
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/23 15:38:53 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/03 12:29:36 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_JOB_H
 # include <sys/types.h>
 # include "double_linked_list.h"
+# include "ft_printf.h"
 
 # define UNUSED_JOB		-10
 # define BUILTIN_JOB	-2

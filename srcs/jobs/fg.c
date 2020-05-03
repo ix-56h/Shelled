@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:10:01 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/03/23 15:41:28 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/03 12:46:44 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int ft_fg(char **argv, char ***tenv)
 		job = find_job_fg(job);
 	else
 		job = find_job_by_number(ft_atoi(argv[1]));
-	if (!job)
+	if (!job || job->pgid == 0)
 		ft_putendl_fd("fg: no such job", 2);
 	else if (job_is_stopped(job))
 	{
