@@ -30,7 +30,7 @@ int	lex_match_parameter(char *s, int *anchor, t_lifo *stack)
 	}
 	if (s[*anchor] != '}')
 	{
-		error_push(stack, MATCH_LEX, "}");
+		error_push(stack, MATCH_LEX, ft_strdup("wordexp_tokenizer.c:33"), "}");
 		return (0);
 	}
 	*anchor += 1;
@@ -44,7 +44,7 @@ int	lex_match_squote(char *s, int *anchor, t_lifo *stack)
 		*anchor += 1;
 	if (s[*anchor] != '\'')
 	{
-		error_push(stack, MATCH_LEX, NULL, "'");
+		error_push(stack, MATCH_LEX, ft_strdup("wordexp_tokenizer.c:47"), "'");
 		return (0);
 	}
 	*anchor += 1;
