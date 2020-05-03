@@ -38,6 +38,8 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype, int *i)
 		ret = check_pipe(s, l, i);
 	else if (toktype == TOK_REDIRECTION)
 		ret = check_redirections(s, l, i);
+	else if (toktype == TOK_SEMI)
+		ret = check_semi(s, l, i);
 	return (ret);
 }
 
@@ -110,7 +112,7 @@ t_tokens	get_next_token(char *s, t_lifo *stack)
 	if (g_abstract_token[gnt->token.tok] && !(gnt->token.tok = \
 				get_true_toktype(gnt->token.data, gnt->token.tok, &(gnt->i))))
 	{
-		error_push(stack, UNRECOGNIZED_TOKEN, gnt->token.data);
+		error_push(stack, UNRECOGNIZED_TOKEN, NULL, gnt->token.data);
 		return (token_error(0, stack, 0));
 	}
 	return (gnt->token);

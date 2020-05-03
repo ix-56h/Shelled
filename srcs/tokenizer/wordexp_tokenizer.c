@@ -44,7 +44,7 @@ int	lex_match_squote(char *s, int *anchor, t_lifo *stack)
 		*anchor += 1;
 	if (s[*anchor] != '\'')
 	{
-		error_push(stack, MATCH_LEX, "'");
+		error_push(stack, MATCH_LEX, NULL, "'");
 		return (0);
 	}
 	*anchor += 1;
@@ -73,7 +73,7 @@ int	lex_match_dquote(char *s, int *anchor, t_lifo *stack)
 	}
 	if (s[*anchor] != '"')
 	{
-		error_push(stack, MATCH_LEX, "\"");
+		error_push(stack, MATCH_LEX, NULL, "\"");
 		return (0);
 	}
 	*anchor += 1;
@@ -97,7 +97,7 @@ int	lex_match_command_sub(char *s, int *anchor, t_lifo *stack)
 	}
 	if (s[*anchor] != close)
 	{
-		error_push(stack, MATCH_LEX, (close == '`') ? "`" : ")");
+		error_push(stack, MATCH_LEX, NULL, (close == '`') ? "`" : ")");
 		return (0);
 	}
 	*anchor += 1;

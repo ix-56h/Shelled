@@ -33,7 +33,7 @@ t_node	*parse_io_here(t_sh *sh)
 			fifo_insert(sh->stack.here_docs, node);
 		}
 		else
-			error_push(sh->stack.errors, PARSE_ERROR, tok.data);
+			error_push(sh->stack.errors, PARSE_ERROR, ft_strdup("parse_io_here.c:36"), tok.data);
 	}
 	return (node);
 }
