@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:36 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/25 17:28:28 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/11 18:46:43 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ typedef struct		s_gnt {
 **	term_and_op_check.c
 */
 t_toktype			check_operator(char *s, size_t len, int *i);
+ t_toktype			check_semi(char *s, size_t len, int *i);
 t_toktype			check_pipe(char *s, size_t len, int *i);
 t_toktype			check_redirections(char *s, size_t len, int *i);
 
@@ -136,11 +137,18 @@ t_tokens			get_next_token(char *s, t_lifo*stack);
 /*
 **	wordexp_tokenizer.c
 */
-int					lex_sequence(char *s, int *anchor, t_lifo *stack);
 int					lex_match_squote(char *s, int *anchor, t_lifo *stack);
 int					lex_match_dquote(char *s, int *anchor, t_lifo *stack);
 int					lex_match_command_sub(char *s, int *anchor, t_lifo *stack);
 int					lex_match_dol(char *s, int *anchor, t_lifo *stack);
+int					lex_match_parameter(char *s, int *anchor, t_lifo *stack);
+
+
+
+/*
+**	lex_sequence.c
+*/
+int					lex_sequence(char *s, int *anchor, t_lifo *stack);
 
 /*
 **	wordexp_misc.c

@@ -6,7 +6,7 @@
 #    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2020/03/09 17:00:11 by mguerrea         ###   ########.fr        #
+#    Updated: 2020/05/03 16:03:15 by mguerrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ FT_LNK = -L$(FT_DIR) -l$(FT) -L$(PRINTF_DIR) -lprintf
 ###  CC && FLAGS ###
 CC = gcc -g #-fsanitize=address 
 DEBUG_FLAGS = -g3
-NO_WARNING ?= false
+NO_WARNING ?= true
 ifeq ($(NO_WARNING), false)
 CFLAGS = \
 		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR) $(PRINTF_INC_DIR))\
@@ -81,7 +81,7 @@ CFLAGS = \
 		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR) $(PRINTF_INC_DIR)) 
 endif
 
-LFLAGS = -ltermcap \
+LFLAGS = -lncurses \
 		 $(FT_LNK) \
 
 .PHONY: all clean fclean re

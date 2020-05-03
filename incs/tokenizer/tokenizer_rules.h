@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:48 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/25 20:09:45 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/02 11:11:16 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ static t_chr_class		g_get_chr_class[255] =
 	['\t'] = CHR_SP,
 	[';'] = CHR_SEMI,
 	['$'] = CHR_DOL,
-	['#'] = CHR_COMMENT,
+	['#'] = CHR_WORD,
 	['A'...'Z'] = CHR_WORD,
 	['a'...'z'] = CHR_WORD,
 	['0'...'9'] = CHR_DIGIT,
+	['%'] = CHR_WORD,
+	['+'] = CHR_WORD,
 	['_'] = CHR_WORD,
 	['='] = CHR_WORD,
 	[':'] = CHR_WORD,
@@ -34,6 +36,7 @@ static t_chr_class		g_get_chr_class[255] =
 	[']'] = CHR_WORD,
 	['@'] = CHR_WORD,
 	[','] = CHR_WORD,
+	['%'] = CHR_WORD,
 	['{'] = CHR_LBRACE,
 	['}'] = CHR_RBRACE,
 	[')'] = CHR_RPAREN,
@@ -56,7 +59,8 @@ static int				g_abstract_token[TOK_MAX] =
 {
 	[TOK_REDIRECTION] = 1,
 	[TOK_PIPE] = 1,
-	[TOK_OPERATOR] = 1
+	[TOK_OPERATOR] = 1,
+	[TOK_SEMI] = 1
 };
 
 static int				g_token_chr_rules[TOK_MAX][CHR_MAX] =
@@ -72,7 +76,9 @@ static int				g_token_chr_rules[TOK_MAX][CHR_MAX] =
 		[CHR_DQUOTE] = 1,
 		[CHR_BQUOTE] = 1,
 		[CHR_LPAREN] = 1,
+		[CHR_RPAREN] = 1,
 		[CHR_LBRACE] = 1,
+		[CHR_RBRACE] = 1,
 		[CHR_DOL] = 1,
 		[CHR_DASH] = 1
 	},
@@ -94,7 +100,9 @@ static int				g_token_chr_rules[TOK_MAX][CHR_MAX] =
 		[CHR_BANG] = 1
 	},
 	[TOK_OPERATOR] = {
-		[CHR_AND] = 1,
+		[CHR_AND] = 1
+	},
+	[TOK_SEMI] = {
 		[CHR_SEMI] = 1
 	},
 	[TOK_REDIRECTION] = {
@@ -124,7 +132,7 @@ static t_toktype		g_get_tok_type[CHR_MAX] = {
 	[CHR_BQUOTE] = TOK_WORD,
 	[CHR_DOL] = TOK_WORD,
 	[CHR_AND] = TOK_OPERATOR,
-	[CHR_SEMI] = TOK_OPERATOR,
+	[CHR_SEMI] = TOK_SEMI,
 	[CHR_LPAREN] = TOK_LPAREN,
 	[CHR_RPAREN] = TOK_RPAREN,
 	[CHR_LBRACE] = TOK_LBRACE,

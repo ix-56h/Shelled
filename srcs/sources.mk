@@ -6,7 +6,7 @@
 #    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/03/23 15:31:17 by mguerrea         ###   ########.fr        #
+#    Updated: 2020/05/03 16:02:53 by mguerrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ C_FILES_tokenizer = \
 					tokenizer_misc.c \
 					wordexp_misc.c \
 					wordexp_tokenizer.c \
+					lex_sequence.c \
 					gnt_standalone.c \
 
 C_FILES_visitor = \
@@ -120,6 +121,7 @@ C_FILES_builtins = \
 				   ft_return.c \
 				   ft_set.c \
 				   ft_unset.c \
+				   ft_export.c \
 
 C_FILES_utils = \
 				index_end_squote.c \
@@ -143,6 +145,11 @@ C_FILES_expansions = \
 					 quote_removal.c \
 					 expression.c \
 					 substitution.c \
+					 parameter_expansions.c \
+					 parameter_expansions2.c \
+					 expansions_utils.c \
+					 dispatch_expansions.c \
+					 manage_brace.c \
 
 C_FILES_jobs = \
 				bg.c \
