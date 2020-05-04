@@ -79,65 +79,82 @@ char	*param_arob(void)
 {
 	int		i;
 	int		j;
+	char	*str;
 	char	*param;
-	char	*word;
 
 	i = 0;
 	j = 0;
 	param = get_env(g_set, "@");
-	word = ft_strnew(0);
-	while (!ft_isdigit(param[i]) && param[i] != ')')
+	str = ft_strnew(0);
+	while (!ft_isalnum(param[i]) && param[i] != ')')
 		i++;
 	if (param[i] == ')')
-		return (word);
+		return (str);
 	while (param[i] && param[i + 1] != ')')
 	{
-		word[j] = param[i];
+		str[j] = param[i];
 		j++;
 		i++;
 	}
-	return (word);
+	return (str);
 }
 
 char	*param_hash(void)
 {
-//	int		i;
-//	int		count;
 	char	*param;
 
-//	i = 0;
-//	count = 0;
 	param = ft_strdup(get_env(g_set, "#"));
-/*	while (param[i])
-	{
-		if (ft_isalnum(param[i]))
-			count++;
-		i++;
-	}*/
 	return (param);
 }
 
-void	test(char **w)
+char	*look_for_param(int index)
 {
-	if ((*w)[1] == '?')
+	int		i;
+	char	*str;
+	char	**split;
+
+	i = 0;
+	split = ft_strsplit(get_env(g_set, "@"), ' ');
+	if (split[index] && ft_strcmp(split[index], ")"))
+		str = ft_strdup(split[index]);
+	else
+		str = ft_strdup("");
+	ft_free(split);
+	return (str);
+}
+
+char	*get_positional_param(char c)
+{
+	char	*str;
+	char	param[2];
+
+	param[0] = c;
+	param[1] = '\0';
+	if (c != '0')
+		str = look_for_param(ft_atoi(param));
+	else
+		str = ft_strdup(get_env(g_set, param));
+	return (str);
+}
+
+void	get_special_param(char **w)
+{
+	if (ft_isdigit((*w)[1]))
+		*w = get_positional_param((*w)[1]);
+	else if ((*w)[1] == '?')
 		printf("\nINTER\n");
 	else if ((*w)[1] == '-')
 		printf("\nDASH\n");
-	else if ((*w)[1] == '0')
-		printf("\nZERO\n");
 	else if ((*w)[1] == '*')
 		printf("\nASTE\n");
 	else if ((*w)[1] == '$')
-		printf("\nDOL\n");
+		*w = ft_strdup(get_env(g_set, "$"));
 	else if ((*w)[1] == '@')
 		*w = param_arob();
 	else if ((*w)[1] == '!')
 		printf("\nBANG\n");
 	else if ((*w)[1] == '#')
-	{
 		*w = param_hash();
-		printf("\nHERE\n");
-	}
 }
 
 void	process_expression(char **w)
@@ -150,10 +167,7 @@ void	process_expression(char **w)
 	if (!w || !*w)
 		exit(1);
 	if (ft_strlen(*w) == 2 && (*w)[i] == '$')
-	{
-		test(w);
-	//	return ;
-	}
+		get_special_param(w);
 	while ((*w)[i])
 	{
 		if ((*w)[i] == '"' && quoted == 2)

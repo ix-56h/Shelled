@@ -117,13 +117,16 @@ void			add_special_param(void)
 {
 	add_set("@", "( )");
 	add_set("#", "0");
+	add_set("-", "");
 }
 
 void			init_set(char **av)
 {
 	g_set = NULL;
-	if (g_env)
-		g_set = cpy_env(g_env);
+//	if (g_env)
+//		g_set = cpy_env(g_env);
+	add_set("HOME", get_env(g_env, "HOME"));
+	add_set("PWD", get_env(g_env, "PWD"));
 	add_info_params(av);
 	add_info_id();
 	add_special_param();

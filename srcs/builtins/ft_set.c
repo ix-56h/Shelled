@@ -41,7 +41,7 @@ void	get_split_args(char **av)
 
 	i = 1;
 	j = 0;
-	param = ft_strdup("( 1 2 3 )");
+	param = ft_strdup("( A B C D E F G H I J )");
 	add_set("@", param);
 	test_hash(param);
 /*	while (av[i])
