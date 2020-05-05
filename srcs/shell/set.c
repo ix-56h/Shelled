@@ -105,19 +105,15 @@ static void		get_sysname(void)
 	if ((uname(&t_utsname)) == 0)
 		add_set("SYSNAME", t_utsname.sysname);
 	add_set("?", "0");
+	add_set("!", "0");
+	add_set("@", "( )");
+	add_set("#", "0");
 	if ((tmp = ft_itoa(getpid())))
 	{
 		add_set("PID", tmp);
 		add_set("$", tmp);
 	}
 	ft_strdel(&tmp);
-}
-
-void			add_special_param(void)
-{
-	add_set("@", "( )");
-	add_set("#", "0");
-	add_set("-", "");
 }
 
 void			init_set(char **av)
@@ -129,7 +125,6 @@ void			init_set(char **av)
 	add_set("PWD", get_env(g_env, "PWD"));
 	add_info_params(av);
 	add_info_id();
-	add_special_param();
 	get_sysname();
 	sort_set();
 }

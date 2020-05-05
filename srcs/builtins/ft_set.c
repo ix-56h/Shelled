@@ -14,9 +14,7 @@
 #include "builtins.h"
 #include "sh.h"
 
-#include <stdio.h>
-
-void	test_hash(char *param)
+static void		add_param_count(char *param)
 {
 	int i;
 	int count;
@@ -32,43 +30,36 @@ void	test_hash(char *param)
 	add_set("#", ft_itoa(count));
 }
 
-void	get_split_args(char **av)
+static char		*get_set_param(char **av)
 {
 	int		i;
-	int		j;
-	char	**split;
-	char	*param;
+	char	*str;
 
 	i = 1;
-	j = 0;
-	param = ft_strdup("( A B C D E F G H I J )");
-	add_set("@", param);
-	test_hash(param);
-/*	while (av[i])
+	str = ft_strnew(2);
+	str[0] = '(';
+	str[1] = ' ';
+	while (av[i])
 	{
-		split = ft_strsplit(av[i], ' ');
-		printf("\nHERE split 0 : |%s|\n", split[0]);
-	//	param[j] = split[0][0];
-		param = ft_strjoinf(param, split[0], 1);
-	printf("\nparam : |%s|\n", param);
-		printf("\nHERE2\n");
-		param[j++] = ' ';
-		printf("\nHERE3\n");
-		ft_free(split);
-		printf("\nHERE4\n");
+		str = ft_strjoinf(str, av[i], 1);
+		if (av[i + 1])
+			str = ft_strjoinf(str, " ", 1);
 		i++;
-		printf("\nHERE5\n");
-		j++;
-		printf("\nHERE6\n");
 	}
-	printf("\nparam : |%s|\n", param);*/
-//	j = 0;
-//	while (param[j])
-//		printf("\nparam : |%s|\n", param[j++]);
-	
+	str = ft_strjoinf(str, " )", 1);
+	return (str);
 }
 
-int		ft_set(char **argv, char ***set)
+static void		get_set_args(char **av)
+{
+	char	*param;
+
+	param = get_set_param(av);
+	add_set("@", param);
+	add_param_count(param);
+}
+
+int				ft_set(char **argv, char ***set)
 {
 	int i;
 
@@ -78,7 +69,6 @@ int		ft_set(char **argv, char ***set)
 		while (g_set[i])
 			ft_putendl_fd(g_set[i++], 1);
 	else
-		get_split_args(argv);
-//		printf("\nargs\n");
+		get_set_args(argv);
 	return (0);
 }

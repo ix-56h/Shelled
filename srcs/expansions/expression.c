@@ -75,7 +75,7 @@ int		check_dol(size_t *i, char **w)
 
 #include <stdio.h>
 
-char	*param_arob(void)
+char	*show_positional_param(void)
 {
 	int		i;
 	int		j;
@@ -99,7 +99,7 @@ char	*param_arob(void)
 	return (str);
 }
 
-char	*param_hash(void)
+char	*count_param(void)
 {
 	char	*param;
 
@@ -141,20 +141,16 @@ void	get_special_param(char **w)
 {
 	if (ft_isdigit((*w)[1]))
 		*w = get_positional_param((*w)[1]);
-	else if ((*w)[1] == '?')
-		printf("\nINTER\n");
-	else if ((*w)[1] == '-')
-		printf("\nDASH\n");
-	else if ((*w)[1] == '*')
-		printf("\nASTE\n");
+	else if ((*w)[1] == '@' || (*w)[1] == '*')
+		*w = show_positional_param();
 	else if ((*w)[1] == '$')
 		*w = ft_strdup(get_env(g_set, "$"));
-	else if ((*w)[1] == '@')
-		*w = param_arob();
+	else if ((*w)[1] == '#')
+		*w = count_param();
+	else if ((*w)[1] == '?')
+		printf("\nINTER\n");
 	else if ((*w)[1] == '!')
 		printf("\nBANG\n");
-	else if ((*w)[1] == '#')
-		*w = param_hash();
 }
 
 void	process_expression(char **w)
