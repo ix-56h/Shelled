@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   visitor_assign.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
+/*   Updated: 2020/03/13 01:46:47 by ezonda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include "parser.h"
 #include "visitor.h"
@@ -6,7 +18,34 @@
 #include "builtins.h"
 #include "ft_printf.h"
 
-int		visit_assign_temp(char *data, char **args)
+static void		visitor_assign_exec(t_sh *sh, char *item, char *old_value,
+					char *data)
+{
+	lifo_empty(sh->stack.errors) ? sh->node = parse_program(sh) : 0;
+	process_sh(sh);
+	add_set(item, old_value);
+	free(data);
+	free(old_value);
+	free_sh(sh);
+}
+
+static char		*get_temp_input(char **args)
+{
+	int		i;
+	char	*input;
+
+	i = 1;
+	input = ft_strnew(0);
+	while (args[i])
+	{
+		input = ft_strjoinf(input, args[i], 1);
+		input = ft_strjoinf(input, " ", 1);
+		i++;
+	}
+	return (input);
+}
+
+static int		visit_assign_temp(char *data, char **args)
 {
 	t_sh	sh;
 	char	*item;
@@ -18,7 +57,7 @@ int		visit_assign_temp(char *data, char **args)
 		return (0);
 	if (!(sh.stack.here_docs = fifo_creator(20, sizeof(t_node*))))
 		return (0);
-	sh.input = ft_strdup(args[1]);
+	sh.input = get_temp_input(args);
 	sh.tok = get_next_token(sh.input, sh.stack.errors);
 	if ((value = ft_strchr(data, '=')))
 	{
@@ -31,16 +70,11 @@ int		visit_assign_temp(char *data, char **args)
 			add_set(item, value);
 		}
 	}
-	lifo_empty(sh.stack.errors) ? sh.node = parse_program(&sh) : 0;
-	process_sh(&sh);
-	add_set(item, old_value);
-	free(data);
-	free(old_value);
-	free_sh(&sh);
+	visitor_assign_exec(&sh, item, old_value, data);
 	return (1);
 }
 
-int		visit_assign_word(t_node *node, t_io_lists io, t_job **job)
+int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 {
 	char	*item;
 	char	*value;

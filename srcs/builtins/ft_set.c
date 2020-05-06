@@ -16,8 +16,9 @@
 
 static void		add_param_count(char *param)
 {
-	int i;
-	int count;
+	int		i;
+	int		count;
+	char	*value;
 
 	i = 0;
 	count = 0;
@@ -27,7 +28,9 @@ static void		add_param_count(char *param)
 			count++;
 		i++;
 	}
-	add_set("#", ft_itoa(count));
+	value = ft_itoa(count);
+	add_set("#", value);
+	free(value);
 }
 
 static char		*get_set_param(char **av)
@@ -36,9 +39,7 @@ static char		*get_set_param(char **av)
 	char	*str;
 
 	i = 1;
-	str = ft_strnew(2);
-	str[0] = '(';
-	str[1] = ' ';
+	str = ft_strdup("( ");
 	while (av[i])
 	{
 		str = ft_strjoinf(str, av[i], 1);

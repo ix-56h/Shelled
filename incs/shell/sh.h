@@ -93,4 +93,11 @@ void			free_sh(t_sh *sh);
 **	signal.c
 */
 void			init_signal(void);
+
+/*
+** shell_var.c
+*/
+
+void			get_special_param(char **w);
+
 #endif

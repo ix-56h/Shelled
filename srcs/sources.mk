@@ -85,6 +85,7 @@ C_FILES_shell = \
 				init.c \
 				signal.c \
 				set.c \
+				shell_var.c \
 
 C_FILES_line_edit = \
 					alloc.c \
