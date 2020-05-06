@@ -79,8 +79,6 @@ char	*get_mod_type(char *word, size_t i, int act)
 	return (str);
 }
 
-#include <stdio.h>
-
 char	*get_expansion_format(char *word)
 {
 	size_t	a;

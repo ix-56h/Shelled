@@ -63,6 +63,7 @@ static char	*remove_pattern(char *param, char *word, size_t index, int act)
 			new_word[i++] = param[index++];
 	}
 	free(param);
+	free(word);
 	return (new_word);
 }
 
@@ -70,7 +71,6 @@ char		*remove_small_suffix(char *param, char *word)
 {
 	size_t i;
 
-	i = 0;
 	if (get_env(g_set, param))
 	{
 		if (word[0] == '$' && word[1])
@@ -83,7 +83,6 @@ char		*remove_small_suffix(char *param, char *word)
 			if (param[i] == word[0] && look_for_pattern(param, word, i, 1))
 			{
 				param = remove_pattern(param, word, i, 1);
-				free(word);
 				return (param);
 			}
 			i--;
@@ -113,7 +112,6 @@ char		*remove_small_prefix(char *param, char *word)
 			if (param[i] == word[0] && look_for_pattern(param, word, i, 2))
 			{
 				param = remove_pattern(param, word, i, 2);
-				free(word);
 				return (param);
 			}
 			i++;
