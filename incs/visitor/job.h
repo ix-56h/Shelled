@@ -20,6 +20,10 @@
 # define BUILTIN_JOB	-2
 # define ERR_JOB		-20
 
+# ifndef WAIT_ANY
+#	define  WAIT_ANY		-1
+# endif
+
 typedef	struct			s_process
 {
 	struct s_process	*next;
