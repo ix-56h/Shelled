@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:38:41 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/13 01:46:56 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/01 23:49:15 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 int		set_pipe_fd(t_pipe_list *piped);
 int		close_used_pipe_fd(t_pipe_list *piped);
+int		close_unused_pipe_fd(t_pipe_list *piped);
 void	close_all_pipe(t_io_lists io);
 int		set_used_fd(t_pipe_list *piped);
 int		set_redir_fd(t_redir_list *redir);

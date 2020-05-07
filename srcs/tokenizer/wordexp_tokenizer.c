@@ -30,7 +30,7 @@ int	lex_match_parameter(char *s, int *anchor, t_lifo *stack)
 	}
 	if (s[*anchor] != '}')
 	{
-		error_push(stack, MATCH_LEX, ft_strdup("wordexp_tokenizer.c:33"), "}");
+		error_push(stack, MATCH_LEX, "}");
 		return (0);
 	}
 	*anchor += 1;
@@ -44,7 +44,7 @@ int	lex_match_squote(char *s, int *anchor, t_lifo *stack)
 		*anchor += 1;
 	if (s[*anchor] != '\'')
 	{
-		error_push(stack, MATCH_LEX, ft_strdup("wordexp_tokenizer.c:47"), "'");
+		error_push(stack, MATCH_LEX, "'");
 		return (0);
 	}
 	*anchor += 1;
@@ -73,7 +73,7 @@ int	lex_match_dquote(char *s, int *anchor, t_lifo *stack)
 	}
 	if (s[*anchor] != '"')
 	{
-		error_push(stack, MATCH_LEX, NULL, "\"");
+		error_push(stack, MATCH_LEX, "\"");
 		return (0);
 	}
 	*anchor += 1;
@@ -97,7 +97,7 @@ int	lex_match_command_sub(char *s, int *anchor, t_lifo *stack)
 	}
 	if (s[*anchor] != close)
 	{
-		error_push(stack, MATCH_LEX, NULL, (close == '`') ? "`" : ")");
+		error_push(stack, MATCH_LEX, (close == '`') ? "`" : ")");
 		return (0);
 	}
 	*anchor += 1;

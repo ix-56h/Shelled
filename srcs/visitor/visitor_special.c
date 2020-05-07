@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:35:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/12 04:19:32 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/06 16:32:34 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,8 @@ int		visit_pipe(t_node *node, t_io_lists io, t_job **job)
 
 int		visit_semi(t_node *node, t_io_lists io, t_job **job)
 {
-	int				ret;
-	t_io_lists		new_io;
-
-	new_io = (t_io_lists){NULL, NULL, 0, io.cmd};
-	ret = visit(node->left, job, new_io.cmd);
-	cut_command(new_io.cmd, 1);
-	ret += visit(node->right, job, new_io.cmd);
-	return (ret);
+	(void)io;
+	return (visit(node->left, job) + visit(node->right, job));
 }
 
 int		visit_assign_word(t_node *node, t_io_lists io, t_job **job)

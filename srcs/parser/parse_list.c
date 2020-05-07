@@ -36,11 +36,6 @@ t_node		*parse_list(t_sh *sh)
 				node = binnode(node, nod2, NULL);
 			if ((nod2 = parse_and_or(sh)))
 				node = binnode(node->left, node, nod2);
-			else if ((node->tok == TOK_AND && sh->tok.tok == TOK_SEMI) || (node->tok == TOK_SEMI && sh->tok.tok == TOK_AND))
-			{
-				error_push(sh->stack.errors, PARSE_ERROR, ft_strdup("parse_list.c:41"), sh->tok.data);
-				return (node);
-			}
 		}
 	}
 	return (!root ? node : root);

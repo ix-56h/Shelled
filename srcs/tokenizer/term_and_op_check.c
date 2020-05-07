@@ -23,28 +23,20 @@ t_toktype	check_operator(char *s, size_t len, int *i)
 		*i -= (len - 2);
 		ret = TOK_AND_IF;
 	}
-	else if (!ft_strncmp(s, "&", 1))
-	{
-		*i -= (len - 1);
-		ret = TOK_AND;
-	}
-	return (ret);
-}
-
-t_toktype	check_semi(char *s, size_t len, int *i)
-{
-	t_toktype	ret;
-
-	ret = 0;
-	if (len == 2 && !ft_strncmp(s, ";;", 2))
+	else if (s[1] && !ft_strncmp(s, ";;", 2))
 	{
 		*i -= (len - 2);
 		ret = TOK_DSEMI;
 	}
-	else if (len == 1 && !ft_strncmp(s, ";", 1))
+	else if (!ft_strncmp(s, ";", 1))
 	{
 		*i -= (len - 1);
 		ret = TOK_SEMI;
+	}
+	else if (!ft_strncmp(s, "&", 1))
+	{
+		*i -= (len - 1);
+		ret = TOK_AND;
 	}
 	return (ret);
 }

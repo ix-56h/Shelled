@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:07:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/23 15:30:31 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/06 20:11:50 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,8 @@ int			ft_debug_job(char **argv, char ***tenv);
 int			ft_return(char **argv, char ***tenv);
 int			ft_set(char **argv, char ***set);
 int			ft_unset(char **argv, char ***set);
-int			ft_export(char **argv, char ***env);
 t_builtin	lookforbuiltin(char *data);
 int			change_path(char *new_path, char **oldpath, char ***tenv);
 int			set_new_path(char ***tenv, char *newpath);
 char		*set_old_path(char ***tenv);
-int			ft_bg(char **argv, char ***tenv);
-int			ft_jobs(char **argv, char ***tenv);
-int			ft_fg(char **argv, char ***tenv);
-
 #endif

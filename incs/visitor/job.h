@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/03 12:29:36 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/03/09 03:09:51 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,16 @@
 # define FT_JOB_H
 # include <sys/types.h>
 # include "double_linked_list.h"
-# include "ft_printf.h"
 
 # define UNUSED_JOB		-10
 # define BUILTIN_JOB	-2
 # define ERR_JOB		-20
 
-# ifndef WAIT_ANY
-#	define  WAIT_ANY		-1
-# endif
-
 typedef	struct			s_process
 {
 	struct s_process	*next;
 	struct s_process	*prev;
-	char				**command;
+	char				*command;
 	pid_t				pid;
 	char				is_finish;
 	char				is_stopped;
@@ -41,9 +36,6 @@ typedef	struct			s_job
 	struct s_job		*prev;
 	t_process			*list;
 	pid_t				pgid;
-	char				is_notified;
-	int					number;
-	char				*line;
 }						t_job;
 
 t_job					*g_job_head;
@@ -58,11 +50,4 @@ int			job_is_stopped(t_job *j);
 int			job_is_completed(t_job *j);
 void		wait_for_job(t_job *j);
 void		put_job_in_foreground(t_job *j, int cont);
-void 		do_job_notification (void);
-t_job		*create_job(void);
-int			get_next_job_count(void);
-char		*cut_command(char *cmd, char act);
-void		free_job(t_job	*job);
-t_job		*find_job_by_number(int nb);
-
 #endif

@@ -29,7 +29,7 @@ t_node	*parse_complete_commands(t_sh *sh)
 				node = binnode(node, nod2, nod2->right);
 			else
 			{
-				error_push(sh->stack.errors, PARSE_ERROR, ft_strdup("parse_complete_commands.c:32"), sh->tok.data);
+				error_push(sh->stack.errors, PARSE_ERROR, sh->tok.data);
 				return (node);
 			}
 		}

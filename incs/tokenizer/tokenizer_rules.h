@@ -36,7 +36,6 @@ static t_chr_class		g_get_chr_class[255] =
 	[']'] = CHR_WORD,
 	['@'] = CHR_WORD,
 	[','] = CHR_WORD,
-	['%'] = CHR_WORD,
 	['{'] = CHR_LBRACE,
 	['}'] = CHR_RBRACE,
 	[')'] = CHR_RPAREN,
@@ -59,8 +58,7 @@ static int				g_abstract_token[TOK_MAX] =
 {
 	[TOK_REDIRECTION] = 1,
 	[TOK_PIPE] = 1,
-	[TOK_OPERATOR] = 1,
-	[TOK_SEMI] = 1
+	[TOK_OPERATOR] = 1
 };
 
 static int				g_token_chr_rules[TOK_MAX][CHR_MAX] =
@@ -100,9 +98,7 @@ static int				g_token_chr_rules[TOK_MAX][CHR_MAX] =
 		[CHR_BANG] = 1
 	},
 	[TOK_OPERATOR] = {
-		[CHR_AND] = 1
-	},
-	[TOK_SEMI] = {
+		[CHR_AND] = 1,
 		[CHR_SEMI] = 1
 	},
 	[TOK_REDIRECTION] = {
@@ -132,7 +128,7 @@ static t_toktype		g_get_tok_type[CHR_MAX] = {
 	[CHR_BQUOTE] = TOK_WORD,
 	[CHR_DOL] = TOK_WORD,
 	[CHR_AND] = TOK_OPERATOR,
-	[CHR_SEMI] = TOK_SEMI,
+	[CHR_SEMI] = TOK_OPERATOR,
 	[CHR_LPAREN] = TOK_LPAREN,
 	[CHR_RPAREN] = TOK_RPAREN,
 	[CHR_LBRACE] = TOK_LBRACE,

@@ -68,8 +68,6 @@ void		check_args(t_sh *sh, int ac, char **av)
 
 void		process_sh(t_sh *sh)
 {
-	char	*cmd;
-
 	if (!lifo_empty(sh->stack.errors))
 	{
 		print_stack_errors(sh->stack.errors, &(sh->tok));
@@ -82,9 +80,7 @@ void		process_sh(t_sh *sh)
 			process_expansions(sh->node);
 			if (sh->f.ast_draw)
 				tree_draw(sh->node);
-			cmd = ft_strdup(sh->input);
-			visit(sh->node, &g_job_head, cmd);
-			free(cmd);
+			visit(sh->node, &g_job_head);
 			clean_job();
 		}
 	}
@@ -102,7 +98,6 @@ int			main(int ac, char **av, char **envp)
 	init_signal();
 	while (1)
 	{
-		do_job_notification();
 		sh.input = run_line_edit();
 		sh.tok = get_next_token(sh.input, sh.stack.errors);
 		lifo_empty(sh.stack.errors) ? sh.node = parse_program(&sh) : 0;

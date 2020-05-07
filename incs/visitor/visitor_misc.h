@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:33:53 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/10 17:54:36 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/02 00:00:19 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ typedef struct			s_io_lists
 {
 	t_redir_list		*redir;
 	t_pipe_list			*piped;
-	char				background;
-	char				*cmd;
 }						t_io_lists;
 
 int						(*g_visit_rules[TOK_POSIX_MAX])(t_node *node,
