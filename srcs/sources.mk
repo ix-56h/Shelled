@@ -123,6 +123,7 @@ C_FILES_builtins = \
 				   ft_return.c \
 				   ft_set.c \
 				   ft_unset.c \
+				   ft_export.c \
 
 C_FILES_utils = \
 				index_end_squote.c \

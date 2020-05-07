@@ -50,5 +50,7 @@ t_builtin	lookforbuiltin(char *data)
 		return (ft_set);
 	else if (ft_strcmp(data, "unset") == 0)
 		return (ft_unset);
+	else if (ft_strcmp(data, "export") == 0)
+		return (ft_export);
 	return (NULL);
 }
