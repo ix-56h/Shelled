@@ -15,9 +15,27 @@
 #include "expansions.h"
 #include "libft.h"
 
-#include <stdio.h>
+static char		*show_with_field_split(char *param, char *str, int index)
+{
+	int		i;
+	char	*ifs_var;
+	char	ifs;
 
-char	*show_positional_param(void)
+	i = 0;
+	ifs_var = ft_strdup(get_env(g_set, "IFS"));
+	ifs = ifs_var[0];
+	while (param[index] && param[index + 1] != ')')
+	{
+		str[i] = param[index];
+		if (str[i] == ifs)
+			str[i] = ' ';
+		i++;
+		index++;
+	}
+	return (str);
+}
+
+static char		*show_positional_param(char c)
 {
 	int		i;
 	int		j;
@@ -32,6 +50,8 @@ char	*show_positional_param(void)
 		i++;
 	if (param[i] == ')')
 		return (str);
+	if (c == '*')
+		return (show_with_field_split(param, str, i));
 	while (param[i] && param[i + 1] != ')')
 	{
 		str[j] = param[i];
@@ -41,7 +61,7 @@ char	*show_positional_param(void)
 	return (str);
 }
 
-char	*look_for_param(int index)
+static char		*look_for_param(int index)
 {
 	int		i;
 	char	*str;
@@ -59,7 +79,7 @@ char	*look_for_param(int index)
 	return (str);
 }
 
-char	*get_positional_param(char c)
+static char		*get_positional_param(char c)
 {
 	char	*str;
 	char	param[2];
@@ -73,12 +93,12 @@ char	*get_positional_param(char c)
 	return (str);
 }
 
-void	get_special_param(char **w)
+void			get_special_param(char **w)
 {
 	if (ft_isdigit((*w)[1]))
 		*w = get_positional_param((*w)[1]);
 	else if ((*w)[1] == '@' || (*w)[1] == '*')
-		*w = show_positional_param();
+		*w = show_positional_param((*w)[1]);
 	else if ((*w)[1] == '$')
 		*w = ft_strdup(get_env(g_set, "$"));
 	else if ((*w)[1] == '#')

@@ -58,6 +58,7 @@ static void		get_set_args(char **av)
 	param = get_set_param(av);
 	add_set("@", param);
 	add_param_count(param);
+	free(param);
 }
 
 int				ft_set(char **argv, char ***set)

@@ -123,6 +123,7 @@ void			init_set(char **av)
 //		g_set = cpy_env(g_env);
 	add_set("HOME", get_env(g_env, "HOME"));
 	add_set("PWD", get_env(g_env, "PWD"));
+	add_set("IFS", " \t\n");
 	add_info_params(av);
 	add_info_id();
 	get_sysname();
