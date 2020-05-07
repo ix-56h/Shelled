@@ -32,7 +32,7 @@ t_node	*parse_io_file(t_sh *sh)
 		if ((nod2 = parse_filename(sh)))
 			node = binnode(NULL, node, nod2);
 		else
-			error_push(sh->stack.errors, PARSE_ERROR, tok.data);
+			error_push(sh->stack.errors, PARSE_ERROR, ft_strdup("parse_io_file.c:35"), tok.data);
 	}
 	return (node);
 }

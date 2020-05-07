@@ -7,13 +7,15 @@ X			Check assignment_word
 Chaque built-in doit avoir au minimum les options dictées par le standard POSIX, (sauf pour set et unset)
 Builtins:
 -	type
--	export
 -- Job control
 	- fg
 	- jobs
 	- bg
 
 Variable definition name=value
+Shell Variables :
+-	Parametres spec.
+-	Creation variable pour commande
 
 Partie modulaire :
 -	Les commandes groupées et sous-shell :

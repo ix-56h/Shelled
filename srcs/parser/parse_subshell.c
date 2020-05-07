@@ -33,7 +33,7 @@ t_node	*parse_subshell(t_sh *sh)
 				sh->tok = get_next_token(sh->input, sh->stack.errors);
 			}
 			else
-				error_push(sh->stack.errors, PARSE_ERROR, sh->tok.data);
+				error_push(sh->stack.errors, PARSE_ERROR, ft_strdup("parse_subshell.c:36"), sh->tok.data);
 			free(tok.data);
 		}
 	}

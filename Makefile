@@ -35,6 +35,7 @@ SUB_DIRS := \
 	ast \
 	stack \
 	expansions \
+	jobs \
 
 ### INCLUDE SRC MAKEFILE ###
 include $(SRC_DIR)/sources.mk
@@ -80,7 +81,7 @@ CFLAGS = \
 		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR) $(PRINTF_INC_DIR)) 
 endif
 
-LFLAGS = -ltermcap \
+LFLAGS = -lncurses \
 		 $(FT_LNK) \
 
 .PHONY: all clean fclean re

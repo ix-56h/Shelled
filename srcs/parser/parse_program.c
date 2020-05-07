@@ -26,9 +26,9 @@ t_node	*parse_program(t_sh *sh)
 		if (!lifo_empty(sh->stack.errors))
 			return (node);
 		if ((parse_linebreak(sh) == 0) || (sh->tok.tok != TOK_EOF))
-			error_push(sh->stack.errors, PARSE_ERROR, sh->tok.data);
+			error_push(sh->stack.errors, PARSE_ERROR, ft_strdup("parse_program.c:29"), sh->tok.data);
 	}
 	else if ((parse_linebreak(sh) == 0) || sh->tok.tok != TOK_EOF)
-		error_push(sh->stack.errors, PARSE_ERROR, sh->tok.data);
+		error_push(sh->stack.errors, PARSE_ERROR, ft_strdup("parse_program.c:32"), sh->tok.data);
 	return (node);
 }
