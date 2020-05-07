@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/13 01:05:34 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/09 03:17:30 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,67 +44,16 @@ t_process	*find_process_by_pid(t_process *process, pid_t pid)
 
 int			job_is_finish(t_job *job)
 {
-	if (job_is_completed(job))
-		return (1);
-	return (0);
-}
+	t_process *process;
 
-void		free_process(t_process *process)
-{
-	if (process)
-	{
-		if (process->prev)
-			process->prev->next = process->next;
-		if (process->next)
-			process->next->prev = process->prev;
-		if (process->command)
-			free_env(process->command);
-		free(process);
-	}
-}
-
-void		free_all_process(t_process *process)
-{
-	t_process	*next;
-
-	while (process->prev)
-		process = process->prev;
+	process = (t_process*)job->list;
 	while (process)
 	{
-		next = process->next;
-		free_process(process);
-		process = next;
+		if (process->is_finish == 0 && process->pid != UNUSED_JOB)
+			return (0);
+		process = process->next;
 	}
-}
-
-void		free_job(t_job	*job)
-{
-	if (job)
-	{
-		if (job->prev)
-			job->prev->next = job->next;
-		if (job->next)
-			job->next->prev = job->prev;
-		if (job->line)
-			free(job->line);
-		if (job->list)
-			free_all_process(job->list);
-		free(job);
-	}
-}
-
-void		free_all_job(t_job *job)
-{
-	t_job	*next;
-
-	while (job->prev)
-		job = job->prev;
-	while (job)
-	{
-		next = job->next;
-		free_job(job);
-		job = next;
-	}
+	return (1);
 }
 
 void		clean_job(void)
@@ -118,17 +67,23 @@ void		clean_job(void)
 	while (nav)
 	{
 		next = nav->next;
-		if (job_is_finish(nav))
+		if (job_is_finish(nav) && nav->next && nav->next->next)
 		{
 			if (head == nav)
 			{
 				g_job_head = next;
 				head = g_job_head;
 			}
-			free_job(nav);
+			dl_free_with_data((t_dl_node *)nav->list, free);
+			dl_del_one((t_dl_node *)nav);
 		}
 		nav = next;
 	}
+}
+
+void		free_all_job(t_job *job)
+{
+	dl_free_with_data((t_dl_node *)job, dl_free_list);
 }
 
 int			mark_process_status(pid_t pid, int status)
@@ -224,34 +179,4 @@ void		put_job_in_foreground(t_job *job, int cont)
 	wait_for_job(job);
 	tcsetpgrp(0, g_shell_pgid);
 	restore_term(2);
-}
-
-t_job		*create_job(void)
-{
-	t_job	*last_job;
-	t_job	**job;
-
-	job = &g_job_head;
-	dl_append_node((t_dl_node **)job, ft_calloc(sizeof(t_job)));
-	last_job = (t_job *)dl_get_last((t_dl_node *)*job);
-	last_job->number = get_next_job_count();
-	return (last_job);
-}
-
-int			get_next_job_count(void)
-{
-	int		max;
-	t_job	*nav;
-
-	nav = g_job_head;
-	max = 1;
-	if (!nav)
-		return (max);
-	while (nav)
-	{
-		if (nav->number >= max)
-			max = nav->number + 1;
-		nav = nav->next;
-	}
-	return (max);
 }

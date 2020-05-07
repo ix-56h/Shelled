@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/11 20:33:35 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/08 23:50:20 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int				visit_cmd(t_node *node, t_io_lists io, t_job **job)
 	return (0);
 }
 
-int				visit(t_node *root, t_job **job, char *cmd)
+int				visit(t_node *root, t_job **job)
 {
 	t_io_lists	io;
 	t_job		*last_job;
@@ -60,8 +60,9 @@ int				visit(t_node *root, t_job **job, char *cmd)
 		return (0);
 	if (g_visit_rules[root->tok])
 	{
-		io = (t_io_lists){NULL, NULL, 0, cmd};
-		last_job = create_job();
+		io = (t_io_lists){.redir = NULL, .piped = NULL};
+		dl_append_node((t_dl_node **)job, ft_calloc(sizeof(t_process)));
+		last_job = (t_job *)dl_get_last((t_dl_node *)*job);
 		if (!(*g_visit_rules[root->tok])(root, io, &last_job))
 			return (0);
 	}
@@ -112,7 +113,7 @@ char			*substitution_wrapper(char *str)
 				return (ft_strdup(""));
 			}
 			close(pipefd[READ_END]);
-			visit(sh.node, &tmp, NULL);
+			visit(sh.node, &tmp);
 			free(sh.stack.errors->ar);
 			free(sh.stack.errors);
 			if (sh.node != NULL)

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/12 04:14:47 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/09 03:09:51 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef	struct			s_process
 {
 	struct s_process	*next;
 	struct s_process	*prev;
-	char				**command;
+	char				*command;
 	pid_t				pid;
 	char				is_finish;
 	char				is_stopped;
@@ -36,9 +36,6 @@ typedef	struct			s_job
 	struct s_job		*prev;
 	t_process			*list;
 	pid_t				pgid;
-	int					number;
-	char                is_notified;
-	char                *line;
 }						t_job;
 
 t_job					*g_job_head;
@@ -53,7 +50,4 @@ int			job_is_stopped(t_job *j);
 int			job_is_completed(t_job *j);
 void		wait_for_job(t_job *j);
 void		put_job_in_foreground(t_job *j, int cont);
-t_job		*create_job(void);
-int			get_next_job_count(void);
-char		*cut_command(char *cmd, char act);
 #endif

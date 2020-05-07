@@ -13,10 +13,6 @@ Builtins:
 	- jobs
 	- bg
 
-Exp:
--	${}
-	- handle special parameters like "?"
-
 Variable definition name=value
 
 Partie modulaire :
@@ -24,13 +20,3 @@ Partie modulaire :
 -	La gestion des alias via les built-ins alias et unalias
 -	Le built-in test avec les opérateurs suivants :-b,-c,-d,-e,-f,-g,-L,-p,-r,-S,-s,-u,-w,-x,-z,=,!=,-eq,-ne,-ge,-lt,-le,!
 	- Ainsi que la possibilité d’un simple opérande, sans opérateur
--	L’expansion du tilde et les formats supplémentaires des paramètres :
-	-	${parameter:-word}
-	-	${parameter:=word}
-	-	${parameter:?word}
-	-	${parameter:+word}
-	-	${#parameter}
-	-	${parameter%}
-	-	${parameter%%}
-	-	${parameter#}
-	-	${parameter##}

@@ -14,7 +14,6 @@
 # define SH_H
 # include <sys/types.h>
 # include <pwd.h>
-# include <signal.h>
 # include "ast.h"
 # define FT_PATH_MAX 256
 # define SHELL_NAME "42sh"

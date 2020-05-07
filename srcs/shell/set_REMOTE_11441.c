@@ -105,10 +105,6 @@ static void		get_sysname(void)
 	if ((uname(&t_utsname)) == 0)
 		add_set("SYSNAME", t_utsname.sysname);
 	add_set("?", "0");
-	add_set("!", "0");
-	add_set("@", "( )");
-	add_set("*", "( )");
-	add_set("#", "0");
 	if ((tmp = ft_itoa(getpid())))
 	{
 		add_set("PID", tmp);
@@ -120,13 +116,10 @@ static void		get_sysname(void)
 void			init_set(char **av)
 {
 	g_set = NULL;
-//	if (g_env)
-//		g_set = cpy_env(g_env);
-	add_set("HOME", get_env(g_env, "HOME"));
-	add_set("PWD", get_env(g_env, "PWD"));
-	add_set("IFS", " \t\n");
+	if (g_env)
+		g_set = cpy_env(g_env);
+	sort_set();
 	add_info_params(av);
 	add_info_id();
 	get_sysname();
-	sort_set();
 }

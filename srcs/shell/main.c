@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/13 01:05:45 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/03/11 18:57:42 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ void		check_args(t_sh *sh, int ac, char **av)
 
 void		process_sh(t_sh *sh)
 {
-	char	*cmd;
-
 	if (!lifo_empty(sh->stack.errors))
 	{
 		print_stack_errors(sh->stack.errors, &(sh->tok));
@@ -82,10 +80,8 @@ void		process_sh(t_sh *sh)
 			process_expansions(sh->node);
 			if (sh->f.ast_draw)
 				tree_draw(sh->node);
-			cmd = ft_strdup(sh->input);
-			visit(sh->node, &g_job_head, cmd);
-			free(cmd);
-			//clean_job();
+			visit(sh->node, &g_job_head);
+			clean_job();
 		}
 	}
 }

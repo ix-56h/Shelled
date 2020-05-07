@@ -120,13 +120,18 @@ static void		get_sysname(void)
 void			init_set(char **av)
 {
 	g_set = NULL;
+<<<<<<< HEAD
 //	if (g_env)
 //		g_set = cpy_env(g_env);
 	add_set("HOME", get_env(g_env, "HOME"));
 	add_set("PWD", get_env(g_env, "PWD"));
 	add_set("IFS", " \t\n");
+=======
+	if (g_env)
+		g_set = cpy_env(g_env);
+	sort_set();
+>>>>>>> dev
 	add_info_params(av);
 	add_info_id();
 	get_sysname();
-	sort_set();
 }
