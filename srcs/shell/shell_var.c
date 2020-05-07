@@ -105,8 +105,8 @@ void			get_special_param(char **w)
 		*w = ft_strdup(get_env(g_set, "#"));
 	else if ((*w)[1] == '-')
 		ft_bzero(*w, ft_strlen(*w));
-	else if ((*w)[1] == '?')
+/*	else if ((*w)[1] == '?')
 		printf("\nINTER\n");
 	else if ((*w)[1] == '!')
-		printf("\nBANG\n");
+		printf("\nBANG\n");*/
 }

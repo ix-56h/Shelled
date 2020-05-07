@@ -107,6 +107,7 @@ static void		get_sysname(void)
 	add_set("?", "0");
 	add_set("!", "0");
 	add_set("@", "( )");
+	add_set("*", "( )");
 	add_set("#", "0");
 	if ((tmp = ft_itoa(getpid())))
 	{
