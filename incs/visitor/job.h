@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/03 12:29:36 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/10 19:58:08 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,16 @@ typedef	struct			s_job
 	char				*line;
 }						t_job;
 
+typedef struct			s_jobnb
+{
+	int					number;
+	struct s_jobnb		*next;
+	struct s_jobnb		*prev;
+}						t_jobnb;
+
+
 t_job					*g_job_head;
+t_jobnb					*g_jobnb;
 
 t_process	*create_process(pid_t pid);
 t_process	*find_process_by_pid(t_process *process, pid_t pid);
@@ -60,5 +69,14 @@ int			get_next_job_count(void);
 char		*cut_command(char *cmd, char act);
 void		free_job(t_job	*job);
 t_job		*find_job_by_number(int nb);
+void		update_status (void);
+void		add_jobnb(int nb);
+void		push_back(int nb);
+void		del_jobnb(int nb);
+void		continue_job (t_job *j, int foreground);
+void		push_front(int nb);
+
+//DEBUG
+void print_jobn();
 
 #endif

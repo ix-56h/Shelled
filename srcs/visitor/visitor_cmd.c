@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/12 15:54:24 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/10 20:30:05 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	exec_command(t_node *node, t_io_lists *io, t_job **job)
 
 	signal(SIGINT, ctrl_c_handler);
 	restore_term(1);
+	add_jobnb((*job)->number);
 	dl_append_node((t_dl_node **)&(*job)->list, (t_dl_node *)create_process(UNUSED_JOB));
 	find_process_by_pid((*job)->list, UNUSED_JOB)->command = cpy_env(node->args);
 	err = exec_cmd(node, NULL, *io, *job);

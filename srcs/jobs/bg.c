@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 17:45:12 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/05/03 12:47:31 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/10 19:58:48 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ put_job_in_background (t_job *job, int cont)
 {
   /* Send the job a continue signal, if necessary.  */
   if (cont)
-    if (kill (-job->pgid, SIGCONT) < 0)
-    	perror ("kill (SIGCONT)");
+  {
+    kill (-job->pgid, SIGCONT);
+  }
+ 
 }
 
 /* Mark a stopped job J as being running again.  */
@@ -42,6 +44,7 @@ mark_job_as_running (t_job *j)
 void continue_job (t_job *j, int foreground)
 {
   mark_job_as_running (j);
+	push_front(j->number);
   if (foreground)
     put_job_in_foreground (j, 1);
   else
@@ -50,15 +53,29 @@ void continue_job (t_job *j, int foreground)
 
 t_job *find_job_bg(t_job *job)
 {
-	while (job && job->next)
-		job = job->next;
-	while (job && job->prev)
+	t_jobnb *jobnb;
+	t_job	*tmp;
+
+	jobnb = g_jobnb;
+	while(jobnb && jobnb->next)
+		jobnb = jobnb->next;
+	while(jobnb && jobnb->prev)
 	{
-		if (!job_is_completed(job) && job_is_stopped(job))
-			break;
-		job = job->prev;
+		tmp = find_job_by_number(jobnb->number);
+		if (!job_is_completed(tmp) && job_is_stopped(tmp))
+	 		break;
+		jobnb = jobnb->prev;
 	}
-	return (job);
+	return (tmp);
+	// while (job && job->next)
+	// 	job = job->next;
+	// while (job && job->prev)
+	// {
+	// 	if (!job_is_completed(job) && job_is_stopped(job))
+	// 		break;
+	// 	job = job->prev;
+	// }
+	// return (job);
 }
 
 t_job *find_job_by_number(int nb)

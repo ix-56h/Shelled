@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:10:01 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/05/03 12:46:44 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/10 19:44:17 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,22 @@
 
 t_job *find_job_fg(t_job *job)
 {
-	while (job && job->next)
-		job = job->next;
-	while (job && job->prev && job->pgid == 0)
-		job = job->prev;
-	if (job->pgid == 0)
-		return(NULL);
-	return (job);
+	t_jobnb *jobnb;
+	t_job *tmp;
+
+	(void)job;
+	jobnb = g_jobnb;
+	while(jobnb && jobnb->next)
+		jobnb = jobnb->next;
+	tmp = find_job_by_number(jobnb->number);
+	while(tmp && tmp->pgid == 0 && jobnb->prev)
+	{
+		jobnb = jobnb->prev;
+		tmp = find_job_by_number(jobnb->number);
+	}
+	if (tmp->pgid == 0)
+		return (NULL);
+	return(tmp);
 }
 
 int ft_fg(char **argv, char ***tenv)
@@ -41,7 +50,7 @@ int ft_fg(char **argv, char ***tenv)
 	else if (job_is_stopped(job))
 	{
 		ft_printf("%s\n", job->line);
-		put_job_in_foreground(job, 1);
+		continue_job(job, 1);
 	}
 	else
 	{

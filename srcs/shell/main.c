@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/05/03 16:03:33 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/10 16:15:00 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int			main(int ac, char **av, char **envp)
 	if (init_shell(&sh, ac, av, envp) == 0)
 		return (EXIT_FAILURE);
 	g_job_head = NULL;
+	g_jobnb = NULL;
 	init_signal();
 	while (1)
 	{
@@ -112,6 +113,7 @@ int			main(int ac, char **av, char **envp)
 		free_sh(&sh);
 		re_init_sh(&sh);
 	}
+	oprhaned_jobs();
 	free_historic();
 	free_sh(&sh);
 	free_env(g_env);

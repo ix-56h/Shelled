@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/08 23:39:34 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/10 16:03:52 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,6 @@ void			free_sh(t_sh *sh);
 **	signal.c
 */
 void			init_signal(void);
+void 			oprhaned_jobs(void);
+
 #endif

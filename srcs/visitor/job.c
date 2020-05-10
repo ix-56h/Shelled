@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/03 16:02:41 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/10 17:00:43 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void		clean_job(void)
 				g_job_head = next;
 				head = g_job_head;
 			}
+			del_jobnb(nav->number);
 			free_job(nav);
 		}
 		nav = next;
