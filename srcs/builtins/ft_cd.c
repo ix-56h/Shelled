@@ -32,7 +32,7 @@ static int	no_arg(char **oldpath, char ***tenv)
 {
 	char	*home;
 
-	home = get_env(*tenv, "HOME");
+	home = get_env(g_set, "HOME");
 	if (!home)
 		return (err_cd(NULL, ERR_CD_NOT_HOME));
 	return (err_cd(NULL, change_path(home, oldpath, tenv)));

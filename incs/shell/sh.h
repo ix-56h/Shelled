@@ -14,7 +14,6 @@
 # define SH_H
 # include <sys/types.h>
 # include <pwd.h>
-# include <signal.h>
 # include "ast.h"
 # define FT_PATH_MAX 256
 # define SHELL_NAME "42sh"
@@ -93,4 +92,11 @@ void			free_sh(t_sh *sh);
 **	signal.c
 */
 void			init_signal(void);
+
+/*
+** shell_var.c
+*/
+
+void			get_special_param(char **w);
+
 #endif

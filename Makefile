@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
+#    By: ezonda <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2020/03/05 02:05:12 by niguinti         ###   ########.fr        #
+#    Created: 2020/03/07 04:11:46 by ezonda            #+#    #+#              #
+#    Updated: 2020/03/11 18:54:15 by niguinti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ FT_LNK = -L$(FT_DIR) -l$(FT) -L$(PRINTF_DIR) -lprintf
 ###  CC && FLAGS ###
 CC = gcc -g #-fsanitize=address 
 DEBUG_FLAGS = -g3
-NO_WARNING ?= false
+NO_WARNING ?= true
 ifeq ($(NO_WARNING), false)
 CFLAGS = \
 		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR) $(PRINTF_INC_DIR))\

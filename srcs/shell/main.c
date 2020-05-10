@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/13 01:05:45 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/10 22:24:52 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void		process_sh(t_sh *sh)
 			cmd = ft_strdup(sh->input);
 			visit(sh->node, &g_job_head, cmd);
 			free(cmd);
-			//clean_job();
+			clean_job();
 		}
 	}
 }

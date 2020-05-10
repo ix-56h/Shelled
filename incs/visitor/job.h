@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/14 17:25:01 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/10 22:38:45 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ typedef	struct			s_job
 	struct s_job		*prev;
 	t_process			*list;
 	pid_t				pgid;
+	char				is_notified;
 	int					number;
-	char                is_notified;
-	char                *line;
+	char				*line;
 }						t_job;
 
 t_job					*g_job_head;
