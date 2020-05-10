@@ -33,12 +33,19 @@ typedef	struct	s_args
 
 typedef	struct	s_sh
 {
-	char		*input;
+	char			*input;
 	t_node		*node;
 	t_tokens	tok;
 	t_stacks	stack;
 	t_args		f;
 }				t_sh;
+
+typedef struct s_alias
+{
+	struct s_alias *next;
+	char 		*data;
+	int 		is;
+} t_alias;
 
 /*
 **	main.c
@@ -100,14 +107,16 @@ void			init_signal(void);
 **  alias.c
 */
 
-char 			*add_alias(char *input);
-char  		*recursive_alias(char *alias_v, char **alias_cpy);
+char 			*add_alias(char *input, t_lifo *stack);
+char  		*recursive_alias(char *alias_v, char **alias_cpy, t_lifo *stack);
 
+char			**add_pot(char **alias, char *pot);
+int 			is_alias(char *t_alias, char **cpy_alias);
+char    	*get_value_by_name(char *name);
 char 			*new_input(char *alias_v, char *input, int *cpt, int len_n);
 void 			rm_first_space(char *input);
 char    	*get_after(char *input, int cpt);
 char    	*get_before(char *input, int cpt);
-char    	*get_value_by_name(char *name);
 char 			*get_next_word(char *input, int cpt);
 int 			ignore_args_n_op(char *input, int *cpt);
 int  			get_len(char *input, int cpt);

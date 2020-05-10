@@ -63,54 +63,79 @@ char *get_command_rec(char *input, int cpt)
 	return (alias_n);
 }
 
-char  *recursive_alias(char *alias_v, char **alias_cpy)
+char  *recursive_alias(char *alias_v, char **alias_cpy, t_lifo *stack)
 {
-  char  *input_s;
-  char  *name;
-  int   cpt;
-  int   len_n;
-  int   to_del;
+  t_tokens  token;
+  char      **pot_alias;
+  char      *input_s;
+  int       cpt;
+  int       i;
+  int       to_del;
 
   cpt = -1;
+  i = 0;
   if (!alias_cpy)
     return (alias_v);
-  rm_first_space(alias_v);
   input_s = ft_strdup(alias_v);
-  while (alias_v[++cpt])
+  while ((token = get_next_token(alias_v, stack)).data)
+  {
+    ft_printf("data : %s\n", token.data);
+    if (ft_strcmp(token.data, "EOF") == 0)
+    {
+      write(1, "\nx", 2);
+      break ;
+    }
+    if (i == 0)
+    {
+      if (!(pot_alias = (char**)malloc(sizeof(char*) * 2)))
+        return (NULL);
+      pot_alias[0] = ft_strdup(token.data);
+      pot_alias[1] = NULL;
+      i++;
+    }
+    else
+      pot_alias = add_pot(pot_alias, token.data);
+  }
+  free(alias_v);
+  i = 0;
+  cpt = -1;
+  while (pot_alias[++cpt])
   {
 //    ft_printf("cpt rec : %d\n", cpt);
 //    ft_printf("alias_v : %s\n", alias_v);
-    name = get_next_word(alias_v, cpt);
 //    ft_printf("name : %s\n", name);
 //    getchar();
-    if (name)
+    if ((to_del = is_alias(pot_alias[cpt], alias_cpy)) >= 0)
     {
-      len_n = ft_strlen(name);
+      if (i == 0)
+        alias_v = get_value_by_name(pot_alias[cpt]);
+      else
+      {
+        alias_v = ft_strjoin(alias_v, " ");
+        alias_v = ft_strjoin(alias_v, get_value_by_name(pot_alias[cpt]));
+      }
+      i++;
+      alias_cpy = del_var(alias_cpy, get_name(alias_cpy[to_del]));
 //      new_cpt = -1;
 //      while (alias_cpy[++new_cpt])
 //        ft_printf("cpy : %s\n", alias_cpy[cpt]);
-      if ((name = test_alias_r(name, alias_cpy, &to_del)))
-      {
-        alias_cpy = del_var(alias_cpy, get_name(alias_cpy[to_del]));
-//        ft_printf("test is not the problem : %s\n", name);
-//        getchar();
-        alias_v = new_input(name, alias_v, &cpt, len_n);
-      }
-      else
-      {
-//        ft_printf("here is the good way\n");
-        cpt += len_n;
-      }
-      free(name);
     }
     else
-      return (alias_v);
-    ignore_args_n_op(alias_v, &cpt);
+    {
+      if (i == 0)
+        alias_v = ft_strdup(pot_alias[cpt]);
+      else
+      {
+        alias_v = ft_strjoin(alias_v, " ");
+        alias_v = ft_strjoin(alias_v, pot_alias[cpt]);
+      }
+      i++;
+    }
   }
 //  ft_printf("before rec alias_v : %s\n", alias_v);
 //  ft_printf("before rec save : %s\n", input_s);
 //  getchar();
   if (alias_cpy && ft_strcmp(alias_v, input_s) != 0)
-    alias_v = recursive_alias(alias_v, alias_cpy);
+    alias_v = recursive_alias(alias_v, alias_cpy, stack);
   return (alias_v);
 }

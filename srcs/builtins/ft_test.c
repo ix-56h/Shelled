@@ -14,38 +14,7 @@
 #include "test_builtins.h"
 #include "libft.h"
 #include "ft_printf.h"
-/*
-int split_reverse(char **a, int mod, int cpt)
-{
-  if (mod == 0)
-  {
-    while (g_operand[++cpt].ope != NULL)
-    {
-      if (g_operand[cpt].is_unary == 1 && !ft_strcmp(g_operand[cpt].ope, a[2]))
-      {
-        if (g_operand[cpt].is_pathname == 1)
-          a[3] = apply_path(a[3]);
-        return (g_operand[cpt].func_op(a[3], NULL));
-      }
-    }
-    return(error_test(a[2], 1));
-  }
-  else if (mod == 1)
-  {
-    while (g_operand[++cpt].ope != NULL)
-    {
-      if (g_operand[cpt].is_unary == 0 && !ft_strcmp(g_operand[cpt].ope, a[3]))
-      {
-        if (g_operand[cpt].is_pathname == 0 && init_integer(a, 1) == 2)
-          return (2);
-        return (g_operand[cpt].func_op(a[2], a[4])); //for integer do atoi
-      }
-    return(error_test(a[2], 2));
-    }
-  }
-  return (0);
-}
-*/
+
 int  check_binary(char **args, int p_size)
 {
   int cpt;

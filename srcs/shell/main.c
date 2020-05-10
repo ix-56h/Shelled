@@ -114,7 +114,7 @@ int			main(int ac, char **av, char **envp)
 	while (1)
 	{
 		sh.input = run_line_edit();
-		sh.input = add_alias(sh.input);
+ 		sh.input = add_alias(sh.input, sh.stack.errors);
 		printf("input : %s\n", sh.input);
 		sh.tok = get_next_token(sh.input, sh.stack.errors);
 		lifo_empty(sh.stack.errors) ? sh.node = parse_program(&sh) : 0;
