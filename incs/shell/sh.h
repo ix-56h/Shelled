@@ -97,6 +97,6 @@ void			init_signal(void);
 ** shell_var.c
 */
 
-void			get_special_param(char **w);
+void			get_special_param(char ***w);
 
 #endif

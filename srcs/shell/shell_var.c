@@ -93,18 +93,18 @@ static char		*get_positional_param(char c)
 	return (str);
 }
 
-void			get_special_param(char **w)
+void			get_special_param(char ***w)
 {
-	if (ft_isdigit((*w)[1]))
-		*w = get_positional_param((*w)[1]);
-	else if ((*w)[1] == '@' || (*w)[1] == '*')
-		*w = show_positional_param((*w)[1]);
-	else if ((*w)[1] == '$')
-		*w = ft_strdup(get_env(g_set, "$"));
-	else if ((*w)[1] == '#')
-		*w = ft_strdup(get_env(g_set, "#"));
-	else if ((*w)[1] == '-')
-		ft_bzero(*w, ft_strlen(*w));
+	if (ft_isdigit((**w)[1]))
+		**w = get_positional_param((**w)[1]);
+	else if ((**w)[1] == '@' || (**w)[1] == '*')
+		**w = show_positional_param((**w)[1]);
+	else if ((**w)[1] == '$')
+		**w = ft_strdup(get_env(g_set, "$"));
+	else if ((**w)[1] == '#')
+		**w = ft_strdup(get_env(g_set, "#"));
+	else if ((**w)[1] == '-')
+		ft_bzero(**w, ft_strlen(**w));
 /*	else if ((*w)[1] == '?')
 		printf("\nINTER\n");
 	else if ((*w)[1] == '!')
