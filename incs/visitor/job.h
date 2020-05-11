@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/11 13:21:41 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/11 17:32:26 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # define UNUSED_JOB		-10
 # define BUILTIN_JOB	-2
 # define ERR_JOB		-20
+# ifndef WAIT_ANY
+#  define WAIT_ANY		-1
+# endif
 
 typedef	struct			s_process
 {
