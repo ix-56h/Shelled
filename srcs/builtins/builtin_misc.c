@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_misc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:40:41 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/06 20:11:50 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/11 13:35:39 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,11 @@ t_builtin	lookforbuiltin(char *data)
 		return (ft_unset);
 	else if (ft_strcmp(data, "export") == 0)
 		return (ft_export);
+	else if (ft_strcmp(data, "bg") == 0)
+		return (ft_bg);
+	else if (ft_strcmp(data, "jobs") == 0)
+		return (ft_jobs);
+	else if (ft_strcmp(data, "fg") == 0)
+		return(ft_fg);
 	return (NULL);
 }

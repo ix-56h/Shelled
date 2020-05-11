@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ezonda <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/07 04:11:46 by ezonda            #+#    #+#              #
-#    Updated: 2020/03/11 18:54:15 by niguinti         ###   ########.fr        #
+#    Updated: 2020/05/11 13:02:23 by mguerrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SUB_DIRS := \
 	ast \
 	stack \
 	expansions \
+	jobs \
 
 ### INCLUDE SRC MAKEFILE ###
 include $(SRC_DIR)/sources.mk

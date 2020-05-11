@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/09 03:17:30 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/11 15:47:59 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "sh.h"
 #include "ft_printf.h"
 #include "ligne.h"
+#include "job.h"
 
 t_process	*create_process(pid_t pid)
 {
@@ -67,13 +68,14 @@ void		clean_job(void)
 	while (nav)
 	{
 		next = nav->next;
-		if (job_is_finish(nav) && nav->next && nav->next->next)
+		if (job_is_finish(nav) && nav->is_notified == 1)
 		{
 			if (head == nav)
 			{
 				g_job_head = next;
 				head = g_job_head;
 			}
+			del_jobnb(nav->number);
 			dl_free_with_data((t_dl_node *)nav->list, free);
 			dl_del_one((t_dl_node *)nav);
 		}
@@ -103,7 +105,10 @@ int			mark_process_status(pid_t pid, int status)
             	{
     				p->status = status;
     				if (WIFSTOPPED(status))
+					{
     					p->is_stopped = 1;
+						j->is_notified = 0;
+					}
     				else
     				{
     					p->is_finish = 1;
@@ -173,10 +178,40 @@ void		put_job_in_foreground(t_job *job, int cont)
 	if (cont)
 	{
     	restore_term(1);
-    	if (kill(-job->pgid, SIGCONT) < 0)
-			perror("kill (SIGCONT)"); //attention fonction interdite
+    	kill(-job->pgid, SIGCONT);
     }
 	wait_for_job(job);
 	tcsetpgrp(0, g_shell_pgid);
 	restore_term(2);
+}
+
+t_job		*create_job(void)
+{
+	t_job	*last_job;
+	t_job	**job;
+
+	job = &g_job_head;
+	dl_append_node((t_dl_node **)job, ft_calloc(sizeof(t_job)));
+	last_job = (t_job *)dl_get_last((t_dl_node *)*job);
+	last_job->number = get_next_job_count();
+	last_job->is_notified = 1;
+	return (last_job);
+}
+
+int			get_next_job_count(void)
+{
+	int		max;
+	t_job	*nav;
+
+	nav = g_job_head;
+	max = 1;
+	if (!nav)
+		return (max);
+	while (nav)
+	{
+		if (nav->number >= max)
+			max = nav->number + 1;
+		nav = nav->next;
+	}
+	return (max);
 }

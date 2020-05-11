@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:07:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/06 20:11:50 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/11 13:35:01 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,8 @@ t_builtin	lookforbuiltin(char *data);
 int			change_path(char *new_path, char **oldpath, char ***tenv);
 int			set_new_path(char ***tenv, char *newpath);
 char		*set_old_path(char ***tenv);
+int			ft_bg(char **argv, char ***tenv);
+int			ft_jobs(char **argv, char ***tenv);
+int			ft_fg(char **argv, char ***tenv);
+
 #endif
