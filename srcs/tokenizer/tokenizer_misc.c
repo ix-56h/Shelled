@@ -34,7 +34,7 @@ t_tokens	token_error(int type, t_lifo *stack, char c)
 	if (!(near = ft_strdup(buf)))
 		exit(2);
 	if (type > 0)
-		error_push(stack, type, NULL, near);
+		error_push(stack, type, near);
 	new.data = near;
 	new.tok = TOK_ERROR;
 	return (new);

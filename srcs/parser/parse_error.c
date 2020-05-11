@@ -12,14 +12,12 @@
 
 #include "parser.h"
 #include "error_class.h"
-#include "ft_printf.h"
 
-int				error_push(t_lifo *stack, int type, char *trace, char *near)
+int				error_push(t_lifo *stack, int type, char *near)
 {
 	if (lifo_full(stack))
 		return (0);
 	++stack->top;
-	((t_staterror*)stack->ar)[stack->top].trace = trace;
 	((t_staterror*)stack->ar)[stack->top].near = near;
 	((t_staterror*)stack->ar)[stack->top].type = type;
 	return (1);
@@ -38,14 +36,13 @@ void			print_stack_errors(t_lifo *stack, t_tokens *cur)
 	while (stack->top != -1)
 	{
 		err = error_peek(stack);
-		if (err.trace)
-		{
-			ft_printf("%s : ", err.trace);
-			free(err.trace);
-		}
 		ft_putstr(g_error_msgs_prefix[err.type]);
 		if (err.near)
-			ft_printf("'%s'", err.near);
+		{
+			ft_putstr("'");
+			ft_putstr(err.near);
+			ft_putstr("'");
+		}
 		ft_putstr("\n");
 		stack->top--;
 	}

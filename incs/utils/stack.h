@@ -47,7 +47,6 @@ typedef	struct	s_stacks
 typedef struct	s_staterror
 {
 	int			type;
-	char		*trace;
 	char		*near;
 }				t_staterror;
 

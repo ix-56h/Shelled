@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/05/10 16:03:52 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/11 12:58:43 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define SH_H
 # include <sys/types.h>
 # include <pwd.h>
-# include <signal.h>
 # include "ast.h"
 # define FT_PATH_MAX 256
 # define SHELL_NAME "42sh"
@@ -94,5 +93,11 @@ void			free_sh(t_sh *sh);
 */
 void			init_signal(void);
 void 			oprhaned_jobs(void);
+
+/*
+** shell_var.c
+*/
+
+void			get_special_param(char **w);
 
 #endif

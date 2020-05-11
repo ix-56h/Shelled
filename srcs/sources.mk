@@ -6,7 +6,7 @@
 #    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/05/10 16:46:00 by mguerrea         ###   ########.fr        #
+#    Updated: 2020/05/11 13:00:32 by mguerrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ C_FILES_visitor = \
 				  visitor.c \
 				  visitor_redir.c \
 				  visitor_redir2.c \
+				  visitor_assign.c \
 				  visitor_special.c \
 				  fd.c \
 				  fd2.c \
@@ -85,6 +86,7 @@ C_FILES_shell = \
 				init.c \
 				signal.c \
 				set.c \
+				shell_var.c \
 
 C_FILES_line_edit = \
 					alloc.c \
@@ -156,6 +158,6 @@ C_FILES_jobs = \
 				jobs.c \
 				fg.c \
 				update_jobs.c \
-				manage_list.c
+				manage_list.c \
 
 C_FILES += $(foreach SUB_DIR,$(SUB_DIRS),$(addprefix $(SUB_DIR)/,$(C_FILES_$(SUB_DIR))))

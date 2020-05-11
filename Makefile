@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2020/05/03 16:03:15 by mguerrea         ###   ########.fr        #
+#    Created: 2020/03/07 04:11:46 by ezonda            #+#    #+#              #
+#    Updated: 2020/05/11 13:02:23 by mguerrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,7 @@ CFLAGS = \
 		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR) $(PRINTF_INC_DIR)) 
 endif
 
-LFLAGS = -lncurses \
+LFLAGS = -ltermcap \
 		 $(FT_LNK) \
 
 .PHONY: all clean fclean re

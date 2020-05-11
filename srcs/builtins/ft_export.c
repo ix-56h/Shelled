@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/01 11:38:35 by ezonda            #+#    #+#             */
+/*   Updated: 2020/03/01 13:46:36 by ezonda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "sh.h"
 #include "builtins.h"
+#include "ft_printf.h"
 
 static void		print_export(char **env)
 {
@@ -13,13 +26,6 @@ static void		print_export(char **env)
 		ft_putendl(env[i]);
 		i++;
 	}
-}
-
-static void		export_error(char *str)
-{
-	ft_putstr_fd("42sh: export: ", 2);
-	ft_putstr_fd(str, 2);
-	ft_putendl_fd(" : not a valid identifier", 2);
 }
 
 static int		is_export(char *str)
@@ -117,7 +123,7 @@ int				ft_export(char **argv, char ***env)
 			else if (is_export(argv[i]))
 				export_and_set(argv[i], opt);
 			else
-				export_error(argv[i]);
+				ft_dprintf(2, "export: %s : not a valid identifier\n", argv[i]);
 			i++;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/10 19:58:08 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/11 13:21:41 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_JOB_H
 # include <sys/types.h>
 # include "double_linked_list.h"
+# include "signal.h"
 # include "ft_printf.h"
 
 # define UNUSED_JOB		-10
@@ -62,7 +63,9 @@ int			mark_process_status(pid_t pid, int status);
 int			job_is_stopped(t_job *j);
 int			job_is_completed(t_job *j);
 void		wait_for_job(t_job *j);
+void		wait_for_job_background(t_job *job);
 void		put_job_in_foreground(t_job *j, int cont);
+void		put_job_in_background(t_job *job, int cont);
 void 		do_job_notification (void);
 t_job		*create_job(void);
 int			get_next_job_count(void);

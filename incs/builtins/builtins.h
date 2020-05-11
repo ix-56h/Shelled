@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:07:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/23 15:30:31 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/11 13:35:01 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int			ft_debug_job(char **argv, char ***tenv);
 int			ft_return(char **argv, char ***tenv);
 int			ft_set(char **argv, char ***set);
 int			ft_unset(char **argv, char ***set);
-int			ft_export(char **argv, char ***env);
+int			ft_export(char **agrv, char ***env);
 t_builtin	lookforbuiltin(char *data);
 int			change_path(char *new_path, char **oldpath, char ***tenv);
 int			set_new_path(char ***tenv, char *newpath);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/11 20:33:35 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/11 15:48:36 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 #include "ligne.h"
 #include "visitor.h"
 #include "visitor_rules.h"
-
-
 #include "sh.h"
 #include "parser.h"
+
 int				exec_heredoc(t_fifo *stack)
 {
 	t_node	*node;
@@ -49,6 +48,14 @@ int				visit_cmd(t_node *node, t_io_lists io, t_job **job)
 {
 	exec_command(node, &io, job);
 	return (0);
+}
+
+int				visit_background(t_node *node, t_io_lists io, t_job **job)
+{
+	io.background = 1;
+	if (!(*g_visit_rules[node->left->tok])(node->left, io, job))
+		return (0);
+	return (1);
 }
 
 int				visit(t_node *root, t_job **job, char *cmd)
@@ -123,7 +130,6 @@ char			*substitution_wrapper(char *str)
 			exit(0);
 		}
 		dup2(stdout_save, STDOUT_FILENO);
-	//	wait(NULL);
 		ft_bzero(buff, sizeof(char) * (BUFFSIZE + 1));
 		ret = NULL;
 		while (read(pipefd[READ_END], buff, BUFFSIZE) > 0)

@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:10:01 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/05/10 19:44:17 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/11 15:47:38 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int ft_fg(char **argv, char ***tenv)
 
 	(void)tenv;
 	job = g_job_head;
-	if (argv[1] == NULL) // find last job
+	if (argv[1] == NULL)
 		job = find_job_fg(job);
 	else
 		job = find_job_by_number(ft_atoi(argv[1]));

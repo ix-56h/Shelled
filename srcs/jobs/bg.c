@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 17:45:12 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/05/10 19:58:48 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/11 15:47:29 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,13 @@
 void
 put_job_in_background (t_job *job, int cont)
 {
-  /* Send the job a continue signal, if necessary.  */
+  job->is_notified = 0;
   if (cont)
   {
     kill (-job->pgid, SIGCONT);
   }
  
 }
-
-/* Mark a stopped job J as being running again.  */
 
 void
 mark_job_as_running (t_job *j)
@@ -59,23 +57,15 @@ t_job *find_job_bg(t_job *job)
 	jobnb = g_jobnb;
 	while(jobnb && jobnb->next)
 		jobnb = jobnb->next;
+	tmp = (jobnb) ? find_job_by_number(jobnb->number) : NULL;
 	while(jobnb && jobnb->prev)
 	{
-		tmp = find_job_by_number(jobnb->number);
-		if (!job_is_completed(tmp) && job_is_stopped(tmp))
+		if (!job_is_completed(tmp) && job_is_stopped(tmp) && tmp->pgid != 0)
 	 		break;
 		jobnb = jobnb->prev;
+		tmp = find_job_by_number(jobnb->number);
 	}
 	return (tmp);
-	// while (job && job->next)
-	// 	job = job->next;
-	// while (job && job->prev)
-	// {
-	// 	if (!job_is_completed(job) && job_is_stopped(job))
-	// 		break;
-	// 	job = job->prev;
-	// }
-	// return (job);
 }
 
 t_job *find_job_by_number(int nb)
@@ -95,7 +85,7 @@ int ft_bg(char **argv, char ***tenv)
 
 	(void)tenv;
 	job = g_job_head;
-	if (argv[1] == NULL) // find last job
+	if (argv[1] == NULL)
 		job = find_job_bg(job);
 	else
 		job = find_job_by_number(ft_atoi(argv[1]));
