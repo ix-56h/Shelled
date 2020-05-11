@@ -72,6 +72,7 @@ void do_job_notification (void)
 				push_back(j->number);
 				j->is_notified = 1;
 			}
+			add_set("!", ft_itoa(j->pgid));
 			j = jnext;
 		}
 }
