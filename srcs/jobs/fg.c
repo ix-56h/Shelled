@@ -14,30 +14,30 @@
 #include "job.h"
 #include "builtins.h"
 
-t_job *find_job_fg(t_job *job)
+t_job	*find_job_fg(t_job *job)
 {
-	t_jobnb *jobnb;
-	t_job *tmp;
+	t_jobnb	*jobnb;
+	t_job	*tmp;
 
 	(void)job;
 	jobnb = g_jobnb;
-	while(jobnb && jobnb->next)
+	while (jobnb && jobnb->next)
 		jobnb = jobnb->next;
 	tmp = find_job_by_number(jobnb->number);
-	while(tmp && tmp->pgid == 0 && jobnb->prev)
+	while (tmp && tmp->pgid == 0 && jobnb->prev)
 	{
 		jobnb = jobnb->prev;
 		tmp = find_job_by_number(jobnb->number);
 	}
 	if (tmp->pgid == 0)
 		return (NULL);
-	return(tmp);
+	return (tmp);
 }
 
-int ft_fg(char **argv, char ***tenv)
+int		ft_fg(char **argv, char ***tenv)
 {
-	t_job *job;
-	int number;
+	t_job	*job;
+	int		number;
 
 	(void)tenv;
 	job = g_job_head;
