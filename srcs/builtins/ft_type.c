@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 15:54:53 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/15 17:18:19 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/15 17:30:10 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,25 +88,39 @@ static char		*type_test_env(char *cmd, char **env)
 int		ft_type(char **argv, char ***tenv)
 {
 	char	*full_path;
+	int		ret;
+	int		i;
 
+	i = 0;
+	ret = 0;
 	if (count_arg(argv) < 1)
 		return (0);
-	if (lookforbuiltin(argv[1]))
-		ft_printf("%s est un builtin de %s\n", argv[1], SHELL_NAME);
-	else if (is_path(argv[1]))
+	while (argv[i])
 	{
-		if (type_test_path(argv[1]) == 0)
-			ft_printf("%s est %s\n", argv[1], argv[1]);
+		if (lookforbuiltin(argv[i]))
+			ft_printf("%s est un builtin de %s\n", argv[i], SHELL_NAME);
+		else if (is_path(argv[i]))
+		{
+			if (type_test_path(argv[i]) == 0)
+				ft_printf("%s est %s\n", argv[i], argv[i]);
+			else
+			{
+				ret = 1;
+				ft_dprintf(2, "%s: type: %s : non trouvé\n", SHELL_NAME, argv[i]);
+			}
+		}
 		else
-			ft_dprintf(2, "%s: type: %s : non trouvé\n", SHELL_NAME, argv[1]);
+		{
+			if ((full_path = type_test_env(argv[i], *tenv)))
+				ft_printf("%s est %s\n", argv[i], full_path);
+			else
+			{
+				ret = 1;
+				ft_dprintf(2, "%s: type: %s : non trouvé\n", SHELL_NAME, argv[i]);
+			}
+			free(full_path);
+		}
+		++i;
 	}
-	else
-	{
-		if ((full_path = type_test_env(argv[1], *tenv)))
-			ft_printf("%s est %s\n", argv[1], full_path);
-		else
-			ft_dprintf(2, "%s: type: %s : non trouvé\n", SHELL_NAME, argv[1]);
-		free(full_path);
-	}
-	return (0);
+	return (ret);
 }
