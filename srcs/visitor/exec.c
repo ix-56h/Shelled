@@ -62,7 +62,9 @@ void			child_exec(t_node *cmd, char **env, t_io_lists io, t_job *job)
 		((env) ? &env : &g_env));
 		exit(ret);
 	}
+	ft_putstr("\npre exec\n");
 	execve(cmd->data, cmd->args, ((env) ? env : g_env));
+	ft_putstr("\npost exec\n");
 	exit(1);
 }
 

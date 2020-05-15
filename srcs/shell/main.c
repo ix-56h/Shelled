@@ -118,6 +118,6 @@ int			main(int ac, char **av, char **envp)
 	free_sh(&sh);
 	free_env(g_env);
 	free_env(g_set);
-	restore_term(3);
+	restore_term(0);
 	return (g_exit == -1 ? EXIT_SUCCESS : g_exit);
 }
