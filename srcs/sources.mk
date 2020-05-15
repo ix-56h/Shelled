@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    sources.mk                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
+#    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/05/11 13:00:32 by mguerrea         ###   ########.fr        #
+#    Updated: 2020/05/15 16:07:53 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -124,6 +124,7 @@ C_FILES_builtins = \
 				   ft_set.c \
 				   ft_unset.c \
 				   ft_export.c \
+				   ft_type.c \
 
 C_FILES_utils = \
 				index_end_squote.c \

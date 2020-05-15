@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:07:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/11 13:35:01 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/15 16:07:11 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ char		*set_old_path(char ***tenv);
 int			ft_bg(char **argv, char ***tenv);
 int			ft_jobs(char **argv, char ***tenv);
 int			ft_fg(char **argv, char ***tenv);
+int			ft_type(char **argv, char ***tenv);
 
 #endif
