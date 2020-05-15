@@ -17,6 +17,8 @@
 #include "exec.h"
 #include <sys/wait.h>
 
+#include <stdio.h>
+
 int				exec_builtin_no_fork(t_node *cmd, char **env, t_io_lists io, t_job *job)
 {
 	t_builtin	exec_builtin;
@@ -28,6 +30,8 @@ int				exec_builtin_no_fork(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	set_redir_fd(io.redir);
 	exec_builtin = lookforbuiltin(cmd->data);
 	ret = exec_builtin(cmd->args, ((env) ? &env : &g_env));
+	add_set("?", ft_itoa(ret));
+	printf("\nret no fork: %d - $?: |%s|\n", ret, get_env(g_set, "?"));
 	close_used_pipe_fd(io.piped);
 	save_and_restore_fd(1);
 	process = find_process_by_pid(job->list, UNUSED_JOB);
@@ -60,11 +64,11 @@ void			child_exec(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	{
 		ret = lookforbuiltin(cmd->data)(cmd->args,
 		((env) ? &env : &g_env));
+		add_set("?", ft_itoa(ret));
+		printf("\n\nret : %d - $? : |%s|\n", ret, get_env(g_set, "?"));
 		exit(ret);
 	}
-	ft_putstr("\npre exec\n");
 	execve(cmd->data, cmd->args, ((env) ? env : g_env));
-	ft_putstr("\npost exec\n");
 	exit(1);
 }
 
@@ -96,6 +100,8 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	pid_t		pid;
 	t_process	*process;
 	int		ret;
+	int		status;
+	int		cpid;
 
 	ret = 0;
 	if (!io.piped && !io.redir && !io.background && lookforbuiltin(cmd->data))
@@ -104,6 +110,12 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	{
 		if ((pid = fork()) == -1)
 			return (-1);
+		if (pid > 0)
+		{
+			cpid = waitpid(pid, &status, NULL);
+			if (WIFEXITED(status))
+				printf("\nSTATUS : %d\n", status);
+		}
 		else if (pid == 0)
 		{
 			apply_fd(io);
