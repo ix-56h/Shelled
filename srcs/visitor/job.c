@@ -168,8 +168,14 @@ void		wait_for_job(t_job *job)
 	pid_t	pid;
 
     pid = waitpid(WAIT_ANY, &status, WUNTRACED);
+	if (WIFEXITED(status))
+		add_set("?", ft_itoa(WEXITSTATUS(status)));
 	while (!mark_process_status(pid, status) && !job_is_stopped(job) && !job_is_completed(job))
+	{
 		pid = waitpid (WAIT_ANY, &status, WUNTRACED);
+		if (WIFEXITED(status))
+			add_set("?", ft_itoa(WEXITSTATUS(status)));
+	}
 }
 
 void		put_job_in_foreground(t_job *job, int cont)

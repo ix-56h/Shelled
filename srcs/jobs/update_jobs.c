@@ -13,6 +13,7 @@
 #include "sh.h"
 #include "job.h"
 #include "stdio.h"
+#include <sys/wait.h>
 
 int shall_we_wait(void)
 {
@@ -39,8 +40,14 @@ void update_status (void)
 	if (shall_we_wait())
 	{
 		pid = waitpid (WAIT_ANY, &status, WUNTRACED|WNOHANG);
-	while (!mark_process_status (pid, status) && shall_we_wait())
-		pid = waitpid (WAIT_ANY, &status, WUNTRACED|WNOHANG);
+		if (WIFEXITED(status))
+			add_set("?", ft_itoa(WEXITSTATUS(status)));
+		while (!mark_process_status (pid, status) && shall_we_wait())
+		{
+			pid = waitpid (WAIT_ANY, &status, WUNTRACED|WNOHANG);
+			if (WIFEXITED(status))
+				add_set("?", ft_itoa(WEXITSTATUS(status)));
+		}
 	}
 }
 

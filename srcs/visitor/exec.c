@@ -30,8 +30,7 @@ int				exec_builtin_no_fork(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	set_redir_fd(io.redir);
 	exec_builtin = lookforbuiltin(cmd->data);
 	ret = exec_builtin(cmd->args, ((env) ? &env : &g_env));
-	add_set("?", ft_itoa(ret));
-	printf("\nret no fork: %d - $?: |%s|\n", ret, get_env(g_set, "?"));
+	add_set("?", ret == 0 ? "0" : "2");
 	close_used_pipe_fd(io.piped);
 	save_and_restore_fd(1);
 	process = find_process_by_pid(job->list, UNUSED_JOB);
@@ -64,8 +63,7 @@ void			child_exec(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	{
 		ret = lookforbuiltin(cmd->data)(cmd->args,
 		((env) ? &env : &g_env));
-		add_set("?", ft_itoa(ret));
-		printf("\n\nret : %d - $? : |%s|\n", ret, get_env(g_set, "?"));
+		add_set("?", ret == 0 ? "0" : "2");
 		exit(ret);
 	}
 	execve(cmd->data, cmd->args, ((env) ? env : g_env));
@@ -83,9 +81,12 @@ void			after_fork_routine(pid_t pid, t_io_lists io, t_job *job)
 	{
 		setpgid(pid, pid);
 		job->pgid = pid;
+		
 	}
 	else
+	{
 		setpgid(pid, job->pgid);
+	}
 }
 
 void			apply_fd(t_io_lists io)
@@ -104,18 +105,13 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	int		cpid;
 
 	ret = 0;
+	status = 0;
 	if (!io.piped && !io.redir && !io.background && lookforbuiltin(cmd->data))
 			ret = exec_builtin_no_fork(cmd, env, io, job);
 	else
 	{
 		if ((pid = fork()) == -1)
 			return (-1);
-		if (pid > 0)
-		{
-			cpid = waitpid(pid, &status, NULL);
-			if (WIFEXITED(status))
-				printf("\nSTATUS : %d\n", status);
-		}
 		else if (pid == 0)
 		{
 			apply_fd(io);
@@ -126,14 +122,14 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 				if ((ret = test_path(cmd)) == 0)
 					child_exec(cmd, env, io, job);
 				else
-					exit(130);
+					exit(127);
 			}
 			else
 			{
 				if ((ret = test_env(cmd, env)) == 0)
 					child_exec(cmd, env, io, job);
 				else
-					exit(130);
+					exit(127);
 			}
 		}
 		after_fork_routine(pid, io, job);
