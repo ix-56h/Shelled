@@ -62,6 +62,11 @@ int				restore_term(int act)
 	if (act == 2)
 		if ((termios = save_initialised_term(0)) == NULL)
 			return (-1);
+	if (act == 3)
+	{
+		termios = save_initialised_term(0);
+		termios->c_lflag &= ~(ICANON | ECHO);
+	}
 	if (tcsetattr(STDIN_FILENO, 0, termios) == -1)
 		return (-1);
 	return (1);

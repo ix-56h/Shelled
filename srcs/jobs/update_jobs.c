@@ -32,21 +32,30 @@ int shall_we_wait(void)
 	return (0);
 }
 
-void update_status (void)
+void update_status(void)
 {
-	int status;
-	pid_t pid;
+	int		status;
+	char	*exit_status;
+	pid_t	pid;
 
 	if (shall_we_wait())
 	{
 		pid = waitpid (WAIT_ANY, &status, WUNTRACED|WNOHANG);
 		if (WIFEXITED(status))
-			add_set("?", ft_itoa(WEXITSTATUS(status)));
+		{
+			exit_status = ft_itoa(WEXITSTATUS(status));
+			add_set("?", exit_status);
+			free(exit_status);
+		}
 		while (!mark_process_status (pid, status) && shall_we_wait())
 		{
 			pid = waitpid (WAIT_ANY, &status, WUNTRACED|WNOHANG);
 			if (WIFEXITED(status))
-				add_set("?", ft_itoa(WEXITSTATUS(status)));
+			{
+				exit_status = ft_itoa(WEXITSTATUS(status));
+				add_set("?", exit_status);
+				free(exit_status);
+			}
 		}
 	}
 }

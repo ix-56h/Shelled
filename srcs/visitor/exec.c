@@ -101,11 +101,8 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	pid_t		pid;
 	t_process	*process;
 	int		ret;
-	int		status;
-	int		cpid;
 
 	ret = 0;
-	status = 0;
 	if (!io.piped && !io.redir && !io.background && lookforbuiltin(cmd->data))
 			ret = exec_builtin_no_fork(cmd, env, io, job);
 	else
@@ -122,7 +119,7 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 				if ((ret = test_path(cmd)) == 0)
 					child_exec(cmd, env, io, job);
 				else
-					exit(127);
+					exit(126);
 			}
 			else
 			{
