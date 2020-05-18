@@ -18,6 +18,7 @@ void	ctrl_c_line_handler(int lel)
 {
 	(void)lel;
 	ioctl(STDOUT_FILENO, TIOCSTI, "\030");
+	add_set("?", "130");
 }
 
 int		heredoc_ctrl_c(t_dl_node *head, t_line *line)

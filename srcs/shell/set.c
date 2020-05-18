@@ -122,7 +122,9 @@ void			init_set(char **av)
 	g_set = NULL;
 //	if (g_env)
 //		g_set = cpy_env(g_env);
+	add_set("SHLVL", get_env(g_env, "SHLVL"));
 	add_set("HOME", get_env(g_env, "HOME"));
+	add_set("PATH", get_env(g_env, "PATH"));
 	add_set("PWD", get_env(g_env, "PWD"));
 	add_set("IFS", " \t\n");
 	add_info_params(av);

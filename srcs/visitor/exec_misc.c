@@ -49,7 +49,10 @@ int		err_exec(char *buff, int err)
 		else if (err == ERR_REDIR)
 			ft_vprintfd(STDERR_FILENO, 3\
 					, SHELL_NAME": redirection error: ", buff, "\n");
+		add_set("?", "1");
 	}
+	if (err == ERR_CMD_NOT_FOUND)
+		add_set("?", "127");
 	return (err);
 }
 
