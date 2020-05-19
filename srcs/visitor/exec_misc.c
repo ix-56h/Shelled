@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:49:31 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/10 22:27:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/19 18:06:37 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*cut_command(char *cmd, char act)
 			++i;
 		}
 		else if (cmd[i] == ';')
-			break;
+			break ;
 		else
 			++i;
 	}

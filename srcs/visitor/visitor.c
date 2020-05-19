@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/05/11 15:48:36 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/19 18:31:28 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int				visit(t_node *root, t_job **job, char *cmd)
 	return (1);
 }
 
-
 char			*substitution_wrapper(char *str)
 {
 	int		pipefd[2];
@@ -105,7 +104,6 @@ char			*substitution_wrapper(char *str)
 		}
 		else if (pid == 0)
 		{
-			//
 			t_sh		sh;
 			if (!(sh.stack.errors = lifo_creator(20, sizeof(t_staterror))))
 				return (0);
@@ -126,7 +124,6 @@ char			*substitution_wrapper(char *str)
 				delete_ast(&sh.node);
 			if ((sh.tok).data != NULL)
 				free((sh.tok).data);
-			//
 			exit(0);
 		}
 		dup2(stdout_save, STDOUT_FILENO);

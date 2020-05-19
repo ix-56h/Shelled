@@ -6,18 +6,17 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/10 22:30:40 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/19 19:05:39 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
+#include <sys/wait.h>
+#include <stdio.h>
 #include "sh.h"
 #include "builtins.h"
 #include "exec.h"
-#include <sys/wait.h>
-
-#include <stdio.h>
 
 int				exec_builtin_no_fork(t_node *cmd, char **env, t_io_lists io, t_job *job)
 {
@@ -53,12 +52,12 @@ void			child_exec(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	}
 	else
 		setpgid(pid, job->pgid);
-	signal (SIGINT, SIG_DFL);
-    signal (SIGQUIT, SIG_DFL);
-    signal (SIGTSTP, SIG_DFL);
-    signal (SIGTTIN, SIG_DFL);
-    signal (SIGTTOU, SIG_DFL);
-    signal (SIGCHLD, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGTSTP, SIG_DFL);
+	signal(SIGTTIN, SIG_DFL);
+	signal(SIGTTOU, SIG_DFL);
+	signal(SIGCHLD, SIG_DFL);
 	if (lookforbuiltin(cmd->data))
 	{
 		ret = lookforbuiltin(cmd->data)(cmd->args,
@@ -81,12 +80,9 @@ void			after_fork_routine(pid_t pid, t_io_lists io, t_job *job)
 	{
 		setpgid(pid, pid);
 		job->pgid = pid;
-		
 	}
 	else
-	{
 		setpgid(pid, job->pgid);
-	}
 }
 
 void			apply_fd(t_io_lists io)
@@ -100,11 +96,11 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 {
 	pid_t		pid;
 	t_process	*process;
-	int		ret;
+	int			ret;
 
 	ret = 0;
 	if (!io.piped && !io.redir && !io.background && lookforbuiltin(cmd->data))
-			ret = exec_builtin_no_fork(cmd, env, io, job);
+		ret = exec_builtin_no_fork(cmd, env, io, job);
 	else
 	{
 		if ((pid = fork()) == -1)

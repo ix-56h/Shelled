@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visitor_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/11 13:01:40 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/19 18:35:40 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void		ctrl_c_handler(int lel)
 	ft_putchar('\n');
 }
 
-int	exec_command(t_node *node, t_io_lists *io, t_job **job)
+int				exec_command(t_node *node, t_io_lists *io, t_job **job)
 {
 	int	err;
 

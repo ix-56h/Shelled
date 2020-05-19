@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 21:33:37 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/02 00:19:15 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/19 18:36:52 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ int	exec_dgreat(t_node *node, t_io_lists *io, t_job **job)
 	else
 		io->redir->in = STDOUT_FILENO;
 	io->redir->out = fd;
-	return (0);	
+	return (0);
 }
