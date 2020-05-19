@@ -167,11 +167,26 @@ int			job_is_completed(t_job *j)
 void		wait_for_job(t_job *job)
 {
 	int		status;
+	char	*exit_status;
 	pid_t	pid;
 
-    pid = waitpid(WAIT_ANY, &status, WUNTRACED);
+	pid = waitpid(WAIT_ANY, &status, WUNTRACED);
+	if (WIFEXITED(status))
+	{
+		exit_status = ft_itoa(WEXITSTATUS(status));
+		add_set("?", exit_status);
+		free(exit_status);
+	}
 	while (!mark_process_status(pid, status) && !job_is_stopped(job) && !job_is_completed(job))
+	{
 		pid = waitpid (WAIT_ANY, &status, WUNTRACED);
+		if (WIFEXITED(status))
+		{
+			exit_status = ft_itoa(WEXITSTATUS(status));
+			add_set("?", exit_status);
+			free(exit_status);
+		}
+	}
 }
 
 void		put_job_in_foreground(t_job *job, int cont)

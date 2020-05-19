@@ -123,8 +123,10 @@ void	process_expression(char **w)
 	quoted = 0;
 	if (!w || !*w)
 		exit(1);
-	if (ft_strlen(*w) == 2 && (*w)[i] == '$')
-		get_special_param(w);
+	if (ft_strlen(*w) == 1 && (*w)[i] == '$')
+		return ;
+	else if (ft_strlen(*w) == 2 && (*w)[i] == '$')
+		get_special_param(&w);
 	while ((*w)[i])
 	{
 		if ((*w)[i] == '"' && quoted == 2)
