@@ -119,9 +119,11 @@ static void		get_sysname(void)
 
 void			init_set(char **av)
 {
+	char *shell_name;
+
 	g_set = NULL;
-//	if (g_env)
-//		g_set = cpy_env(g_env);
+	shell_name = ft_strjoin(get_env(g_env, "PWD"), "/42sh");
+	add_set("SHELL", shell_name);
 	add_set("SHLVL", get_env(g_env, "SHLVL"));
 	add_set("HOME", get_env(g_env, "HOME"));
 	add_set("PATH", get_env(g_env, "PATH"));
@@ -131,4 +133,5 @@ void			init_set(char **av)
 	add_info_id();
 	get_sysname();
 	sort_set();
+	free(shell_name);
 }
