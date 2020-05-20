@@ -91,8 +91,9 @@ void			free_sh(t_sh *sh);
 /*
 **	signal.c
 */
+
 void			init_signal(void);
-void 			oprhaned_jobs(void);
+void			oprhaned_jobs(void);
 
 /*
 ** shell_var.c

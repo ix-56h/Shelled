@@ -14,63 +14,47 @@
 #include "job.h"
 #include "builtins.h"
 
-void
-put_job_in_background (t_job *job, int cont)
+void	put_job_in_background(t_job *job, int cont)
 {
-  job->is_notified = 0;
-  if (cont)
-  {
-    kill (-job->pgid, SIGCONT);
-  }
- 
-}
-
-void
-mark_job_as_running (t_job *j)
-{
-  t_process *p;
-
-	p = j->list;
-	while (p)
+	job->is_notified = 0;
+	if (cont)
 	{
-		p->is_stopped = 0;
-		p = p->next;
+		kill(-job->pgid, SIGCONT);
 	}
-  j->is_notified = 0;
 }
 
-void continue_job (t_job *j, int foreground)
+void	continue_job(t_job *j, int foreground)
 {
-  mark_job_as_running (j);
+	mark_job_as_running(j);
 	push_front(j->number);
-  if (foreground)
-    put_job_in_foreground (j, 1);
-  else
-    put_job_in_background (j, 1);
+	if (foreground)
+		put_job_in_foreground(j, 1);
+	else
+		put_job_in_background(j, 1);
 }
 
-t_job *find_job_bg(t_job *job)
+t_job	*find_job_bg(t_job *job)
 {
-	t_jobnb *jobnb;
+	t_jobnb	*jobnb;
 	t_job	*tmp;
 
 	jobnb = g_jobnb;
-	while(jobnb && jobnb->next)
+	while (jobnb && jobnb->next)
 		jobnb = jobnb->next;
 	tmp = (jobnb) ? find_job_by_number(jobnb->number) : NULL;
-	while(jobnb && jobnb->prev)
+	while (jobnb && jobnb->prev)
 	{
 		if (!job_is_completed(tmp) && job_is_stopped(tmp) && tmp->pgid != 0)
-	 		break;
+			break ;
 		jobnb = jobnb->prev;
 		tmp = find_job_by_number(jobnb->number);
 	}
 	return (tmp);
 }
 
-t_job *find_job_by_number(int nb)
+t_job	*find_job_by_number(int nb)
 {
-	t_job *job;
+	t_job	*job;
 
 	job = g_job_head;
 	while (job && job->number != nb)
@@ -78,10 +62,10 @@ t_job *find_job_by_number(int nb)
 	return (job);
 }
 
-int ft_bg(char **argv, char ***tenv)
+int		ft_bg(char **argv, char ***tenv)
 {
-	t_job *job;
-	int number;
+	t_job	*job;
+	int		number;
 
 	(void)tenv;
 	job = g_job_head;

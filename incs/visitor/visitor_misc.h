@@ -27,6 +27,7 @@ typedef struct			s_pipe_list
 	int					fd[2];
 	int					used;
 }						t_pipe_list;
+
 typedef struct			s_redir_list
 {
 	struct s_redir_list	*next;
@@ -34,6 +35,7 @@ typedef struct			s_redir_list
 	int					in;
 	int					out;
 }						t_redir_list;
+
 typedef struct			s_io_lists
 {
 	t_redir_list		*redir;

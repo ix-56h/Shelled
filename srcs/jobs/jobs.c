@@ -14,12 +14,12 @@
 #include "job.h"
 #include "stdio.h"
 
-void oprhaned_jobs()
+void	oprhaned_jobs(void)
 {
 	t_job *job;
-	
+
 	job = g_job_head;
-	while(job)
+	while (job)
 	{
 		if (!job_is_completed(job) && job_is_stopped(job))
 		{
@@ -33,17 +33,17 @@ void oprhaned_jobs()
 	}
 }
 
-char *get_job_status(t_job *job)
+char	*get_job_status(t_job *job)
 {
 	if (job_is_completed(job))
-			return("Done");
+		return ("Done");
 	else if (job_is_stopped(job))
-			return("Stopped");
+		return ("Stopped");
 	else
-			return("Running");
+		return ("Running");
 }
 
-void print_job_info(t_job *job, char *arg, int last[2])
+void	print_job_info(t_job *job, char *arg, int last[2])
 {
 	char c;
 
@@ -64,15 +64,16 @@ void print_job_info(t_job *job, char *arg, int last[2])
 		ft_printf("%d\n", job->pgid);
 }
 
-void get_last_process(int *last0, int *last1)
+void	get_last_process(int *last0, int *last1)
 {
 	t_jobnb *jobnb;
 	t_job	*tmp;
 
 	jobnb = g_jobnb;
-	while(jobnb && jobnb->next)
+	while (jobnb && jobnb->next)
 		jobnb = jobnb->next;
-	while((tmp = find_job_by_number(jobnb->number)) && tmp->pgid == 0 && jobnb->prev)
+	while ((tmp = find_job_by_number(jobnb->number))
+		&& tmp->pgid == 0 && jobnb->prev)
 		jobnb = jobnb->prev;
 	if (tmp->pgid == 0)
 		*last0 = 0;
@@ -87,29 +88,30 @@ void get_last_process(int *last0, int *last1)
 	}
 }
 
-int ft_jobs(char **argv, char ***tenv)
+int		ft_jobs(char **argv, char ***tenv)
 {
-	t_job *job;
-	t_process *process;
-	int i;
-	int last_process[2];
+	t_job		*job;
+	int			i;
+	int			last_jobs[2];
 
 	job = g_job_head;
 	update_status();
-	get_last_process(&last_process[0], &last_process[1]);
-	if (argv[1] && argv[1][0] != '-' && (job = find_job_by_number(ft_atoi(argv[1]))))
-		print_job_info(job, NULL, last_process);
-	else if (argv[1] && argv[2] && argv[2][0] != '-' && (job = find_job_by_number(ft_atoi(argv[2]))))
-		print_job_info(job, argv[1], last_process);
+	get_last_process(&last_jobs[0], &last_jobs[1]);
+	if (argv[1] && argv[1][0] != '-'
+		&& (job = find_job_by_number(ft_atoi(argv[1]))))
+		print_job_info(job, NULL, last_jobs);
+	else if (argv[1] && argv[2] && argv[2][0] != '-'
+		&& (job = find_job_by_number(ft_atoi(argv[2]))))
+		print_job_info(job, argv[1], last_jobs);
 	else if (job == NULL)
 		ft_printf("jobs: no such jobs\n");
 	else
 	{
-	while (job && job->pgid != 0)
-	{
-		print_job_info(job, argv[1], last_process);
-		job = job->next;
-	}
+		while (job && job->pgid != 0)
+		{
+			print_job_info(job, argv[1], last_jobs);
+			job = job->next;
+		}
 	}
 	return (0);
 }
