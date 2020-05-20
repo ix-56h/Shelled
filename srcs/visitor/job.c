@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/19 18:35:10 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/20 18:22:58 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int			mark_process_status(pid_t pid, int status)
 		return (-1);
 	}
 	else if (pid == 0)
-		returnc(-1);
+		return (-1);
 	else
 	{
 		ft_dprintf(3, "waitpid err\n");

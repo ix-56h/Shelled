@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    sources.mk                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
+#    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/05/11 13:00:32 by mguerrea         ###   ########.fr        #
+#    Updated: 2020/05/20 18:57:34 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,7 @@ C_FILES_visitor = \
 				  fd2.c \
 				  exec.c \
 				  exec_misc.c \
+				  misc_cut_cmd.c \
 				  test_and_find.c \
 				  visitor_cmd.c \
 				  visitor_greatand.c \
@@ -78,6 +79,7 @@ C_FILES_visitor = \
 				  visitor_dless.c \
 				  visitor_dgreat.c \
 				  job.c \
+				  substitution.c \
 
 C_FILES_shell = \
 				main.c \
