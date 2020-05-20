@@ -142,8 +142,6 @@ int					lex_match_command_sub(char *s, int *anchor, t_lifo *stack);
 int					lex_match_dol(char *s, int *anchor, t_lifo *stack);
 int					lex_match_parameter(char *s, int *anchor, t_lifo *stack);
 
-
-
 /*
 **	lex_sequence.c
 */

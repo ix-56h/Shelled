@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/11 15:47:59 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/14 20:02:45 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void		clean_job(void)
 			}
 			del_jobnb(nav->number);
 			dl_free_with_data((t_dl_node *)nav->list, free);
+			if (nav->line)
+				free(nav->line);
 			dl_del_one((t_dl_node *)nav);
 		}
 		nav = next;
@@ -165,11 +167,26 @@ int			job_is_completed(t_job *j)
 void		wait_for_job(t_job *job)
 {
 	int		status;
+	char	*exit_status;
 	pid_t	pid;
 
-    pid = waitpid(WAIT_ANY, &status, WUNTRACED);
+	pid = waitpid(WAIT_ANY, &status, WUNTRACED);
+	if (WIFEXITED(status))
+	{
+		exit_status = ft_itoa(WEXITSTATUS(status));
+		add_set("?", exit_status);
+		free(exit_status);
+	}
 	while (!mark_process_status(pid, status) && !job_is_stopped(job) && !job_is_completed(job))
+	{
 		pid = waitpid (WAIT_ANY, &status, WUNTRACED);
+		if (WIFEXITED(status))
+		{
+			exit_status = ft_itoa(WEXITSTATUS(status));
+			add_set("?", exit_status);
+			free(exit_status);
+		}
+	}
 }
 
 void		put_job_in_foreground(t_job *job, int cont)

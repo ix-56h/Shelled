@@ -49,5 +49,5 @@ int	exec_command(t_node *node, t_io_lists *io, t_job **job)
 	set_used_fd(io->piped);
 	restore_term(2);
 	signal(SIGINT, SIG_DFL);
-	return (err);	
+	return (err);
 }
