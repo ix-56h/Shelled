@@ -24,6 +24,7 @@
 typedef int	(*t_builtin)(char **, char ***);
 
 int			count_arg(char **argv);
+void		add_bang(char *value);
 int			ft_addpath(char **argv, char ***env);
 int			ft_cd(char **argv, char ***tenv);
 int			ft_exit(char **argv, char ***tenv);
