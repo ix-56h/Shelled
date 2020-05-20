@@ -37,8 +37,8 @@ void	add_jobnb(int nb)
 
 void	del_jobnb(int nb)
 {
-	t_jobnb *jobnb;
-	t_jobnb *tmp;
+	t_jobnb	*jobnb;
+	t_jobnb	*tmp;
 
 	jobnb = g_jobnb;
 	while (jobnb && jobnb->number != nb)
@@ -69,7 +69,7 @@ void	push_back(int nb)
 	add_jobnb(nb);
 }
 
-void push_front(int nb)
+void	push_front(int nb)
 {
 	t_jobnb *new;
 
@@ -80,15 +80,4 @@ void push_front(int nb)
 	new->prev = NULL;
 	new->next = g_jobnb;
 	g_jobnb = new;
-}
-
-void print_jobn()
-{
-	t_jobnb *jobnb = g_jobnb;
-	while(jobnb)
-	{
-		dprintf(2, "%d\t", jobnb->number);
-		jobnb = jobnb->next;
-	}
-	dprintf(2, "\n");
 }

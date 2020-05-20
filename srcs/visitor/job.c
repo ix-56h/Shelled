@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/11 15:47:59 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/14 20:02:45 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void		clean_job(void)
 			}
 			del_jobnb(nav->number);
 			dl_free_with_data((t_dl_node *)nav->list, free);
+			if (nav->line)
+				free(nav->line);
 			dl_del_one((t_dl_node *)nav);
 		}
 		nav = next;

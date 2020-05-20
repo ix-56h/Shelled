@@ -13,6 +13,7 @@
 #ifndef FT_JOB_H
 # define FT_JOB_H
 # include <sys/types.h>
+# include <sys/wait.h>
 # include "double_linked_list.h"
 # include "signal.h"
 # include "ft_printf.h"
@@ -84,5 +85,6 @@ void					push_front(int nb);
 
 //DEBUG
 void					print_jobn();
+void					mark_job_as_running (t_job *j);
 
 #endif
