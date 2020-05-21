@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:36 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/25 17:28:28 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/11 18:46:43 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct		s_gnt {
 /*
 **	term_and_op_check.c
 */
+
 t_toktype			check_operator(char *s, size_t len, int *i);
 t_toktype			check_pipe(char *s, size_t len, int *i);
 t_toktype			check_redirections(char *s, size_t len, int *i);
@@ -119,6 +120,7 @@ t_toktype			check_redirections(char *s, size_t len, int *i);
 /*
 **	tokenizer_misc.c
 */
+
 int					is_opening_class(t_chr_class chr_class);
 t_tokens			token_error(int type, t_lifo*stack, char c);
 t_tokens			save_token(char *s, int anchor, t_toktype toktype);
@@ -129,6 +131,7 @@ int					is_special_char(t_chr_class chr_class\
 /*
 **	tokenizer.c
 */
+
 t_toktype			get_true_toktype(char *s, t_toktype toktype, int *i);
 int					get_token(char *s, t_gnt *gnt, t_lifo *stack);
 t_tokens			get_next_token(char *s, t_lifo*stack);
@@ -136,15 +139,23 @@ t_tokens			get_next_token(char *s, t_lifo*stack);
 /*
 **	wordexp_tokenizer.c
 */
-int					lex_sequence(char *s, int *anchor, t_lifo *stack);
+
 int					lex_match_squote(char *s, int *anchor, t_lifo *stack);
 int					lex_match_dquote(char *s, int *anchor, t_lifo *stack);
 int					lex_match_command_sub(char *s, int *anchor, t_lifo *stack);
 int					lex_match_dol(char *s, int *anchor, t_lifo *stack);
+int					lex_match_parameter(char *s, int *anchor, t_lifo *stack);
+
+/*
+**	lex_sequence.c
+*/
+
+int					lex_sequence(char *s, int *anchor, t_lifo *stack);
 
 /*
 **	wordexp_misc.c
 */
+
 int					is_whitespace(char c);
 void				skip_whitespaces(char *s, int *a);
 int					ignore_arithmetic(char *s, int *a);
@@ -152,10 +163,13 @@ int					ignore_arithmetic(char *s, int *a);
 /*
 **	gnt_standalone.c
 */
+
 t_gnt				*gnt_standalone(size_t value);
 
 /*
 **	utils/is_arithmetic.c
 */
+
 int					is_arithmetic(char *w);
+
 #endif

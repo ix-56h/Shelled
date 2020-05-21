@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:37:48 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/25 20:09:45 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/02 11:11:16 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ static t_chr_class		g_get_chr_class[255] =
 	['\t'] = CHR_SP,
 	[';'] = CHR_SEMI,
 	['$'] = CHR_DOL,
-	['#'] = CHR_COMMENT,
+	['#'] = CHR_WORD,
 	['A'...'Z'] = CHR_WORD,
 	['a'...'z'] = CHR_WORD,
 	['0'...'9'] = CHR_DIGIT,
+	['%'] = CHR_WORD,
+	['+'] = CHR_WORD,
 	['_'] = CHR_WORD,
 	['='] = CHR_WORD,
 	[':'] = CHR_WORD,
@@ -45,7 +47,7 @@ static t_chr_class		g_get_chr_class[255] =
 	['<'] = CHR_LREDI,
 	['>'] = CHR_RREDI,
 	['|'] = CHR_PIPE,
-	['!'] = CHR_BANG,
+	['!'] = CHR_WORD,
 	['\''] = CHR_SQUOTE,
 	['"'] = CHR_DQUOTE,
 	['&'] = CHR_AND,
@@ -72,7 +74,9 @@ static int				g_token_chr_rules[TOK_MAX][CHR_MAX] =
 		[CHR_DQUOTE] = 1,
 		[CHR_BQUOTE] = 1,
 		[CHR_LPAREN] = 1,
+		[CHR_RPAREN] = 1,
 		[CHR_LBRACE] = 1,
+		[CHR_RBRACE] = 1,
 		[CHR_DOL] = 1,
 		[CHR_DASH] = 1
 	},

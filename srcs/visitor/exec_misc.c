@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:49:31 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/12 04:14:02 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/10 22:27:54 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ int		err_exec(char *buff, int err)
 		else if (err == ERR_REDIR)
 			ft_vprintfd(STDERR_FILENO, 3\
 					, SHELL_NAME": redirection error: ", buff, "\n");
+		add_set("?", "1");
 	}
+	if (err == ERR_CMD_NOT_FOUND)
+		add_set("?", "127");
 	return (err);
 }
 

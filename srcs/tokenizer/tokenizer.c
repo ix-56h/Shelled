@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh.h"
 #include "tokenizer.h"
 #include "tokenizer_rules.h"
 #include "error_handler.h"

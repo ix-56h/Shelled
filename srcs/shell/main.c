@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/13 01:05:45 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/11 14:22:30 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,26 @@ void		init_shell_job(void)
 	shell_is_interactive = isatty(shell_terminal);
 	if (shell_is_interactive)
 	{
-		while (tcgetpgrp(shell_terminal) != (g_shell_pgid = getpgrp()))
+    	while (tcgetpgrp(shell_terminal) != (g_shell_pgid = getpgrp()))
 		{
-			kill(-g_shell_pgid, SIGTTIN);
+    		kill(-g_shell_pgid, SIGTTIN);
 		}
 		signal (SIGINT, SIG_IGN);
-		signal (SIGQUIT, SIG_IGN);
-		signal (SIGTSTP, SIG_IGN);
-		signal (SIGTTIN, SIG_IGN);
-		signal (SIGTTOU, SIG_IGN);
+    	signal (SIGQUIT, SIG_IGN);
+    	signal (SIGTSTP, SIG_IGN);
+    	signal (SIGTTIN, SIG_IGN);
+    	signal (SIGTTOU, SIG_IGN);
 		//signal (SIGCHLD, SIG_IGN);
-		g_shell_pgid = getpid ();
-		if (setpgid (g_shell_pgid, g_shell_pgid) < 0)
-		{
-			ft_putstr_fd("Couldn't put the shell in its own process group", STDERR_FILENO);
-			exit(1);
-		}
-		tcsetpgrp (shell_terminal, g_shell_pgid);
-	}
+    	g_shell_pgid = getpid ();
+    	if (setpgid (g_shell_pgid, g_shell_pgid) < 0)
+    	{
+        	ft_putstr_fd("Couldn't put the shell in its own process group", STDERR_FILENO);
+    		exit(1);
+        }
+    	tcsetpgrp (shell_terminal, g_shell_pgid);
+    }
 }
+
 
 void		check_args(t_sh *sh, int ac, char **av)
 {
@@ -84,19 +85,9 @@ void		process_sh(t_sh *sh)
 			cmd = ft_strdup(sh->input);
 			visit(sh->node, &g_job_head, cmd);
 			free(cmd);
-			//clean_job();
+			clean_job();
 		}
 	}
-}
-
-void		free_all(t_sh *sh)
-{
-	free_historic();
-	free_sh(sh);
-	free_env(g_env);
-	free_env(g_set);
-	free_env(g_alias);
-	restore_term(3);
 }
 
 int			main(int ac, char **av, char **envp)
@@ -108,11 +99,12 @@ int			main(int ac, char **av, char **envp)
 	if (init_shell(&sh, ac, av, envp) == 0)
 		return (EXIT_FAILURE);
 	g_job_head = NULL;
+	g_jobnb = NULL;
 	init_signal();
 	while (1)
 	{
+		do_job_notification();
 		sh.input = run_line_edit();
- 		sh.input = add_alias(sh.input, sh.stack.errors);
 		sh.tok = get_next_token(sh.input, sh.stack.errors);
 		lifo_empty(sh.stack.errors) ? sh.node = parse_program(&sh) : 0;
 		process_sh(&sh);
@@ -121,6 +113,11 @@ int			main(int ac, char **av, char **envp)
 		free_sh(&sh);
 		re_init_sh(&sh);
 	}
-	free_all(&sh);
+	oprhaned_jobs();
+	free_historic();
+	free_sh(&sh);
+	free_env(g_env);
+	free_env(g_set);
+	restore_term(1);
 	return (g_exit == -1 ? EXIT_SUCCESS : g_exit);
 }

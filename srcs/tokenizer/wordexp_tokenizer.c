@@ -6,7 +6,7 @@
 /*   By: niguinti <0x00fi@protonmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 06:36:46 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/25 17:38:03 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/03/11 22:51:48 by niguinti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,25 @@
 #include "libft.h"
 #include "stack.h"
 
-int	lex_sequence(char *s, int *anchor, t_lifo *stack)
+int	lex_match_parameter(char *s, int *anchor, t_lifo *stack)
 {
-	int	ret;
-
-	ret = 0;
-	if (s[*anchor] == '\'')
-		ret = lex_match_squote(s, anchor, stack);
-	else if (s[*anchor] == '"')
-		ret = lex_match_dquote(s, anchor, stack);
-	else if (s[*anchor] == '`')
-		ret = lex_match_command_sub(s, anchor, stack);
-	else if (s[*anchor] == '$')
-		ret = lex_match_dol(s, anchor, stack);
-	return (ret);
+	while (s[*anchor] && s[*anchor] != '}')
+	{
+		if (g_wexp_rules[BQU][(int)(s[*anchor])])
+		{
+			if (!lex_sequence(s, anchor, stack))
+				return (0);
+			continue;
+		}
+		*anchor += 1;
+	}
+	if (s[*anchor] != '}')
+	{
+		error_push(stack, MATCH_LEX, "}");
+		return (0);
+	}
+	*anchor += 1;
+	return (1);
 }
 
 int	lex_match_squote(char *s, int *anchor, t_lifo *stack)
@@ -107,6 +112,13 @@ int	lex_match_dol(char *s, int *anchor, t_lifo *stack)
 		if (is_arithmetic(s + *anchor + 1))
 			ignore_arithmetic(s, anchor);
 		else if (lex_match_command_sub(s, anchor, stack))
+			skip_whitespaces(s, anchor);
+		else
+			return (0);
+	}
+	else if (s[*anchor] == '{')
+	{
+		if (lex_match_parameter(s, anchor, stack))
 			skip_whitespaces(s, anchor);
 		else
 			return (0);
