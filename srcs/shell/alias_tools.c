@@ -31,12 +31,12 @@ char	**add_pot(char **alias, char *pot)
 		new_env[j] = alias[j];
 		j++;
 	}
-  alias = ft_free(alias);
+	alias = ft_free(alias);
 	new_env[j] = ft_strdup(pot);
 	return (new_env);
 }
 
-char **alloc_pot(char *data, char **pot_alias, int *i)
+char	**alloc_pot(char *data, char **pot_alias, int *i)
 {
 	if (*i == 0)
 	{
@@ -55,10 +55,10 @@ char **alloc_pot(char *data, char **pot_alias, int *i)
 	return (pot_alias);
 }
 
-char **cpy_alias(char **alias)
+char	**cpy_alias(char **alias)
 {
-	char **new_alias;
-	int i;
+	char	**new_alias;
+	int		i;
 
 	i = 0;
 	while (alias[i])
@@ -72,7 +72,7 @@ char **cpy_alias(char **alias)
 	return (new_alias);
 }
 
-int *create_n_realloc_type(int *toktype, int is_multi)
+int		*create_n_realloc_type(int *toktype, int is_multi)
 {
 	int i;
 	int *new_toktype;
@@ -91,8 +91,10 @@ int *create_n_realloc_type(int *toktype, int is_multi)
 		free(toktype);
 	}
 	else
+	{
 		if (!(new_toktype = (int*)malloc(sizeof(int) * 2)))
 			return (0);
+	}
 	if (is_multi == 0)
 		new_toktype[i++] = 2;
 	else
@@ -101,7 +103,7 @@ int *create_n_realloc_type(int *toktype, int is_multi)
 	return (new_toktype);
 }
 
-int 	*alloc_toktype(int *toktype, int *is_multi, t_tokens token)
+int		*alloc_toktype(int *toktype, int *is_multi, t_tokens token)
 {
 	if (*is_multi == 0 && token.tok == 12)
 	{

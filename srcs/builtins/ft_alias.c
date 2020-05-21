@@ -60,7 +60,7 @@ int			init_alias(char **args)
 		if (!args[cpt])
 			return (0);
 		if (check_error_name(get_name(args[cpt]), 1) == 1)
-    	error_alias(args[cpt], 0);
+			error_alias(args[cpt], 0);
 		cpt++;
 	}
 	free(v_alias);
@@ -109,10 +109,6 @@ int			ft_alias(char **args, char ***env)
 	int			cpt;
 
 	(void)env;
-/*	cpt = -1;
-	while (args[++cpt])
-		ft_printf("args : %s\n", args[cpt]);
-*/
 	if (!g_alias)
 	{
 		i = 0;
@@ -122,7 +118,6 @@ int			ft_alias(char **args, char ***env)
 	cpt = 0;
 	while (args[++cpt])
 	{
-
 		if (i == 0)
 		{
 			if ((cpt = init_alias(args)) == 0)

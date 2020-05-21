@@ -19,7 +19,6 @@ int		ft_unsetenv(char **argv, char ***env)
 	int		i;
 	int		index;
 
-
 	i = count_arg(argv);
 	if (i == 0)
 	{

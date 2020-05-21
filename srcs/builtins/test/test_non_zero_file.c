@@ -12,12 +12,12 @@
 
 #include "builtins.h"
 
-int test_non_zero_file(char *s1, char *s2)
+int		test_non_zero_file(char *s1, char *s2)
 {
-  (void)s2;
-  if (stat(s1, &st) < 0)
-    return (1);
-  if (st.st_size > 0)
-    return (0);
-  return (1);
+	(void)s2;
+	if (stat(s1, &st) < 0)
+		return (1);
+	if (st.st_size > 0)
+		return (0);
+	return (1);
 }

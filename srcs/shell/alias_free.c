@@ -14,20 +14,20 @@
 #include "builtins.h"
 #include "ft_printf.h"
 
-int f_s(char **save_alias)
+int		f_s(char **save_alias)
 {
-  free_env(save_alias);
-  return (0);
+	free_env(save_alias);
+	return (0);
 }
 
-char *free_recursive(char *input_s, char **alias_cpy, char *alias_v)
+char	*free_recursive(char *input_s, char **alias_cpy, char *alias_v)
 {
-  free(input_s);
-  free_env(alias_cpy);
-  return (alias_v);
+	free(input_s);
+	free_env(alias_cpy);
+	return (alias_v);
 }
 
-void free_alias(char **alias)
+void	free_alias(char **alias)
 {
 	int i;
 
@@ -37,8 +37,8 @@ void free_alias(char **alias)
 	free(alias);
 }
 
-char  *free_recursive_launch(char **pot_alias, char **save_alias,
-	 														char **alias_cpy, char *new_input)
+char	*free_recursive_launch(char **pot_alias, char **save_alias,
+		char **alias_cpy, char *new_input)
 {
 	free_alias(pot_alias);
 	free_alias(save_alias);
@@ -46,9 +46,9 @@ char  *free_recursive_launch(char **pot_alias, char **save_alias,
 	return (new_input);
 }
 
-void  reset_token(t_tokens token, int *is_multi)
+void	reset_token(t_tokens token, int *is_multi)
 {
-  if (token.tok == 12)
-    *is_multi = 1;
-  free(token.data);
+	if (token.tok == 12)
+		*is_multi = 1;
+	free(token.data);
 }

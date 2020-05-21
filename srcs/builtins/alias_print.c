@@ -20,7 +20,7 @@
 **  mod = 1 : name error not conform alias name
 */
 
-int		error_alias(char *arg, int mod)
+int			error_alias(char *arg, int mod)
 {
 	if (mod == 0)
 	{

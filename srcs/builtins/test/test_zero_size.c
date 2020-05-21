@@ -12,10 +12,10 @@
 
 #include "libft.h"
 
-int test_zero_size(char *s1, char *s2)
+int		test_zero_size(char *s1, char *s2)
 {
-  (void)s2;
-  if (ft_strlen(s1) == 0)
-    return (0);
-  return (1);
+	(void)s2;
+	if (ft_strlen(s1) == 0)
+		return (0);
+	return (1);
 }

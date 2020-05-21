@@ -87,9 +87,9 @@ void	concat_pwd(char *str, char c)
 
 char	*new_path(char *add_to_path, char *pwd, int flags)
 {
-	char **arg;
-	char *save;
-	int i;
+	char	**arg;
+	char	*save;
+	int		i;
 
 	save = ft_strdup(pwd);
 	i = -1;

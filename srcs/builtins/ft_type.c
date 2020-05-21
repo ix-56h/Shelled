@@ -52,14 +52,10 @@ int		builtin_type(char *arg)
 	return (0);
 }
 
-/*
-   error not found : 0
-*/
-
-int 	alias_type(char *arg)
+int		alias_type(char *arg)
 {
-	int cpt;
-	char *value;
+	int		cpt;
+	char	*value;
 
 	if (!g_alias)
 		return (0);
@@ -89,10 +85,10 @@ void	error_type(int error, char *arg)
 
 int		ft_type(char **args, char ***tenv)
 {
-	int cpt;
-	int error;
-	char **path_s;
-	char *path;
+	int		cpt;
+	int		error;
+	char	**path_s;
+	char	*path;
 
 	path = get_env(*tenv, "PATH");
 	path_s = ft_strsplit(path, ':');

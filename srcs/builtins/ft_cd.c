@@ -59,14 +59,6 @@ int		step_to_do(char **args, char ***tenv, int *start)
 		return (step_arg(args, start));
 }
 
-/*
-flag :
-flag -P -> flags = 3 || flags = 4
-flag -L -> flags = 2  -> same behavior as no flag
-no flag -> flags = 5
-*/
-
-
 int		form_path(char *add_to_path, char ***tenv, char flags)
 {
 	char *old_pwd;
@@ -113,15 +105,6 @@ int		new_dir(char **args, char ***tenv, int flags, int start)
 	free(save);
 	return (error);
 }
-
-/*
-   path has been changed : 0
-   error no oldpwd : 1
-   error too many argument : 2
-   error no such file or directory : 3
-   error permission denied : 4
-   error not a directory : 5
-   */
 
 int		ft_cd(char **args, char ***tenv)
 {

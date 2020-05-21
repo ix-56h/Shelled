@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int test_reverse(char *s1, char *s2)
+int		test_reverse(char *s1, char *s2)
 {
-  (void)s2;
-  if (!s1)
-    return (0);
-  return (1);
+	(void)s2;
+	if (!s1)
+		return (0);
+	return (1);
 }

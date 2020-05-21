@@ -49,7 +49,6 @@ void		init_shell_job(void)
 	}
 }
 
-
 void		check_args(t_sh *sh, int ac, char **av)
 {
 	if (ac < 2)
@@ -99,8 +98,6 @@ void		free_all(t_sh *sh)
 	free_env(g_alias);
 	restore_term(3);
 }
-
-#include "stdio.h"
 
 int			main(int ac, char **av, char **envp)
 {

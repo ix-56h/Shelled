@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_dir.c                                        :+:      :+:    :+:   */
+/*   test_dir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jebrocho <jebrocho@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,10 +12,10 @@
 
 #include "builtins.h"
 
-int test_dir(char *s1, char *s2)
+int		test_dir(char *s1, char *s2)
 {
-  (void)s2;
-  if (stat(s1, &st) < 0)
-    return (1);
-  return (0);
+	(void)s2;
+	if (stat(s1, &st) < 0)
+		return (1);
+	return (0);
 }

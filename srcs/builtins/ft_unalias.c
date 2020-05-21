@@ -15,11 +15,6 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-/*
-   mod = 0 : wrong usage
-   mod = 1 : not found
-   */
-
 int		unalias_error(int mod, char *arg)
 {
 	if (mod == 0)
@@ -34,8 +29,8 @@ int		unalias_error(int mod, char *arg)
 
 int		del_all(void)
 {
-	int cpt;
-	char *name;
+	int		cpt;
+	char	*name;
 
 	cpt = ft_tablen(g_alias) - 1;
 	while (cpt > -1)
@@ -52,8 +47,8 @@ int		del_all(void)
 
 int		del_alias(char *arg)
 {
-	int cpt;
-	char *name;
+	int		cpt;
+	char	*name;
 
 	cpt = -1;
 	while (g_alias[++cpt])
@@ -72,8 +67,8 @@ int		del_alias(char *arg)
 
 int		ft_unalias(char **args, char ***env)
 {
-	int cpt;
-	int opt;
+	int		cpt;
+	int		opt;
 
 	cpt = 0;
 	opt = 0;

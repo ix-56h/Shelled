@@ -26,7 +26,7 @@ static void			printenv(char **env)
 	}
 }
 
-int 				setenv_error(int i, char *arg)
+int					setenv_error(int i, char *arg)
 {
 	char *error;
 
