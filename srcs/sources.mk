@@ -134,7 +134,7 @@ C_FILES_builtins = \
 					 ft_unalias.c \
 					 alias_tools.c \
 					 alias_print.c \
-					 test_algebraically_equal.c \
+		#			 test_algebraically_equal.c \
 					 test_block.c \
 					 test_char.c \
 					 test_dir.c \
@@ -158,7 +158,34 @@ C_FILES_builtins = \
 					 test_symbolic_link.c \
 					 test_userid_flag.c \
 					 test_write.c \
-					 test_zero_size.c \
+					 test_zero_size.c \#
+
+C_FILES_builtins/test = \
+			test_algebraically_equal.c \
+			test_block.c \
+			test_char.c \
+			test_dir.c \
+			test_exec.c \
+			test_fifo.c \
+			test_file.c \
+			test_greater_or_equal.c \
+			test_greater.c \
+			test_groupid_flag.c \
+			test_identical.c \
+			test_less_or_equal.c \
+			test_less.c \
+			test_non_algebraically_equal.c \
+			test_non_identical.c \
+			test_non_zero_file.c \
+			test_non_zero_size.c \
+			test_only_dir.c \
+			test_read.c \
+			test_reverse.c \
+			test_socket.c \
+			test_symbolic_link.c \
+			test_userid_flag.c \
+			test_write.c \
+			test_zero_size.c \
 
 C_FILES_utils = \
 				index_end_squote.c \

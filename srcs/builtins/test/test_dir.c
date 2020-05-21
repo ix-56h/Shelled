@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "builtins.h"
 
 int test_dir(char *s1, char *s2)
 {
-  (void)s1;
   (void)s2;
+  if (stat(s1, &st) < 0)
+    return (1);
   return (0);
 }

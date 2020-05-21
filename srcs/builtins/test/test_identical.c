@@ -14,7 +14,7 @@
 
 int test_identical(char *s1, char *s2)
 {
-  (void)s1;
-  (void)s2;
-  return (0);
+  if (ft_strcmp(s1, s2) == 0)
+    return (0);
+  return (1);
 }

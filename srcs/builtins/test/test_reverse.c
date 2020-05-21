@@ -10,11 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
 int test_reverse(char *s1, char *s2)
 {
-  (void)s1;
   (void)s2;
-  return (0);
+  if (!s1)
+    return (0);
+  return (1);
 }

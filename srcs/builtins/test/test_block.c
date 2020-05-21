@@ -10,11 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "builtins.h"
 
 int  test_block(char *s1, char *s2)
 {
-  (void)s1;
   (void)s2;
-  return (0);
+  if (stat(s1, &st) < 0)
+    return (1);
+  if (S_ISBLK(st.st_mode))
+    return (0);
+  return (1);
 }

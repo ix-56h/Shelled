@@ -14,7 +14,12 @@
 
 int test_less(char *s1, char *s2)
 {
-  (void)s1;
-  (void)s2;
-  return (0);
+  int i1;
+  int i2;
+
+  i1 = ft_atoi(s1);
+  i2 = ft_atoi(s2);
+  if (i1 < i2)
+    return (0);
+  return (1);
 }
