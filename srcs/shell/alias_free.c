@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   alias_get.c                                        :+:      :+:    :+:   */
+/*   alias_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jebrocho <jebrocho@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,25 +10,45 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
 #include "sh.h"
+#include "builtins.h"
 #include "ft_printf.h"
 
-char	*get_value_by_name(char *name)
+int f_s(char **save_alias)
 {
-	char	*name_g;
-	int		cpt;
+  free_env(save_alias);
+  return (0);
+}
 
-	cpt = -1;
-	while (g_alias[++cpt])
-	{
-		name_g = get_name(g_alias[cpt]);
-		if (ft_strcmp(name_g, name) == 0)
-		{
-			free(name_g);
-			return (get_value(g_alias[cpt]));
-		}
-		free(name_g);
-	}
-	return (NULL);
+char *free_recursive(char *input_s, char **alias_cpy, char *alias_v)
+{
+  free(input_s);
+  free_env(alias_cpy);
+  return (alias_v);
+}
+
+void free_alias(char **alias)
+{
+	int i;
+
+	i = -1;
+	while (alias[++i])
+		free(alias[i]);
+	free(alias);
+}
+
+char  *free_recursive_launch(char **pot_alias, char **save_alias,
+	 														char **alias_cpy, char *new_input)
+{
+	free_alias(pot_alias);
+	free_alias(save_alias);
+	free_alias(alias_cpy);
+	return (new_input);
+}
+
+void  reset_token(t_tokens token, int *is_multi)
+{
+  if (token.tok == 12)
+    *is_multi = 1;
+  free(token.data);
 }

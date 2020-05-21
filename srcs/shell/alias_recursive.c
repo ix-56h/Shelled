@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   alias.c                                            :+:      :+:    :+:   */
+/*   alias_recursive.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jebrocho <jebrocho@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,128 +14,76 @@
 #include "builtins.h"
 #include "ft_printf.h"
 
-char  *test_alias_r(char *name, char **alias_cpy, int *to_del)
+char  **del_var_alias(char **alias_cpy, char *data, char **alias_v, int *i)
 {
-  char	*name_g;
-  char  *alias_v;
-  int		cpt;
+  char *freed;
 
-  cpt = -1;
-  if (!alias_cpy)
-    return (NULL);
-  cpt = -1;
-  while (alias_cpy[++cpt])
-  {
-    name_g = get_name(alias_cpy[cpt]);
-    if (ft_strcmp(name_g, name) == 0)
-    {
-      alias_v = get_value(alias_cpy[cpt]);
-      *to_del = cpt;
-      free(name_g);
-      free(name);
-      return (alias_v);
-    }
-    free(name_g);
-  }
-  free(name);
-  return (NULL);
+  print_with_alias(data, alias_v, i);
+  freed = get_name(alias_cpy[is_alias(data, alias_cpy)]);
+  alias_cpy = del_var(alias_cpy, freed);
+  free(freed);
+  return (alias_cpy);
 }
 
-char *get_command_rec(char *input, int cpt)
+char **realloc_alias_n_multi(char **alias_cpy, char **save_alias, int *is_multi)
 {
-	char	*alias_n;
-	int		i;
-	int		id;
+  free_env(alias_cpy);
+  alias_cpy = cpy_alias(save_alias);
+  *is_multi = 0;
+  return (alias_cpy);
+}
 
-	i = get_len(input, cpt);
-//  ft_printf("rec get_len : %d\n", i);
-	if (!(alias_n = (char*)malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	id = 0;
-	while (id < i)
-	{
-		alias_n[id] = input[cpt];
-		cpt++;
-		id++;
-	}
-	alias_n[id] = '\0';
-//  ft_printf("rec alias_n : %s\n", alias_n);
-	return (alias_n);
+int   ft_strcmp_alias(char *s1, char *s2)
+{
+  int				i;
+  char      d;
+
+  i = 0;
+  while (s1[i] == s2[i] && s1[i] && s2[i])
+    i++;
+  d = s1[i] - s2[i];
+  if (d == 0)
+    free(s1);
+  return (d);
+}
+
+char **init_recursive(int *is_multi, char **input_s,
+                        char **alias_cpy, char *alias_v)
+{
+  char **save_alias;
+
+  *is_multi = 0;
+  *input_s = ft_strdup(alias_v);
+  save_alias = cpy_alias(alias_cpy);
+  free(alias_v);
+  return (save_alias);
 }
 
 char  *recursive_alias(char *alias_v, char **alias_cpy, t_lifo *stack)
 {
   t_tokens  token;
-  char      **pot_alias;
+  char      **save_alias;
   char      *input_s;
-  int       cpt;
   int       i;
-  int       to_del;
+  int       is_multi;
 
-  cpt = -1;
   i = 0;
   if (!alias_cpy)
     return (alias_v);
-  input_s = ft_strdup(alias_v);
-  while ((token = get_next_token(alias_v, stack)).data)
+  save_alias = init_recursive(&is_multi, &input_s, alias_cpy, alias_v);
+  while ((token = get_next_token(input_s, stack)).data)
   {
-    ft_printf("data : %s\n", token.data);
-    if (ft_strcmp(token.data, "EOF") == 0)
-    {
-      write(1, "\nx", 2);
+    if (ft_strcmp_alias(token.data, "EOF") == 0)
       break ;
-    }
-    if (i == 0)
-    {
-      if (!(pot_alias = (char**)malloc(sizeof(char*) * 2)))
-        return (NULL);
-      pot_alias[0] = ft_strdup(token.data);
-      pot_alias[1] = NULL;
-      i++;
-    }
+    if (token.tok != 12)
+      alias_cpy = realloc_alias_n_multi(alias_cpy, save_alias, &is_multi);
+    if (is_multi == 0 && is_alias(token.data, alias_cpy) >= 0)
+      alias_cpy = del_var_alias(alias_cpy, token.data, &alias_v, &i);
     else
-      pot_alias = add_pot(pot_alias, token.data);
+      alias_v = join_new_input(token.data, alias_v, &i);
+    reset_token(token, &is_multi);
   }
-  free(alias_v);
-  i = 0;
-  cpt = -1;
-  while (pot_alias[++cpt])
-  {
-//    ft_printf("cpt rec : %d\n", cpt);
-//    ft_printf("alias_v : %s\n", alias_v);
-//    ft_printf("name : %s\n", name);
-//    getchar();
-    if ((to_del = is_alias(pot_alias[cpt], alias_cpy)) >= 0)
-    {
-      if (i == 0)
-        alias_v = get_value_by_name(pot_alias[cpt]);
-      else
-      {
-        alias_v = ft_strjoin(alias_v, " ");
-        alias_v = ft_strjoin(alias_v, get_value_by_name(pot_alias[cpt]));
-      }
-      i++;
-      alias_cpy = del_var(alias_cpy, get_name(alias_cpy[to_del]));
-//      new_cpt = -1;
-//      while (alias_cpy[++new_cpt])
-//        ft_printf("cpy : %s\n", alias_cpy[cpt]);
-    }
-    else
-    {
-      if (i == 0)
-        alias_v = ft_strdup(pot_alias[cpt]);
-      else
-      {
-        alias_v = ft_strjoin(alias_v, " ");
-        alias_v = ft_strjoin(alias_v, pot_alias[cpt]);
-      }
-      i++;
-    }
-  }
-//  ft_printf("before rec alias_v : %s\n", alias_v);
-//  ft_printf("before rec save : %s\n", input_s);
-//  getchar();
-  if (alias_cpy && ft_strcmp(alias_v, input_s) != 0)
-    alias_v = recursive_alias(alias_v, alias_cpy, stack);
-  return (alias_v);
+  if (f_s(save_alias) == 0 && alias_cpy && ft_strcmp(alias_v, input_s) != 0)
+    alias_v = recursive_alias(alias_v, cpy_env(alias_cpy), stack);
+  return (free_recursive(input_s, alias_cpy, alias_v));
 }

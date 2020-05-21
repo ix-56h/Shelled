@@ -27,7 +27,7 @@ int  check_binary(char **args, int p_size)
     {
       if (g_operand[cpt].is_pathname == 0 && init_integer(args, p_size) == 2)
         return (2);
-      return (g_operand[cpt].func_op(args[1 + p_size], args[3 + p_size])); //for integer do atoi
+      return (g_operand[cpt].func_op(args[1 + p_size], args[3 + p_size]));
     }
   }
   return (error_test(args[2 + p_size], 2));
@@ -83,6 +83,8 @@ int  ft_test(char **args, char ***env)
   cpt = 0;
   while (args[cpt])
     cpt++;
+  if (cpt == 1)
+    return (1);
   if (!ft_strcmp(args[1], "!"))
     return (do_reverse(args, cpt));
   if (cpt == 4)
@@ -91,8 +93,6 @@ int  ft_test(char **args, char ***env)
     return (check_unary(args, 0));
   if (cpt == 2)
     return (simple_operand(args));
-  if (cpt == 1)
-    return (1);
   (void)env;
   return (error_test(NULL, 0));
 }

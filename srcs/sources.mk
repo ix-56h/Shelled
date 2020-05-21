@@ -88,6 +88,8 @@ C_FILES_shell = \
 				alias_get.c \
 				alias_print.c \
 				alias_recursive.c \
+				alias_free.c \
+				alias_tools.c \
 
 C_FILES_line_edit = \
 					alloc.c \

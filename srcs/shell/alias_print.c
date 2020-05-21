@@ -14,79 +14,93 @@
 #include "sh.h"
 #include "ft_printf.h"
 
-char	*print_no_after(char *before, char *value)
+void print_with_alias(char *data, char **alias_v, int *i)
 {
-	char	*input;
+  char *freed;
 
-	input = ft_strjoin(before, value);
-	return (input);
+  if (*i == 0)
+  {
+    freed = get_value_by_name(data);
+    *alias_v = ft_strdup(freed);
+    free(freed);
+  }
+  else
+  {
+    *alias_v = ft_strjoinf(*alias_v, " ", 1);
+    *alias_v = ft_strjoinf(*alias_v, get_value_by_name(data), 3);
+  }
+  *i  = *i + 1;
 }
 
-char	*print_before_and_after(char *before, char *value, char *after)
+char *join_new_input(char *data, char *new_input, int *i)
 {
-	char	*input;
-
-	input = ft_strjoin(before, value);
-	input = ft_strjoinf(input, after, 1);
-	return (input);
-}
-
-char	*print_no_before(char *value, char *after)
-{
-	char	*input;
-
-	input = ft_strjoin(value, after);
-	return (input);
-}
-
-
-char	*new_input(char *alias_v, char *input, int *cpt, int len_n)
-{
-	char	*after;
-	char	*before;
-	char	*new_input;
-
-	after = get_after(input, *cpt + len_n);
-	before = get_before(input, *cpt);
-	if (!after && !before)
-		new_input = ft_strdup(alias_v);
-	else if (after && !before /* *cpt == 0 */)
-	{
-		new_input = print_no_before(alias_v, after);
-		free(after);
-	}
-	else if (before && !after  /*ft_strlen(input) == (size_t)(*cpt + len_n)*/)
-	{
-		new_input = print_no_after(before, alias_v);
-		free(before);
-	}
+	if (*i == 0)
+		new_input = ft_strdup(data);
 	else
 	{
-		new_input = print_before_and_after(before, alias_v, after);
-		free(after);
-		free(before);
+		new_input = ft_strjoinf(new_input, " ", 1);
+		new_input = ft_strjoinf(new_input, data, 1);
 	}
-	*cpt += ft_strlen(alias_v);
-	free(input);
+	*i = *i + 1;
 	return (new_input);
 }
 
-void rm_first_space(char *input)
+
+char *print_recursive_alias(char **alias_cpy, char **save_alias,
+																	char **pot_alias, t_lifo *sta)
 {
 	int cpt;
-	int id;
+	int i;
+	char *new_input;
+	char *t;
 
 	cpt = 0;
-	id = 0;
-	while (input[cpt] == ' ' || input[cpt] == '\t' || input[cpt] == '\n')
-		cpt++;
-	if (cpt == 0)
-		return ;
-	while (input[cpt])
+	i = 0;
+	while (pot_alias[cpt])
+  {
+    if (is_alias(pot_alias[cpt], alias_cpy) >= 0)
+    {
+      t = recursive_alias(ft_strdup(pot_alias[cpt]), cpy_alias(alias_cpy), sta);
+      if (t)
+      {
+				new_input = join_new_input(t, new_input, &i);
+        free(t);
+				free_alias(alias_cpy);
+				alias_cpy = cpy_alias(save_alias);
+      }
+    }
+    else
+			new_input = join_new_input(pot_alias[cpt], new_input, &i);
+    cpt++;
+  }
+	return (free_recursive_launch(pot_alias, alias_cpy, save_alias, new_input));
+}
+
+char *print_new_input(char **pot_alias, int *toktype, t_lifo *stack)
+{
+	char *to_add;
+	char *new_input;
+	int i;
+	int cpt;
+
+	cpt = 0;
+	i = 0;
+	while (pot_alias[cpt])
 	{
-		input[id] = input[cpt];
-		id++;
+		if (toktype[cpt] == 2)
+			to_add = test_alias(pot_alias[cpt], stack);
+		if (to_add)
+		{
+			new_input = join_new_input(to_add, new_input, &i);
+			free(to_add);
+		}
+		else
+			new_input = join_new_input(pot_alias[cpt], new_input, &i);
+		free(pot_alias[cpt]);
+		to_add = NULL;
 		cpt++;
 	}
-	input[id] = '\0';
+	free(toktype);
+	free(pot_alias);
+	return (new_input);
 }
