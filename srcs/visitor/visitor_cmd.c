@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visitor_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/11 13:01:40 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/22 17:17:03 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,16 @@ static void		ctrl_c_handler(int lel)
 	ft_putchar('\n');
 }
 
-int	exec_command(t_node *node, t_io_lists *io, t_job **job)
+int				exec_command(t_node *node, t_io_lists *io, t_job **job)
 {
 	int	err;
 
 	signal(SIGINT, ctrl_c_handler);
 	restore_term(1);
 	add_jobnb((*job)->number);
-	dl_append_node((t_dl_node **)&(*job)->list, (t_dl_node *)create_process(UNUSED_JOB));
-	find_process_by_pid((*job)->list, UNUSED_JOB)->command = ft_strdup(node->data);
+	dl_append_node((t_dl_node **)&(*job)->list,
+						(t_dl_node *)create_process(UNUSED_JOB));
+	find_process_by_pid((*job)->list, -10)->command = ft_strdup(node->data);
 	err = exec_cmd(node, NULL, *io, *job);
 	if ((io->piped && !io->piped->next && io->piped->used == 1) || !io->piped)
 	{

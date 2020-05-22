@@ -123,11 +123,11 @@ int	lex_match_dol(char *s, int *anchor, t_lifo *stack)
 		else
 			return (0);
 	}
-	else if (ft_isalpha(s[*anchor]) || s[*anchor] == '_')
+	else if (ft_isalpha(s[*anchor]) || s[*anchor] == '_' || s[*anchor] == '$')
 	{
 		*anchor += 1;
 		while (ft_isalpha(s[*anchor]) || s[*anchor] == '_'
-				|| ft_isdigit(s[*anchor]))
+				|| ft_isdigit(s[*anchor]) || s[*anchor] == '$')
 			*anchor += 1;
 	}
 	return (1);

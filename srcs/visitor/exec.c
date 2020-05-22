@@ -6,20 +6,20 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/10 22:30:40 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/22 17:25:10 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
+#include <sys/wait.h>
+#include <stdio.h>
 #include "sh.h"
 #include "builtins.h"
 #include "exec.h"
-#include <sys/wait.h>
 
-#include <stdio.h>
-
-int				exec_builtin_no_fork(t_node *cmd, char **env, t_io_lists io, t_job *job)
+int				exec_builtin_no_fork(t_node *cmd, char **env,
+										t_io_lists io, t_job *job)
 {
 	t_builtin	exec_builtin;
 	int			ret;
@@ -53,16 +53,15 @@ void			child_exec(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	}
 	else
 		setpgid(pid, job->pgid);
-	signal (SIGINT, SIG_DFL);
-    signal (SIGQUIT, SIG_DFL);
-    signal (SIGTSTP, SIG_DFL);
-    signal (SIGTTIN, SIG_DFL);
-    signal (SIGTTOU, SIG_DFL);
-    signal (SIGCHLD, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGTSTP, SIG_DFL);
+	signal(SIGTTIN, SIG_DFL);
+	signal(SIGTTOU, SIG_DFL);
+	signal(SIGCHLD, SIG_DFL);
 	if (lookforbuiltin(cmd->data))
 	{
-		ret = lookforbuiltin(cmd->data)(cmd->args,
-		((env) ? &env : &g_env));
+		ret = lookforbuiltin(cmd->data)(cmd->args, ((env) ? &env : &g_env));
 		add_set("?", ret == 0 ? "0" : "2");
 		exit(ret);
 	}
@@ -81,54 +80,51 @@ void			after_fork_routine(pid_t pid, t_io_lists io, t_job *job)
 	{
 		setpgid(pid, pid);
 		job->pgid = pid;
-		
+	}
+	else
+		setpgid(pid, job->pgid);
+}
+
+static void		child_exec_forked(t_io_lists io,
+						char **env, t_job *job, t_node *cmd)
+{
+	int			ret;
+
+	ret = 0;
+	apply_fd(io);
+	if (lookforbuiltin(cmd->data))
+		child_exec(cmd, env, io, job);
+	else if (is_path(cmd->data))
+	{
+		if ((ret = test_path(cmd)) == 0)
+			child_exec(cmd, env, io, job);
+		else
+			exit(126);
 	}
 	else
 	{
-		setpgid(pid, job->pgid);
+		if ((ret = test_env(cmd, env)) == 0)
+			child_exec(cmd, env, io, job);
+		else
+			exit(127);
 	}
-}
-
-void			apply_fd(t_io_lists io)
-{
-	set_pipe_fd(io.piped);
-	close_all_pipe(io);
-	set_redir_fd(io.redir);
 }
 
 int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 {
 	pid_t		pid;
 	t_process	*process;
-	int		ret;
+	int			ret;
 
 	ret = 0;
 	if (!io.piped && !io.redir && !io.background && lookforbuiltin(cmd->data))
-			ret = exec_builtin_no_fork(cmd, env, io, job);
+		ret = exec_builtin_no_fork(cmd, env, io, job);
 	else
 	{
 		if ((pid = fork()) == -1)
 			return (-1);
 		else if (pid == 0)
-		{
-			apply_fd(io);
-			if (lookforbuiltin(cmd->data))
-				child_exec(cmd, env, io, job);
-			else if (is_path(cmd->data))
-			{
-				if ((ret = test_path(cmd)) == 0)
-					child_exec(cmd, env, io, job);
-				else
-					exit(126);
-			}
-			else
-			{
-				if ((ret = test_env(cmd, env)) == 0)
-					child_exec(cmd, env, io, job);
-				else
-					exit(127);
-			}
-		}
+			child_exec_forked(io, env, job, cmd);
 		after_fork_routine(pid, io, job);
 	}
 	return (ret);
