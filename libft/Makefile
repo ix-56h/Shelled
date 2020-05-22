@@ -32,7 +32,8 @@ SRC			=	ft_atoi.c         ft_islower.c      ft_memcpy.c       ft_putendl.c      
 				ft_isdigits.c	  ft_strichr.c		ft_calloc.c		  ft_strljoin.c  	ft_strreplace.c   ft_free.c			ft_vjoin.c 		  ft_vprint.c		ft_vprintfd.c   \
 				ft_itoa.c		  ft_isalldigit.c																																	\
 				ft_tablen.c \
-				ft_isalnum_str.c
+				ft_isalnum_str.c \
+				ft_isportable.c \
 # Some tricks in order to get the makefile doing his job the way I want (Can't be changed)
 
 CSRC		= $(addprefix $(SRCDIR), $(SRC))
