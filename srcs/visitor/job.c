@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/20 18:22:58 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/22 19:43:08 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,30 @@ void		free_all_job(t_job *job)
 	dl_free_with_data((t_dl_node *)job, dl_free_list);
 }
 
+static void	sub_mark_process_status(t_process **p, t_job **j,
+										pid_t pid, int status)
+{
+	if ((*p)->pid == pid)
+	{
+		(*p)->status = status;
+		if (WIFSTOPPED(status))
+		{
+			(*p)->is_stopped = 1;
+			(*j)->is_notified = 0;
+		}
+		else
+		{
+			(*p)->is_finish = 1;
+			if (WIFSIGNALED(status))
+				ft_dprintf(3, "%d: Terminated by signal %d.\n",
+					(int)pid, WTERMSIG(p->status));
+			(*p)->ret = status;
+		}
+		return (0);
+	}
+	(*p) = (*p)->next;
+}
+
 int			mark_process_status(pid_t pid, int status)
 {
 	t_job		*j;
@@ -102,26 +126,7 @@ int			mark_process_status(pid_t pid, int status)
 		{
 			p = j->list;
 			while (p)
-			{
-				if (p->pid == pid)
-				{
-					p->status = status;
-					if (WIFSTOPPED(status))
-					{
-						p->is_stopped = 1;
-						j->is_notified = 0;
-					}
-					else
-					{
-						p->is_finish = 1;
-						if (WIFSIGNALED(status))
-							ft_dprintf(3, "%d: Terminated by signal %d.\n", (int)pid, WTERMSIG(p->status));
-						p->ret = status;
-					}
-					return (0);
-				}
-				p = p->next;
-			}
+				sub_mark_process_status(&p, &j, pid, status);
 			j = j->next;
 		}
 		ft_dprintf(3, "No child process %d.\n", pid);
@@ -177,7 +182,8 @@ void		wait_for_job(t_job *job)
 		add_set("?", exit_status);
 		free(exit_status);
 	}
-	while (!mark_process_status(pid, status) && !job_is_stopped(job) && !job_is_completed(job))
+	while (!mark_process_status(pid, status) &&
+		!job_is_stopped(job) && !job_is_completed(job))
 	{
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED);
 		if (WIFEXITED(status))
