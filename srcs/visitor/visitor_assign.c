@@ -18,17 +18,33 @@
 #include "builtins.h"
 #include "ft_printf.h"
 
-static void		visitor_assign_exec(t_sh *sh, char *item, char *old_value,
+static int		is_only_assign(char *data, char **args)
+{
+	int i;
+	int count;
+
+	i = 0;
+	count = 0;
+	while (args[i])
+	{
+		if (ft_strchr(args[i], '='))
+			count++;
+		i++;
+	}
+	return (i == count ? 1 : 0);
+}
+
+static int		visitor_assign_exec(t_sh *sh, char *item, char *old_value,
 					char *data)
 {
 	lifo_empty(sh->stack.errors) ? sh->node = parse_program(sh) : 0;
 	process_sh(sh);
-//	add_set(item, old_value);
 	if (!ft_edit_env(g_env, item, old_value))
 		g_env = add_env(g_env, item, old_value);
 	free(old_value);
 	free(data);
 	free_sh(sh);
+	return (1);
 }
 
 static char		*get_temp_input(char **args)
@@ -69,14 +85,35 @@ static int		visit_assign_temp(char *data, char **args)
 			value = &value[1];
 			item = data;
 			old_value = ft_strdup(get_env(g_set, item));
-		//	add_set(item, value);
-		//	add_env(g_env, item, value);
 			if (!ft_edit_env(g_env, item, value))
 				g_env = add_env(g_env, item, value);
 		}
 	}
-	visitor_assign_exec(&sh, item, old_value, data);
-	return (1);
+	return (visitor_assign_exec(&sh, item, old_value, data));
+}
+
+void			visit_assign_multi(char *data, char **args)
+{
+	int i;
+	char *value;
+	char *item;
+
+	i = 0;
+	while (args[i])
+	{
+		if ((value = ft_strchr(args[i], '=')))
+		{
+			if (ft_strlen(args[i]) > 1)
+			{
+				value[0] = '\0';
+				value = &value[1];
+				item = args[i];
+				add_set(item, value);
+			}
+		}
+		i++;
+	}
+	free(data);
 }
 
 int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
@@ -88,11 +125,16 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 	(void)io;
 	(void)job;
 	data = ft_strdup(node->data);
-	if (node->args[1] && visit_assign_temp(data, node->args))
+	if (node->args[1] && is_only_assign(data, node->args))
+	{
+		visit_assign_multi(data, node->args);
+		return (0);
+	}
+	else if (node->args[1] && visit_assign_temp(data, node->args))
 	{
 		return (0);
 	}
-	if ((value = ft_strchr(data, '=')))
+	else if ((value = ft_strchr(data, '=')))
 	{
 		if (ft_strlen(data) > 1)
 		{

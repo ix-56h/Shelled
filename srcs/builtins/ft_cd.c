@@ -27,13 +27,12 @@ int			err_cd(char *buff, int error)
 		ft_putendl_fd("cd: HOME not set", STDERR_FILENO);
 	return (error);
 }
-#include <stdio.h>
+
 static int	no_arg(char **oldpath, char ***tenv)
 {
 	char	*home;
 
 	home = get_env(g_env, "HOME");
-	printf("\nhome : |%s|\n", home);
 	if (!home)
 		return (err_cd(NULL, ERR_CD_NOT_HOME));
 	return (err_cd(NULL, change_path(home, oldpath, tenv)));
