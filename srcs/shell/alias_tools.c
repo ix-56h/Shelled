@@ -1,0 +1,120 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   alias_tools.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jebrocho <jebrocho@42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/11/06 20:28:36 by jebrocho          #+#    #+#             */
+/*   Updated: 2018/11/13 12:52:15 by jebrocho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "sh.h"
+#include "builtins.h"
+#include "ft_printf.h"
+
+char	**add_pot(char **alias, char *pot)
+{
+	size_t		i;
+	size_t		j;
+	char		**new_env;
+
+	j = 0;
+	i = 0;
+	while (alias && alias[i])
+		++i;
+	i += 2;
+	new_env = ft_calloc(sizeof(char *) * i);
+	while (j < i - 2)
+	{
+		new_env[j] = alias[j];
+		j++;
+	}
+	alias = ft_free(alias);
+	new_env[j] = ft_strdup(pot);
+	return (new_env);
+}
+
+char	**alloc_pot(char *data, char **pot_alias, int *i)
+{
+	if (*i == 0)
+	{
+		if (!(pot_alias = (char**)malloc(sizeof(char*) * 2)))
+			return (NULL);
+		pot_alias[0] = ft_strdup(data);
+		pot_alias[1] = NULL;
+		*i = *i + 1;
+	}
+	else
+	{
+		pot_alias = add_pot(pot_alias, data);
+		*i = *i + 1;
+	}
+	free(data);
+	return (pot_alias);
+}
+
+char	**cpy_alias(char **alias)
+{
+	char	**new_alias;
+	int		i;
+
+	i = 0;
+	while (alias[i])
+		i++;
+	if (!(new_alias = (char**)malloc(sizeof(char*) * (i + 1))))
+		return (NULL);
+	i = -1;
+	while (alias[++i])
+		new_alias[i] = ft_strdup(alias[i]);
+	new_alias[i] = NULL;
+	return (new_alias);
+}
+
+int		*create_n_realloc_type(int *toktype, int is_multi)
+{
+	int i;
+	int *new_toktype;
+
+	i = 0;
+	if (toktype != 0)
+	{
+		while (toktype[i])
+			i++;
+		i += 2;
+		if (!(new_toktype = (int*)malloc(sizeof(int) * i)))
+			return (0);
+		i = -1;
+		while (toktype[++i])
+			new_toktype[i] = toktype[i];
+		free(toktype);
+	}
+	else
+	{
+		if (!(new_toktype = (int*)malloc(sizeof(int) * 2)))
+			return (0);
+	}
+	if (is_multi == 0)
+		new_toktype[i++] = 2;
+	else
+		new_toktype[i++] = 1;
+	new_toktype[i] = 0;
+	return (new_toktype);
+}
+
+int		*alloc_toktype(int *toktype, int *is_multi, t_tokens token)
+{
+	if (*is_multi == 0 && token.tok == 12)
+	{
+		toktype = create_n_realloc_type(toktype, *is_multi);
+		*is_multi = 1;
+	}
+	else
+	{
+		toktype = create_n_realloc_type(toktype, *is_multi);
+		if (token.tok != 12)
+			*is_multi = 0;
+	}
+	return (toktype);
+}

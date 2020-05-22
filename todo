@@ -1,0 +1,22 @@
+# IMPORTANT
+X			Check assignment_word 
+				- Need to check for the 7b rule if the current word is the first or not
+
+#		FOR 42sh 
+
+Chaque built-in doit avoir au minimum les options dictées par le standard POSIX, (sauf pour set et unset)
+Builtins:
+-	type
+-	export
+-- Job control
+	- fg
+	- jobs
+	- bg
+
+Variable definition name=value
+
+Partie modulaire :
+-	Les commandes groupées et sous-shell :
+-	La gestion des alias via les built-ins alias et unalias
+-	Le built-in test avec les opérateurs suivants :-b,-c,-d,-e,-f,-g,-L,-p,-r,-S,-s,-u,-w,-x,-z,=,!=,-eq,-ne,-ge,-lt,-le,!
+	- Ainsi que la possibilité d’un simple opérande, sans opérateur

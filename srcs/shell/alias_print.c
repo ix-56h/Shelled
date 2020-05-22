@@ -1,0 +1,105 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   alias_print.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jebrocho <jebrocho@42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/11/06 20:28:36 by jebrocho          #+#    #+#             */
+/*   Updated: 2018/11/13 12:52:15 by jebrocho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "builtins.h"
+#include "sh.h"
+#include "ft_printf.h"
+
+void	print_with_alias(char *data, char **alias_v, int *i)
+{
+	char *freed;
+
+	if (*i == 0)
+	{
+		freed = get_value_by_name(data);
+		*alias_v = ft_strdup(freed);
+		free(freed);
+	}
+	else
+	{
+		*alias_v = ft_strjoinf(*alias_v, " ", 1);
+		*alias_v = ft_strjoinf(*alias_v, get_value_by_name(data), 3);
+	}
+	*i = *i + 1;
+}
+
+char	*join_new_input(char *data, char *new_input, int *i)
+{
+	if (*i == 0)
+		new_input = ft_strdup(data);
+	else
+	{
+		new_input = ft_strjoinf(new_input, " ", 1);
+		new_input = ft_strjoinf(new_input, data, 1);
+	}
+	*i = *i + 1;
+	return (new_input);
+}
+
+char	*print_recursive_alias(char **a_y, char **save_alias,
+		char **pot_alias, t_lifo *sta)
+{
+	int		cpt;
+	int		i;
+	char	*new_input;
+	char	*t;
+
+	cpt = 0;
+	i = 0;
+	while (pot_alias[cpt])
+	{
+		if (is_alias(pot_alias[cpt], a_y) >= 0)
+		{
+			t = recursive_alias(ft_strdup(pot_alias[cpt]), cpy_alias(a_y), sta);
+			if (t)
+			{
+				new_input = join_new_input(t, new_input, &i);
+				free(t);
+				free_alias(a_y);
+				a_y = cpy_alias(save_alias);
+			}
+		}
+		else
+			new_input = join_new_input(pot_alias[cpt], new_input, &i);
+		cpt++;
+	}
+	return (free_recursive_launch(pot_alias, a_y, save_alias, new_input));
+}
+
+char	*print_new_input(char **pot_alias, int *toktype, t_lifo *stack)
+{
+	char	*to_add;
+	char	*new_input;
+	int		i;
+	int		cpt;
+
+	cpt = 0;
+	i = 0;
+	while (pot_alias[cpt])
+	{
+		if (toktype[cpt] == 2)
+			to_add = test_alias(pot_alias[cpt], stack);
+		if (to_add)
+		{
+			new_input = join_new_input(to_add, new_input, &i);
+			free(to_add);
+		}
+		else
+			new_input = join_new_input(pot_alias[cpt], new_input, &i);
+		free(pot_alias[cpt]);
+		to_add = NULL;
+		cpt++;
+	}
+	free(toktype);
+	free(pot_alias);
+	return (new_input);
+}
