@@ -1,2 +1,0 @@
-
-test -option pathname && echo "$? true" || echo "$? false"
