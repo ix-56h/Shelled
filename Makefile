@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
+#    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/10/22 18:06:27 by niguinti          #+#    #+#              #
-#    Updated: 2020/03/05 02:05:12 by niguinti         ###   ########.fr        #
+#    Created: 2020/03/07 04:11:46 by ezonda            #+#    #+#              #
+#    Updated: 2020/05/11 13:02:23 by mguerrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRC_DIR := ./srcs
 OBJ_DIR := ./.obj
 
 INC_DIR := ./incs
-
+			
 ### SUB FILES ###
 SUB_DIRS := \
 	error_handler \
@@ -30,12 +30,12 @@ SUB_DIRS := \
 	visitor \
 	shell \
 	builtins \
-	builtins/test \
 	utils \
 	line_edit \
 	ast \
 	stack \
 	expansions \
+	jobs \
 
 ### INCLUDE SRC MAKEFILE ###
 include $(SRC_DIR)/sources.mk
@@ -69,16 +69,16 @@ FT_INC_DIR = $(FT_DIR)/incs
 FT_LNK = -L$(FT_DIR) -l$(FT) -L$(PRINTF_DIR) -lprintf
 
 ###  CC && FLAGS ###
-CC = gcc -g #-fsanitize=address
+CC = gcc -g #-fsanitize=address 
 DEBUG_FLAGS = -g3
-NO_WARNING ?= false
+NO_WARNING ?= true
 ifeq ($(NO_WARNING), false)
 CFLAGS = \
 		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR) $(PRINTF_INC_DIR))\
 		 -Wall -Werror -Wextra
 else
 CFLAGS = \
-		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR) $(PRINTF_INC_DIR))
+		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR) $(PRINTF_INC_DIR)) 
 endif
 
 LFLAGS = -ltermcap \
