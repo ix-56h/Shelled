@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:35:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/22 18:17:10 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/22 18:50:47 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int		visit_or_if(t_node *node, t_io_lists io, t_job **job)
 		if (process->pid == ERR_JOB || process->ret != 0 || err != 0)
 			if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
 				return (0);
+		if (err == 0)
+			return (0);
 	}
 	return (1);
 }
