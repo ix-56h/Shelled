@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/14 20:02:45 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/22 19:08:21 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void		clean_job(void)
 		next = nav->next;
 		if (job_is_finish(nav) && nav->is_notified == 1)
 		{
+			signal_notif(nav);
 			if (head == nav)
 			{
 				g_job_head = next;

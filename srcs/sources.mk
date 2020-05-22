@@ -6,7 +6,7 @@
 #    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/05/11 13:00:32 by mguerrea         ###   ########.fr        #
+#    Updated: 2020/05/22 15:30:51 by mguerrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -159,5 +159,6 @@ C_FILES_jobs = \
 				fg.c \
 				update_jobs.c \
 				manage_list.c \
+				signal_handling.c \
 
 C_FILES += $(foreach SUB_DIR,$(SUB_DIRS),$(addprefix $(SUB_DIR)/,$(C_FILES_$(SUB_DIR))))
