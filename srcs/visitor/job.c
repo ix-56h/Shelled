@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/22 19:43:08 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/22 20:46:34 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static void	sub_mark_process_status(t_process **p, t_job **j,
 			(*p)->is_finish = 1;
 			if (WIFSIGNALED(status))
 				ft_dprintf(3, "%d: Terminated by signal %d.\n",
-					(int)pid, WTERMSIG(p->status));
+					(int)pid, WTERMSIG((*p)->status));
 			(*p)->ret = status;
 		}
 		return (0);
