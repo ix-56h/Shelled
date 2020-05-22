@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:35:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/19 18:07:15 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/22 18:17:10 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,12 @@ int		visit_semi(t_node *node, t_io_lists io, t_job **job)
 {
 	int				ret;
 	t_io_lists		new_io;
+	char			*tmp;
 
 	new_io = (t_io_lists){NULL, NULL, 0, io.cmd};
 	ret = visit(node->left, job, new_io.cmd);
-	cut_command(new_io.cmd, 1);
+	if ((tmp = cut_command(new_io.cmd, 1)))
+		free(tmp);
 	ret += visit(node->right, job, new_io.cmd);
 	return (ret);
 }
