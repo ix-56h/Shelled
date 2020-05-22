@@ -127,5 +127,6 @@ char			*get_last_part(char *word, size_t *a);
 */
 
 char			*dispatch_exp(char *full_word, char *mod);
+char			*test_parameter(t_exp_data *exp, char *word);
 
 #endif

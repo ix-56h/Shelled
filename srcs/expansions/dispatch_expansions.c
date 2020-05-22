@@ -27,6 +27,34 @@ t_exp_param		g_dispatch_string[MOD_MAX] =
 	{ MOD_ERROR, ":", error_modifier }
 };
 
+char			*test_parameter(t_exp_data *exp, char *word)
+{
+	int		i;
+	char	*new_word;
+
+	i = 1;
+	new_word = NULL;
+	if (exp->last[0])
+		process_expression(&exp->last);
+	if (!exp->modifier)
+	{
+		new_word = remove_brace(word);
+		while (new_word[i++])
+			if (parameter_error(new_word, i, 1))
+				return (ft_strdup(""));
+		process_expression(&new_word);
+	}
+	else
+	{
+		new_word = dispatch_exp(word, exp->modifier);
+		if (exp->first[0])
+			new_word = ft_strjoinf(exp->first, new_word, 2);
+	}
+	if (exp->last[0])
+		new_word = ft_strjoinf(new_word, exp->last, 1);
+	return (new_word);
+}
+
 static char		*get_word(char *full_word, char *mod)
 {
 	int		i;

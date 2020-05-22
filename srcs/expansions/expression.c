@@ -15,54 +15,7 @@
 #include "expansions.h"
 #include "libft.h"
 
-char	*test_parameter(t_exp_data *exp, char *word)
-{
-	int		i;
-	char	*new_word;
-
-	i = 1;
-	new_word = NULL;
-	if (exp->last[0])
-		process_expression(&exp->last);
-	if (!exp->modifier)
-	{
-		new_word = remove_brace(word);
-		while (new_word[i++])
-			if (parameter_error(new_word, i, 1))
-				return (ft_strdup(""));
-		process_expression(&new_word);
-	}
-	else
-	{
-		new_word = dispatch_exp(word, exp->modifier);
-		if (exp->first[0])
-			new_word = ft_strjoinf(exp->first, new_word, 2);
-	}
-	if (exp->last[0])
-		new_word = ft_strjoinf(new_word, exp->last, 1);
-	return (new_word);
-}
-
-char	*process_parameter(size_t *i, char *word)
-{
-	t_exp_data	exp;
-	char		*new_word;
-
-	new_word = NULL;
-	if (!check_braces(word, i))
-		return (ft_strdup(""));
-	exp.modifier = get_expansion_format(word);
-	exp.first = get_first_part(word);
-	exp.last = get_last_part(word, i);
-	new_word = test_parameter(&exp, word);
-	free(exp.first);
-	free(exp.last);
-	free(exp.modifier);
-	free(word);
-	return (new_word);
-}
-
-char	*process_simple_parameter(size_t *i, char *word)
+char			*process_simple_parameter(size_t *i, char *word)
 {
 	size_t	a;
 	char	expression[128];
@@ -91,7 +44,26 @@ char	*process_simple_parameter(size_t *i, char *word)
 	return (new_word);
 }
 
-int		check_dol(size_t *i, char **w)
+static char		*process_parameter(size_t *i, char *word)
+{
+	t_exp_data	exp;
+	char		*new_word;
+
+	new_word = NULL;
+	if (!check_braces(word, i))
+		return (ft_strdup(""));
+	exp.modifier = get_expansion_format(word);
+	exp.first = get_first_part(word);
+	exp.last = get_last_part(word, i);
+	new_word = test_parameter(&exp, word);
+	free(exp.first);
+	free(exp.last);
+	free(exp.modifier);
+	free(word);
+	return (new_word);
+}
+
+static int		check_dol(size_t *i, char **w)
 {
 	*i += 1;
 	if (!(*w)[*i] || (*w)[*i] == ' ' || (*w)[*i] == '\n' || (*w)[*i] == '\t')
@@ -114,37 +86,42 @@ int		check_dol(size_t *i, char **w)
 	return (0);
 }
 
-void	process_expression(char **w)
+static void		expression_loop(char ***w)
 {
 	size_t			i;
 	unsigned int	quoted;
 
 	i = 0;
 	quoted = 0;
-	if (!w || !*w)
-		exit(1);
-	if (ft_strlen(*w) == 1 && (*w)[i] == '$')
-		return ;
-	else if (ft_strlen(*w) == 2 && (*w)[i] == '$')
-		get_special_param(&w);
-	while ((*w)[i])
+	while ((**w)[i])
 	{
-		if ((*w)[i] == '"' && quoted == 2)
+		if ((**w)[i] == '"' && quoted == 2)
 			quoted = 0;
-		else if ((*w)[i] == '"' && quoted == 0)
+		else if ((**w)[i] == '"' && quoted == 0)
 			quoted = 2;
-		else if ((*w)[i] == '\'' && quoted == 0)
+		else if ((**w)[i] == '\'' && quoted == 0)
 		{
-			i = index_end_squote(*w, i);
+			i = index_end_squote(**w, i);
 			continue ;
 		}
-		else if ((*w)[i] == '`')
+		else if ((**w)[i] == '`')
 		{
-			*w = process_substitution(&i, *w, '`');
+			**w = process_substitution(&i, **w, '`');
 			break ;
 		}
-		else if ((*w)[i] == '$' && check_dol(&i, w) == 1)
+		else if ((**w)[i] == '$' && check_dol(&i, *w) == 1)
 			break ;
 		i++;
 	}
+}
+
+void			process_expression(char **w)
+{
+	if (!w || !*w)
+		exit(1);
+	if (ft_strlen(*w) == 1 && (*w)[0] == '$')
+		return ;
+	else if (ft_strlen(*w) == 2 && (*w)[0] == '$')
+		get_special_param(&w);
+	expression_loop(&w);
 }

@@ -13,6 +13,7 @@
 #include "sh.h"
 #include "job.h"
 #include "stdio.h"
+#include "builtins.h"
 #include <sys/wait.h>
 
 int		shall_we_wait(void)
@@ -88,7 +89,7 @@ void	do_job_notification(void)
 			push_back(j->number);
 			j->is_notified = 1;
 		}
-		add_set("!", ft_itoa(j->pgid));
+		add_bang(ft_itoa(j->pgid));
 		j = jnext;
 	}
 }

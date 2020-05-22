@@ -128,6 +128,7 @@ void			init_set(char **av)
 	add_set("HOME", get_env(g_env, "HOME"));
 	add_set("PATH", get_env(g_env, "PATH"));
 	add_set("PWD", get_env(g_env, "PWD"));
+	add_set("TERM", "xterm-256color");
 	add_set("IFS", " \t\n");
 	add_info_params(av);
 	add_info_id();

@@ -14,6 +14,12 @@
 #include "builtins.h"
 #include "sh.h"
 
+void			add_bang(char *value)
+{
+	add_set("!", value);
+	free(value);
+}
+
 static void		add_param_count(char *param)
 {
 	int		i;
