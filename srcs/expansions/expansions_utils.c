@@ -22,6 +22,7 @@ char	*remove_brace(char *word)
 
 	i = 0;
 	j = 0;
+	ft_putstr("\n\n-- HERE --\n\n");
 	while (word[i] && word[i] != '}')
 	{
 		if (word[i] == '{')
