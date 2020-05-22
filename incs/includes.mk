@@ -23,7 +23,9 @@ H_FILES_utils 		= 	\
 						stack.h \
 
 H_FILES_builtins 	= 	\
+						builtins_jump.h \
 						builtins.h \
+						test_builtins.h \
 
 H_FILES_line_edit 	= 	\
 						ligne.h \

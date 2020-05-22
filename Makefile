@@ -30,6 +30,7 @@ SUB_DIRS := \
 	visitor \
 	shell \
 	builtins \
+	builtins/test \
 	utils \
 	line_edit \
 	ast \
