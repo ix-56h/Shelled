@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/05/20 18:57:34 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/05/22 18:55:11 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -121,7 +121,6 @@ C_FILES_builtins = \
 				   ft_echo.c \
 				   ft_exit.c \
 				   builtin_misc.c \
-				   ft_debug_job.c \
 				   ft_return.c \
 				   ft_set.c \
 				   ft_unset.c \
