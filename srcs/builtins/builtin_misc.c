@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_misc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:40:41 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/11 13:35:39 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/22 17:26:06 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ t_builtin	lookforbuiltin(char *data)
 		return (ft_unsetenv);
 	else if (ft_strcmp(data, "exit") == 0)
 		return (ft_exit);
-	else if (ft_strcmp(data, "djob") == 0)
-		return (ft_debug_job);
 	else if (ft_strcmp(data, "return") == 0)
 		return (ft_return);
 	else if (ft_strcmp(data, "set") == 0)

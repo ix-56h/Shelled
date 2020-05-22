@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:35:19 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/02 00:07:34 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/22 17:25:02 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,11 @@ void	close_all_pipe(t_io_lists io)
 		close(piped->fd[1]);
 		piped = piped->next;
 	}
+}
+
+void	apply_fd(t_io_lists io)
+{
+	set_pipe_fd(io.piped);
+	close_all_pipe(io);
+	set_redir_fd(io.redir);
 }
