@@ -90,6 +90,7 @@ char			*substitution_wrapper(char *str)
 	char	buff[BUFFSIZE + 1];
 	int		pid;
 	t_job	*tmp;
+	int status;
 
 	tmp = NULL;
 	if (pipe(pipefd) != -1)
@@ -129,6 +130,7 @@ char			*substitution_wrapper(char *str)
 			//
 			exit(0);
 		}
+		pid = waitpid(WAIT_ANY, &status, WUNTRACED);
 		dup2(stdout_save, STDOUT_FILENO);
 		ft_bzero(buff, sizeof(char) * (BUFFSIZE + 1));
 		ret = NULL;
