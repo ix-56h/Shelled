@@ -92,11 +92,11 @@ static int		visit_assign_temp(char *data, char **args)
 	return (visitor_assign_exec(&sh, item, old_value, data));
 }
 
-void			visit_assign_multi(char *data, char **args)
+int				visit_assign_multi(char *data, char **args)
 {
-	int i;
-	char *value;
-	char *item;
+	int		i;
+	char	*value;
+	char	*item;
 
 	i = 0;
 	while (args[i])
@@ -114,6 +114,7 @@ void			visit_assign_multi(char *data, char **args)
 		i++;
 	}
 	free(data);
+	return (0);
 }
 
 int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
@@ -125,20 +126,10 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 	(void)io;
 	(void)job;
 	data = ft_strdup(node->data);
-//	if (node->args[1])
-//		ft_printf("\nHERE 0\n");
-
 	if (node->args[1] && is_only_assign(data, node->args))
-	{
-//	ft_printf("\nHERE 1\n");
-		visit_assign_multi(data, node->args);
-		return (0);
-	}
+		return (visit_assign_multi(data, node->args));
 	else if (node->args[1] && visit_assign_temp(data, node->args))
-	{
-//	ft_printf("\nHERE 2\n");
 		return (0);
-	}
 	else if ((value = ft_strchr(data, '=')))
 	{
 		if (ft_strlen(data) > 1)

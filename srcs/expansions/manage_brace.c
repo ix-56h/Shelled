@@ -13,8 +13,6 @@
 #include "expansions.h"
 #include "libft.h"
 
-#include <stdio.h>
-
 char	*get_last_part(char *word, size_t *a)
 {
 	size_t	i;
@@ -26,14 +24,9 @@ char	*get_last_part(char *word, size_t *a)
 	i = 0;
 	if (get_recur_end(2) == 1)
 		return (ft_strdup(""));
-//	printf("\nGET LAST - word : |%s|\n", word);
-//	printf("\nGET LAST - word[j] : |%c| - %ld - |%c|\n", word[j], *a, word[4]);
 	while (word[j])
-	{
 		tmp[i++] = word[j++];
-	}
 	tmp[i] = '\0';
-//	printf("\nGET LAST - tmp : |%s|\n", tmp);
 	new_word = ft_strdup(tmp);
 	get_recur_end(1);
 	return (new_word);
@@ -91,7 +84,6 @@ int		check_braces(char *word, size_t *a)
 	i = 1;
 	obrace = 0;
 	cbrace = 0;
-//	printf("\n- %ld\n", *a);
 	if (word[2] == '}')
 	{
 		ft_putstr_fd("42sh: bad substitution1", 2);
@@ -101,23 +93,15 @@ int		check_braces(char *word, size_t *a)
 	while (word[i] && word[i] != '}')
 		i++;
 	j = i;
-//	printf("\nj- %ld\n", j);
 	while (word[i])
 	{
 		if (word[i] == '}')
 			cbrace++;
-		if (obrace == cbrace)
-			break ;
-//	printf("\ni- %ld\n", i);
 		i++;
 	}
-//	*a = i + i;
 	j = 0;
 	while (word[j] && word[j] != '}')
 		j++;
 	*a = j + 1;
-//	printf("\n-- i- %ld\n", i);
-//	printf("\n-- j- %ld\n", j);
-//	printf("\n---- %ld\n", *a);
 	return (1);
 }

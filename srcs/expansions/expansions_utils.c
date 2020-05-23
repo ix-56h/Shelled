@@ -12,7 +12,7 @@
 
 #include "libft.h"
 #include "expansions.h"
-#include <stdio.h>
+
 char	*remove_brace(char *word)
 {
 	int		i;
@@ -22,7 +22,6 @@ char	*remove_brace(char *word)
 
 	i = 0;
 	j = 0;
-//	ft_putstr("\n\n-- HERE --\n\n");
 	while (word[i] && word[i] != '}')
 	{
 		if (word[i] == '{')
@@ -35,7 +34,6 @@ char	*remove_brace(char *word)
 	}
 	tmp[j] = '\0';
 	new_word = ft_strdup(tmp);
-//	printf("\nWORDb : |%s|\n", new_word);
 	return (new_word);
 }
 

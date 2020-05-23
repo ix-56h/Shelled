@@ -44,7 +44,6 @@ typedef	struct	s_sh
 
 void			check_param(char **av, t_args *f);
 int				init_shell(t_sh *sh, int ac, char **av, char **envp);
-void			init_shell_job(void);
 void			process_sh(t_sh *sh);
 void			check_args(t_sh *sh, int ac, char **av);
 
