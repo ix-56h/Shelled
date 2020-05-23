@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/22 21:01:11 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/23 14:48:57 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,6 @@ int			mark_process_status(pid_t pid, int status)
 					else
 					{
 						p->is_finish = 1;
-						if (WIFSIGNALED(status))
-							ft_dprintf(3, "%d: Terminated by signal %d.\n", (int)pid, WTERMSIG(p->status));
 						p->ret = status;
 					}
 					return (0);

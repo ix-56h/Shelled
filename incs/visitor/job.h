@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/11 17:32:26 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/23 14:53:13 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <sys/wait.h>
 # include "double_linked_list.h"
 # include "signal.h"
+# include <signal.h>
 # include "ft_printf.h"
 
 # define UNUSED_JOB		-10
@@ -82,9 +83,8 @@ void					push_back(int nb);
 void					del_jobnb(int nb);
 void					continue_job (t_job *j, int foreground);
 void					push_front(int nb);
-
-//DEBUG
-void					print_jobn();
+void					format_job_info(t_job *j, const char *status);
 void					mark_job_as_running (t_job *j);
+void					set_up_sigchld(void);
 
 #endif

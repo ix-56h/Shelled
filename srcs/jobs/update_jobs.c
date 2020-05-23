@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 15:45:38 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/05/11 15:23:47 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/23 13:38:18 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ void	do_job_notification(void)
 		if (job_is_completed(j))
 		{
 			if (WIFSIGNALED(j->list->status))
-				format_job_info(j, "terminated");
+				format_job_info(j, "Terminated");
 			else
-				format_job_info(j, "completed");
+				format_job_info(j, "Completed");
 			j->is_notified = 1;
 		}
 		else if (job_is_stopped(j) && !j->is_notified)
 		{
-			format_job_info(j, "stopped");
+			format_job_info(j, "Stopped");
 			push_back(j->number);
 			j->is_notified = 1;
 		}
