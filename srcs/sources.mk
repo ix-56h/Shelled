@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    sources.mk                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
+#    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/05/22 18:55:11 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/05/11 13:00:32 by mguerrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,6 +89,12 @@ C_FILES_shell = \
 				signal.c \
 				set.c \
 				shell_var.c \
+					alias.c \
+					alias_get.c \
+					alias_print.c \
+					alias_recursive.c \
+					alias_free.c \
+					alias_tools.c \
 
 C_FILES_line_edit = \
 					alloc.c \
@@ -116,8 +122,9 @@ C_FILES_builtins = \
 				   ft_take.c \
 				   ft_unsetenv.c \
 				   ft_addpath.c \
-				   ft_cd.c \
-				   ft_cd2.c \
+				   		ft_cd.c \
+				   		ft_cd2.c \
+				   		ft_cd3.c \
 				   ft_echo.c \
 				   ft_exit.c \
 				   builtin_misc.c \
@@ -125,6 +132,40 @@ C_FILES_builtins = \
 				   ft_set.c \
 				   ft_unset.c \
 				   ft_export.c \
+					 ft_type.c \
+					 ft_test.c \
+					 ft_test_tools.c \
+					 ft_alias.c \
+					 ft_unalias.c \
+					 alias_tools.c \
+					 alias_print.c \
+
+C_FILES_builtins/test = \
+			test_algebraically_equal.c \
+			test_block.c \
+			test_char.c \
+			test_dir.c \
+			test_exec.c \
+			test_fifo.c \
+			test_file.c \
+			test_greater_or_equal.c \
+			test_greater.c \
+			test_groupid_flag.c \
+			test_identical.c \
+			test_less_or_equal.c \
+			test_less.c \
+			test_non_algebraically_equal.c \
+			test_non_identical.c \
+			test_non_zero_file.c \
+			test_non_zero_size.c \
+			test_only_dir.c \
+			test_read.c \
+			test_reverse.c \
+			test_socket.c \
+			test_symbolic_link.c \
+			test_userid_flag.c \
+			test_write.c \
+			test_zero_size.c \
 
 C_FILES_utils = \
 				index_end_squote.c \

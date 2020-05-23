@@ -23,6 +23,7 @@ pid_t			g_shell_pgid;
 
 char			**g_env;
 char			**g_set;
+char			**g_alias;
 
 typedef	struct	s_args
 {
@@ -100,5 +101,37 @@ void			oprhaned_jobs(void);
 */
 
 void			get_special_param(char ***w);
+
+/*
+**  alias.c
+*/
+
+char			*add_alias(char *input, t_lifo *stack);
+char			*recursive_alias(char *alias_v, char **alias_cpy, t_lifo *stack);
+
+int				is_alias(char *t_alias, char **cpy_alias);
+char			*get_value_by_name(char *name);
+char			*test_alias(char *alias_n, t_lifo *stac);
+
+/*  print  */
+char			*print_new_input(char **pot_alias, int *toktype, t_lifo *stack);
+char			*join_new_input(char *data, char *new_input, int *i);
+void			print_with_alias(char *data, char **alias_v, int *i);
+char			*print_recursive_alias(char **alias_cpy, char **save_alias\
+										, char **pot_alias, t_lifo *sta);
+
+/*  free   */
+void			free_alias(char **alias);
+char			*free_recursive_launch(char **pot_alias, char **save_alias\
+										, char **alias_cpy, char *new_input);
+char			*free_recursive(char *input_s, char **alias_cpy, char *alias_v);
+int				f_s(char **save_alias);
+void			reset_token(t_tokens token, int *is_multi);
+
+/*   tools */
+char			**cpy_alias(char **alias);
+char			**alloc_pot(char *data, char **pot_alias, int *i);
+int				*alloc_toktype(int *toktype, int *is_multi, t_tokens token);
+char			**add_pot(char **alias, char *pot);
 
 #endif

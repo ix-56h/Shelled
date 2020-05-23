@@ -105,6 +105,7 @@ int			main(int ac, char **av, char **envp)
 	{
 		do_job_notification();
 		sh.input = run_line_edit();
+		sh.input = add_alias(sh.input, sh.stack.errors);
 		sh.tok = get_next_token(sh.input, sh.stack.errors);
 		lifo_empty(sh.stack.errors) ? sh.node = parse_program(&sh) : 0;
 		process_sh(&sh);
