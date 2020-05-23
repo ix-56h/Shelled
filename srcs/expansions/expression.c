@@ -43,7 +43,7 @@ char			*process_simple_parameter(size_t *i, char *word)
 	}
 	return (new_word);
 }
-
+#include <stdio.h>
 static char		*process_parameter(size_t *i, char *word)
 {
 	t_exp_data	exp;
@@ -52,6 +52,7 @@ static char		*process_parameter(size_t *i, char *word)
 	new_word = NULL;
 	if (!check_braces(word, i))
 		return (ft_strdup(""));
+//	printf("\ni : %ld\n", *i);
 	exp.modifier = get_expansion_format(word);
 	exp.first = get_first_part(word);
 	exp.last = get_last_part(word, i);
@@ -60,6 +61,7 @@ static char		*process_parameter(size_t *i, char *word)
 	free(exp.last);
 	free(exp.modifier);
 	free(word);
+//	printf("\nnew word : |%s|\n", new_word);
 	return (new_word);
 }
 
@@ -124,4 +126,5 @@ void			process_expression(char **w)
 	else if (ft_strlen(*w) == 2 && (*w)[0] == '$')
 		get_special_param(&w);
 	expression_loop(&w);
+//	printf("\nfinal word : |%s|\n", *w);
 }

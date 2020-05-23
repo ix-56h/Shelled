@@ -125,13 +125,18 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 	(void)io;
 	(void)job;
 	data = ft_strdup(node->data);
+//	if (node->args[1])
+//		ft_printf("\nHERE 0\n");
+
 	if (node->args[1] && is_only_assign(data, node->args))
 	{
+//	ft_printf("\nHERE 1\n");
 		visit_assign_multi(data, node->args);
 		return (0);
 	}
 	else if (node->args[1] && visit_assign_temp(data, node->args))
 	{
+//	ft_printf("\nHERE 2\n");
 		return (0);
 	}
 	else if ((value = ft_strchr(data, '=')))

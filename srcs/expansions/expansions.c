@@ -57,7 +57,7 @@ char	*expand_tilde(char *w)
 	}
 	return (w);
 }
-
+#include <stdio.h>
 char	*expand_word(char *word)
 {
 	char *word_len;
@@ -77,6 +77,7 @@ char	*expand_word(char *word)
 		return (word_len);
 	}
 	quote_removal(&word);
+//	printf("\nWORD : |%s|\n", word);
 	return (word);
 }
 
@@ -95,6 +96,7 @@ void	process_expansions(t_node *n)
 			while (n->args[i])
 			{
 				n->args[i] = expand_word(n->args[i]);
+//				printf("\nargs[i] : |%s|\n", n->args[i]);
 				i++;
 			}
 		}

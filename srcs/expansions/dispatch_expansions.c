@@ -27,6 +27,18 @@ t_exp_param		g_dispatch_string[MOD_MAX] =
 	{ MOD_ERROR, ":", error_modifier }
 };
 
+#include <stdio.h>
+
+int				is_blank(char *last)
+{
+	int i;
+
+	i = 0;
+	while (last[i] == ' ' || last[i] == '\n' || last[i] == '\t')
+		i++;
+	return (i == ft_strlen(last) ? 1 : 0);
+}
+
 char			*test_parameter(t_exp_data *exp, char *word)
 {
 	int		i;
@@ -35,14 +47,20 @@ char			*test_parameter(t_exp_data *exp, char *word)
 	i = 1;
 	new_word = NULL;
 	if (exp->last[0])
+	{
+//		printf("\nlast : |%s|\n", exp->last);
 		process_expression(&exp->last);
+//		printf("\nlast : |%s|\n", exp->last);
+	}
 	if (!exp->modifier)
 	{
 		new_word = remove_brace(word);
+//	printf("\n--here-1- nw : |%s|\n", new_word);
 		while (new_word[i++])
 			if (parameter_error(new_word, i, 1))
 				return (ft_strdup(""));
 		process_expression(&new_word);
+//	printf("\n--here-2- nw : |%s|\n", new_word);
 	}
 	else
 	{
@@ -50,8 +68,9 @@ char			*test_parameter(t_exp_data *exp, char *word)
 		if (exp->first[0])
 			new_word = ft_strjoinf(exp->first, new_word, 2);
 	}
-	if (exp->last[0])
+	if (exp->last[0] && !is_blank(exp->last))
 		new_word = ft_strjoinf(new_word, exp->last, 1);
+//	printf("\n--here-3- nw : |%s|\n", new_word);
 	return (new_word);
 }
 
