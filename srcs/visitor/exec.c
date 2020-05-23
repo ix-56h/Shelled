@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/22 17:25:10 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/23 20:02:42 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static void		child_exec_forked(t_io_lists io,
 		if ((ret = test_path(cmd)) == 0)
 			child_exec(cmd, env, io, job);
 		else
-			exit(126);
+			exit(127);
 	}
 	else
 	{
