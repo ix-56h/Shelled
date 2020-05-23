@@ -79,12 +79,11 @@ char	*expand_word(char *word)
 	quote_removal(&word);
 	return (word);
 }
-#include <stdio.h>
+
 void	process_expansions(t_node *n)
 {
 	size_t	i;
 
-	printf("\nexp\n");
 	if (n == NULL)
 		return ;
 	if (n->tok == TOK_WORD)
@@ -95,20 +94,13 @@ void	process_expansions(t_node *n)
 			i = 0;
 			while (n->args[i])
 			{
-				printf("\nexpand - arg : |%s|\n", n->args[i]);
 				n->args[i] = expand_word(n->args[i]);
 				i++;
 			}
 		}
 	}
 	if (n->left)
-	{
-				printf("\nproc left\n");
 		process_expansions(n->left);
-	}
 	if (n->right)
-	{
-				printf("\nproc right\n");
 		process_expansions(n->right);
-	}
 }

@@ -37,8 +37,6 @@ int				is_blank(char *last)
 	return (i == ft_strlen(last) ? 1 : 0);
 }
 
-#include <stdio.h>
-
 char			*test_parameter(t_exp_data *exp, char *word)
 {
 	int		i;
@@ -61,12 +59,9 @@ char			*test_parameter(t_exp_data *exp, char *word)
 		new_word = dispatch_exp(word, exp->modifier);
 		if (exp->first[0])
 			new_word = ft_strjoinf(exp->first, new_word, 2);
-//		printf("\n-- here 1-nw : |%s|\n", new_word);
 	}
 	if (exp->last[0] && !is_blank(exp->last))
 		new_word = ft_strjoinf(new_word, exp->last, 1);
-//	printf("\n-- here 2-nw : |%s| -|%s|-\n", new_word, word);
-//	new_word = remove_brace(new_word);
 	return (new_word);
 }
 
