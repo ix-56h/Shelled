@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:50:16 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/22 15:29:42 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/23 14:53:13 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <sys/wait.h>
 # include "double_linked_list.h"
 # include "signal.h"
+# include <signal.h>
 # include "ft_printf.h"
 
 # define UNUSED_JOB		-10
@@ -84,6 +85,6 @@ void					continue_job (t_job *j, int foreground);
 void					push_front(int nb);
 void					format_job_info(t_job *j, const char *status);
 void					mark_job_as_running (t_job *j);
-void signal_notif(t_job *job);
+void					set_up_sigchld(void);
 
 #endif

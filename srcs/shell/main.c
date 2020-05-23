@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/05/11 14:22:30 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/23 14:52:21 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		init_shell_job(void)
     	signal (SIGTSTP, SIG_IGN);
     	signal (SIGTTIN, SIG_IGN);
     	signal (SIGTTOU, SIG_IGN);
-		//signal (SIGCHLD, SIG_IGN);
+		set_up_sigchld();
     	g_shell_pgid = getpid ();
     	if (setpgid (g_shell_pgid, g_shell_pgid) < 0)
     	{
@@ -84,10 +84,10 @@ void		process_sh(t_sh *sh)
 				tree_draw(sh->node);
 			cmd = ft_strdup(sh->input);
 			visit(sh->node, &g_job_head, cmd);
-			free(cmd);
-			clean_job();
+			free(cmd);	
 		}
 	}
+	clean_job();
 }
 
 int			main(int ac, char **av, char **envp)
@@ -105,6 +105,7 @@ int			main(int ac, char **av, char **envp)
 	{
 		do_job_notification();
 		sh.input = run_line_edit();
+		sh.input = add_alias(sh.input, sh.stack.errors);
 		sh.tok = get_next_token(sh.input, sh.stack.errors);
 		lifo_empty(sh.stack.errors) ? sh.node = parse_program(&sh) : 0;
 		process_sh(&sh);

@@ -27,6 +27,16 @@ t_exp_param		g_dispatch_string[MOD_MAX] =
 	{ MOD_ERROR, ":", error_modifier }
 };
 
+int				is_blank(char *last)
+{
+	int i;
+
+	i = 0;
+	while (last[i] == ' ' || last[i] == '\n' || last[i] == '\t')
+		i++;
+	return (i == ft_strlen(last) ? 1 : 0);
+}
+
 char			*test_parameter(t_exp_data *exp, char *word)
 {
 	int		i;
@@ -50,7 +60,7 @@ char			*test_parameter(t_exp_data *exp, char *word)
 		if (exp->first[0])
 			new_word = ft_strjoinf(exp->first, new_word, 2);
 	}
-	if (exp->last[0])
+	if (exp->last[0] && !is_blank(exp->last))
 		new_word = ft_strjoinf(new_word, exp->last, 1);
 	return (new_word);
 }

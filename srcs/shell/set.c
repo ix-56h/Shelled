@@ -121,14 +121,9 @@ void			init_set(char **av)
 {
 	char *shell_name;
 
-	g_set = NULL;
+	g_set = cpy_env(g_env);
 	shell_name = ft_strjoin(get_env(g_env, "PWD"), "/42sh");
 	add_set("SHELL", shell_name);
-	add_set("SHLVL", get_env(g_env, "SHLVL"));
-	add_set("HOME", get_env(g_env, "HOME"));
-	add_set("PATH", get_env(g_env, "PATH"));
-	add_set("PWD", get_env(g_env, "PWD"));
-	add_set("TERM", "xterm-256color");
 	add_set("IFS", " \t\n");
 	add_info_params(av);
 	add_info_id();

@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/22 15:18:19 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/05/22 19:09:18 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/23 14:54:43 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,25 @@ const char *g_sig_message[31] = {"Hangup: 1", "Interrupt: 2", "Quit: 3",
 	"Virtual timer expired: 26", "Profiling timer expired: 27", "SIGPROF",
 	"SIGWINCH", "User defined signal 1: 30", "User defined signal 2: 31"};
 
-void	signal_notif(t_job *job)
+void child_handler(int useless, siginfo_t *info, void *context)
 {
 	int signal;
 
-	if (!(WIFSTOPPED(job->list->status)) && WIFSIGNALED(job->list->status))
+	(void)useless;
+	(void)context;
+	signal = WTERMSIG(info->si_status);
+	if (WIFSIGNALED(info->si_status) && info->si_code != 2)
 	{
-	signal = WTERMSIG(job->list->status);
-	ft_dprintf(2, "%d: Terminated by signal: %s.\n", job->pgid,
-		g_sig_message[signal - 1]);
+		ft_dprintf(2, "%s\n", g_sig_message[signal - 1]);
 	}
+}
+
+void set_up_sigchld(void)
+{
+	struct sigaction act;
+
+	act.sa_sigaction = child_handler;
+	act.sa_flags = SA_NOCLDSTOP|SA_SIGINFO;
+
+	sigaction(SIGCHLD, &act, 0);
 }

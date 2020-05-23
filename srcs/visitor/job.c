@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/22 19:14:47 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/23 14:48:57 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void		clean_job(void)
 		next = nav->next;
 		if (job_is_finish(nav) && nav->is_notified == 1)
 		{
-			signal_notif(nav);
 			if (head == nav)
 			{
 				g_job_head = next;
@@ -115,8 +114,6 @@ int			mark_process_status(pid_t pid, int status)
 					else
 					{
 						p->is_finish = 1;
-						if (WIFSIGNALED(status))
-							ft_dprintf(3, "%d: Terminated by signal %d.\n", (int)pid, WTERMSIG(p->status));
 						p->ret = status;
 					}
 					return (0);

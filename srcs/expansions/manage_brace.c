@@ -77,10 +77,11 @@ int		get_open_brace(char *word)
 int		check_braces(char *word, size_t *a)
 {
 	size_t	i;
+	size_t	j;
 	int		obrace;
 	int		cbrace;
 
-	i = 0;
+	i = 1;
 	obrace = 0;
 	cbrace = 0;
 	if (word[2] == '}')
@@ -89,14 +90,18 @@ int		check_braces(char *word, size_t *a)
 		return (0);
 	}
 	obrace = get_open_brace(word);
+	while (word[i] && word[i] != '}')
+		i++;
+	j = i;
 	while (word[i])
 	{
 		if (word[i] == '}')
 			cbrace++;
-		if (obrace == cbrace)
-			break ;
 		i++;
 	}
-	*a = i + 1;
+	j = 0;
+	while (word[j] && word[j] != '}')
+		j++;
+	*a = j + 1;
 	return (1);
 }
