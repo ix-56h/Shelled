@@ -66,6 +66,8 @@ void		check_args(t_sh *sh, int ac, char **av)
 	}
 }
 
+#include <stdio.h>
+
 void		process_sh(t_sh *sh)
 {
 	char	*cmd;
@@ -83,6 +85,7 @@ void		process_sh(t_sh *sh)
 			if (sh->f.ast_draw)
 				tree_draw(sh->node);
 			cmd = ft_strdup(sh->input);
+//			printf("\ncmd : |%s|\n", sh->node->data);
 			visit(sh->node, &g_job_head, cmd);
 			free(cmd);
 			clean_job();

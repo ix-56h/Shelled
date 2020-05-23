@@ -15,6 +15,8 @@
 #include "expansions.h"
 #include "libft.h"
 
+#include <stdio.h>
+
 char			*process_simple_parameter(size_t *i, char *word)
 {
 	size_t	a;
@@ -39,8 +41,43 @@ char			*process_simple_parameter(size_t *i, char *word)
 	{
 		*i += ft_strlen(tmp) - 1;
 		new_word = ft_vjoin(3, word, tmp, word + a);
+		printf("\n-- heresimple -nw : |%s|\n", new_word);
 		free(word);
 	}
+	return (new_word);
+}
+
+char			*get_closing(char *word, size_t *i)
+{
+	int cb = 0;
+	int ob = 0;
+	size_t a;
+	char *new_word;
+
+	a = *i;
+	new_word = ft_strnew(0);
+	while (word[a])
+	{
+		if (word[a] == '{')
+			ob++;
+		if (word[a] == '}')
+			cb++;
+		if (ob && cb && ob == cb)
+		{
+	printf("\nbreak\n");
+			break;
+		}
+		a++;
+	}
+	int j = 0;
+	while (word[j] && j <= a)
+	{
+		new_word[j] = word[j];
+		j++;
+	}
+	printf("\ni : |%ld|wordfi - |%s|\n", a, new_word);
+//	getchar();
+	*i = a;
 	return (new_word);
 }
 
@@ -49,9 +86,11 @@ static char		*process_parameter(size_t *i, char *word)
 	t_exp_data	exp;
 	char		*new_word;
 
+	printf("\nprocess param - word : |%s|\n", word);
 	new_word = NULL;
-	if (!check_braces(word, i))
-		return (ft_strdup(""));
+//	if (!check_braces(word, i))
+//		return (ft_strdup(""));
+	word = get_closing(word, i);
 	exp.modifier = get_expansion_format(word);
 	exp.first = get_first_part(word);
 	exp.last = get_last_part(word, i);
@@ -70,11 +109,13 @@ static int		check_dol(size_t *i, char **w)
 		return (2);
 	if ((*w)[*i] == '{')
 	{
+		printf("\nparam process - w : |%s|\n", *w);
 		*w = process_parameter(i, *w);
 		return (1);
 	}
 	else if (ft_isalpha((*w)[*i]) || (*w)[*i] == '_')
 	{
+		printf("\nsimple process - w : |%s|\n", *w);
 		*w = process_simple_parameter(i, *w);
 		return (1);
 	}
@@ -124,4 +165,5 @@ void			process_expression(char **w)
 	else if (ft_strlen(*w) == 2 && (*w)[0] == '$')
 		get_special_param(&w);
 	expression_loop(&w);
+//	printf("\nfinal word : |%s|\n", *w);
 }
