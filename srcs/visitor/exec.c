@@ -124,7 +124,7 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 		if ((pid = fork()) == -1)
 			return (-1);
 		else if (pid == 0)
-			child_exec_forked(io, env, job, cmd);
+			child_exec_forked(io, g_env, job, cmd);
 		after_fork_routine(pid, io, job);
 	}
 	return (ret);
