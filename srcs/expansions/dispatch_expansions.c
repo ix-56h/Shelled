@@ -37,6 +37,43 @@ int				is_blank(char *last)
 	return (i == ft_strlen(last) ? 1 : 0);
 }
 
+void			test_param(char **word)
+{
+	int		i;
+	int		j;
+	char	param[256];
+	char	**split;
+
+	j = 0;
+	i = 1;
+	split = ft_strsplit(get_env(g_set, "@"), ' ');
+	while ((*word)[i])
+	{
+		param[j] = (*word)[i];
+		j++;
+		i++;
+	}
+	param[j] = '\0';
+	j = 0;
+	i = ft_atoi(param);
+	ft_strdel(word);
+	while (split[j])
+		j++;
+	if (i < j && i > 0)
+	{
+		if (ft_strcmp(split[i], ")"))
+			*word = ft_strdup(split[i]);
+		else
+			*word = ft_strdup("");
+	}
+	else
+		*word = ft_strdup("");
+	i = 0;
+	while (split[i])
+		free(split[i++]);
+	free(split);
+}
+
 char			*test_parameter(t_exp_data *exp, char *word)
 {
 	int		i;
@@ -49,6 +86,17 @@ char			*test_parameter(t_exp_data *exp, char *word)
 	if (!exp->modifier)
 	{
 		new_word = remove_brace(word);
+		if (ft_isalldigit(&new_word[1]))
+			test_param(&new_word);
+		if (!new_word[0])
+		{
+			return (new_word);
+		}
+		if (ft_isdigit(new_word[1]) && !ft_isalldigit(&new_word[1]))
+		{
+			ft_putstr_fd("42sh: bad substitution", 2);
+			ft_bzero(new_word, ft_strlen(new_word));
+		}
 		while (new_word[i++])
 			if (parameter_error(new_word, i, 1))
 				return (ft_strdup(""));

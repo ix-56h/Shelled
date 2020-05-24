@@ -13,6 +13,8 @@
 #include "expansions.h"
 #include "libft.h"
 
+#include <stdio.h>
+
 char	*get_last_part(char *word, size_t *a)
 {
 	size_t	i;
@@ -23,7 +25,11 @@ char	*get_last_part(char *word, size_t *a)
 	j = *a;
 	i = 0;
 	if (get_recur_end(2) == 1)
-		return (ft_strdup(""));
+	{
+//		printf("\nrec ret\n");
+//		return (ft_strdup(""));
+	}
+//	printf("\ninlast : |%s|\n", word);
 	while (word[j])
 		tmp[i++] = word[j++];
 	tmp[i] = '\0';

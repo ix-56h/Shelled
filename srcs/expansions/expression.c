@@ -15,6 +15,8 @@
 #include "expansions.h"
 #include "libft.h"
 
+
+#include <stdio.h>
 char			*process_simple_parameter(size_t *i, char *word)
 {
 	size_t	a;
@@ -26,25 +28,30 @@ char			*process_simple_parameter(size_t *i, char *word)
 	a = *i;
 	while (word[a] && (ft_isalpha(word[a]) || ft_isdigit(word[a])))
 		a++;
+//	printf("\nHERE1\n");
 	ft_bzero(expression, 128);
 	ft_strncpy(expression, word + *i, (a - *i));
 	(*i)--;
 	word[*i] = 0;
+//	printf("\nHERE2\n");
 	if (!(tmp = get_env(g_set, expression)))
 	{
+//	printf("\nHERE3\n");
 		new_word = ft_strjoinf(word, word + a, 1);
 		*i -= 1;
 	}
 	else
 	{
+//	printf("\nHERE4\n");
 		*i += ft_strlen(tmp) - 1;
 		new_word = ft_vjoin(3, word, tmp, word + a);
 		free(word);
 	}
+//	printf("\nHERE5\n");
 	return (new_word);
 }
 
-char			*get_closing(char *word, size_t *i)
+char			*get_closing(char *word, size_t *i, char **last)
 {
 	int cb = 0;
 	int ob = 0;
@@ -52,7 +59,7 @@ char			*get_closing(char *word, size_t *i)
 	char *new_word;
 
 	a = *i;
-	new_word = ft_strnew(0);
+	new_word = ft_strnew(150);
 	while (word[a])
 	{
 		if (word[a] == '{')
@@ -70,7 +77,9 @@ char			*get_closing(char *word, size_t *i)
 		j++;
 	}
 	new_word[j] = '\0';
-	*i = a;
+	*i = a + 1;
+	*last = get_last_part(word, i);
+	free(word);
 	return (new_word);
 }
 
@@ -82,10 +91,10 @@ static char		*process_parameter(size_t *i, char *word)
 	new_word = NULL;
 //	if (!check_braces(word, i))
 //		return (ft_strdup(""));
-	word = get_closing(word, i);
+	word = get_closing(word, i, &exp.last);
 	exp.modifier = get_expansion_format(word);
 	exp.first = get_first_part(word);
-	exp.last = get_last_part(word, i);
+//	exp.last = get_last_part(word, i);
 	new_word = test_parameter(&exp, word);
 	free(exp.first);
 	free(exp.last);
@@ -148,14 +157,24 @@ static void		expression_loop(char ***w)
 	}
 }
 
+int				is_special_param(char c)
+{
+	if (ft_isdigit(c) || c == '@' || c == '*' || c == '$' || c == '#'
+	|| c == '?' || c == '?' || c == '-')
+		return (1);
+	return (0);
+}
+
 void			process_expression(char **w)
 {
 	if (!w || !*w)
 		exit(1);
 	if (ft_strlen(*w) == 1 && (*w)[0] == '$')
+	{
+		ft_bzero(*w, ft_strlen(*w));
 		return ;
-	else if (ft_strlen(*w) == 2 && (*w)[0] == '$')
+	}
+	else if (is_special_param((*w)[1]) && (*w)[0] == '$')
 		get_special_param(&w);
 	expression_loop(&w);
-//	printf("\nfinal word : |%s|\n", *w);
 }

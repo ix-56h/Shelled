@@ -80,6 +80,8 @@ char	*expand_word(char *word)
 	return (word);
 }
 
+#include <stdio.h>
+
 void	process_expansions(t_node *n)
 {
 	size_t	i;
@@ -94,6 +96,7 @@ void	process_expansions(t_node *n)
 			i = 0;
 			while (n->args[i])
 			{
+//				printf("\narg : |%s|\n", n->args[i]);
 				n->args[i] = expand_word(n->args[i]);
 				i++;
 			}

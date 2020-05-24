@@ -15,7 +15,7 @@
 #include "expansions.h"
 #include "libft.h"
 
-static char		*show_with_field_split(char *param, char *str, int index)
+static char		*show_with_field_split(char *param, char *str, int index, char *word)
 {
 	int		i;
 	char	*ifs_var;
@@ -32,10 +32,12 @@ static char		*show_with_field_split(char *param, char *str, int index)
 		i++;
 		index++;
 	}
+	free(ifs_var);
+	free(word);
 	return (str);
 }
 
-static char		*show_positional_param(char c)
+static char		*show_positional_param(char *word)
 {
 	int		i;
 	int		j;
@@ -49,19 +51,25 @@ static char		*show_positional_param(char c)
 	while (!ft_isalnum(param[i]) && param[i] != ')')
 		i++;
 	if (param[i] == ')')
+	{
+		free(word);
 		return (str);
-	if (c == '*')
-		return (show_with_field_split(param, str, i));
+	}
+	if (word[1] == '*')
+		return (show_with_field_split(param, str, i, word));
 	while (param[i] && param[i + 1] != ')')
 	{
 		str[j] = param[i];
 		j++;
 		i++;
 	}
+	free(word);
 	return (str);
 }
 
-static char		*look_for_param(int index)
+#include <stdio.h>
+
+static char		*look_for_param(char *word, int index)
 {
 	int		i;
 	char	*str;
@@ -79,34 +87,50 @@ static char		*look_for_param(int index)
 	return (str);
 }
 
-static char		*get_positional_param(char c)
+static char		*get_positional_param(char *word)
 {
 	char	*str;
 	char	param[2];
 
-	param[0] = c;
+	param[0] = word[1];
 	param[1] = '\0';
-	if (c != '0')
-		str = look_for_param(ft_atoi(param));
+	if (word[1] != '0')
+		str = look_for_param(word, ft_atoi(param));
 	else
 		str = ft_strdup(get_env(g_set, param));
+	free(word);
+	return (str);
+}
+
+static char		*show_special_param(char *word)
+{
+	char *str;
+	char param[2];
+
+	param[0] = word[1];
+	param[1] = '\0';
+	str = ft_strdup(get_env(g_set, param));
+	free(word);
 	return (str);
 }
 
 void			get_special_param(char ***w)
 {
+	char	*last;
+	size_t	i;
+
+	i = 2;
+	last = get_last_part(**w, &i);
 	if (ft_isdigit((**w)[1]))
-		**w = get_positional_param((**w)[1]);
+		**w = get_positional_param(**w);
 	else if ((**w)[1] == '@' || (**w)[1] == '*')
-		**w = show_positional_param((**w)[1]);
-	else if ((**w)[1] == '$')
-		**w = ft_strdup(get_env(g_set, "$"));
-	else if ((**w)[1] == '#')
-		**w = ft_strdup(get_env(g_set, "#"));
+		**w = show_positional_param(**w);
+	else if ((**w)[1] == '$' || (**w)[1] == '#'
+	|| (**w)[1] == '?' || (**w)[1] == '!')
+		**w = show_special_param(**w);
 	else if ((**w)[1] == '-')
 		ft_bzero(**w, ft_strlen(**w));
-	else if ((**w)[1] == '?')
-		**w = ft_strdup(get_env(g_set, "?"));
-	else if ((**w)[1] == '!')
-		**w = ft_strdup(get_env(g_set, "!"));
+	if (last[0])
+		**w = ft_strjoinf(**w, last, 1);
+	free(last);
 }
