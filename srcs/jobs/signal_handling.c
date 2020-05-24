@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/22 15:18:19 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/05/23 20:07:02 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/23 20:29:59 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void child_handler(int useless, siginfo_t *info, void *context)
 	(void)useless;
 	(void)context;
 	signal = WTERMSIG(info->si_status);
-	if (WIFSIGNALED(info->si_status) && info->si_code != 2 && signal < 32)
+	if (info->si_code == CLD_DUMPED && signal > 0 && signal < 32)
 	{
 		ft_dprintf(2, "%s\n", g_sig_message[signal - 1]);
 	}
