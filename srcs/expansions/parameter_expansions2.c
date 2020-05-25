@@ -77,6 +77,8 @@ char	*indicate_error(char *param, char *word)
 	return (ft_strdup(""));
 }
 
+//#include <stdio.h>
+
 char	*use_alternative_value(char *param, char *word)
 {
 	if (!get_env(g_set, param))
@@ -88,7 +90,11 @@ char	*use_alternative_value(char *param, char *word)
 	else
 	{
 		if (word[0] == '$' && word[1] == '{')
+		{
+//			printf("\nword1 : |%s|\n", word);
 			word = ft_strjoinf(word, "}", 1);
+//			printf("\nword2 : |%s|\n", word);
+		}
 		process_expression(&word);
 		free(param);
 		return (word);

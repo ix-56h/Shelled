@@ -60,6 +60,31 @@ char			*get_closing(char *word, size_t *i, char **last)
 
 	a = *i;
 	new_word = ft_strnew(150);
+//	printf("\nword : |%s| - i : %ld\n", word, a);
+/*	while (word[a])
+	{
+		if (word[a] == '{')
+			ob++;
+		if (word[a] == '}')
+			cb++;
+		a++;
+	}
+	a = *i;*/
+	if (word[2] == '}' || word[2] == '{')
+	{
+		ft_putstr_fd("42sh: bad substitution", 2);
+		return (NULL);
+	}
+//	if (ob > cb)
+//	{
+//		printf("\nerror - ob : %d - cb : %d\n", ob, cb);
+//		free(word);
+//		return (NULL);
+//	}
+//	else
+//		printf("\nno error - ob : %d - cb : %d\n", ob, cb);
+	ob = 0;
+	cb = 0;
 	while (word[a])
 	{
 		if (word[a] == '{')
@@ -92,6 +117,8 @@ static char		*process_parameter(size_t *i, char *word)
 //	if (!check_braces(word, i))
 //		return (ft_strdup(""));
 	word = get_closing(word, i, &exp.last);
+	if (!word)
+		return (ft_strdup(""));
 	exp.modifier = get_expansion_format(word);
 	exp.first = get_first_part(word);
 //	exp.last = get_last_part(word, i);
