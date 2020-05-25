@@ -34,8 +34,8 @@ t_node	*parse_subshell(t_sh *sh)
 			}
 			else
 				error_push(sh->stack.errors, PARSE_ERROR, sh->tok.data);
-			free(tok.data);
 		}
+		free(tok.data);
 	}
 	return (node);
 }
