@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/23 20:02:42 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/27 12:11:12 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,7 @@ void			child_exec(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	}
 	else
 		setpgid(pid, job->pgid);
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGTSTP, SIG_DFL);
-	signal(SIGTTIN, SIG_DFL);
-	signal(SIGTTOU, SIG_DFL);
-	signal(SIGCHLD, SIG_DFL);
+	restore_signals();
 	if (lookforbuiltin(cmd->data))
 	{
 		ret = lookforbuiltin(cmd->data)(cmd->args, ((env) ? &env : &g_env));
@@ -124,7 +119,7 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 		if ((pid = fork()) == -1)
 			return (-1);
 		else if (pid == 0)
-			child_exec_forked(io, env, job, cmd);
+			child_exec_forked(io, g_env, job, cmd);
 		after_fork_routine(pid, io, job);
 	}
 	return (ret);

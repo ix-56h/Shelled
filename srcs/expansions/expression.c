@@ -50,11 +50,11 @@ static char		*process_parameter(size_t *i, char *word)
 	char		*new_word;
 
 	new_word = NULL;
-	if (!check_braces(word, i))
+	word = get_closing(word, i, &exp.last);
+	if (!word)
 		return (ft_strdup(""));
 	exp.modifier = get_expansion_format(word);
 	exp.first = get_first_part(word);
-	exp.last = get_last_part(word, i);
 	new_word = test_parameter(&exp, word);
 	free(exp.first);
 	free(exp.last);
@@ -120,8 +120,11 @@ void			process_expression(char **w)
 	if (!w || !*w)
 		exit(1);
 	if (ft_strlen(*w) == 1 && (*w)[0] == '$')
+	{
+		ft_bzero(*w, ft_strlen(*w));
 		return ;
-	else if (ft_strlen(*w) == 2 && (*w)[0] == '$')
+	}
+	else if (is_special_param((*w)[1]) && (*w)[0] == '$')
 		get_special_param(&w);
 	expression_loop(&w);
 }

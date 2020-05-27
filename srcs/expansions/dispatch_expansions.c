@@ -27,14 +27,25 @@ t_exp_param		g_dispatch_string[MOD_MAX] =
 	{ MOD_ERROR, ":", error_modifier }
 };
 
-int				is_blank(char *last)
+void			get_multi_pos_param(char **word)
 {
-	int i;
+	int		i;
+	int		j;
+	char	param[256];
+	char	**split;
 
-	i = 0;
-	while (last[i] == ' ' || last[i] == '\n' || last[i] == '\t')
+	j = 0;
+	i = 1;
+	split = ft_strsplit(get_env(g_set, "@"), ' ');
+	while ((*word)[i])
+	{
+		param[j] = (*word)[i];
+		j++;
 		i++;
-	return (i == ft_strlen(last) ? 1 : 0);
+	}
+	param[j] = '\0';
+	i = ft_atoi(param);
+	look_multi_pos_param(split, word, i);
 }
 
 char			*test_parameter(t_exp_data *exp, char *word)
@@ -49,6 +60,20 @@ char			*test_parameter(t_exp_data *exp, char *word)
 	if (!exp->modifier)
 	{
 		new_word = remove_brace(word);
+		if (ft_isalldigit(&new_word[1]))
+			get_multi_pos_param(&new_word);
+		if (!new_word[0])
+			return (new_word);
+		if (ft_isdigit(new_word[1]) && !ft_isalldigit(&new_word[1]))
+		{
+			ft_putstr_fd("42sh: bad substitution", 2);
+			ft_bzero(new_word, ft_strlen(new_word));
+		}
+//		if (!ft_isalnum(new_word[1]))
+//		{
+//			ft_putstr_fd("42sh: bad substitution", 2);
+//			ft_bzero(new_word, ft_strlen(new_word));
+//		}
 		while (new_word[i++])
 			if (parameter_error(new_word, i, 1))
 				return (ft_strdup(""));

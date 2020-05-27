@@ -22,8 +22,6 @@ char	*get_last_part(char *word, size_t *a)
 
 	j = *a;
 	i = 0;
-	if (get_recur_end(2) == 1)
-		return (ft_strdup(""));
 	while (word[j])
 		tmp[i++] = word[j++];
 	tmp[i] = '\0';
@@ -74,34 +72,24 @@ int		get_open_brace(char *word)
 	return (obrace);
 }
 
-int		check_braces(char *word, size_t *a)
+char	*get_closing(char *word, size_t *i, char **last)
 {
-	size_t	i;
-	size_t	j;
-	int		obrace;
-	int		cbrace;
+	int		j;
+	size_t	a;
+	char	*new_word;
 
-	i = 1;
-	obrace = 0;
-	cbrace = 0;
-	if (word[2] == '}')
-	{
-		ft_putstr_fd("42sh: bad substitution1", 2);
-		return (0);
-	}
-	obrace = get_open_brace(word);
-	while (word[i] && word[i] != '}')
-		i++;
-	j = i;
-	while (word[i])
-	{
-		if (word[i] == '}')
-			cbrace++;
-		i++;
-	}
+	a = *i;
 	j = 0;
-	while (word[j] && word[j] != '}')
+	new_word = ft_strnew(FT_PATH_MAX);
+	look_braces_error(word, &a);
+	while (word[j] && j < a)
+	{
+		new_word[j] = word[j];
 		j++;
-	*a = j + 1;
-	return (1);
+	}
+	new_word[j] = '\0';
+	*i = a + 1;
+	*last = get_last_part(word, i);
+	free(word);
+	return (new_word);
 }

@@ -6,7 +6,7 @@
 #    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/05/23 13:23:34 by mguerrea         ###   ########.fr        #
+#    Updated: 2020/05/27 12:00:59 by mguerrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,9 +86,9 @@ C_FILES_shell = \
 				env.c \
 				env2.c \
 				init.c \
-				signal.c \
 				set.c \
 				shell_var.c \
+				shell_var2.c \
 					alias.c \
 					alias_get.c \
 					alias_print.c \
@@ -192,6 +192,7 @@ C_FILES_expansions = \
 					 parameter_expansions.c \
 					 parameter_expansions2.c \
 					 expansions_utils.c \
+					 expansions_utils2.c \
 					 dispatch_expansions.c \
 					 manage_brace.c \
 
