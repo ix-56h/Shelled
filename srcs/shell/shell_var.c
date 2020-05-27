@@ -15,59 +15,6 @@
 #include "expansions.h"
 #include "libft.h"
 
-static char		*show_with_field_split(char *param, char *str, \
-				int index, char *word)
-{
-	int		i;
-	char	*ifs_var;
-	char	ifs;
-
-	i = 0;
-	ifs_var = ft_strdup(get_env(g_set, "IFS"));
-	ifs = ifs_var[0];
-	while (param[index] && param[index + 1] != ')')
-	{
-		str[i] = param[index];
-		if (str[i] == ifs)
-			str[i] = ' ';
-		i++;
-		index++;
-	}
-	free(ifs_var);
-	free(word);
-	return (str);
-}
-
-static char		*show_positional_param(char *word)
-{
-	int		i;
-	int		j;
-	char	*str;
-	char	*param;
-
-	i = 0;
-	j = 0;
-	param = get_env(g_set, "@");
-	str = ft_strnew(FT_PATH_MAX);
-	while (!ft_isalnum(param[i]) && param[i] != ')')
-		i++;
-	if (param[i] == ')')
-	{
-		free(word);
-		return (str);
-	}
-	if (word[1] == '*')
-		return (show_with_field_split(param, str, i, word));
-	while (param[i] && param[i + 1] != ')')
-	{
-		str[j] = param[i];
-		j++;
-		i++;
-	}
-	free(word);
-	return (str);
-}
-
 static char		*look_for_param(char *word, int index)
 {
 	int		i;

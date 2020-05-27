@@ -15,8 +15,6 @@
 #include "expansions.h"
 #include "libft.h"
 
-
-#include <stdio.h>
 char			*process_simple_parameter(size_t *i, char *word)
 {
 	size_t	a;
@@ -28,84 +26,21 @@ char			*process_simple_parameter(size_t *i, char *word)
 	a = *i;
 	while (word[a] && (ft_isalpha(word[a]) || ft_isdigit(word[a])))
 		a++;
-//	printf("\nHERE1\n");
 	ft_bzero(expression, 128);
 	ft_strncpy(expression, word + *i, (a - *i));
 	(*i)--;
 	word[*i] = 0;
-//	printf("\nHERE2\n");
 	if (!(tmp = get_env(g_set, expression)))
 	{
-//	printf("\nHERE3\n");
 		new_word = ft_strjoinf(word, word + a, 1);
 		*i -= 1;
 	}
 	else
 	{
-//	printf("\nHERE4\n");
 		*i += ft_strlen(tmp) - 1;
 		new_word = ft_vjoin(3, word, tmp, word + a);
 		free(word);
 	}
-//	printf("\nHERE5\n");
-	return (new_word);
-}
-
-char			*get_closing(char *word, size_t *i, char **last)
-{
-	int cb = 0;
-	int ob = 0;
-	size_t a;
-	char *new_word;
-
-	a = *i;
-	new_word = ft_strnew(150);
-//	printf("\nword : |%s| - i : %ld\n", word, a);
-/*	while (word[a])
-	{
-		if (word[a] == '{')
-			ob++;
-		if (word[a] == '}')
-			cb++;
-		a++;
-	}
-	a = *i;*/
-//	if (word[2] == '}' || word[2] == '{')
-//	{
-//		ft_putstr_fd("42sh: bad substitution", 2);
-//		return (NULL);
-//	}						//	last change
-//	if (ob > cb)
-//	{
-//		printf("\nerror - ob : %d - cb : %d\n", ob, cb);
-//		free(word);
-//		return (NULL);
-//	}
-//	else
-//		printf("\nno error - ob : %d - cb : %d\n", ob, cb);
-	ob = 0;
-	cb = 0;
-	while (word[a])
-	{
-		if (word[a] == '{')
-			ob++;
-		if (word[a] == '}')
-			cb++;
-		if (ob && cb && ob == cb)
-			break;
-		a++;
-	}
-	int j = 0;
-	while (word[j] && j < a)
-	{
-		new_word[j] = word[j];
-		j++;
-	}
-	new_word[j] = '\0';
-	*i = a + 1;
-	*last = get_last_part(word, i);
-	free(word);
-	printf("\nhere - nw : |%s|\n", new_word);
 	return (new_word);
 }
 
@@ -115,25 +50,16 @@ static char		*process_parameter(size_t *i, char *word)
 	char		*new_word;
 
 	new_word = NULL;
-	printf("\nin exp\n");
-//	if (!check_braces(word, i))
-//		return (ft_strdup(""));
 	word = get_closing(word, i, &exp.last);
 	if (!word)
-	{
-		printf("\nno word ret null\n");
 		return (ft_strdup(""));
-	}
 	exp.modifier = get_expansion_format(word);
 	exp.first = get_first_part(word);
-//	exp.last = get_last_part(word, i);
 	new_word = test_parameter(&exp, word);
-	printf("\nHERE - |%s|\n", get_env(g_set, "a"));
 	free(exp.first);
 	free(exp.last);
 	free(exp.modifier);
 	free(word);
-printf("nw : |%s|", new_word);
 	return (new_word);
 }
 
@@ -144,13 +70,11 @@ static int		check_dol(size_t *i, char **w)
 		return (2);
 	if ((*w)[*i] == '{')
 	{
-//		printf("\nparam process - w : |%s|\n", *w);
 		*w = process_parameter(i, *w);
 		return (1);
 	}
 	else if (ft_isalpha((*w)[*i]) || (*w)[*i] == '_')
 	{
-//		printf("\nsimple process - w : |%s|\n", *w);
 		*w = process_simple_parameter(i, *w);
 		return (1);
 	}
@@ -189,14 +113,6 @@ static void		expression_loop(char ***w)
 			break ;
 		i++;
 	}
-}
-
-int				is_special_param(char c)
-{
-	if (ft_isdigit(c) || c == '@' || c == '*' || c == '$' || c == '#'
-	|| c == '?' || c == '?' || c == '-')
-		return (1);
-	return (0);
 }
 
 void			process_expression(char **w)

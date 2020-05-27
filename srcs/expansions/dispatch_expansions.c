@@ -27,17 +27,7 @@ t_exp_param		g_dispatch_string[MOD_MAX] =
 	{ MOD_ERROR, ":", error_modifier }
 };
 
-int				is_blank(char *last)
-{
-	int i;
-
-	i = 0;
-	while (last[i] == ' ' || last[i] == '\n' || last[i] == '\t')
-		i++;
-	return (i == ft_strlen(last) ? 1 : 0);
-}
-
-void			test_param(char **word)
+void			get_multi_pos_param(char **word)
 {
 	int		i;
 	int		j;
@@ -54,24 +44,8 @@ void			test_param(char **word)
 		i++;
 	}
 	param[j] = '\0';
-	j = 0;
 	i = ft_atoi(param);
-	ft_strdel(word);
-	while (split[j])
-		j++;
-	if (i < j && i > 0)
-	{
-		if (ft_strcmp(split[i], ")"))
-			*word = ft_strdup(split[i]);
-		else
-			*word = ft_strdup("");
-	}
-	else
-		*word = ft_strdup("");
-	i = 0;
-	while (split[i])
-		free(split[i++]);
-	free(split);
+	look_multi_pos_param(split, word, i);
 }
 
 char			*test_parameter(t_exp_data *exp, char *word)
@@ -87,11 +61,9 @@ char			*test_parameter(t_exp_data *exp, char *word)
 	{
 		new_word = remove_brace(word);
 		if (ft_isalldigit(&new_word[1]))
-			test_param(&new_word);
+			get_multi_pos_param(&new_word);
 		if (!new_word[0])
-		{
 			return (new_word);
-		}
 		if (ft_isdigit(new_word[1]) && !ft_isalldigit(&new_word[1]))
 		{
 			ft_putstr_fd("42sh: bad substitution", 2);
