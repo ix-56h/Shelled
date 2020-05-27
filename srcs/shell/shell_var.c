@@ -15,7 +15,8 @@
 #include "expansions.h"
 #include "libft.h"
 
-static char		*show_with_field_split(char *param, char *str, int index, char *word)
+static char		*show_with_field_split(char *param, char *str, \
+				int index, char *word)
 {
 	int		i;
 	char	*ifs_var;
@@ -66,8 +67,6 @@ static char		*show_positional_param(char *word)
 	free(word);
 	return (str);
 }
-
-#include <stdio.h>
 
 static char		*look_for_param(char *word, int index)
 {

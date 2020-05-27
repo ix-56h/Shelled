@@ -70,11 +70,11 @@ char			*get_closing(char *word, size_t *i, char **last)
 		a++;
 	}
 	a = *i;*/
-	if (word[2] == '}' || word[2] == '{')
-	{
-		ft_putstr_fd("42sh: bad substitution", 2);
-		return (NULL);
-	}
+//	if (word[2] == '}' || word[2] == '{')
+//	{
+//		ft_putstr_fd("42sh: bad substitution", 2);
+//		return (NULL);
+//	}						//	last change
 //	if (ob > cb)
 //	{
 //		printf("\nerror - ob : %d - cb : %d\n", ob, cb);
@@ -105,6 +105,7 @@ char			*get_closing(char *word, size_t *i, char **last)
 	*i = a + 1;
 	*last = get_last_part(word, i);
 	free(word);
+	printf("\nhere - nw : |%s|\n", new_word);
 	return (new_word);
 }
 
@@ -114,19 +115,25 @@ static char		*process_parameter(size_t *i, char *word)
 	char		*new_word;
 
 	new_word = NULL;
+	printf("\nin exp\n");
 //	if (!check_braces(word, i))
 //		return (ft_strdup(""));
 	word = get_closing(word, i, &exp.last);
 	if (!word)
+	{
+		printf("\nno word ret null\n");
 		return (ft_strdup(""));
+	}
 	exp.modifier = get_expansion_format(word);
 	exp.first = get_first_part(word);
 //	exp.last = get_last_part(word, i);
 	new_word = test_parameter(&exp, word);
+	printf("\nHERE - |%s|\n", get_env(g_set, "a"));
 	free(exp.first);
 	free(exp.last);
 	free(exp.modifier);
 	free(word);
+printf("nw : |%s|", new_word);
 	return (new_word);
 }
 
