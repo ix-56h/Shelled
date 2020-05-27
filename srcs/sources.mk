@@ -6,7 +6,7 @@
 #    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/05/23 13:23:34 by mguerrea         ###   ########.fr        #
+#    Updated: 2020/05/27 12:00:59 by mguerrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,6 @@ C_FILES_shell = \
 				env.c \
 				env2.c \
 				init.c \
-				signal.c \
 				set.c \
 				shell_var.c \
 				shell_var2.c \
