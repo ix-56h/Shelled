@@ -84,7 +84,7 @@ void		process_sh(t_sh *sh)
 				tree_draw(sh->node);
 			cmd = ft_strdup(sh->input);
 			visit(sh->node, &g_job_head, cmd);
-			free(cmd);	
+			free(cmd);
 		}
 	}
 	clean_job();

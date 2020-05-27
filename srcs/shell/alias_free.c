@@ -48,7 +48,23 @@ char	*free_recursive_launch(char **pot_alias, char **save_alias,
 
 void	reset_token(t_tokens token, int *is_multi)
 {
-	if (token.tok == 12)
+	char *name;
+	int cpt;
+
+	name = get_value_by_name(token.data);
+	if (name)
+	{
+		cpt = ft_strlen(name);
+		if (cpt > 0)
+		{
+			if (name[cpt - 1] == ' ')
+				*is_multi = 0;
+			else
+				*is_multi = 1;
+		}
+		free(name);
+	}
+	else if (token.tok == 12)
 		*is_multi = 1;
 	free(token.data);
 }

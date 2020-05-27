@@ -131,7 +131,7 @@ void			reset_token(t_tokens token, int *is_multi);
 /*   tools */
 char			**cpy_alias(char **alias);
 char			**alloc_pot(char *data, char **pot_alias, int *i);
-int				*alloc_toktype(int *toktype, int *is_multi, t_tokens token);
+int				*alloc_toktype(int *toktype, int *is_multi, char **pot, t_tokens token);
 char			**add_pot(char **alias, char *pot);
 
 #endif

@@ -59,11 +59,7 @@ int				init_integer(char **args, size_t p_size)
 int				simple_operand(char **args)
 {
 	if (ft_strlen(args[1]) == 0)
-	{
-		ft_printf("simple | false\n");
 		return (1);
-	}
-	ft_printf("simple | true\n");
 	return (0);
 }
 

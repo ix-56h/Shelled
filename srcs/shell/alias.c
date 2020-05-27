@@ -42,6 +42,12 @@ char	*launch_recursive(char *alias_v, char **alias_cpy, t_lifo *stack)
 	int			i;
 
 	i = 0;
+	if (ft_strlen(alias_v) == 0)
+	{
+		free(alias_v);
+		free_env(alias_cpy);
+		return (ft_strdup(""));
+	}
 	save_alias = cpy_alias(alias_cpy);
 	while ((token = get_next_token(alias_v, stack)).data)
 	{
@@ -105,7 +111,7 @@ char	*add_alias(char *input, t_lifo *stack)
 				return (input);
 			break ;
 		}
-		toktype = alloc_toktype(toktype, &is_multi, token);
+		toktype = alloc_toktype(toktype, &is_multi, pot_alias, token);
 		pot_alias = alloc_pot(token.data, pot_alias, &i);
 	}
 	free(input);
