@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/22 15:18:19 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/05/27 12:06:35 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/27 12:26:16 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ const char *g_sig_message[31] = {"Hangup: 1", "Interrupt: 2", "Quit: 3",
 	"Virtual timer expired: 26", "Profiling timer expired: 27", "SIGPROF",
 	"SIGWINCH", "User defined signal 1: 30", "User defined signal 2: 31"};
 
-void child_handler(int useless, siginfo_t *info, void *context)
+void	child_handler(int useless, siginfo_t *info, void *context)
 {
 	int signal;
 
@@ -36,20 +36,19 @@ void child_handler(int useless, siginfo_t *info, void *context)
 	}
 }
 
-void set_up_sigchld(void)
+void	set_up_sigchld(void)
 {
 	struct sigaction act;
 
 	act.sa_sigaction = child_handler;
-	act.sa_flags = SA_NOCLDSTOP|SA_SIGINFO;
-
+	act.sa_flags = SA_NOCLDSTOP | SA_SIGINFO;
 	sigaction(SIGCHLD, &act, 0);
 }
 
-void set_up_signals(void)
+void	set_up_signals(void)
 {
-	int j;
-	struct sigaction act;
+	int					j;
+	struct sigaction	act;
 
 	j = 1;
 	while (j < 31)
@@ -59,11 +58,11 @@ void set_up_signals(void)
 	}
 	signal(SIGINT, ctrl_c_line_handler);
 	act.sa_sigaction = child_handler;
-	act.sa_flags = SA_NOCLDSTOP|SA_SIGINFO;
+	act.sa_flags = SA_NOCLDSTOP | SA_SIGINFO;
 	sigaction(SIGCHLD, &act, 0);
 }
 
-void restore_signals(void)
+void	restore_signals(void)
 {
 	int j;
 

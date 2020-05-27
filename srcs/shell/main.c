@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/05/27 12:13:53 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/27 12:28:24 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,20 @@ void		init_shell_job(void)
 	shell_is_interactive = isatty(shell_terminal);
 	if (shell_is_interactive)
 	{
-    	while (tcgetpgrp(shell_terminal) != (g_shell_pgid = getpgrp()))
+		while (tcgetpgrp(shell_terminal) != (g_shell_pgid = getpgrp()))
 		{
-    		kill(-g_shell_pgid, SIGTTIN);
+			kill(-g_shell_pgid, SIGTTIN);
 		}
 		set_up_signals();
-    	g_shell_pgid = getpid ();
-    	if (setpgid (g_shell_pgid, g_shell_pgid) < 0)
-    	{
-        	ft_putstr_fd("Couldn't put the shell in its own process group", STDERR_FILENO);
-    		exit(1);
-        }
-    	tcsetpgrp (shell_terminal, g_shell_pgid);
-    }
+		g_shell_pgid = getpid();
+		if (setpgid (g_shell_pgid, g_shell_pgid) < 0)
+		{
+			ft_putstr_fd("Couldn't put the shell in its own process group", STDERR_FILENO);
+			exit(1);
+		}
+		tcsetpgrp (shell_terminal, g_shell_pgid);
+	}
 }
-
 
 void		check_args(t_sh *sh, int ac, char **av)
 {
@@ -79,7 +78,7 @@ void		process_sh(t_sh *sh)
 				tree_draw(sh->node);
 			cmd = ft_strdup(sh->input);
 			visit(sh->node, &g_job_head, cmd);
-			free(cmd);	
+			free(cmd);
 		}
 	}
 	clean_job();
