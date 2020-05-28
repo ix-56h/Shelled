@@ -13,10 +13,10 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/wait.h>
-#include <stdio.h>
 #include "sh.h"
 #include "builtins.h"
 #include "exec.h"
+#include "expansions.h"
 
 int				exec_builtin_no_fork(t_node *cmd, char **env,
 										t_io_lists io, t_job *job)
@@ -110,8 +110,16 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	pid_t		pid;
 	t_process	*process;
 	int			ret;
+	int			i;
 
+	i = 0;
 	ret = 0;
+	while (cmd->args[i])
+	{
+		if (cmd->args[i][0] == '$')
+			cmd->args[i] = expand_word(cmd->args[i]);
+		i++;
+	}
 	if (!io.piped && !io.redir && !io.background && lookforbuiltin(cmd->data))
 		ret = exec_builtin_no_fork(cmd, env, io, job);
 	else

@@ -55,7 +55,7 @@ typedef struct	s_exp
 **	expansions.c functions
 */
 
-void			process_expansions(t_node *n);
+char			*expand_word(char *word);
 int				get_length_mod(int act);
 int				get_recur_end(int act);
 

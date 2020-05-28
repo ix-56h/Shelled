@@ -67,8 +67,8 @@ void			look_braces_error(char *word, size_t *i)
 /*	if (word[2] == '}' || word[2] == '{')
 	{
 		ft_putstr_fd("42sh: bad substitution", 2);
-		return (NULL);
-	}	*/					//	last change
+		return ;
+	}			*/			//	last change
 	while (word[a])
 	{
 		if (word[a] == '{')

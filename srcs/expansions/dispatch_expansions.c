@@ -69,11 +69,11 @@ char			*test_parameter(t_exp_data *exp, char *word)
 			ft_putstr_fd("42sh: bad substitution", 2);
 			ft_bzero(new_word, ft_strlen(new_word));
 		}
-//		if (!ft_isalnum(new_word[1]))
-//		{
-//			ft_putstr_fd("42sh: bad substitution", 2);
-//			ft_bzero(new_word, ft_strlen(new_word));
-//		}
+/*		if (!ft_isalnum(new_word[1]))
+		{
+			ft_putstr_fd("42sh: bad substitution", 2);
+			ft_bzero(new_word, ft_strlen(new_word));
+		}*/
 		while (new_word[i++])
 			if (parameter_error(new_word, i, 1))
 				return (ft_strdup(""));
