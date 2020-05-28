@@ -60,6 +60,18 @@ char	**init_recursive(int *is_multi, char **input_s,
 	return (save_alias);
 }
 
+int 	check_conform(char **alias_cpy, char *alias_v)
+{
+	if (!alias_cpy)
+		return (0);
+	if (ft_strlen(alias_v) == 0)
+	{
+		free_env(alias_cpy);
+		return (0);
+	}
+	return (1);
+}
+
 char	*recursive_alias(char *alias_v, char **alias_cpy, t_lifo *stack)
 {
 	t_tokens	token;
@@ -69,7 +81,7 @@ char	*recursive_alias(char *alias_v, char **alias_cpy, t_lifo *stack)
 	int			is_multi;
 
 	i = 0;
-	if (!alias_cpy)
+	if (check_conform(alias_cpy, alias_v) == 0)
 		return (alias_v);
 	save_alias = init_recursive(&is_multi, &input_s, alias_cpy, alias_v);
 	while ((token = get_next_token(input_s, stack)).data)
@@ -82,7 +94,7 @@ char	*recursive_alias(char *alias_v, char **alias_cpy, t_lifo *stack)
 			alias_cpy = del_var_alias(alias_cpy, token.data, &alias_v, &i);
 		else
 			alias_v = join_new_input(token.data, alias_v, &i);
-		reset_token(token, &is_multi);
+		reset_token(token, &is_multi, alias_v);
 	}
 	if (f_s(save_alias) == 0 && alias_cpy && ft_strcmp(alias_v, input_s) != 0)
 		alias_v = recursive_alias(alias_v, cpy_env(alias_cpy), stack);

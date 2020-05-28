@@ -17,6 +17,7 @@
 char	*get_value_by_name(char *name)
 {
 	char	*name_g;
+	char	*value;
 	int		cpt;
 
 	cpt = -1;
@@ -26,7 +27,11 @@ char	*get_value_by_name(char *name)
 		if (ft_strcmp(name_g, name) == 0)
 		{
 			free(name_g);
-			return (get_value(g_alias[cpt]));
+			value = get_value(g_alias[cpt]);
+			if (ft_strlen(value) > 0)
+				return (value);
+			free(value);
+			return (ft_strdup(""));
 		}
 		free(name_g);
 	}
