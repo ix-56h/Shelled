@@ -94,7 +94,7 @@ char	*recursive_alias(char *alias_v, char **alias_cpy, t_lifo *stack)
 			alias_cpy = del_var_alias(alias_cpy, token.data, &alias_v, &i);
 		else
 			alias_v = join_new_input(token.data, alias_v, &i);
-		reset_token(token, &is_multi);
+		reset_token(token, &is_multi, alias_v);
 	}
 	if (f_s(save_alias) == 0 && alias_cpy && ft_strcmp(alias_v, input_s) != 0)
 		alias_v = recursive_alias(alias_v, cpy_env(alias_cpy), stack);
