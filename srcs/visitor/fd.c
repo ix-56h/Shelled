@@ -6,12 +6,15 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 23:06:50 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/10 22:30:57 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/28 23:06:12 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <fcntl.h>
 #include "visitor_misc.h"
+#include "builtins.h"
+#include "exec.h"
 
 int		set_pipe_fd(t_pipe_list *piped)
 {
@@ -74,10 +77,34 @@ int		set_used_fd(t_pipe_list *piped)
 	return (EXIT_SUCCESS);
 }
 
+int		open_file(t_redir_list *redir)
+{
+	int	fd;
+
+	if (redir)
+	{
+		while (redir)
+		{
+			if (redir->file)
+			{
+				if ((fd = open(redir->file, redir->flag, 0644)) == -1)
+					return (err_exec(redir->file, ERR_PATH_ACCES));
+				if (redir->in == -10)
+					redir->in = fd;
+				else if (redir->out == -10)
+					redir->out = fd;
+			}
+			redir = redir->next;
+		}
+	}
+	return (EXIT_SUCCESS);
+}
+
 int		set_redir_fd(t_redir_list *redir)
 {
 	if (redir)
 	{
+		open_file(redir);
 		while (redir)
 		{
 			if (redir->out == -1)
