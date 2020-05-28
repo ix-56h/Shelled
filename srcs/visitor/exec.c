@@ -115,11 +115,7 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	i = 0;
 	ret = 0;
 	while (cmd->args[i])
-	{
-		if (cmd->args[i][0] == '$')
-			cmd->args[i] = expand_word(cmd->args[i]);
-		i++;
-	}
+		cmd->args[i++] = expand_word(cmd->args[i]);
 	if (!io.piped && !io.redir && !io.background && lookforbuiltin(cmd->data))
 		ret = exec_builtin_no_fork(cmd, env, io, job);
 	else
