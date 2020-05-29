@@ -107,6 +107,9 @@ int			ft_alias(char **args, char ***env)
 	int			cpt;
 
 	(void)env;
+	cpt = -1;
+	while (args[++cpt])
+		ft_printf("args : %s\n", args[cpt]);
 	if (!g_alias)
 	{
 		i = 0;
