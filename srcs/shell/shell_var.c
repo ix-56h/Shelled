@@ -23,10 +23,15 @@ static char		*look_for_param(char *word, int index)
 
 	i = 0;
 	split = ft_strsplit(get_env(g_set, "@"), ' ');
-	if (split[index] && ft_strcmp(split[index], ")"))
+	while (split[i])
+		i++;
+	if (index > i)
+		str = ft_strdup("");
+	else if (split[index] && ft_strcmp(split[index], ")"))
 		str = ft_strdup(split[index]);
 	else
 		str = ft_strdup("");
+	i = 0;
 	while (split[i])
 		free(split[i++]);
 	free(split);

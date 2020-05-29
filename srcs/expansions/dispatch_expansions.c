@@ -48,6 +48,23 @@ void			get_multi_pos_param(char **word)
 	look_multi_pos_param(split, word, i);
 }
 
+int				digit_error(char *word)
+{
+	int i;
+
+	i = 0;
+	while (word[i] != '$')
+		i++;
+	i += 1;
+	if ((ft_isdigit(word[i]) && !ft_isalldigit(&word[i]))
+		|| (!ft_isalnum(word[i])))
+	{
+		ft_putstr_fd("42sh: bad substitution", 2);
+		return (1);
+	}
+	return (0);
+}
+
 char			*test_parameter(t_exp_data *exp, char *word)
 {
 	int		i;
@@ -64,16 +81,8 @@ char			*test_parameter(t_exp_data *exp, char *word)
 			get_multi_pos_param(&new_word);
 		if (!new_word[0])
 			return (new_word);
-		if (ft_isdigit(new_word[1]) && !ft_isalldigit(&new_word[1]))
-		{
-			ft_putstr_fd("42sh: bad substitution", 2);
+		if (digit_error(new_word))
 			ft_bzero(new_word, ft_strlen(new_word));
-		}
-/*		if (!ft_isalnum(new_word[1]))
-		{
-			ft_putstr_fd("42sh: bad substitution", 2);
-			ft_bzero(new_word, ft_strlen(new_word));
-		}*/
 		while (new_word[i++])
 			if (parameter_error(new_word, i, 1))
 				return (ft_strdup(""));
