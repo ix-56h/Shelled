@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/27 12:11:12 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/28 19:22:22 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/wait.h>
+#include <signal.h>
 #include "sh.h"
 #include "builtins.h"
 #include "exec.h"
@@ -86,6 +87,7 @@ static void		child_exec_forked(t_io_lists io,
 	int			ret;
 
 	ret = 0;
+	signal(SIGINT, SIG_DFL);
 	apply_fd(io);
 	if (lookforbuiltin(cmd->data))
 		child_exec(cmd, env, io, job);

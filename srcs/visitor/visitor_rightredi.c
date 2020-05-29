@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 18:38:07 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/19 19:04:15 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/28 23:05:16 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	exec_right_redi(t_node *node, t_io_lists *io, t_job **job)
 	int	fd;
 
 	(void)job;
-	if ((fd = open(node->right->data,
-			(O_CREAT | O_WRONLY | O_TRUNC), 0644)) == -1)
-		return (err_exec(node->right->data, ERR_PATH_ACCES));
+	fd = -10;
 	dl_push_node((t_dl_node **)&io->redir, ft_calloc(sizeof(t_redir_list)));
+	io->redir->file = node->right->data;
+	io->redir->flag = (O_CREAT | O_WRONLY | O_TRUNC);
 	if (node->io != -1)
 		io->redir->in = node->io;
 	else
