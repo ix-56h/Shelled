@@ -109,7 +109,7 @@ static void		expression_loop(char ***w)
 			**w = process_substitution(&i, **w, '`');
 			break ;
 		}
-		else if ((**w)[i] == '$' && check_dol(&i, *w) == 1)
+		else if (((**w)[i] == '$' && check_dol(&i, *w) == 1) || (!(**w)[i]))
 			break ;
 		i++;
 	}

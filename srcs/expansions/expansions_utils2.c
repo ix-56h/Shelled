@@ -54,8 +54,6 @@ void			look_multi_pos_param(char **split, char **word, int i)
 	free(split);
 }
 
-#include <stdio.h>
-
 void			look_braces_error(char *word, size_t *i)
 {
 	int		cb;
@@ -72,10 +70,9 @@ void			look_braces_error(char *word, size_t *i)
 	j += 2;
 	if (word[j] == '}' || word[j] == '{')
 	{
-//		printf("\nword : |%s|\n", word);
-		ft_putstr_fd("42sh: bad substitution", 2);
+		ft_putstr_fd("42sh: bad substitution!", 2);
 		return ;
-	}						//	last change
+	}
 	while (word[a])
 	{
 		if (word[a] == '{')
