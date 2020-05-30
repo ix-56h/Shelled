@@ -99,6 +99,8 @@ char			*test_parameter(t_exp_data *exp, char *word)
 	return (new_word);
 }
 
+#include <stdio.h>
+
 static char		*get_word(char *full_word, char *mod)
 {
 	int		i;
@@ -109,7 +111,6 @@ static char		*get_word(char *full_word, char *mod)
 
 	i = 0;
 	j = 0;
-	word = NULL;
 	index = mod[1] ? 1 : 0;
 	while (full_word[i] != mod[index])
 		i++;
@@ -118,7 +119,9 @@ static char		*get_word(char *full_word, char *mod)
 	else
 		i += 1;
 	len = i;
-	while (full_word && full_word[len] != '}')
+	if (!full_word[len])
+		return (ft_strdup(""));
+	while (len < ft_strlen(full_word) && full_word[len] != '}')
 		len++;
 	len -= i;
 	word = ft_strnew(len);
@@ -162,6 +165,8 @@ char			*dispatch_exp(char *full_word, char *mod)
 	i = -1;
 	new_word = NULL;
 	parameter = get_param(full_word, mod);
+	if (!parameter[0])
+		printf("\nno param\n");
 	word = parameter[0] ? get_word(full_word, mod) : ft_strdup("");
 	while (++i < MOD_MAX)
 	{
