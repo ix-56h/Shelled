@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:31:50 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/05/10 19:42:13 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/29 12:02:31 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	oprhaned_jobs(void)
 	{
 		if (!job_is_completed(job) && job_is_stopped(job))
 		{
+			kill(-(job->pgid), SIGCONT);
 			kill(-(job->pgid), SIGHUP);
 		}
 		else
