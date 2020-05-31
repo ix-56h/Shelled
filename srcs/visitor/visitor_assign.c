@@ -42,7 +42,7 @@ static int		visitor_assign_exec(t_sh *sh, char *item, char *old_value,
 	process_sh(sh);
 	if (!ft_edit_env(g_env, item, old_value))
 		g_env = add_env(g_env, item, old_value);
-//	add_set(item, old_value);
+	add_set(item, old_value);
 	free(old_value);
 	free(data);
 	free_sh(sh);
@@ -93,7 +93,7 @@ static int		visit_assign_temp(char *data, char **args)
 				process_expression(&expand);
 			if (!ft_edit_env(g_env, item, expand))
 				g_env = add_env(g_env, item, expand);
-//			add_set(item, expand);
+			add_set(item, ft_strdup(""));
 			free(expand);
 		}
 	}

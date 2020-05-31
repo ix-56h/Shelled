@@ -108,17 +108,24 @@ int		new_dir(char **args, char ***tenv, int flags, int start)
 
 int		ft_cd(char **args, char ***tenv)
 {
-	int i;
-	int start;
+	int		i;
+	int		start;
+	char	*home;
 
 	i = step_to_do(args, tenv, &start);
+	home = get_env(g_set, "HOME");
 	if (i == 0)
 	{
 		ft_printf("42sh: cd: HOME not set");
 		return (-1);
 	}
 	else if (i == 1)
-		chdir(get_env(*tenv, "HOME"));
+	{
+		if (!home[0])
+			chdir(get_env(*tenv, "HOME"));
+		else
+			chdir(home);
+	}
 	else
 		return (new_dir(args, tenv, i, start));
 	return (0);
