@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include "ligne.h"
+#include <expansions.h>
 #include "visitor.h"
 #include "visitor_rules.h"
 #include "sh.h"
@@ -65,6 +66,7 @@ int				visit(t_node *root, t_job **job, char *cmd)
 
 	if (!root)
 		return (0);
+	root->data = expand_word(root->data);
 	if (g_visit_rules[root->tok])
 	{
 		io = (t_io_lists){NULL, NULL, 0, cmd};

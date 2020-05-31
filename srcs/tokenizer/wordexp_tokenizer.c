@@ -33,7 +33,7 @@ int	lex_match_parameter(char *s, int *anchor, t_lifo *stack)
 		error_push(stack, MATCH_LEX, "}");
 		return (0);
 	}
-	//*anchor += 1;
+	*anchor += 1;
 	return (1);
 }
 

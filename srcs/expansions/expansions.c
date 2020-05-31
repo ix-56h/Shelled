@@ -79,28 +79,3 @@ char	*expand_word(char *word)
 	quote_removal(&word);
 	return (word);
 }
-
-void	process_expansions(t_node *n)
-{
-	size_t	i;
-
-	if (n == NULL)
-		return ;
-	if (n->tok == TOK_WORD)
-	{
-		n->data = expand_word(n->data);
-		if (n->args)
-		{
-			i = 0;
-			while (n->args[i])
-			{
-				n->args[i] = expand_word(n->args[i]);
-				i++;
-			}
-		}
-	}
-	if (n->left)
-		process_expansions(n->left);
-	if (n->right)
-		process_expansions(n->right);
-}

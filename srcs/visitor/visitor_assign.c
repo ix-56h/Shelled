@@ -16,6 +16,7 @@
 #include "ligne.h"
 #include "exec.h"
 #include "builtins.h"
+#include "expansions.h"
 #include "ft_printf.h"
 
 static int		is_only_assign(char *data, char **args)
@@ -41,6 +42,7 @@ static int		visitor_assign_exec(t_sh *sh, char *item, char *old_value,
 	process_sh(sh);
 	if (!ft_edit_env(g_env, item, old_value))
 		g_env = add_env(g_env, item, old_value);
+//	add_set(item, old_value);
 	free(old_value);
 	free(data);
 	free_sh(sh);
@@ -69,6 +71,7 @@ static int		visit_assign_temp(char *data, char **args)
 	char	*item;
 	char	*value;
 	char	*old_value;
+	char	*expand;
 
 	sh.f.ast_draw = 0;
 	if (!(sh.stack.errors = lifo_creator(20, sizeof(t_staterror))))
@@ -84,9 +87,14 @@ static int		visit_assign_temp(char *data, char **args)
 			value[0] = '\0';
 			value = &value[1];
 			item = data;
+			expand = ft_strdup(value);
 			old_value = ft_strdup(get_env(g_set, item));
-			if (!ft_edit_env(g_env, item, value))
-				g_env = add_env(g_env, item, value);
+			if (value[0] == '$')
+				process_expression(&expand);
+			if (!ft_edit_env(g_env, item, expand))
+				g_env = add_env(g_env, item, expand);
+//			add_set(item, expand);
+			free(expand);
 		}
 	}
 	return (visitor_assign_exec(&sh, item, old_value, data));
@@ -97,6 +105,7 @@ int				visit_assign_multi(char *data, char **args)
 	int		i;
 	char	*value;
 	char	*item;
+	char	*expand;
 
 	i = 0;
 	while (args[i])
@@ -108,7 +117,11 @@ int				visit_assign_multi(char *data, char **args)
 				value[0] = '\0';
 				value = &value[1];
 				item = args[i];
-				add_set(item, value);
+				expand = ft_strdup(value);
+				if (value[0] == '$')
+					process_expression(&expand);
+				add_set(item, expand);
+				free(expand);
 			}
 		}
 		i++;
@@ -122,6 +135,7 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 	char	*item;
 	char	*value;
 	char	*data;
+	char	*expand;
 
 	(void)io;
 	(void)job;
@@ -137,7 +151,11 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 			value[0] = '\0';
 			value = &value[1];
 			item = data;
-			add_set(item, value);
+			expand = ft_strdup(value);
+			if (value[0] == '$')
+				process_expression(&expand);
+			add_set(item, expand);
+			free(expand);
 			free(data);
 			return (0);
 		}

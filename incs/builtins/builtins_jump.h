@@ -33,6 +33,7 @@ const s_builtins g_builtins[] =
   {"return", ft_return},
   {"set", ft_set},
   {"unset", ft_unset},
+  {"export", ft_export},
   {"type", ft_type},
   {"alias", ft_alias},
   {"unalias", ft_unalias},

@@ -61,7 +61,7 @@ char	**get_env_path(void)
 	char	*path;
 	char	**paths;
 
-	path = get_env(g_env, "PATH");
+	path = get_env(g_set, "PATH");
 	if (path)
 	{
 		paths = ft_strsplit(path, ':');

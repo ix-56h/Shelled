@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:33:53 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/10 22:17:46 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/05/28 19:24:36 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ typedef struct			s_redir_list
 	struct s_redir_list	*prev;
 	int					in;
 	int					out;
+	char				*file;
+	int					flag;
 }						t_redir_list;
 
 typedef struct			s_io_lists

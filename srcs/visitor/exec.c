@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/27 12:11:12 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/28 19:22:22 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/wait.h>
-#include <stdio.h>
+#include <signal.h>
 #include "sh.h"
 #include "builtins.h"
 #include "exec.h"
+#include "expansions.h"
 
 int				exec_builtin_no_fork(t_node *cmd, char **env,
 										t_io_lists io, t_job *job)
@@ -86,6 +87,7 @@ static void		child_exec_forked(t_io_lists io,
 	int			ret;
 
 	ret = 0;
+	signal(SIGINT, SIG_DFL);
 	apply_fd(io);
 	if (lookforbuiltin(cmd->data))
 		child_exec(cmd, env, io, job);
@@ -110,8 +112,12 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	pid_t		pid;
 	t_process	*process;
 	int			ret;
+	int			i;
 
+	i = 0;
 	ret = 0;
+	while (cmd->args[i])
+		cmd->args[i++] = expand_word(cmd->args[i]);
 	if (!io.piped && !io.redir && !io.background && lookforbuiltin(cmd->data))
 		ret = exec_builtin_no_fork(cmd, env, io, job);
 	else
@@ -119,7 +125,7 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 		if ((pid = fork()) == -1)
 			return (-1);
 		else if (pid == 0)
-			child_exec_forked(io, env, job, cmd);
+			child_exec_forked(io, g_env, job, cmd);
 		after_fork_routine(pid, io, job);
 	}
 	return (ret);

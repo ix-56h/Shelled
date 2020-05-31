@@ -73,7 +73,6 @@ void		process_sh(t_sh *sh)
 	{
 		if (exec_heredoc(sh->stack.here_docs))
 		{
-			process_expansions(sh->node);
 			if (sh->f.ast_draw)
 				tree_draw(sh->node);
 			cmd = ft_strdup(sh->input);

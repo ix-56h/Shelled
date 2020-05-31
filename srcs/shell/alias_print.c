@@ -14,10 +14,26 @@
 #include "sh.h"
 #include "ft_printf.h"
 
+int 	check_red(char *data)
+{
+	if (!ft_strcmp(">>", data))
+		return (0);
+	if (!ft_strcmp(">", data))
+		return (0);
+	if (!ft_strcmp("<<", data))
+		return (0);
+	if (!ft_strcmp("<", data))
+		return (0);
+	return (1);
+}
+
 void	print_with_alias(char *data, char **alias_v, int *i)
 {
 	char *freed;
+	static int save;
 
+	if (check_red(data) == 0)
+		save = *i;
 	if (*i == 0)
 	{
 		freed = get_value_by_name(data);
@@ -26,27 +42,39 @@ void	print_with_alias(char *data, char **alias_v, int *i)
 	}
 	else
 	{
-		*alias_v = ft_strjoinf(*alias_v, " ", 1);
+		if ((save != *i && save != *i - 1) || *i < 1)
+			*alias_v = ft_strjoinf(*alias_v, " ", 1);
 		*alias_v = ft_strjoinf(*alias_v, get_value_by_name(data), 3);
 	}
+	if (*i > save)
+		save = 0;
 	*i = *i + 1;
 }
 
 char	*join_new_input(char *data, char *new_input, int *i)
 {
+	static int save;
+
+	if (save == 0)
+		save = -2;
+	if (check_red(data) == 0)
+		save = *i;
 	if (*i == 0)
 		new_input = ft_strdup(data);
 	else
 	{
-		new_input = ft_strjoinf(new_input, " ", 1);
+		if (save != *i && save != *i - 1)
+			new_input = ft_strjoinf(new_input, " ", 1);
 		new_input = ft_strjoinf(new_input, data, 1);
 	}
+	if (*i > save)
+		save = -2;
 	*i = *i + 1;
 	return (new_input);
 }
 
 char	*print_recursive_alias(char **a_y, char **save_alias,
-		char **pot_alias, t_lifo *sta)
+		char **pot_alias, t_lifo *sta, int *toktype)
 {
 	int		cpt;
 	int		i;
@@ -57,7 +85,7 @@ char	*print_recursive_alias(char **a_y, char **save_alias,
 	i = 0;
 	while (pot_alias[cpt])
 	{
-		if (is_alias(pot_alias[cpt], a_y) >= 0)
+		if (toktype[cpt] == 2 && is_alias(pot_alias[cpt], a_y) >= 0)
 		{
 			t = recursive_alias(ft_strdup(pot_alias[cpt]), cpy_alias(a_y), sta);
 			if (t)
@@ -72,6 +100,7 @@ char	*print_recursive_alias(char **a_y, char **save_alias,
 			new_input = join_new_input(pot_alias[cpt], new_input, &i);
 		cpt++;
 	}
+	free(toktype);
 	return (free_recursive_launch(pot_alias, a_y, save_alias, new_input));
 }
 

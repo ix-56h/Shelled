@@ -35,6 +35,57 @@ char		*get_name(char *arg)
 	return (name);
 }
 
+char		*form_value(char *arg)
+{
+	int		cpt;
+	int		new;
+	char	*new_arg;
+
+	cpt = 0;
+	new = 0;
+	if (arg[cpt] == '\'')
+	{
+		while (arg[cpt])
+		{
+			if (arg[cpt] == '\'')
+			{
+				new = cpt;
+				while (arg[new])
+				{
+					arg[new] = arg[new + 1];
+					new++;
+				}
+				arg[new] = '\0';
+				cpt--;
+			}
+			cpt++;
+		}
+	}
+	else if (arg[cpt] == '\"')
+	{
+		while (arg[cpt])
+		{
+			if (arg[cpt] == '\"')
+			{
+				new = cpt;
+				while (arg[new])
+				{
+					arg[new] = arg[new + 1];
+					new++;
+				}
+				arg[new] = '\0';
+				cpt--;
+			}
+			cpt++;
+		}
+	}
+	else
+		return (arg);
+	new_arg = ft_strdup(arg);
+	free(arg);
+	return (new_arg);
+}
+
 char		*get_value(char *arg)
 {
 	int		cpt;
@@ -61,7 +112,7 @@ char		*get_value(char *arg)
 		cpt++;
 	}
 	value[i] = '\0';
-	return (value);
+	return (form_value(value));
 }
 
 void		ft_swap(char **a, char **b)

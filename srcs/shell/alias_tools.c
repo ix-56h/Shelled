@@ -103,8 +103,40 @@ int		*create_n_realloc_type(int *toktype, int is_multi)
 	return (new_toktype);
 }
 
-int		*alloc_toktype(int *toktype, int *is_multi, t_tokens token)
+int 	check_for_replace(char *arg)
 {
+	int cpt;
+	char *name;
+
+	name = get_value_by_name(arg);
+	if (name)
+	{
+		cpt = ft_strlen(name);
+		if (cpt > 0)
+		{
+			if (name[cpt - 1] == ' ')
+			{
+				free(name);
+				return (0);
+			}
+		}
+		free(name);
+	}
+	return (1);
+}
+
+int		*alloc_toktype(int *toktype, int *is_multi, char **pot, t_tokens token)
+{
+	int i;
+
+	i = 0;
+	if (*is_multi == 1)
+	{
+		while (toktype[i] != 0)
+			i++;
+		if (*is_multi == 1 && toktype[i - 1] == 2)
+			*is_multi = check_for_replace(pot[i - 1]);
+	}
 	if (*is_multi == 0 && token.tok == 12)
 	{
 		toktype = create_n_realloc_type(toktype, *is_multi);

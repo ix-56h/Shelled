@@ -88,6 +88,7 @@ C_FILES_shell = \
 				init.c \
 				set.c \
 				shell_var.c \
+				shell_var2.c \
 					alias.c \
 					alias_get.c \
 					alias_print.c \
@@ -191,6 +192,7 @@ C_FILES_expansions = \
 					 parameter_expansions.c \
 					 parameter_expansions2.c \
 					 expansions_utils.c \
+					 expansions_utils2.c \
 					 dispatch_expansions.c \
 					 manage_brace.c \
 

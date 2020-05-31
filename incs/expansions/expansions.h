@@ -55,7 +55,7 @@ typedef struct	s_exp
 **	expansions.c functions
 */
 
-void			process_expansions(t_node *n);
+char			*expand_word(char *word);
 int				get_length_mod(int act);
 int				get_recur_end(int act);
 
@@ -115,10 +115,19 @@ char			*error_modifier(char *param, char *word);
 int				parameter_error(char *word, int index, int act);
 
 /*
+**	expansions_utils2.c
+*/
+
+int				is_special_param(char c);
+int				is_blank(char *last);
+void			look_multi_pos_param(char **split, char **word, int i);
+void			look_braces_error(char *word, size_t *i);
+
+/*
 **	manage_brace.c
 */
 
-int				check_braces(char *word, size_t *a);
+char			*get_closing(char *word, size_t *i, char **last);
 char			*get_first_part(char *word);
 char			*get_last_part(char *word, size_t *a);
 

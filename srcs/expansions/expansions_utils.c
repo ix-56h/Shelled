@@ -41,7 +41,7 @@ int		parameter_error(char *word, int index, int act)
 {
 	if (word[index] == '{' && word[index - 1] != '$')
 	{
-		ft_putstr_fd("42sh: bad substitution!", 2);
+		ft_putstr_fd("42sh: bad substitution", 2);
 		if (act == 1)
 			free(word);
 		return (1);
