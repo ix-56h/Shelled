@@ -112,7 +112,6 @@ char		*get_value(char *arg)
 		cpt++;
 	}
 	value[i] = '\0';
-	ft_printf("get | value : %s\n", value);
 	return (form_value(value));
 }
 
