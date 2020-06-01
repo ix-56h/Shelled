@@ -13,8 +13,6 @@
 #include "expansions.h"
 #include "libft.h"
 
-#include <stdio.h>
-
 char	*get_last_part(char *word, size_t *a)
 {
 	size_t	i;

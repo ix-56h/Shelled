@@ -53,8 +53,6 @@ static char		*get_positional_param(char *word)
 	return (str);
 }
 
-#include <stdio.h>
-
 static char		*show_special_param(char *word)
 {
 	char *str;
@@ -79,10 +77,8 @@ void			get_special_param(char ***w)
 	else if ((**w)[1] == '@' || (**w)[1] == '*')
 		**w = show_positional_param(**w);
 	else if ((**w)[1] == '$' || (**w)[1] == '#'
-	|| (**w)[1] == '?' || (**w)[1] == '!')
+	|| (**w)[1] == '?' || (**w)[1] == '!' || (**w)[1] == '-')
 		**w = show_special_param(**w);
-	else if ((**w)[1] == '-')
-		ft_bzero(**w, ft_strlen(**w));
 	if (last[0])
 		**w = ft_strjoinf(**w, last, 1);
 	free(last);

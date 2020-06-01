@@ -93,7 +93,6 @@ static int		visit_assign_temp(char *data, char **args)
 				process_expression(&expand);
 			if (!ft_edit_env(g_env, item, expand))
 				g_env = add_env(g_env, item, expand);
-//			add_set(item, "\0");
 			free(expand);
 		}
 	}
