@@ -19,6 +19,30 @@
 #include "expansions.h"
 #include "ft_printf.h"
 
+void			assign_var(char *data, char *value, int mod)
+{
+	char	*item;
+	char	*expand;
+
+	item = data;
+	expand = ft_strdup(value);
+	if (value[0] == '$')
+		process_expression(&expand);
+	if (!mod)
+	{
+		add_set(item, expand);
+		if (!ft_strcmp(item, "HOME"))
+			if (!ft_edit_env(g_env, item, expand))
+				g_env = add_env(g_env, item, expand);
+	}
+	else
+	{
+		if (!ft_edit_env(g_env, item, expand))
+			g_env = add_env(g_env, item, expand);
+	}
+	free(expand);
+}
+
 static int		is_only_assign(char *data, char **args)
 {
 	int i;
@@ -68,10 +92,8 @@ static char		*get_temp_input(char **args)
 static int		visit_assign_temp(char *data, char **args)
 {
 	t_sh	sh;
-	char	*item;
 	char	*value;
 	char	*old_value;
-	char	*expand;
 
 	sh.f.ast_draw = 0;
 	if (!(sh.stack.errors = lifo_creator(20, sizeof(t_staterror))))
@@ -86,17 +108,11 @@ static int		visit_assign_temp(char *data, char **args)
 		{
 			value[0] = '\0';
 			value = &value[1];
-			item = data;
-			expand = ft_strdup(value);
-			old_value = ft_strdup(get_env(g_set, item));
-			if (value[0] == '$')
-				process_expression(&expand);
-			if (!ft_edit_env(g_env, item, expand))
-				g_env = add_env(g_env, item, expand);
-			free(expand);
+			old_value = ft_strdup(get_env(g_set, data));
+			assign_var(data, value, 1);
 		}
 	}
-	return (visitor_assign_exec(&sh, item, old_value, data));
+	return (visitor_assign_exec(&sh, data, old_value, data));
 }
 
 int				visit_assign_multi(char *data, char **args)
@@ -131,10 +147,8 @@ int				visit_assign_multi(char *data, char **args)
 
 int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 {
-	char	*item;
 	char	*value;
 	char	*data;
-	char	*expand;
 
 	(void)io;
 	(void)job;
@@ -149,15 +163,7 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 		{
 			value[0] = '\0';
 			value = &value[1];
-			item = data;
-			expand = ft_strdup(value);
-			if (value[0] == '$')
-				process_expression(&expand);
-			add_set(item, expand);
-			if (!ft_strcmp(item, "HOME"))
-				if (!ft_edit_env(g_env, item, expand))
-					g_env = add_env(g_env, item, expand);
-			free(expand);
+			assign_var(data, value, 0);
 			free(data);
 			return (0);
 		}

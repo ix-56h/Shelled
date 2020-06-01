@@ -27,10 +27,19 @@ int		visit_and_if(t_node *node, t_io_lists io, t_job **job)
 	{
 		err = (*g_visit_rules[node->left->tok])(node->left, io, job);
 		process = (t_process *)dl_get_last((t_dl_node *)(*job)->list);
+		if (!process)		// a voir
+		{
+//			if (err == 0)
+//				if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
+//					return (0);
+			return (0);
+		}
 		if (process->pid != ERR_JOB && process->ret == 0)
+		{
 			if (err == 0)
 				if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
 					return (0);
+		}
 	}
 	return (1);
 }
