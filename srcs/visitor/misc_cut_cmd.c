@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/20 18:24:42 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/20 18:36:50 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/01 18:56:50 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ char			*cut_command(char *cmd, char act)
 	int		len;
 
 	i = 0;
+	if (!cmd)
+		return (NULL);
 	sub_cut3(cmd, &i);
 	cmd[i] = '\0';
 	res = ft_strdup(cmd);

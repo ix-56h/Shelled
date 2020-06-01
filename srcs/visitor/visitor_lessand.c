@@ -6,12 +6,13 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 19:52:04 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/19 18:06:20 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/01 19:01:30 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "builtins.h"
+#include "libft.h"
 #include "job.h"
 #include "visitor_misc.h"
 #include "exec.h"

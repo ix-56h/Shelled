@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:38:41 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/10 22:17:10 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/01 18:23:47 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	close_all_pipe(t_io_lists io);
 int		set_used_fd(t_pipe_list *piped);
 int		set_redir_fd(t_redir_list *redir);
 int		save_and_restore_fd(int action);
+void	apply_fd(t_io_lists io);
 
 int		exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job);
 int		exec_heredoc(t_fifo *stack);
@@ -34,4 +35,6 @@ int		is_path(char *buff);
 void	free_tab(char **tab);
 int		err_exec(char *buff, int err);
 char	**get_env_path(void);
+
+void	after_fork_routine(pid_t pid, t_io_lists io, t_job *job);
 #endif
