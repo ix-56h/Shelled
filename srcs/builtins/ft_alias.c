@@ -107,7 +107,6 @@ int			ft_alias(char **args, char ***env)
 	int			cpt;
 
 	(void)env;
-	cpt = -1;
 	if (!g_alias)
 	{
 		i = 0;
