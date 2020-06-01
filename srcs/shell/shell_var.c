@@ -53,6 +53,8 @@ static char		*get_positional_param(char *word)
 	return (str);
 }
 
+#include <stdio.h>
+
 static char		*show_special_param(char *word)
 {
 	char *str;

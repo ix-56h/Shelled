@@ -93,7 +93,7 @@ static int		visit_assign_temp(char *data, char **args)
 				process_expression(&expand);
 			if (!ft_edit_env(g_env, item, expand))
 				g_env = add_env(g_env, item, expand);
-			add_set(item, ft_strdup(""));
+//			add_set(item, "\0");
 			free(expand);
 		}
 	}
@@ -155,6 +155,9 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 			if (value[0] == '$')
 				process_expression(&expand);
 			add_set(item, expand);
+			if (!ft_strcmp(item, "HOME"))
+				if (!ft_edit_env(g_env, item, expand))
+					g_env = add_env(g_env, item, expand);
 			free(expand);
 			free(data);
 			return (0);
