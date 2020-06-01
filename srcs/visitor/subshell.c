@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   visitor_cmd.c                                      :+:      :+:    :+:   */
+/*   subshell.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/01 22:16:53 by akeiflin         ###   ########.fr       */
+/*   Created: 2020/06/01 19:43:24 by akeiflin          #+#    #+#             */
+/*   Updated: 2020/06/02 01:03:37 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <fcntl.h>
 #include <sys/wait.h>
-#include "visitor_misc.h"
 #include "ligne.h"
+#include "expansions.h"
 #include "exec.h"
-#include "ft_printf.h"
-#include "job.h"
+#include "visitor.h"
+#include "sh.h"
+#include "parser.h"
 
 static void		ctrl_c_handler(int lel)
 {
@@ -25,7 +25,40 @@ static void		ctrl_c_handler(int lel)
 	ft_putchar('\n');
 }
 
-int				exec_command(t_node *node, t_io_lists *io, t_job **job)
+static void		child_exec_subshell_forked(t_node *node, t_io_lists io, t_job *job)
+{
+	pid_t	pid;
+	t_job	*tmp;
+
+	pid = getpid();
+	if (!io.piped || (io.piped && !io.piped->prev && io.piped->used == 0))
+	{
+		setpgid(pid, pid);
+		job->pgid = pid;
+	}
+	else
+		setpgid(pid, job->pgid);
+	signal(SIGINT, SIG_DFL);
+	apply_fd(io);
+	tmp = NULL;
+	visit(node, &tmp, NULL);
+	exit(ft_atoi(get_env(g_set, "?")));
+}
+
+static int				exec_subshell_as_cmd(t_node *node, t_io_lists io, t_job *job)
+{
+	pid_t		pid;
+	t_process	*process;
+
+	if ((pid = fork()) == -1)
+		return (-1);
+	else if (pid == 0)
+		child_exec_subshell_forked(node, io, job);
+	after_fork_routine(pid, io, job);
+	return (0);
+}
+
+int				exec_subshell(t_node *node, t_io_lists *io, t_job **job)
 {
 	int	err;
 
@@ -35,7 +68,7 @@ int				exec_command(t_node *node, t_io_lists *io, t_job **job)
 	dl_append_node((t_dl_node **)&(*job)->list,
 						(t_dl_node *)create_process(UNUSED_JOB));
 	find_process_by_pid((*job)->list, -10)->command = ft_strdup(node->data);
-	err = exec_cmd(node, NULL, *io, *job);
+	err = exec_subshell_as_cmd(node, *io, *job);
 	if ((io->piped && !io->piped->next && io->piped->used == 1) || !io->piped)
 	{
 		if ((*job)->list->pid != BUILTIN_JOB)
@@ -50,5 +83,5 @@ int				exec_command(t_node *node, t_io_lists *io, t_job **job)
 	set_used_fd(io->piped);
 	restore_term(2);
 	signal(SIGINT, SIG_DFL);
-	return (err);
+	return (0);
 }

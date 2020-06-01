@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    sources.mk                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
+#    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/05/27 12:00:59 by mguerrea         ###   ########.fr        #
+#    Updated: 2020/06/01 22:18:10 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,6 +80,7 @@ C_FILES_visitor = \
 				  visitor_dgreat.c \
 				  job.c \
 				  substitution.c \
+				  subshell.c \
 
 C_FILES_shell = \
 				main.c \

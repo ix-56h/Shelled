@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/13 01:46:47 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/06/02 00:21:54 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,12 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 	char	*value;
 	char	*data;
 
-	(void)io;
-	(void)job;
+	if (node->state == 2)
+	{
+		node->state = -2;
+		exec_subshell(node, &io, job);
+		return (0);
+	}
 	data = ft_strdup(node->data);
 	if (node->args[1] && is_only_assign(data, node->args))
 		return (visit_assign_multi(data, node->args));

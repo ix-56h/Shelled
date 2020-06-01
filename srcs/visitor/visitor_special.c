@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:35:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/28 23:06:04 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/02 00:20:35 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ int		visit_and_if(t_node *node, t_io_lists io, t_job **job)
 	int			err;
 	t_process	*process;
 
+	if (node->state == 2)
+	{
+		node->state = -2;
+		exec_subshell(node, &io, job);
+		return (0);
+	}
 	if (node->left && node->right)
 	{
 		err = (*g_visit_rules[node->left->tok])(node->left, io, job);
@@ -49,6 +55,12 @@ int		visit_or_if(t_node *node, t_io_lists io, t_job **job)
 	t_process	*process;
 	int			err;
 
+	if (node->state == 2)
+	{
+		node->state = -2;
+		exec_subshell(node, &io, job);
+		return (0);
+	}
 	if (node->left && node->right)
 	{
 		err = (*g_visit_rules[node->left->tok])(node->left, io, job);
@@ -66,6 +78,12 @@ int		visit_pipe(t_node *node, t_io_lists io, t_job **job)
 {
 	int	pipefd[2];
 
+	if (node->state == 2)
+	{
+		node->state = -2;
+		exec_subshell(node, &io, job);
+		return (0);
+	}
 	if (node->left && node->right)
 	{
 		if (pipe(pipefd) == -1)
@@ -95,6 +113,12 @@ int		visit_semi(t_node *node, t_io_lists io, t_job **job)
 	t_io_lists		new_io;
 	char			*tmp;
 
+	if (node->state == 2)
+	{
+		node->state = -2;
+		exec_subshell(node, &io, job);
+		return (0);
+	}
 	new_io = (t_io_lists){NULL, NULL, 0, io.cmd};
 	ret = visit(node->left, job, new_io.cmd);
 	if ((tmp = cut_command(new_io.cmd, 1)))
