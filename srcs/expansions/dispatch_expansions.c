@@ -162,8 +162,6 @@ char			*dispatch_exp(char *full_word, char *mod)
 	i = -1;
 	new_word = NULL;
 	parameter = get_param(full_word, mod);
-	if (!parameter[0])
-		printf("\nno param\n");
 	word = parameter[0] ? get_word(full_word, mod) : ft_strdup("");
 	while (++i < MOD_MAX)
 	{
