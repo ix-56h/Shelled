@@ -108,8 +108,8 @@ int		new_dir(char **args, char ***tenv, int flags, int start)
 
 int		ft_cd(char **args, char ***tenv)
 {
-	int i;
-	int start;
+	int		i;
+	int		start;
 
 	i = step_to_do(args, tenv, &start);
 	if (i == 0)

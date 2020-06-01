@@ -22,6 +22,9 @@ char	*get_last_part(char *word, size_t *a)
 
 	j = *a;
 	i = 0;
+	new_word = NULL;
+	if (j > ft_strlen(word))
+		return (ft_strdup(""));
 	while (word[j])
 		tmp[i++] = word[j++];
 	tmp[i] = '\0';

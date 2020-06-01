@@ -109,6 +109,7 @@ static void		get_sysname(void)
 	add_set("@", "( )");
 	add_set("*", "( )");
 	add_set("#", "0");
+	add_set("-", "--ast_draw");
 	if ((tmp = ft_itoa(getpid())))
 	{
 		add_set("PID", tmp);
@@ -124,6 +125,7 @@ void			init_set(char **av)
 	g_set = cpy_env(g_env);
 	shell_name = ft_strjoin(get_env(g_env, "PWD"), "/42sh");
 	add_set("SHELL", shell_name);
+	add_set("IFS", " \t\n");
 	add_set("IFS", " \t\n");
 	add_info_params(av);
 	add_info_id();
