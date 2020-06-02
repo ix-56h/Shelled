@@ -27,7 +27,7 @@ t_node	*parse_and_or(t_sh *sh)
 		{
 			sh->tok = get_next_token(sh->input, sh->stack.errors);
 			if ((nod2 = parse_pipeline(sh)))
-				node = save_node(node, tok, nod2, 5);
+				node = save_node(node, tok, nod2, 0);
 			else
 			{
 				node = save_node(node, tok, nod2, 0);
