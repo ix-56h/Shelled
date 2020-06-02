@@ -60,10 +60,13 @@ static int		is_only_assign(char *data, char **args)
 }
 
 static int		visitor_assign_exec(t_sh *sh, char *item, char *old_value,
-					char *data)
+					char *data, t_node *node)
 {
+	t_job *tmp;
+
 	lifo_empty(sh->stack.errors) ? sh->node = parse_program(sh) : 0;
-	process_sh(sh);
+//	process_sh(sh);
+	visit(sh->node, &tmp, NULL);
 	if (!ft_edit_env(g_env, item, old_value))
 		g_env = add_env(g_env, item, old_value);
 	add_set(item, old_value);
@@ -89,7 +92,7 @@ static char		*get_temp_input(char **args)
 	return (input);
 }
 
-static int		visit_assign_temp(char *data, char **args)
+static int		visit_assign_temp(char *data, char **args, t_node *node)
 {
 	t_sh	sh;
 	char	*value;
@@ -112,7 +115,7 @@ static int		visit_assign_temp(char *data, char **args)
 			assign_var(data, value, 1);
 		}
 	}
-	return (visitor_assign_exec(&sh, data, old_value, data));
+	return (visitor_assign_exec(&sh, data, old_value, data, node));
 }
 
 int				visit_assign_multi(char *data, char **args)
@@ -149,17 +152,17 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 {
 	char	*value;
 	char	*data;
-
-/*	restore_term(1);
+/*
+	restore_term(1);
 	add_jobnb((*job)->number);
 	dl_append_node((t_dl_node **)&(*job)->list,
 						(t_dl_node *)create_process(UNUSED_JOB));
-	find_process_by_pid((*job)->list, -10)->command = ft_strdup(node->data);*/
-
+	find_process_by_pid((*job)->list, -10)->command = ft_strdup(node->data);
+*/
 	data = ft_strdup(node->data);
 	if (node->args[1] && is_only_assign(data, node->args))
 		return (visit_assign_multi(data, node->args));
-	else if (node->args[1] && visit_assign_temp(data, node->args))
+	else if (node->args[1] && visit_assign_temp(data, node->args, node))
 		return (0);
 	else if ((value = ft_strchr(data, '=')))
 	{
@@ -169,10 +172,10 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 			value = &value[1];
 			assign_var(data, value, 0);
 			free(data);
-
-/*			set_used_fd(io.piped);
-			restore_term(2);*/
-
+/*
+			set_used_fd(io.piped);
+			restore_term(2);
+*/
 			return (0);
 		}
 	}
