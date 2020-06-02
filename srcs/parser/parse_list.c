@@ -18,15 +18,15 @@ t_node		*parse_list(t_sh *sh)
 	t_node			*node;
 	t_node			*nod2;
 
-	if (!lifo_empty(sh->stack.errors))
+	if (!(root = NULL) && !lifo_empty(sh->stack.errors))
 		return (NULL);
-	root = NULL;
 	if ((node = parse_and_or(sh)))
 	{
 		while ((nod2 = parse_separator_op(sh)))
 		{
 			!root ? root = nod2 : 0;
-			if (node->right && (node->tok == TOK_AND || node->tok == TOK_SEMI))
+			if (node->right && (node->tok == TOK_AND || node->tok == TOK_SEMI)
+				&& !node->state)
 			{
 				binnode(node->right, nod2, NULL);
 				binnode(node->left, node, nod2);
