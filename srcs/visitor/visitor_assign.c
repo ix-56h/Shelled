@@ -107,7 +107,6 @@ static int		visit_assign_temp(char *data, char **args)
 	if (!(sh.stack.here_docs = fifo_creator(20, sizeof(t_node*))))
 		return (0);
 	sh.input = get_temp_input(args);
-	printf("\nHERE -input: |%s|\n", sh.input);
 	sh.tok = get_next_token(sh.input, sh.stack.errors);
 	if ((value = ft_strchr(data, '=')))
 	{
