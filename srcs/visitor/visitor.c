@@ -66,19 +66,24 @@ int				visit(t_node *root, t_job **job, char *cmd)
 
 	if (!root)
 		return (0);
+//		ft_putstr("HERE1\n");
 	root->data = expand_word(root->data);
+//		ft_putstr("HERE2\n");
 	if (g_visit_rules[root->tok])
 	{
 		io = (t_io_lists){NULL, NULL, 0, cmd};
 		last_job = create_job();
+//		ft_putstr("HERE3\n");
 		if (!(*g_visit_rules[root->tok])(root, io, &last_job))
 			return (0);
 	}
 	else
 	{
+//		ft_putstr("HERE4\n");
 		ft_putstr("42sh: no visit function for '");
 		ft_putstr(root->data);
 		ft_putstr("'\n");
 	}
+//		ft_putstr("HEREEND\n");
 	return (1);
 }

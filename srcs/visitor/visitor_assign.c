@@ -150,8 +150,12 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 	char	*value;
 	char	*data;
 
-	(void)io;
-	(void)job;
+/*	restore_term(1);
+	add_jobnb((*job)->number);
+	dl_append_node((t_dl_node **)&(*job)->list,
+						(t_dl_node *)create_process(UNUSED_JOB));
+	find_process_by_pid((*job)->list, -10)->command = ft_strdup(node->data);*/
+
 	data = ft_strdup(node->data);
 	if (node->args[1] && is_only_assign(data, node->args))
 		return (visit_assign_multi(data, node->args));
@@ -165,6 +169,10 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 			value = &value[1];
 			assign_var(data, value, 0);
 			free(data);
+
+/*			set_used_fd(io.piped);
+			restore_term(2);*/
+
 			return (0);
 		}
 	}
