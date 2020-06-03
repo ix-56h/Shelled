@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 06:57:57 by niguinti          #+#    #+#             */
-/*   Updated: 2020/02/09 17:27:16 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/03 15:18:13 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		check_if_jobs()
 	job = g_job_head;
 	while (job)
 	{
-		if (job_is_stopped(job))
+		if (job_is_stopped(job) && !job_is_completed(job))
 		{
 			ft_putstr_fd("42sh: there are stopped job\n", 2);
 			return (1);
