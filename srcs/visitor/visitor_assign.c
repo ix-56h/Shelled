@@ -58,20 +58,27 @@ static int		is_only_assign(char *data, char **args)
 	}
 	return (i == count ? 1 : 0);
 }
-
+#include <stdio.h>
 static int		visitor_assign_exec(t_sh *sh, char *item, char *old_value,
 					char *data)
 {
-	char	*cmd;
 	t_job	*tmp;
+	char	*cmd;
 
 	cmd = ft_strdup(sh->input);
 	lifo_empty(sh->stack.errors) ? sh->node = parse_program(sh) : 0;
-//	process_sh(sh);
 	visit(sh->node, &tmp, cmd);
-	if (!ft_edit_env(g_env, item, old_value))
-		g_env = add_env(g_env, item, old_value);
-	add_set(item, old_value);
+	if (!old_value[0])
+	{
+		g_env = del_var(g_env, item);
+		g_set = del_var(g_set, item);
+	}
+	else
+	{
+		if (!ft_edit_env(g_env, item, old_value))
+			g_env = add_env(g_env, item, old_value);
+		add_set(item, old_value);
+	}
 	free(old_value);
 	free(data);
 	free(cmd);
@@ -95,7 +102,7 @@ static char		*get_temp_input(char **args)
 	return (input);
 }
 
-static int		visit_assign_temp(char *data, char **args)
+static int		visit_assign_temp(char *data, char **args, t_node *node)
 {
 	t_sh	sh;
 	char	*value;
@@ -106,7 +113,7 @@ static int		visit_assign_temp(char *data, char **args)
 		return (0);
 	if (!(sh.stack.here_docs = fifo_creator(20, sizeof(t_node*))))
 		return (0);
-	sh.input = get_temp_input(args);
+	sh.input = get_temp_input(args)/*ft_strdup("env | grep ONESHOT")*/;
 	sh.tok = get_next_token(sh.input, sh.stack.errors);
 	if ((value = ft_strchr(data, '=')))
 	{
@@ -156,16 +163,16 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 	char	*value;
 	char	*data;
 
-	restore_term(1);
+//	restore_term(1);
 	add_jobnb((*job)->number);
 	dl_append_node((t_dl_node **)&(*job)->list,
 						(t_dl_node *)create_process(UNUSED_JOB));
-	find_process_by_pid((*job)->list, -10)->command = ft_strdup(node->data);
+//	find_process_by_pid((*job)->list, -10)->command = ft_strdup(node->data);
 
 	data = ft_strdup(node->data);
 	if (node->args[1] && is_only_assign(data, node->args))
 		return (visit_assign_multi(data, node->args));
-	else if (node->args[1] && visit_assign_temp(data, node->args))
+	else if (node->args[1] && visit_assign_temp(data, node->args, node))
 		return (0);
 	else if ((value = ft_strchr(data, '=')))
 	{
@@ -177,7 +184,7 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 			free(data);
 
 			set_used_fd(io.piped);
-			restore_term(2);
+//			restore_term(2);
 
 			return (0);
 		}

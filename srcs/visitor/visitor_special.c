@@ -29,7 +29,7 @@ int		visit_and_if(t_node *node, t_io_lists io, t_job **job)
 	{
 		err = (*g_visit_rules[node->left->tok])(node->left, io, job);
 		process = (t_process *)dl_get_last((t_dl_node *)(*job)->list);
-		if (!process)		// a voir
+		if (!process)
 		{
 			printf("\nNULL\n");
 			return (0);
