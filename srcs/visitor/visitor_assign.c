@@ -58,7 +58,7 @@ static int		is_only_assign(char *data, char **args)
 	}
 	return (i == count ? 1 : 0);
 }
-#include <stdio.h>
+
 static int		visitor_assign_exec(t_sh *sh, char *item, char *old_value,
 					char *data)
 {
@@ -113,7 +113,7 @@ static int		visit_assign_temp(char *data, char **args, t_node *node)
 		return (0);
 	if (!(sh.stack.here_docs = fifo_creator(20, sizeof(t_node*))))
 		return (0);
-	sh.input = get_temp_input(args)/*ft_strdup("env | grep ONESHOT")*/;
+	sh.input = get_temp_input(args);
 	sh.tok = get_next_token(sh.input, sh.stack.errors);
 	if ((value = ft_strchr(data, '=')))
 	{
@@ -163,12 +163,8 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 	char	*value;
 	char	*data;
 
-//	restore_term(1);
-	add_jobnb((*job)->number);
 	dl_append_node((t_dl_node **)&(*job)->list,
 						(t_dl_node *)create_process(UNUSED_JOB));
-//	find_process_by_pid((*job)->list, -10)->command = ft_strdup(node->data);
-
 	data = ft_strdup(node->data);
 	if (node->args[1] && is_only_assign(data, node->args))
 		return (visit_assign_multi(data, node->args));
@@ -182,10 +178,6 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 			value = &value[1];
 			assign_var(data, value, 0);
 			free(data);
-
-			set_used_fd(io.piped);
-//			restore_term(2);
-
 			return (0);
 		}
 	}

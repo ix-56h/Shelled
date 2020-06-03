@@ -18,8 +18,6 @@
 #include "builtins.h"
 #include "ft_printf.h"
 
-#include <stdio.h>
-
 int		visit_and_if(t_node *node, t_io_lists io, t_job **job)
 {
 	int			err;
@@ -29,11 +27,6 @@ int		visit_and_if(t_node *node, t_io_lists io, t_job **job)
 	{
 		err = (*g_visit_rules[node->left->tok])(node->left, io, job);
 		process = (t_process *)dl_get_last((t_dl_node *)(*job)->list);
-		if (!process)
-		{
-			printf("\nNULL\n");
-			return (0);
-		}
 		if (process->pid != ERR_JOB && process->ret == 0)
 		{
 			if (err == 0)
@@ -74,11 +67,6 @@ int		visit_pipe(t_node *node, t_io_lists io, t_job **job)
 		io.piped->fd[0] = pipefd[0];
 		io.piped->fd[1] = pipefd[1];
 		io.piped->used = 0;
-		if ((*g_visit_rules[node->left->tok])(node->left, io, job))
-		{
-			close(pipefd[WRITE_END]);
-			set_used_fd(io.piped);
-		}
 		if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
 		{
 			dl_del_one((t_dl_node *)io.piped);
