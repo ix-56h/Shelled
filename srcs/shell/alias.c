@@ -39,8 +39,8 @@ char	*launch_recursive(char *alias_v, char **alias_cpy, t_lifo *stack)
 	t_tokens	token;
 	char		**save_alias;
 	char		**pot_alias;
-	int			i;
 	int			*toktype;
+	int			i;
 	int			is_multi;
 
 	i = 0;

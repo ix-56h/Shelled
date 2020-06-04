@@ -16,7 +16,7 @@
 #include "historique.h"
 #include "ligne.h"
 
-int		check_if_jobs()
+int		check_if_jobs(void)
 {
 	t_job *job;
 
@@ -36,7 +36,7 @@ int		check_if_jobs()
 	return (0);
 }
 
-int 	check_num(char *argv)
+int		check_num(char *argv)
 {
 	if (!argv)
 		return (0);
