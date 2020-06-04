@@ -12,6 +12,18 @@
 
 #include "parser.h"
 
+t_node	*push_node_left(t_node *to_push, t_node *branch)
+{
+	t_node *root;
+
+	root = branch;
+	while (branch->left)
+		branch = branch->left;
+	binnode(to_push, branch, branch->right);
+	return (root);
+}
+
+
 t_node	*parse_command(t_sh *sh)
 {
 	t_node	*node;
@@ -26,7 +38,7 @@ t_node	*parse_command(t_sh *sh)
 	else if ((node = parse_compound_command(sh)))
 	{
 		if ((nod2 = parse_redirect_list(sh)))
-			node = binnode(node, nod2, nod2->right);
+			node = push_node_left(node, nod2);
 	}
 	else
 		node = parse_function_definition(sh);

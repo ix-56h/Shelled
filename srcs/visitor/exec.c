@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/28 19:22:22 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/02 00:59:33 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int				exec_builtin_no_fork(t_node *cmd, char **env,
 	set_redir_fd(io.redir);
 	exec_builtin = lookforbuiltin(cmd->data);
 	ret = exec_builtin(cmd->args, ((env) ? &env : &g_env));
-	add_set("?", ret == 0 ? "0" : "2");
+	add_set("?", ft_itoa(ret));
 	close_used_pipe_fd(io.piped);
 	save_and_restore_fd(1);
 	process = find_process_by_pid(job->list, UNUSED_JOB);
@@ -58,7 +58,7 @@ void			child_exec(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	if (lookforbuiltin(cmd->data))
 	{
 		ret = lookforbuiltin(cmd->data)(cmd->args, ((env) ? &env : &g_env));
-		add_set("?", ret == 0 ? "0" : "2");
+		add_set("?", ft_itoa(ret));
 		exit(ret);
 	}
 	execve(cmd->data, cmd->args, ((env) ? env : g_env));

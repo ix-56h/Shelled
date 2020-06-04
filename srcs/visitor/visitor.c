@@ -6,14 +6,15 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/05/22 18:23:39 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/02 00:21:09 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <sys/wait.h>
 #include "ligne.h"
-#include <expansions.h>
+#include "expansions.h"
+#include "exec.h"
 #include "visitor.h"
 #include "visitor_rules.h"
 #include "sh.h"
@@ -47,13 +48,24 @@ int				exec_heredoc(t_fifo *stack)
 
 int				visit_cmd(t_node *node, t_io_lists io, t_job **job)
 {
-
+	if (node->state == 2)
+	{
+		node->state = -2;
+		exec_subshell(node, &io, job);
+		return (0);
+	}
 	exec_command(node, &io, job);
 	return (0);
 }
 
 int				visit_background(t_node *node, t_io_lists io, t_job **job)
 {
+	if (node->state == 2)
+	{
+		node->state = -2;
+		exec_subshell(node, &io, job);
+		return (0);
+	}
 	io.background = 1;
 	if (!(*g_visit_rules[node->left->tok])(node->left, io, job))
 		return (0);
