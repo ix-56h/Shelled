@@ -19,6 +19,7 @@
 # define SHELL_NAME "42sh"
 
 int				g_exit;
+int				ready_exit;
 pid_t			g_shell_pgid;
 
 char			**g_env;

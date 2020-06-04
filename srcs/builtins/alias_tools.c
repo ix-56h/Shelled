@@ -44,41 +44,9 @@ char		*form_value(char *arg)
 	cpt = 0;
 	new = 0;
 	if (arg[cpt] == '\'')
-	{
-		while (arg[cpt])
-		{
-			if (arg[cpt] == '\'')
-			{
-				new = cpt;
-				while (arg[new])
-				{
-					arg[new] = arg[new + 1];
-					new++;
-				}
-				arg[new] = '\0';
-				cpt--;
-			}
-			cpt++;
-		}
-	}
+		arg = form_algo('\'', arg);
 	else if (arg[cpt] == '\"')
-	{
-		while (arg[cpt])
-		{
-			if (arg[cpt] == '\"')
-			{
-				new = cpt;
-				while (arg[new])
-				{
-					arg[new] = arg[new + 1];
-					new++;
-				}
-				arg[new] = '\0';
-				cpt--;
-			}
-			cpt++;
-		}
-	}
+		arg = form_algo('\"', arg);
 	else
 		return (arg);
 	new_arg = ft_strdup(arg);

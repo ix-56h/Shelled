@@ -15,7 +15,7 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-void free_realloc_alias(char *name_g, char *name, char *value)
+void	free_realloc_alias(char *name_g, char *name, char *value)
 {
 	free(name_g);
 	free(name);

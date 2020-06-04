@@ -75,6 +75,7 @@ void		show_this_alias(char *arg);
 void		dispatch_show(int cpt);
 int			error_alias(char *arg, int mod);
 void		free_realloc_alias(char *name_g, char *name, char *value);
+char		*form_algo(char c, char *arg);
 
 /*  test functions */
 int			error_test(char *arg_err, int mod);
