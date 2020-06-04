@@ -14,9 +14,9 @@
 #include "builtins.h"
 #include "sh.h"
 
-void			add_bang(char *value)
+void			set_ret_value(char *var, char *value)
 {
-	add_set("!", value);
+	add_set(var, value);
 	free(value);
 }
 

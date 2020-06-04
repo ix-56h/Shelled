@@ -35,27 +35,18 @@ int		shall_we_wait(void)
 void	update_status(void)
 {
 	int		status;
-	char	*exit_status;
 	pid_t	pid;
 
 	if (shall_we_wait())
 	{
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
 		if (WIFEXITED(status))
-		{
-			exit_status = ft_itoa(WEXITSTATUS(status));
-			add_set("?", exit_status);
-			free(exit_status);
-		}
+			set_ret_value("?", ft_itoa(WEXITSTATUS(status)));
 		while (!mark_process_status(pid, status) && shall_we_wait())
 		{
 			pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
 			if (WIFEXITED(status))
-			{
-				exit_status = ft_itoa(WEXITSTATUS(status));
-				add_set("?", exit_status);
-				free(exit_status);
-			}
+				set_ret_value("?", ft_itoa(WEXITSTATUS(status)));
 		}
 	}
 }
@@ -87,7 +78,7 @@ void	do_job_notification(void)
 			push_back(j->number);
 			j->is_notified = 1;
 		}
-		add_bang(ft_itoa(j->pgid));
+		set_ret_value("!", ft_itoa(j->pgid));
 		j = j->next;
 	}
 	clean_job();

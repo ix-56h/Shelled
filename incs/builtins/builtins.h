@@ -32,7 +32,7 @@ struct dirent	*diread;
 struct stat st;
 
 int			count_arg(char **argv);
-void		add_bang(char *value);
+void		set_ret_value(char *var, char *value);
 int			ft_addpath(char **argv, char ***env);
 int			ft_cd(char **argv, char ***tenv);
 int			ft_exit(char **argv, char ***tenv);
