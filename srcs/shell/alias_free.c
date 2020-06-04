@@ -48,9 +48,9 @@ char	*free_recursive_launch(char **pot_alias, char **save_alias,
 
 void	reset_token(t_tokens token, int *is_multi, char *alias_v)
 {
-	char *name;
-	int cpt;
-	int cpt2;
+	char	*name;
+	int		cpt;
+	int		cpt2;
 
 	name = get_value_by_name(token.data);
 	if (name)
