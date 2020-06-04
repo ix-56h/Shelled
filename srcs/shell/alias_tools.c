@@ -72,41 +72,10 @@ char	**cpy_alias(char **alias)
 	return (new_alias);
 }
 
-int		*create_n_realloc_type(int *toktype, int is_multi)
+int		check_for_replace(char *arg)
 {
-	int i;
-	int *new_toktype;
-
-	i = 0;
-	if (toktype != 0)
-	{
-		while (toktype[i])
-			i++;
-		i += 2;
-		if (!(new_toktype = (int*)malloc(sizeof(int) * i)))
-			return (0);
-		i = -1;
-		while (toktype[++i])
-			new_toktype[i] = toktype[i];
-		free(toktype);
-	}
-	else
-	{
-		if (!(new_toktype = (int*)malloc(sizeof(int) * 2)))
-			return (0);
-	}
-	if (is_multi == 0)
-		new_toktype[i++] = 2;
-	else
-		new_toktype[i++] = 1;
-	new_toktype[i] = 0;
-	return (new_toktype);
-}
-
-int 	check_for_replace(char *arg)
-{
-	int cpt;
-	char *name;
+	int		cpt;
+	char	*name;
 
 	name = get_value_by_name(arg);
 	if (name)

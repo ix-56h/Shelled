@@ -140,6 +140,7 @@ C_FILES_builtins = \
 					 ft_unalias.c \
 					 alias_tools.c \
 					 alias_print.c \
+					 alias_form.c \
 
 C_FILES_builtins/test = \
 			test_algebraically_equal.c \

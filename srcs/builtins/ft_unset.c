@@ -21,12 +21,17 @@ int		ft_unset(char **argv, char ***set)
 	i = 0;
 	(void)set;
 	if (!argv[1])
-		ft_putendl_fd("unset: Too few arguments.", 2);
+	{
+		ft_putendl_fd("42sh: unset: Too few arguments.", 2);
+		return (1);
+	}
 	else
+	{
 		while (g_set && argv[++i])
 			g_set = del_var(g_set, argv[i]);
-	i = 0;
-	while (g_env && argv[++i])
-		ft_unsetenv(argv, &g_env);
+		i = 0;
+		while (g_env && argv[++i])
+			g_env = del_var(g_env, argv[i]);
+	}
 	return (0);
 }

@@ -111,16 +111,12 @@ int	lex_match_dol(char *s, int *anchor, t_lifo *stack)
 	{
 		if (is_arithmetic(s + *anchor + 1))
 			ignore_arithmetic(s, anchor);
-		else if (lex_match_command_sub(s, anchor, stack))
-			skip_whitespaces(s, anchor);
-		else
+		else if (!lex_match_command_sub(s, anchor, stack))
 			return (0);
 	}
 	else if (s[*anchor] == '{')
 	{
-		if (lex_match_parameter(s, anchor, stack))
-			skip_whitespaces(s, anchor);
-		else
+		if (!lex_match_parameter(s, anchor, stack))
 			return (0);
 	}
 	else if (ft_isalpha(s[*anchor]) || s[*anchor] == '_' || s[*anchor] == '$')

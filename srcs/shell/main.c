@@ -93,6 +93,7 @@ int			main(int ac, char **av, char **envp)
 		return (EXIT_FAILURE);
 	g_job_head = NULL;
 	g_jobnb = NULL;
+	ready_exit = 0;
 	while (1)
 	{
 		do_job_notification();

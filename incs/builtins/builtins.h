@@ -32,7 +32,7 @@ struct dirent	*diread;
 struct stat st;
 
 int			count_arg(char **argv);
-void		add_bang(char *value);
+void		set_ret_value(char *var, char *value);
 int			ft_addpath(char **argv, char ***env);
 int			ft_cd(char **argv, char ***tenv);
 int			ft_exit(char **argv, char ***tenv);
@@ -75,6 +75,7 @@ void		show_this_alias(char *arg);
 void		dispatch_show(int cpt);
 int			error_alias(char *arg, int mod);
 void		free_realloc_alias(char *name_g, char *name, char *value);
+char		*form_algo(char c, char *arg);
 
 /*  test functions */
 int			error_test(char *arg_err, int mod);

@@ -31,7 +31,7 @@ int				exec_builtin_no_fork(t_node *cmd, char **env,
 	set_redir_fd(io.redir);
 	exec_builtin = lookforbuiltin(cmd->data);
 	ret = exec_builtin(cmd->args, ((env) ? &env : &g_env));
-	add_set("?", ft_itoa(ret));
+	set_ret_value("?", ft_itoa(ret));
 	close_used_pipe_fd(io.piped);
 	save_and_restore_fd(1);
 	process = find_process_by_pid(job->list, UNUSED_JOB);
@@ -58,7 +58,7 @@ void			child_exec(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	if (lookforbuiltin(cmd->data))
 	{
 		ret = lookforbuiltin(cmd->data)(cmd->args, ((env) ? &env : &g_env));
-		add_set("?", ft_itoa(ret));
+		set_ret_value("?", ft_itoa(ret));
 		exit(ret);
 	}
 	execve(cmd->data, cmd->args, ((env) ? env : g_env));
@@ -117,7 +117,10 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	i = 0;
 	ret = 0;
 	while (cmd->args[i])
-		cmd->args[i++] = expand_word(cmd->args[i]);
+	{
+		cmd->args[i] = expand_word(cmd->args[i]);
+		i++;
+	}
 	if (!io.piped && !io.redir && !io.background && lookforbuiltin(cmd->data))
 		ret = exec_builtin_no_fork(cmd, env, io, job);
 	else
