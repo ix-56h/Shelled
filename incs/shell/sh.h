@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/05/11 12:58:43 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/04 12:52:03 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void			free_sh(t_sh *sh);
 */
 
 void			init_signal(void);
-void			oprhaned_jobs(void);
+void			orphaned_jobs(void);
 
 /*
 ** shell_var.c

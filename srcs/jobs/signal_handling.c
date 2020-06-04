@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/22 15:18:19 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/06/04 12:21:12 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/04 12:53:18 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	set_up_sigchld(void)
 void	sighup_handler(int sig)
 {
 	(void)sig;
-	g_exit = 0;
+	g_exit = SIGHUP;
 }
 
 void	set_up_signals(void)

@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/05/27 12:28:24 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/04 12:52:15 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int			main(int ac, char **av, char **envp)
 		free_sh(&sh);
 		re_init_sh(&sh);
 	}
-	oprhaned_jobs();
+	orphaned_jobs();
 	free_historic();
 	free_sh(&sh);
 	free_env(g_env);
