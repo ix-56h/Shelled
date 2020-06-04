@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 15:45:38 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/05/23 13:38:18 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/04 12:13:44 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,11 @@ void	format_job_info(t_job *j, const char *status)
 void	do_job_notification(void)
 {
 	t_job *j;
-	t_job *jnext;
 
 	update_status();
 	j = g_job_head;
 	while (j)
 	{
-		jnext = j->next;
 		if (job_is_completed(j))
 		{
 			if (WIFSIGNALED(j->list->status))
@@ -90,8 +88,9 @@ void	do_job_notification(void)
 			j->is_notified = 1;
 		}
 		add_bang(ft_itoa(j->pgid));
-		j = jnext;
+		j = j->next;
 	}
+	clean_job();
 }
 
 void	mark_job_as_running(t_job *j)

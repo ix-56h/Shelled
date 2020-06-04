@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/22 15:18:19 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/05/30 13:47:12 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/04 12:21:12 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	set_up_sigchld(void)
 
 	act.sa_sigaction = child_handler;
 	act.sa_flags = SA_NOCLDSTOP | SA_SIGINFO;
+	sigemptyset(&act.sa_mask);
 	sigaction(SIGCHLD, &act, 0);
 }
 
@@ -64,6 +65,7 @@ void	set_up_signals(void)
 	}
 	signal(SIGINT, ctrl_c_line_handler);
 	signal(SIGHUP, sighup_handler);
+	sigemptyset(&act.sa_mask);
 	act.sa_sigaction = child_handler;
 	act.sa_flags = SA_NOCLDSTOP | SA_SIGINFO;
 	sigaction(SIGCHLD, &act, 0);

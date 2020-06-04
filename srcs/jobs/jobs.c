@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:31:50 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/05/29 12:02:31 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/04 12:30:18 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,14 @@ void	get_last_process(int *last0, int *last1)
 	t_jobnb *jobnb;
 	t_job	*tmp;
 
+	tmp = NULL;
 	jobnb = g_jobnb;
 	while (jobnb && jobnb->next)
 		jobnb = jobnb->next;
-	while ((tmp = find_job_by_number(jobnb->number))
+	while (jobnb && (tmp = find_job_by_number(jobnb->number))
 		&& tmp->pgid == 0 && jobnb->prev)
 		jobnb = jobnb->prev;
-	if (tmp->pgid == 0)
+	if (!tmp || tmp->pgid == 0)
 		*last0 = 0;
 	else
 	{
