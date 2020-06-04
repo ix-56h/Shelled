@@ -60,14 +60,19 @@ static int		is_only_assign(char *data, char **args)
 }
 
 static int		visitor_assign_exec(t_sh *sh, char *item, char *old_value,
-					char *data)
+					char *data, t_io_lists *io)
 {
 	t_job	*tmp;
 	char	*cmd;
 
 	cmd = ft_strdup(sh->input);
 	lifo_empty(sh->stack.errors) ? sh->node = parse_program(sh) : 0;
+//	save_and_restore_fd(0);
+//	set_pipe_fd(io->piped);
+//	set_redir_fd(io->redir);
 	visit(sh->node, &tmp, cmd);
+//	close_used_pipe_fd(io->piped);
+//	save_and_restore_fd(1);
 	if (!old_value[0])
 	{
 		g_env = del_var(g_env, item);
@@ -102,7 +107,33 @@ static char		*get_temp_input(char **args)
 	return (input);
 }
 
-static int		visit_assign_temp(char *data, char **args, t_node *node)
+char	*get_io_input(char *cmd)
+{
+	int i;
+	int j;
+	char *input;
+
+	i = 0;
+	j = 0;
+	input = ft_strnew(150);
+	while (cmd[i] != '=')
+		i++;
+	i += 1;
+	while (ft_isalnum(cmd[i]))
+		i++;
+	while (cmd[i] == ' ')
+		i++;
+	while (i < ft_strlen(cmd))
+	{
+		input[j] = cmd[i];
+		i++;
+		j++;
+	}
+	input[j] = '\0';
+	return (input);
+}
+
+static int		visit_assign_temp(char *data, char **args, t_io_lists *io)
 {
 	t_sh	sh;
 	char	*value;
@@ -113,7 +144,10 @@ static int		visit_assign_temp(char *data, char **args, t_node *node)
 		return (0);
 	if (!(sh.stack.here_docs = fifo_creator(20, sizeof(t_node*))))
 		return (0);
-	sh.input = get_temp_input(args);
+	if (!io->piped && !io->redir)
+		sh.input = get_temp_input(args);
+	else
+		sh.input = get_io_input(io->cmd);
 	sh.tok = get_next_token(sh.input, sh.stack.errors);
 	if ((value = ft_strchr(data, '=')))
 	{
@@ -125,7 +159,7 @@ static int		visit_assign_temp(char *data, char **args, t_node *node)
 			assign_var(data, value, 1);
 		}
 	}
-	return (visitor_assign_exec(&sh, data, old_value, data));
+	return (visitor_assign_exec(&sh, data, old_value, data, io));
 }
 
 int				visit_assign_multi(char *data, char **args)
@@ -163,15 +197,12 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 	char	*value;
 	char	*data;
 
-//	restore_term(1);
-//	add_jobnb((*job)->number);
 	dl_append_node((t_dl_node **)&(*job)->list,
 						(t_dl_node *)create_process(UNUSED_JOB));
-//	find_process_by_pid((*job)->list, -10)->command = ft_strdup(node->data);
 	data = ft_strdup(node->data);
 	if (node->args[1] && is_only_assign(data, node->args))
 		return (visit_assign_multi(data, node->args));
-	else if (node->args[1] && visit_assign_temp(data, node->args, node))
+	else if (node->args[1] && visit_assign_temp(data, node->args, &io))
 		return (0);
 	else if ((value = ft_strchr(data, '=')))
 	{
@@ -180,8 +211,7 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 			value[0] = '\0';
 			value = &value[1];
 			assign_var(data, value, 0);
-//			set_used_fd(io.piped);
-//			restore_term(2);
+			set_used_fd(io.piped);
 			free(data);
 			return (0);
 		}
