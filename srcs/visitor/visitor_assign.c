@@ -67,20 +67,17 @@ static int		visitor_assign_exec(t_sh *sh, char *item, char *old_value,
 
 	cmd = ft_strdup(sh->input);
 	lifo_empty(sh->stack.errors) ? sh->node = parse_program(sh) : 0;
-//	save_and_restore_fd(0);
-//	set_pipe_fd(io->piped);
-//	set_redir_fd(io->redir);
 	visit(sh->node, &tmp, cmd);
-//	close_used_pipe_fd(io->piped);
-//	save_and_restore_fd(1);
 	if (!old_value[0])
 	{
-		g_env = del_var(g_env, item);
 		g_set = del_var(g_set, item);
+		g_env = del_var(g_env, item);
 	}
 	else
 	{
-		if (!ft_edit_env(g_env, item, old_value))
+		if (ft_strcmp(get_env(g_env, item), old_value))
+			g_env = del_var(g_env, item);
+		else if (!ft_edit_env(g_env, item, old_value))
 			g_env = add_env(g_env, item, old_value);
 		add_set(item, old_value);
 	}
