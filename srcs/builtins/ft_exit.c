@@ -25,6 +25,9 @@ int		check_if_jobs()
 	{
 		if (job_is_stopped(job) && !job_is_completed(job))
 		{
+			if (ready_exit == 1)
+				return (0);
+			ready_exit = 1;
 			ft_putstr_fd("42sh: there are stopped job\n", 2);
 			return (1);
 		}
@@ -59,14 +62,6 @@ int		ft_exit(char **argv, char ***tenv)
 	}
 	if (check_if_jobs() == 1)
 		return (0);
-/*	oprhaned_jobs();
-	free_historic();
-//	free_sh(&sh);
-	free_env(g_env);
-	free_env(g_set);
-	restore_term(1);
-	while (1)
-		;*/
 	g_exit = check_num(argv[1]);
 	return (0);
 }

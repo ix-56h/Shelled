@@ -13,6 +13,7 @@
 #include "libft.h"
 #include "builtins.h"
 #include "builtins_jump.h"
+#include "sh.h"
 
 int			count_arg(char **argv)
 {
@@ -32,6 +33,8 @@ t_builtin	lookforbuiltin(char *data)
 	int cpt;
 
 	cpt = 0;
+	if (ft_strcmp(data, "exit") != 0)
+		ready_exit = 0;
 	while (g_builtins[cpt].command)
 	{
 		if (!ft_strcmp(g_builtins[cpt].command, data))
