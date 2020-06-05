@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jebrocho <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:07:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/11 13:35:01 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/05/11 13:35:01 by jebrocho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
-
 # include <stdlib.h>
 # include <sys/stat.h>
 # include <dirent.h>
@@ -57,7 +56,10 @@ int			ft_alias(char **args, char ***env);
 int			ft_unalias(char **args, char ***env);
 int			ft_test(char **args, char ***env);
 
-/* cd functions */
+/*
+** cd functions
+*/
+
 int			error_cd(int error_mod, char *path);
 char		*ft_get_link(char *pathname);
 int			ft_is_dir(char *s);
@@ -65,9 +67,13 @@ char		*new_path(char *add_to_path, char *pwd, int flags);
 void		concat_pwd(char *str, char c);
 int			add_old_pwd(char ***tenv, int flags, char *pwd, char *old_pwd);
 int			check_dir(char *add_to_path, int flags);
-void		update_env(char ***tenv, char *pwd, char *old_pwd, char *add_to_path);
+void		update_env(char ***tenv, char *pwd, char *old_pwd, \
+						char *add_to_path);
 
-/*  alias functions */
+/*
+** alias functions
+*/
+
 char		*get_name(char *arg);
 char		*get_value(char *arg);
 void		sort_alias(void);
@@ -77,7 +83,9 @@ int			error_alias(char *arg, int mod);
 void		free_realloc_alias(char *name_g, char *name, char *value);
 char		*form_algo(char c, char *arg);
 
-/*  test functions */
+/*
+** test functions
+*/
 int			error_test(char *arg_err, int mod);
 char		*apply_path(char *arg);
 int			init_integer(char **args, size_t p_size);
