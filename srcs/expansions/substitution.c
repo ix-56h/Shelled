@@ -21,6 +21,7 @@ char	*exec_substitution(char *tmp)
 
 	nw = substitution_wrapper(tmp);
 	nw = ft_strtrimf(nw);
+	free(tmp);
 	return (nw);
 }
 
@@ -46,7 +47,6 @@ char	*process_substitution(size_t *i, char *word, char occur)
 		ft_strncpy(nw, word + *i, y);
 		tmp = exec_substitution(nw);
 		x = ft_strlen(tmp);
-		free(nw);
 		*i -= (occur == '`' ? 1 : 2);
 		word[*i] = 0;
 		nw = ft_vjoin(3, word, tmp, word + *i + y + (occur == '`' ? 2 : 3));
