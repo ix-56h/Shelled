@@ -43,4 +43,9 @@ int			exec_dless(t_node *node, t_io_lists *io, t_job **job);
 int			exec_pipe(t_node *node, t_io_lists *io, t_job **job, int *pipefd);
 int			exec_command(t_node *node, t_io_lists *io, t_job **job);
 
+void		assign_var(char *data, char *value, int mod);
+char		*get_io_input(char *cmd);
+char		*get_temp_input(char **args);
+int			is_only_assign(char *data, char **args);
+
 #endif

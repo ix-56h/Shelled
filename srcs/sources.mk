@@ -70,6 +70,7 @@ C_FILES_visitor = \
 				  exec.c \
 				  exec_misc.c \
 				  misc_cut_cmd.c \
+				  misc_assign.c \
 				  test_and_find.c \
 				  visitor_cmd.c \
 				  visitor_greatand.c \
@@ -193,6 +194,7 @@ C_FILES_expansions = \
 					 substitution.c \
 					 parameter_expansions.c \
 					 parameter_expansions2.c \
+					 test_parameter.c \
 					 expansions_utils.c \
 					 expansions_utils2.c \
 					 dispatch_expansions.c \

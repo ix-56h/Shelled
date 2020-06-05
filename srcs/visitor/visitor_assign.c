@@ -19,46 +19,6 @@
 #include "expansions.h"
 #include "ft_printf.h"
 
-void			assign_var(char *data, char *value, int mod)
-{
-	char	*item;
-	char	*expand;
-
-	item = data;
-	expand = ft_strdup(value);
-	if (value[0] == '$')
-		process_expression(&expand);
-	if (!mod)
-	{
-		add_set(item, expand);
-		if (!ft_strcmp(item, "HOME"))
-			if (!ft_edit_env(g_env, item, expand))
-				g_env = add_env(g_env, item, expand);
-	}
-	else
-	{
-		if (!ft_edit_env(g_env, item, expand))
-			g_env = add_env(g_env, item, expand);
-	}
-	free(expand);
-}
-
-static int		is_only_assign(char *data, char **args)
-{
-	int i;
-	int count;
-
-	i = 0;
-	count = 0;
-	while (args[i])
-	{
-		if (ft_strchr(args[i], '='))
-			count++;
-		i++;
-	}
-	return (i == count ? 1 : 0);
-}
-
 static int		visitor_assign_exec(t_sh *sh, char *item, char *old_value,
 					char *data)
 {
@@ -86,48 +46,6 @@ static int		visitor_assign_exec(t_sh *sh, char *item, char *old_value,
 	free(cmd);
 	free_sh(sh);
 	return (1);
-}
-
-static char		*get_temp_input(char **args)
-{
-	int		i;
-	char	*input;
-
-	i = 1;
-	input = ft_strnew(0);
-	while (args[i])
-	{
-		input = ft_strjoinf(input, args[i], 1);
-		input = ft_strjoinf(input, " ", 1);
-		i++;
-	}
-	return (input);
-}
-
-char			*get_io_input(char *cmd)
-{
-	int		i;
-	int		j;
-	char	*input;
-
-	i = 0;
-	j = 0;
-	input = ft_strnew(150);
-	while (cmd[i] != '=')
-		i++;
-	i += 1;
-	while (ft_isalnum(cmd[i]))
-		i++;
-	while (cmd[i] == ' ')
-		i++;
-	while (i < ft_strlen(cmd))
-	{
-		input[j] = cmd[i];
-		i++;
-		j++;
-	}
-	input[j] = '\0';
-	return (input);
 }
 
 static int		visit_assign_temp(char *data, char **args, t_io_lists *io)
@@ -184,9 +102,31 @@ int				visit_assign_multi(char *data, char **args)
 	return (0);
 }
 
-int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
+int				visit_assign_is_valid(t_node *node, t_io_lists *io, char *data)
 {
 	char	*value;
+
+	if (node->args[1] && is_only_assign(data, node->args))
+		return (visit_assign_multi(data, node->args));
+	else if (node->args[1] && visit_assign_temp(data, node->args, io))
+		return (0);
+	else if ((value = ft_strchr(data, '=')))
+	{
+		if (ft_strlen(data) > 1)
+		{
+			value[0] = '\0';
+			value = &value[1];
+			assign_var(data, value, 0);
+			set_used_fd(io->piped);
+			free(data);
+			return (0);
+		}
+	}
+	return (1);
+}
+
+int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
+{
 	char	*data;
 
 	dl_append_node((t_dl_node **)&(*job)->list,
@@ -198,22 +138,8 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 		return (0);
 	}
 	data = ft_strdup(node->data);
-	if (node->args[1] && is_only_assign(data, node->args))
-		return (visit_assign_multi(data, node->args));
-	else if (node->args[1] && visit_assign_temp(data, node->args, &io))
+	if (!visit_assign_is_valid(node, &io, data))
 		return (0);
-	else if ((value = ft_strchr(data, '=')))
-	{
-		if (ft_strlen(data) > 1)
-		{
-			value[0] = '\0';
-			value = &value[1];
-			assign_var(data, value, 0);
-			set_used_fd(io.piped);
-			free(data);
-			return (0);
-		}
-	}
 	ft_dprintf(2, SHELL_NAME": Assignement word error: %s\n", node->data);
 	free(data);
 	return (1);
