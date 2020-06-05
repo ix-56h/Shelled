@@ -60,7 +60,7 @@ static int		is_only_assign(char *data, char **args)
 }
 
 static int		visitor_assign_exec(t_sh *sh, char *item, char *old_value,
-					char *data, t_io_lists *io)
+					char *data)
 {
 	t_job	*tmp;
 	char	*cmd;
@@ -104,11 +104,11 @@ static char		*get_temp_input(char **args)
 	return (input);
 }
 
-char	*get_io_input(char *cmd)
+char			*get_io_input(char *cmd)
 {
-	int i;
-	int j;
-	char *input;
+	int		i;
+	int		j;
+	char	*input;
 
 	i = 0;
 	j = 0;
@@ -156,7 +156,7 @@ static int		visit_assign_temp(char *data, char **args, t_io_lists *io)
 			assign_var(data, value, 1);
 		}
 	}
-	return (visitor_assign_exec(&sh, data, old_value, data, io));
+	return (visitor_assign_exec(&sh, data, old_value, data));
 }
 
 int				visit_assign_multi(char *data, char **args)
@@ -175,12 +175,7 @@ int				visit_assign_multi(char *data, char **args)
 			{
 				value[0] = '\0';
 				value = &value[1];
-				item = args[i];
-				expand = ft_strdup(value);
-				if (value[0] == '$')
-					process_expression(&expand);
-				add_set(item, expand);
-				free(expand);
+				assign_var(args[i], value, 0);
 			}
 		}
 		i++;
