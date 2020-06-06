@@ -39,9 +39,11 @@ char	*remove_brace(char *word)
 
 int		parameter_error(char *word, int index, int act)
 {
-	if (word[index] == '{' && word[index - 1] != '$')
+	if ((word[index] == '{' && word[index - 1] != '$')
+	|| (word[index] == ' ' || word[index] == '\t' || word[index] == '\n'))
 	{
 		ft_putstr_fd("42sh: bad substitution", 2);
+		add_set("?", "1");
 		if (act == 1)
 			free(word);
 		return (1);
@@ -54,6 +56,7 @@ char	*error_modifier(char *param, char *word)
 	free(word);
 	free(param);
 	ft_putstr_fd("42sh: unrecognized modifier", 2);
+	add_set("?", "1");
 	return (ft_strdup(""));
 }
 
