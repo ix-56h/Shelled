@@ -24,7 +24,7 @@ char			*process_simple_parameter(size_t *i, char *word)
 
 	tmp = NULL;
 	a = *i;
-	while (word[a] && (ft_isalpha(word[a]) || ft_isdigit(word[a])))
+	while (word[a] && word[a] != '=')
 		a++;
 	ft_bzero(expression, 128);
 	ft_strncpy(expression, word + *i, (a - *i));
