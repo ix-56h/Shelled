@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 23:06:50 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/28 23:06:12 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/06 17:03:21 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ int		set_redir_fd(t_redir_list *redir)
 {
 	if (redir)
 	{
-		open_file(redir);
+		if (open_file(redir))
+			return (EXIT_FAILURE);
 		while (redir)
 		{
 			if (redir->out == -1)
@@ -112,8 +113,16 @@ int		set_redir_fd(t_redir_list *redir)
 				close(redir->in);
 				redir->in = -2;
 			}
-			else if (dup2(redir->out, redir->in) == -1)
+			else if (fcntl(redir->out, F_GETFD) == 0)
+			{
+				if (dup2(redir->out, redir->in) == -1)
+					return (EXIT_FAILURE);
+			}
+			else
+			{
+				ft_dprintf(2, "42sh: %i: Bad fd\n", redir->out);
 				return (EXIT_FAILURE);
+			}
 			redir = redir->next;
 		}
 	}

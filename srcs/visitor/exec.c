@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/06 15:43:33 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/06 17:39:05 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ static void		child_exec_forked(t_io_lists io,
 
 	ret = 0;
 	signal(SIGINT, SIG_DFL);
-	apply_fd(io);
+	if (apply_fd(io) != 0)
+		exit(1);
 	if (lookforbuiltin(cmd->data))
 		child_exec(cmd, env, io, job);
 	else if (is_path(cmd->data))
