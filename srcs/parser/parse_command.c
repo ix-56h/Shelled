@@ -23,7 +23,6 @@ t_node	*push_node_left(t_node *to_push, t_node *branch)
 	return (root);
 }
 
-
 t_node	*parse_command(t_sh *sh)
 {
 	t_node	*node;
