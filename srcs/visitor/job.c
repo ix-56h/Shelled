@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/23 14:48:57 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/06 16:32:04 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,8 @@ void		wait_for_job(t_job *job)
 	char	*exit_status;
 	pid_t	pid;
 
-	pid = waitpid(WAIT_ANY, &status, WUNTRACED);
+	if(job_is_completed(job) || (pid = waitpid(WAIT_ANY, &status, WUNTRACED)) == -1)
+		return ;
 	if (WIFEXITED(status))
 	{
 		exit_status = ft_itoa(WEXITSTATUS(status));
@@ -210,6 +211,7 @@ t_job		*create_job(void)
 	last_job = (t_job *)dl_get_last((t_dl_node *)*job);
 	last_job->number = get_next_job_count();
 	last_job->is_notified = 1;
+	add_jobnb(last_job->number);
 	return (last_job);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visitor_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/01 22:16:53 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/06 16:39:49 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int				exec_command(t_node *node, t_io_lists *io, t_job **job)
 
 	signal(SIGINT, ctrl_c_handler);
 	restore_term(1);
-	add_jobnb((*job)->number);
 	dl_append_node((t_dl_node **)&(*job)->list,
 						(t_dl_node *)create_process(UNUSED_JOB));
 	find_process_by_pid((*job)->list, -10)->command = ft_strdup(node->data);
@@ -45,7 +44,8 @@ int				exec_command(t_node *node, t_io_lists *io, t_job **job)
 			else
 				put_job_in_foreground(*job, 0);
 		}
-		(*job)->line = cut_command(io->cmd, 0);
+		if ((*job)->line == NULL)
+			(*job)->line = cut_command(io->cmd, 0);
 	}
 	set_used_fd(io->piped);
 	restore_term(2);
