@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:31:50 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/06/04 12:30:18 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/04 12:51:56 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "job.h"
 #include "stdio.h"
 
-void	oprhaned_jobs(void)
+void	orphaned_jobs(void)
 {
 	t_job *job;
 

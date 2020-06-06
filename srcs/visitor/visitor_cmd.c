@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/01 22:16:53 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/04 23:01:27 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int				exec_command(t_node *node, t_io_lists *io, t_job **job)
 			else
 				put_job_in_foreground(*job, 0);
 		}
-		(*job)->line = cut_command(io->cmd, 0);
+		if (!(*job)->line)
+			(*job)->line = cut_command(io->cmd, 0);
 	}
 	set_used_fd(io->piped);
 	restore_term(2);

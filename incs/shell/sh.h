@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/05/11 12:58:43 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/04 12:52:03 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define SHELL_NAME "42sh"
 
 int				g_exit;
-int				ready_exit;
+int				g_ready_exit;
 pid_t			g_shell_pgid;
 
 char			**g_env;
@@ -95,34 +95,41 @@ void			free_sh(t_sh *sh);
 */
 
 void			init_signal(void);
-void			oprhaned_jobs(void);
+void			orphaned_jobs(void);
 
 /*
-** shell_var.c
+**	shell_var.c
 */
 
 void			get_special_param(char ***w);
 char			*show_positional_param(char *word);
 
 /*
-**  alias.c
+**	alias.c
 */
 
 char			*add_alias(char *input, t_lifo *stack);
-char			*recursive_alias(char *alias_v, char **alias_cpy, t_lifo *stack);
-
+char			*recursive_alias(char *alias_v, char **alias_cpy,\
+									t_lifo *stack);
+int				check_conform(char **alias_cpy, char *alias_v);
 int				is_alias(char *t_alias, char **cpy_alias);
 char			*get_value_by_name(char *name);
 char			*test_alias(char *alias_n, t_lifo *stac);
 
-/*  print  */
+/*
+**  alias_print.c
+*/
+
 char			*print_new_input(char **pot_alias, int *toktype, t_lifo *stack);
 char			*join_new_input(char *data, char *new_input, int *i);
 void			print_with_alias(char *data, char **alias_v, int *i);
-char			*print_recursive_alias(char **alias_cpy, char **save_alias\
-										, char **pot_alias, t_lifo *sta, int *toktype);
+char			*print_recursive_alias(char **alias_cpy, char **alias[2]\
+										, t_lifo *sta, int *toktype);
 
-/*  free   */
+/*
+**  alias_free.c
+*/
+
 void			free_alias(char **alias);
 char			*free_recursive_launch(char **pot_alias, char **save_alias\
 										, char **alias_cpy, char *new_input);
@@ -130,10 +137,15 @@ char			*free_recursive(char *input_s, char **alias_cpy, char *alias_v);
 int				f_s(char **save_alias);
 void			reset_token(t_tokens token, int *is_multi, char *alias_v);
 
-/*   tools */
+/*
+**   alias_tools.c
+*/
+
 char			**cpy_alias(char **alias);
 char			**alloc_pot(char *data, char **pot_alias, int *i);
-int				*alloc_toktype(int *toktype, int *is_multi, char **pot, t_tokens token);
+int				*alloc_toktype(int *toktype, int *is_multi, char **pot\
+								, t_tokens token);
 char			**add_pot(char **alias, char *pot);
+int				*create_n_realloc_type(int *toktype, int is_multi);
 
 #endif

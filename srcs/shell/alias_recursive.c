@@ -60,18 +60,6 @@ char	**init_recursive(int *is_multi, char **input_s,
 	return (save_alias);
 }
 
-int 	check_conform(char **alias_cpy, char *alias_v)
-{
-	if (!alias_cpy)
-		return (0);
-	if (ft_strlen(alias_v) == 0)
-	{
-		free_env(alias_cpy);
-		return (0);
-	}
-	return (1);
-}
-
 char	*recursive_alias(char *alias_v, char **alias_cpy, t_lifo *stack)
 {
 	t_tokens	token;
