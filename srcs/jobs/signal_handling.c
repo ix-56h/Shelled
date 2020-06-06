@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/22 15:18:19 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/06/06 17:44:01 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/06 18:02:11 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	child_handler(int useless, siginfo_t *info, void *context)
 	job = g_job_head;
 	while(job && job->pgid != info->si_pid)
 		job = job->next;
-	if (info->si_code | CLD_DUMPED && signal > 0 && signal < 32)
+	if ((info->si_code == CLD_DUMPED || info->si_code == CLD_KILLED)
+		&& signal > 0 && signal < 32)
 	{
 		if (signal == SIGKILL)
 			job->is_notified = 0;
