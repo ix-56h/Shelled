@@ -15,28 +15,47 @@
 #include "parser.h"
 #include "visitor.h"
 
-char	*exec_substitution(char *tmp)
+static char		*exec_substitution(char *tmp)
 {
 	char *nw;
 
 	nw = substitution_wrapper(tmp);
 	nw = ft_strtrimf(nw);
+	free(tmp);
 	return (nw);
 }
 
-char	*process_substitution(size_t *i, char *word, char occur)
+static size_t	get_first_pos(size_t *i, char *word, char occur)
 {
 	size_t	y;
-	char	*tmp;
-	char	*nw;
-	size_t	x;
 
-	x = 0;
-	(*i)++;
 	y = *i;
 	while (word[y] && word[y] != occur)
 		y++;
 	if (!word[y])
+		return (-1);
+	return (y);
+}
+
+static size_t	get_new_pos(size_t *i, char *tmp, char *word)
+{
+	size_t	x;
+
+	x = ft_strlen(tmp);
+	*i += x;
+	free(tmp);
+	free(word);
+}
+
+char			*process_substitution(size_t *i, char *word, char occur)
+{
+	size_t	y;
+	char	*tmp;
+	char	*nw;
+
+	(*i)++;
+	y = get_first_pos(i, word, occur);
+	if (y == -1)
 		return (word);
 	if (word[y] == occur && y > (*i))
 	{
@@ -45,14 +64,10 @@ char	*process_substitution(size_t *i, char *word, char occur)
 			exit(1);
 		ft_strncpy(nw, word + *i, y);
 		tmp = exec_substitution(nw);
-		x = ft_strlen(tmp);
-		free(nw);
 		*i -= (occur == '`' ? 1 : 2);
 		word[*i] = 0;
 		nw = ft_vjoin(3, word, tmp, word + *i + y + (occur == '`' ? 2 : 3));
-		*i += x;
-		free(tmp);
-		free(word);
+		*i = get_new_pos(i, tmp, word);
 	}
 	else
 		return (word);
