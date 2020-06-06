@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:35:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/02 00:20:35 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/07 01:27:38 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,7 @@ int		visit_and_if(t_node *node, t_io_lists io, t_job **job)
 	t_process	*process;
 
 	if (node->state == 2)
-	{
-		node->state = -2;
-		exec_subshell(node, &io, job);
-		return (0);
-	}
+		return (subshell_wrapper(node, &io, job));
 	if (node->left && node->right)
 	{
 		err = (*g_visit_rules[node->left->tok])(node->left, io, job);
@@ -49,11 +45,7 @@ int		visit_or_if(t_node *node, t_io_lists io, t_job **job)
 	int			err;
 
 	if (node->state == 2)
-	{
-		node->state = -2;
-		exec_subshell(node, &io, job);
-		return (0);
-	}
+		return (subshell_wrapper(node, &io, job));
 	if (node->left && node->right)
 	{
 		err = (*g_visit_rules[node->left->tok])(node->left, io, job);
@@ -72,11 +64,7 @@ int		visit_pipe(t_node *node, t_io_lists io, t_job **job)
 	int	pipefd[2];
 
 	if (node->state == 2)
-	{
-		node->state = -2;
-		exec_subshell(node, &io, job);
-		return (0);
-	}
+		return (subshell_wrapper(node, &io, job));
 	if (node->left && node->right)
 	{
 		if (pipe(pipefd) == -1)
@@ -106,16 +94,18 @@ int		visit_semi(t_node *node, t_io_lists io, t_job **job)
 	t_io_lists		new_io;
 	char			*tmp;
 
-	if (node->state == 2)
+	if (node->state == 3)
 	{
-		node->state = -2;
-		exec_subshell(node, &io, job);
-		return (0);
+		dl_push_node((t_dl_node **)&io.grp_redir, ft_calloc(sizeof(t_redir_list)));
+		io.grp_redir->data = io.redir;
+		io.redir = NULL;
 	}
-	new_io = (t_io_lists){NULL, NULL, 0, io.cmd};
-	ret = visit(node->left, job, new_io.cmd);
-	if ((tmp = cut_command(new_io.cmd, 1)))
+	if (node->state == 2)
+		return (subshell_wrapper(node, &io, job));
+	//new_io = (t_io_lists){NULL, io.grp_redir, NULL, 0, io.cmd};
+	ret = visit(node->left, job, io.cmd, io.grp_redir);
+	if ((tmp = cut_command(io.cmd, 1)))
 		free(tmp);
-	ret += visit(node->right, job, new_io.cmd);
+	ret += visit(node->right, job, io.cmd, io.grp_redir);
 	return (ret);
 }

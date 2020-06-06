@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/20 18:24:42 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/04 23:00:35 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/07 01:06:41 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ static int		get_end_grouped_cmd(char *cmd, int i)
 		if (cmd[i] == '\\')
 			i += 2;
 		else if (cmd[i] == '{')
+		{
 			++count;
+			++i;
+		}
 		else if (cmd[i] == '}')
 		{
 			if (count != 0)
@@ -46,7 +49,10 @@ static int		get_end_subshell(char *cmd, int i)
 		if (cmd[i] == '\\')
 			i += 2;
 		else if (cmd[i] == '(')
+		{
 			++count;
+			++i;
+		}
 		else if (cmd[i] == ')')
 		{
 			if (count != 0)
@@ -119,6 +125,8 @@ char			*cut_command(char *cmd, char act)
 	char	*res;
 	int		len;
 
+	if (!cmd)
+		return (NULL);
 	semi_col_index = get_next_semi_col(cmd);
 	cmd[semi_col_index] = '\0';
 	res = ft_strdup(cmd);

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/02 01:03:37 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/07 00:52:16 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ static void		child_exec_subshell_forked(t_node *node, t_io_lists io, t_job *job)
 	signal(SIGINT, SIG_DFL);
 	apply_fd(io);
 	tmp = NULL;
-	visit(node, &tmp, NULL);
+	visit(node, &tmp, NULL, io.grp_redir);
 	exit(ft_atoi(get_env(g_set, "?")));
 }
 
-static int				exec_subshell_as_cmd(t_node *node, t_io_lists io, t_job *job)
+static int		exec_subshell_as_cmd(t_node *node, t_io_lists io, t_job *job)
 {
 	pid_t		pid;
 	t_process	*process;
@@ -83,5 +83,12 @@ int				exec_subshell(t_node *node, t_io_lists *io, t_job **job)
 	set_used_fd(io->piped);
 	restore_term(2);
 	signal(SIGINT, SIG_DFL);
+	return (0);
+}
+
+int				subshell_wrapper(t_node *node, t_io_lists *io, t_job **job)
+{
+	node->state = -2;
+	exec_subshell(node, io, job);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/02 00:21:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/07 00:45:03 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int		visitor_assign_exec(t_sh *sh, char *item, char *old_value,
 
 	cmd = ft_strdup(sh->input);
 	lifo_empty(sh->stack.errors) ? sh->node = parse_program(sh) : 0;
-	visit(sh->node, &tmp, cmd);
+	visit(sh->node, &tmp, cmd, NULL);
 	if (!old_value[0])
 	{
 		g_set = del_var(g_set, item);
@@ -132,11 +132,7 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 	dl_append_node((t_dl_node **)&(*job)->list,
 						(t_dl_node *)create_process(UNUSED_JOB));
 	if (node->state == 2)
-	{
-		node->state = -2;
-		exec_subshell(node, &io, job);
-		return (0);
-	}
+		return (subshell_wrapper(node, &io, job));
 	data = ft_strdup(node->data);
 	if (!visit_assign_is_valid(node, &io, data))
 		return (0);

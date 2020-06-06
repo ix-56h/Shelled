@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 23:33:53 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/28 19:24:36 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/06 23:44:05 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct			s_redir_list
 typedef struct			s_io_lists
 {
 	t_redir_list		*redir;
+	t_dl_node			*grp_redir;
 	t_pipe_list			*piped;
 	char				background;
 	char				*cmd;

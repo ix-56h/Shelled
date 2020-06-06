@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/20 18:52:04 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/23 15:22:57 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/07 00:50:55 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void		substitution_fork(char *str, int *pipefd, int *stdout_save)
 		if (!lifo_empty(sh.stack.errors))
 			exit(1);
 		close(pipefd[READ_END]);
-		visit(sh.node, &tmp, NULL);
+		visit(sh.node, &tmp, NULL, NULL);
 		exit(0);
 	}
 }

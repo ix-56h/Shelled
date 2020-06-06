@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/04 12:52:15 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/07 00:41:26 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void		process_sh(t_sh *sh)
 			if (sh->f.ast_draw)
 				tree_draw(sh->node);
 			cmd = ft_strdup(sh->input);
-			visit(sh->node, &g_job_head, cmd);
+			visit(sh->node, &g_job_head, cmd, NULL);
 			free(cmd);
 		}
 	}
