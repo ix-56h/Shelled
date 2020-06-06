@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/06 16:39:49 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/06 16:46:46 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int				exec_command(t_node *node, t_io_lists *io, t_job **job)
 			else
 				put_job_in_foreground(*job, 0);
 		}
-		if ((*job)->line == NULL)
+		if (!(*job)->line)
 			(*job)->line = cut_command(io->cmd, 0);
 	}
 	set_used_fd(io->piped);

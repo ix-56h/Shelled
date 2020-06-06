@@ -67,11 +67,13 @@ char	*indicate_error(char *param, char *word)
 	{
 		free(param);
 		ft_putstr_fd(": parameter null or not set", 2);
+		add_set("?", "1");
 		return (word);
 	}
 	process_expression(&word);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(word, 2);
+	add_set("?", "1");
 	free(param);
 	free(word);
 	return (ft_strdup(""));

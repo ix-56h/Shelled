@@ -25,9 +25,9 @@ int		check_if_jobs(void)
 	{
 		if (job_is_stopped(job) && !job_is_completed(job))
 		{
-			if (ready_exit == 1)
+			if (g_ready_exit == 1)
 				return (0);
-			ready_exit = 1;
+			g_ready_exit = 1;
 			ft_putstr_fd("42sh: there are stopped job\n", 2);
 			return (1);
 		}

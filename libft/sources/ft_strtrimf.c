@@ -23,7 +23,8 @@ char	*ft_strtrimf(char *s)
 	if (!s)
 		return (NULL);
 	start = 0;
-	while (s[start] && (s[start] == '\n' || s[start] == ' ' || s[start] == '\t'))
+	while (s[start] && (s[start] == '\n' || s[start] == ' '
+			|| s[start] == '\t'))
 		start++;
 	len = ft_strlen(s);
 	if (len > 0)

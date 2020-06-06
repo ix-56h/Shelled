@@ -58,7 +58,8 @@ int				braces_error(char c)
 {
 	if (c == '}' || c == '{')
 	{
-		ft_putstr_fd("42sh: bad substitution!", 2);
+		ft_putstr_fd("42sh: bad substitution", 2);
+		add_set("?", "1");
 		return (1);
 	}
 	return (0);
