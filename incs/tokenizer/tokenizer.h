@@ -62,7 +62,6 @@ typedef enum		e_toktype {
 	TOK_SP,
 	TOK_SUBSHELL,
 	TOK_VALIDATOR,
-	TOK_OPERATOR,
 	TOK_REDIRECTION,
 	TOK_HERE,
 	TOK_MAX
@@ -113,7 +112,6 @@ typedef struct		s_gnt {
 **	term_and_op_check.c
 */
 
-t_toktype			check_operator(char *s, size_t len, int *i);
 t_toktype			check_pipe(char *s, size_t len, int *i);
 t_toktype			check_redirections(char *s, size_t len, int *i);
 

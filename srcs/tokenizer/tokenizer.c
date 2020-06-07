@@ -32,8 +32,16 @@ t_toktype	get_true_toktype(char *s, t_toktype toktype, int *i)
 
 	ret = TOK_ERROR;
 	l = ft_strlen(s);
-	if (toktype == TOK_OPERATOR)
-		ret = check_operator(s, l, i);
+	if (toktype == TOK_SEMI || toktype == TOK_AND)
+	{
+		if (l == 1)
+			ret = toktype;
+		else if (l == 2)
+		{
+			toktype == TOK_SEMI ? (ret = TOK_DSEMI) : 0;
+			toktype == TOK_AND ? (ret = TOK_AND_IF) : 0;
+		}
+	}
 	else if (toktype == TOK_PIPE)
 		ret = check_pipe(s, l, i);
 	else if (toktype == TOK_REDIRECTION)
@@ -56,12 +64,9 @@ int			get_token(char *s, t_gnt *g, t_lifo *stack)
 	while (s[anchor] && (g_token_chr_rules[g->toktype][(g->chr_class = \
 g_get_chr_class[(unsigned char)s[anchor]])] || prev_class == CHR_ESCAPE))
 	{
-		if (is_special_char(g->chr_class, prev_class))
-		{
-			if (!lex_sequence(s, &anchor, stack))
-				return (anchor);
-			continue;
-		}
+		if (is_special_char(g->chr_class, prev_class)
+			&& !lex_sequence(s, &anchor, stack))
+			return (anchor);
 		prev_class = g->chr_class;
 		anchor++;
 	}
