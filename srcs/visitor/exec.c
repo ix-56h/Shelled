@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/06 17:39:05 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/07 23:58:04 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,9 @@ int				exec_builtin_no_fork(t_node *cmd, char **env,
 	int			ret;
 	t_process	*process;
 
-	save_and_restore_fd(0);
-	set_pipe_fd(io.piped);
-	set_redir_fd(io.redir);
 	exec_builtin = lookforbuiltin(cmd->data);
 	ret = exec_builtin(cmd->args, ((env) ? &env : &g_env));
 	set_ret_value("?", ft_itoa(ret));
-	close_used_pipe_fd(io.piped);
-	save_and_restore_fd(1);
 	process = find_process_by_pid(job->list, UNUSED_JOB);
 	process->pid = BUILTIN_JOB;
 	process->ret = ret;
@@ -122,7 +117,7 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 		cmd->args[i] = expand_word(cmd->args[i]);
 		i++;
 	}
-	if (!io.piped && !io.redir && !io.background && lookforbuiltin(cmd->data))
+	if (!io.grp_redir && !io.piped && !io.redir && !io.background && lookforbuiltin(cmd->data))
 		ret = exec_builtin_no_fork(cmd, env, io, job);
 	else
 	{
