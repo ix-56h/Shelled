@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    sources.mk                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
+#    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/06/01 22:18:10 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/06/07 22:46:26 by mguerrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -142,6 +142,8 @@ C_FILES_builtins = \
 					 alias_tools.c \
 					 alias_print.c \
 					 alias_form.c \
+					 ft_hash.c \
+					 hash_utils.c \
 
 C_FILES_builtins/test = \
 			test_algebraically_equal.c \

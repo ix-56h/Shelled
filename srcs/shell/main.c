@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/04 12:52:15 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/07 21:24:39 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "parser.h"
 #include "exec.h"
 #include "libft.h"
+#include "hash.h"
 
 void		init_shell_job(void)
 {
@@ -27,6 +28,8 @@ void		init_shell_job(void)
 
 	shell_terminal = 0;
 	shell_is_interactive = isatty(shell_terminal);
+	g_job_head = NULL;
+	g_jobnb = NULL;
 	if (shell_is_interactive)
 	{
 		while (tcgetpgrp(shell_terminal) != (g_shell_pgid = getpgrp()))
@@ -91,8 +94,7 @@ int			main(int ac, char **av, char **envp)
 	init_shell_job();
 	if (init_shell(&sh, ac, av, envp) == 0)
 		return (EXIT_FAILURE);
-	g_job_head = NULL;
-	g_jobnb = NULL;
+	g_hash = NULL;
 	g_ready_exit = 0;
 	while (1)
 	{

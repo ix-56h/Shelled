@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_jump.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jebrocho <jebrocho@42.fr>                  +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 20:28:36 by jebrocho          #+#    #+#             */
-/*   Updated: 2018/11/13 12:52:15 by jebrocho         ###   ########.fr       */
+/*   Updated: 2020/06/07 21:07:16 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ const t_builtins g_builtins[] =
 	{"bg", ft_bg},
 	{"jobs", ft_jobs},
 	{"fg", ft_fg},
+	{"hash", ft_hash},
 	{NULL, NULL}
 };
 

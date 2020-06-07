@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_and_find.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:37:06 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/02/26 19:40:01 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/07 21:42:48 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <sys/stat.h>
 #include "builtins.h"
 #include "exec.h"
+#include "hash.h"
 
 /*
 **	check if there is an error on the file
@@ -83,7 +84,8 @@ int		test_env(t_node *cmd, char **env)
 {
 	char	*cmd_path;
 
-	if ((cmd_path = search_path(cmd, env)))
+	if ((cmd_path = search_table(cmd->data))
+		|| (cmd_path = search_path(cmd, env)))
 	{
 		if (access(cmd_path, X_OK) == 0)
 		{
