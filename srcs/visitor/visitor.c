@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/02 00:21:09 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/07 21:33:35 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,17 @@ int				visit_background(t_node *node, t_io_lists io, t_job **job)
 	}
 	io.background = 1;
 	if (!(*g_visit_rules[node->left->tok])(node->left, io, job))
+	{
+		if (node->left)
+		{
+			io.background = 0;
+			if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
+				return (0);
+		}
+		return (0);
+	}
+
+	
 		return (0);
 	return (1);
 }
