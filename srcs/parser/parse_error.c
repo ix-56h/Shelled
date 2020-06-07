@@ -42,6 +42,8 @@ void			print_stack_errors(t_lifo *stack, t_tokens *cur)
 			ft_putstr("'");
 			ft_putstr(err.near);
 			ft_putstr("'");
+			if (err.type == UNRECOGNIZED_TOKEN)
+				free(err.near);
 		}
 		ft_putstr("\n");
 		stack->top--;

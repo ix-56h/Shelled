@@ -31,7 +31,7 @@ t_node	*parse_and_or(t_sh *sh)
 			else
 			{
 				node = save_node(node, tok, nod2, 0);
-				error_push(sh->stack.errors, PARSE_ERROR, tok.data);
+				error_push(sh->stack.errors, PARSE_ERROR, sh->tok.data);
 				return (node);
 			}
 			tok = sh->tok;
