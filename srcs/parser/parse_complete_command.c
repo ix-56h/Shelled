@@ -15,16 +15,9 @@
 t_node	*parse_complete_command(t_sh *sh)
 {
 	t_node		*node;
-	t_node		*nod2;
 
 	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
-	node = NULL;
-	nod2 = NULL;
-	if ((node = parse_list(sh)))
-	{
-		if ((nod2 = parse_separator_op(sh)))
-			node = binnode(node, nod2, NULL);
-	}
+	node = parse_list(sh);
 	return (node);
 }
