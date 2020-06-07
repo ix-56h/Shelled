@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/20 18:24:42 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/07 01:06:41 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/07 23:01:17 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,22 +119,53 @@ static int		get_next_semi_col(char *cmd)
 	return (i);
 }
 
+static int		get_next_and(char *cmd)
+{
+	int		i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '\\')
+			i += 2;
+		else if (cmd[i] == '\'')
+			i = get_next_cote(cmd, ++i) + 1;
+		else if (cmd[i] == '"')
+			i = get_next_double_cote(cmd, ++i) + 1;
+		else if (cmd[i] == '(')
+			i = get_end_subshell(cmd, ++i) + 1;
+		else if (cmd[i] == '{')
+			i = get_end_grouped_cmd(cmd, ++i) + 1;
+		else if (cmd[i] == '&')
+			break ;
+		else
+			++i;
+	}
+	return (i);
+}
+
 char			*cut_command(char *cmd, char act)
 {
-	int		semi_col_index;
+	int		index;
+	char	find;
 	char	*res;
 	int		len;
 
-	if (!cmd)
-		return (NULL);
-	semi_col_index = get_next_semi_col(cmd);
-	cmd[semi_col_index] = '\0';
+	index = get_next_semi_col(cmd);
+	if (get_next_and(cmd) < index)
+	{
+		index = get_next_and(cmd);
+		find = '&';
+	}
+	else
+		find = ';';
+	cmd[index] = '\0';
 	res = ft_strdup(cmd);
-	cmd[semi_col_index] = ';';
+	cmd[index] = find;
 	if (act == 1)
 	{
-		len = ft_strlen(&(cmd[semi_col_index + 1]));
-		ft_memcpy(cmd, &(cmd[semi_col_index + 1]), len);
+		len = ft_strlen(&(cmd[index + 1]));
+		ft_memcpy(cmd, &(cmd[index + 1]), len);
 		cmd[len] = '\0';
 	}
 	return (res);
