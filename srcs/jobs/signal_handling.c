@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/22 15:18:19 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/06/06 18:02:11 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/08 14:47:00 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ const char *g_sig_message[31] = {"Hangup: 1", "Interrupt: 2", "Quit: 3",
 
 void	child_handler(int useless, siginfo_t *info, void *context)
 {
-	int signal;
-	t_job *job;
+	int		signal;
+	t_job	*job;
 
 	(void)useless;
 	(void)context;
 	signal = WTERMSIG(info->si_status);
 	job = g_job_head;
-	while(job && job->pgid != info->si_pid)
+	while (job && job->pgid != info->si_pid)
 		job = job->next;
 	if ((info->si_code == CLD_DUMPED || info->si_code == CLD_KILLED)
 		&& signal > 0 && signal < 32)
