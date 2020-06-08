@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:28:07 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/09 00:01:39 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/08 12:34:11 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 #include <unistd.h>
 #include "libft.h"
+#include "hash.h"
 
 char	**init_env(char **env)
 {
@@ -83,6 +84,8 @@ int		ft_edit_env(char **env, char *looking, char *value)
 {
 	char	*new_env;
 
+	if (ft_strcmp(looking, "PATH") == 0)
+		empty_table();
 	while (env && *env)
 	{
 		if (ft_strcmp(*env, looking) == '=')
@@ -112,6 +115,8 @@ char	**add_env(char **env, char *var, char *value)
 
 	j = 0;
 	i = 0;
+	if (ft_strcmp(var, "PATH") == 0)
+		empty_table();
 	while (env && env[i])
 		++i;
 	i += 2;
@@ -138,6 +143,8 @@ char	**del_var(char **env, char *var)
 	char	**new_env;
 
 	i = 0;
+	if (ft_strcmp(var, "PATH") == 0)
+		empty_table();
 	while (env[i])
 	{
 		if (ft_strcmp(env[i], var) == '=')

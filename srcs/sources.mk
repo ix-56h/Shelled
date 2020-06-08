@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/06/08 20:29:25 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/06/08 21:29:13 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -143,6 +143,9 @@ C_FILES_builtins = \
 					 alias_tools.c \
 					 alias_print.c \
 					 alias_form.c \
+					 ft_hash.c \
+					 hash_utils.c \
+					 hash_table.c \
 
 C_FILES_builtins/test = \
 			test_algebraically_equal.c \

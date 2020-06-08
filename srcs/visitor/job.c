@@ -32,6 +32,8 @@ t_process	*create_process(pid_t pid)
 
 t_process	*find_process_by_pid(t_process *process, pid_t pid)
 {
+	if (g_exp_error)
+		free(process->command);
 	while (process && process->prev)
 		process = process->prev;
 	while (process)

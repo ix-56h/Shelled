@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    includes.mk                                        :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
+#    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 14:33:36 by thdelmas          #+#    #+#              #
-#    Updated: 2020/03/01 23:53:47 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/06/07 21:04:53 by mguerrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ H_FILES_builtins 	= 	\
 						builtins_jump.h \
 						builtins.h \
 						test_builtins.h \
+						hash.h \
 
 H_FILES_line_edit 	= 	\
 						ligne.h \

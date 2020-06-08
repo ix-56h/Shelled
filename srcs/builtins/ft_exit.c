@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 06:57:57 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/03 15:18:13 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/08 16:07:22 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,20 @@
 #include "job.h"
 #include "historique.h"
 #include "ligne.h"
+#include "hash.h"
+
+void	clean_before_exit(void)
+{
+	restore_signals();
+	clean_job();
+	if (g_ready_exit)
+		orphaned_jobs();
+	free_historic();
+	free_env(g_env);
+	free_env(g_set);
+	empty_table();
+	restore_term(1);
+}
 
 int		check_if_jobs(void)
 {
@@ -58,10 +72,12 @@ int		ft_exit(char **argv, char ***tenv)
 	if (argv[1] && argv[2])
 	{
 		ft_putstr_fd("42sh: exit: too much arguments\n", 2);
-		return (0);
+		return (1);
 	}
 	if (check_if_jobs() == 1)
 		return (0);
-	g_exit = check_num(argv[1]);
+	value = check_num(argv[1]);
+	clean_before_exit();
+	exit(value);
 	return (0);
 }

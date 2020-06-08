@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/07 23:58:04 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/08 21:28:45 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "builtins.h"
 #include "exec.h"
 #include "expansions.h"
+#include "hash.h"
 
 int				exec_builtin_no_fork(t_node *cmd, char **env,
 										t_io_lists io, t_job *job)
@@ -117,6 +118,8 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 		cmd->args[i] = expand_word(cmd->args[i]);
 		i++;
 	}
+	if (g_exp_error)
+		return (1);
 	if (!io.grp_redir && !io.piped && !io.redir && !io.background && lookforbuiltin(cmd->data))
 		ret = exec_builtin_no_fork(cmd, env, io, job);
 	else
@@ -125,6 +128,7 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 			return (-1);
 		else if (pid == 0)
 			child_exec_forked(io, g_env, job, cmd);
+		add_to_table(cmd->data, 1);
 		after_fork_routine(pid, io, job);
 	}
 	return (ret);

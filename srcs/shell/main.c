@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/07 00:41:26 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/08 21:29:32 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "parser.h"
 #include "exec.h"
 #include "libft.h"
+#include "hash.h"
 
 void		init_shell_job(void)
 {
@@ -27,6 +28,8 @@ void		init_shell_job(void)
 
 	shell_terminal = 0;
 	shell_is_interactive = isatty(shell_terminal);
+	g_job_head = NULL;
+	g_jobnb = NULL;
 	if (shell_is_interactive)
 	{
 		while (tcgetpgrp(shell_terminal) != (g_shell_pgid = getpgrp()))
@@ -35,12 +38,12 @@ void		init_shell_job(void)
 		}
 		set_up_signals();
 		g_shell_pgid = getpid();
-		if (setpgid (g_shell_pgid, g_shell_pgid) < 0)
+		if (setpgid(g_shell_pgid, g_shell_pgid) < 0)
 		{
-			ft_putstr_fd("Couldn't put the shell in its own process group", STDERR_FILENO);
+			ft_putstr_fd("Couldn't put the shell in its own process group", 2);
 			exit(1);
 		}
-		tcsetpgrp (shell_terminal, g_shell_pgid);
+		tcsetpgrp(shell_terminal, g_shell_pgid);
 	}
 }
 
@@ -64,6 +67,7 @@ void		process_sh(t_sh *sh)
 {
 	char	*cmd;
 
+	g_exp_error = 0;
 	if (!lifo_empty(sh->stack.errors))
 	{
 		print_stack_errors(sh->stack.errors, &(sh->tok));
@@ -91,8 +95,7 @@ int			main(int ac, char **av, char **envp)
 	init_shell_job();
 	if (init_shell(&sh, ac, av, envp) == 0)
 		return (EXIT_FAILURE);
-	g_job_head = NULL;
-	g_jobnb = NULL;
+	g_hash = NULL;
 	g_ready_exit = 0;
 	while (1)
 	{
@@ -102,16 +105,10 @@ int			main(int ac, char **av, char **envp)
 		sh.tok = get_next_token(sh.input, sh.stack.errors);
 		lifo_empty(sh.stack.errors) ? sh.node = parse_program(&sh) : 0;
 		process_sh(&sh);
-		if (g_exit != -1)
-			break ;
 		free_sh(&sh);
 		re_init_sh(&sh);
 	}
-	orphaned_jobs();
-	free_historic();
 	free_sh(&sh);
-	free_env(g_env);
-	free_env(g_set);
-	restore_term(1);
-	return (g_exit == -1 ? EXIT_SUCCESS : g_exit);
+	clean_before_exit();
+	return (EXIT_SUCCESS);
 }

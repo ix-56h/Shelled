@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:31:50 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/06/06 16:32:30 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/08 15:22:18 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	orphaned_jobs(void)
 			kill(-(job->pgid), SIGCONT);
 			kill(-(job->pgid), SIGHUP);
 		}
-		else
+		else if (!job_is_completed(job))
 		{
 			kill(-(job->pgid), SIGHUP);
 		}

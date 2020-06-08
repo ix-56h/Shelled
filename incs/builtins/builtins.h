@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jebrocho <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 21:07:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/11 13:35:01 by jebrocho         ###   ########.fr       */
+/*   Updated: 2020/06/07 21:07:53 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int			ft_type(char **args, char ***tenv);
 int			ft_alias(char **args, char ***env);
 int			ft_unalias(char **args, char ***env);
 int			ft_test(char **args, char ***env);
+int			ft_hash(char **argv, char ***set);
 
 /*
 ** cd functions

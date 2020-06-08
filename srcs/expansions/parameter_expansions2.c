@@ -66,7 +66,8 @@ char	*indicate_error(char *param, char *word)
 	if (!word[0])
 	{
 		free(param);
-		ft_putstr_fd(": parameter null or not set", 2);
+		ft_putstr_fd(": parameter null or not set\n", 2);
+		g_exp_error = 1;
 		add_set("?", "1");
 		return (word);
 	}
