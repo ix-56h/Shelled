@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 06:57:57 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/08 15:42:57 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/08 16:07:22 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "ligne.h"
 #include "hash.h"
 
-void		clean_before_exit(void)
+void	clean_before_exit(void)
 {
 	restore_signals();
 	clean_job();

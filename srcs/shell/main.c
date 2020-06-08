@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/08 15:53:11 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/08 16:11:15 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,5 @@ int			main(int ac, char **av, char **envp)
 	}
 	free_sh(&sh);
 	clean_before_exit();
-	return(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
