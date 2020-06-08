@@ -123,6 +123,8 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 		cmd->args[i] = expand_word(cmd->args[i]);
 		i++;
 	}
+	if (g_exp_error)
+		return (1);
 	if (!io.piped && !io.redir && !io.background && lookforbuiltin(cmd->data))
 		ret = exec_builtin_no_fork(cmd, env, io, job);
 	else
