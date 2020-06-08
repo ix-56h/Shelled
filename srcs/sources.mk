@@ -6,7 +6,7 @@
 #    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/06/07 22:46:26 by mguerrea         ###   ########.fr        #
+#    Updated: 2020/06/08 12:19:02 by mguerrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -144,6 +144,7 @@ C_FILES_builtins = \
 					 alias_form.c \
 					 ft_hash.c \
 					 hash_utils.c \
+					 hash_table.c \
 
 C_FILES_builtins/test = \
 			test_algebraically_equal.c \

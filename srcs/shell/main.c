@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/07 21:24:39 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/08 12:58:22 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ void		init_shell_job(void)
 		}
 		set_up_signals();
 		g_shell_pgid = getpid();
-		if (setpgid (g_shell_pgid, g_shell_pgid) < 0)
+		if (setpgid(g_shell_pgid, g_shell_pgid) < 0)
 		{
-			ft_putstr_fd("Couldn't put the shell in its own process group", STDERR_FILENO);
+			ft_putstr_fd("Couldn't put the shell in its own process group", 2);
 			exit(1);
 		}
-		tcsetpgrp (shell_terminal, g_shell_pgid);
+		tcsetpgrp(shell_terminal, g_shell_pgid);
 	}
 }
 
@@ -86,6 +86,17 @@ void		process_sh(t_sh *sh)
 	clean_job();
 }
 
+void		clean_before_exit(t_sh *sh)
+{
+	orphaned_jobs();
+	free_historic();
+	free_sh(sh);
+	free_env(g_env);
+	free_env(g_set);
+	empty_table();
+	restore_term(1);
+}
+
 int			main(int ac, char **av, char **envp)
 {
 	t_sh		sh;
@@ -109,11 +120,6 @@ int			main(int ac, char **av, char **envp)
 		free_sh(&sh);
 		re_init_sh(&sh);
 	}
-	orphaned_jobs();
-	free_historic();
-	free_sh(&sh);
-	free_env(g_env);
-	free_env(g_set);
-	restore_term(1);
+	clean_before_exit(&sh);
 	return (g_exit == -1 ? EXIT_SUCCESS : g_exit);
 }
