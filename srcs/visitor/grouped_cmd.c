@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 20:05:20 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/08 21:26:13 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/09 00:24:13 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void		patch_trunc_redir(t_io_lists *io)
 		while (nav)
 		{
 			redir = (t_redir_list *)nav->data;
-			if (redir->file && redir->flag & O_TRUNC)
+			if (redir && redir->file && redir->flag & O_TRUNC)
 			{
 				if (stat(redir->file, &buf) == 0)
 				{

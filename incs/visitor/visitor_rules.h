@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:47:24 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/02 00:16:24 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/08 23:49:17 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int		(*g_visit_rules[TOK_POSIX_MAX]) (t_node *node, t_io_lists io,
 	[TOK_ASSIGNMENT_WORD] = visit_assign_word,
 	[TOK_LESSAND] = visit_lessand,
 	[TOK_GREATAND] = visit_greatand,
-	[TOK_LESSGREAT] = visit_lessgreat,
 	[TOK_WORD] = visit_cmd,
 	[TOK_AND_IF] = visit_and_if,
 	[TOK_OR_IF] = visit_or_if,

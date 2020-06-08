@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/07 23:13:20 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/09 00:22:20 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,11 @@ int				visit_cmd(t_node *node, t_io_lists io, t_job **job)
 {
 	if (node->state == 2)
 		return (subshell_wrapper(node, &io, job));
+	if (node->state == 3)
+		grp_cmd_wrapper(&io);
 	exec_command(node, &io, job);
+	if (node->state == 3)
+		dl_del_one(io.grp_redir);
 	return (0);
 }
 
@@ -58,23 +62,23 @@ int				visit_cmd(t_node *node, t_io_lists io, t_job **job)
 
 int				visit_background(t_node *node, t_io_lists io, t_job **job)
 {
+	int	ret;
+
 	if (node->state == 2)
 		return (subshell_wrapper(node, &io, job));
 	io.background = 1;
-	if (!(*g_visit_rules[node->left->tok])(node->left, io, job))
+	ret = 1;
+	if (!(ret = (*g_visit_rules[node->left->tok])(node->left, io, job)))
 	{
+		if (node->state == 3)
+			grp_cmd_wrapper(&io);
 		if (node->right)
 		{
 			io.background = 0;
-			if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
-				return (0);
+			ret = (*g_visit_rules[node->right->tok])(node->right, io, job);
 		}
-		return (0);
 	}
-
-	
-		return (0);
-	return (1);
+	return (ret);
 }
 
 int				visit(t_node *root, t_job **job, char *cmd, t_dl_node *redir)
