@@ -64,7 +64,9 @@ int			get_token(char *s, t_gnt *g, t_lifo *stack)
 	while (s[anchor] && (g_token_chr_rules[g->toktype][(g->chr_class = \
 g_get_chr_class[(unsigned char)s[anchor]])] || prev_class == CHR_ESCAPE))
 	{
-		if (is_special_char(g->chr_class, prev_class)
+		if (g->toktype == TOK_WORD && s[anchor] == '=')
+			g->toktype = TOK_ASSIGNMENT_WORD;
+		else if (is_special_char(g->chr_class, prev_class)
 			&& !lex_sequence(s, &anchor, stack))
 			return (anchor);
 		prev_class = g->chr_class;

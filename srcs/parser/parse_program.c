@@ -30,5 +30,6 @@ t_node	*parse_program(t_sh *sh)
 	}
 	else if ((parse_linebreak(sh) == 0) || sh->tok.tok != TOK_EOF)
 		error_push(sh->stack.errors, PARSE_ERROR, sh->tok.data);
+	tree_draw(node);
 	return (node);
 }
