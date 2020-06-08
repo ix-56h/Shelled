@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/08 12:58:22 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/08 15:53:11 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,6 @@ void		process_sh(t_sh *sh)
 	clean_job();
 }
 
-void		clean_before_exit(t_sh *sh)
-{
-	orphaned_jobs();
-	free_historic();
-	free_sh(sh);
-	free_env(g_env);
-	free_env(g_set);
-	empty_table();
-	restore_term(1);
-}
-
 int			main(int ac, char **av, char **envp)
 {
 	t_sh		sh;
@@ -115,11 +104,10 @@ int			main(int ac, char **av, char **envp)
 		sh.tok = get_next_token(sh.input, sh.stack.errors);
 		lifo_empty(sh.stack.errors) ? sh.node = parse_program(&sh) : 0;
 		process_sh(&sh);
-		if (g_exit != -1)
-			break ;
 		free_sh(&sh);
 		re_init_sh(&sh);
 	}
-	clean_before_exit(&sh);
-	return (g_exit == -1 ? EXIT_SUCCESS : g_exit);
+	free_sh(&sh);
+	clean_before_exit();
+	return(EXIT_SUCCESS);
 }

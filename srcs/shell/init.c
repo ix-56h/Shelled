@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 14:49:49 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/03/02 00:34:23 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/08 15:52:51 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static void	test_fd(void)
 
 int			init_shell(t_sh *sh, int ac, char **av, char **envp)
 {
-	g_exit = -1;
 	test_fd();
 	if (!(sh->stack.errors = lifo_creator(20, sizeof(t_staterror))))
 		return (0);

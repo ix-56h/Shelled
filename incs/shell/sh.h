@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 13:39:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/04 12:52:03 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/08 15:52:46 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # define FT_PATH_MAX 256
 # define SHELL_NAME "42sh"
 
-int				g_exit;
 int				g_ready_exit;
 pid_t			g_shell_pgid;
 
@@ -48,6 +47,7 @@ void			check_param(char **av, t_args *f);
 int				init_shell(t_sh *sh, int ac, char **av, char **envp);
 void			process_sh(t_sh *sh);
 void			check_args(t_sh *sh, int ac, char **av);
+void			clean_before_exit(void);
 
 /*
 **	env.c
