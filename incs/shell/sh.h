@@ -20,6 +20,7 @@
 
 int				g_exit;
 int				g_ready_exit;
+int				g_exp_error;
 pid_t			g_shell_pgid;
 
 char			**g_env;

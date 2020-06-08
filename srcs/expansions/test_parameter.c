@@ -45,7 +45,8 @@ int				digit_error(char *word)
 	if ((ft_isdigit(word[i]) && !ft_isalldigit(&word[i]))
 		|| (!ft_isalnum(word[i])))
 	{
-		ft_putstr_fd("42sh: bad substitution", 2);
+		ft_putstr_fd("42sh: bad substitution\n", 2);
+		g_exp_error = 1;
 		add_set("?", "1");
 		return (1);
 	}

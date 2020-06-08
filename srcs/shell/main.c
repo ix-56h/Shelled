@@ -64,6 +64,7 @@ void		process_sh(t_sh *sh)
 {
 	char	*cmd;
 
+	g_exp_error = 0;
 	if (!lifo_empty(sh->stack.errors))
 	{
 		print_stack_errors(sh->stack.errors, &(sh->tok));
