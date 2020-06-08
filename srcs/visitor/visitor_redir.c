@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:59:58 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/07 01:24:37 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/08 20:27:15 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,7 @@ int		visit_right_redi(t_node *node, t_io_lists io, t_job **job)
 	if (node->state == 2)
 		return (subshell_wrapper(node, &io, job));
 	if (node->state == 3)
-	{
-		dl_push_node((t_dl_node **)&io.grp_redir, ft_calloc(sizeof(t_redir_list)));
-		io.grp_redir->data = io.redir;
-		io.redir = NULL;
-	}
+		grp_cmd_wrapper(&io);
 	if (node->left && node->right && node->right->tok == TOK_WORD)
 	{
 		exec_right_redi(node, &io, job);

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:38:41 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/07 23:58:09 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/08 20:26:12 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,6 @@ char	**get_env_path(void);
 void	after_fork_routine(pid_t pid, t_io_lists io, t_job *job);
 int		exec_subshell(t_node *node, t_io_lists *io, t_job **job);
 int		subshell_wrapper(t_node *node, t_io_lists *io, t_job **job);
+void	grp_cmd_wrapper(t_io_lists *io);
+
 #endif
