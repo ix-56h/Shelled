@@ -57,6 +57,22 @@ void		restore_env(char *data, char *old_value)
 	}
 }
 
+void		restore_env_back(t_node *node)
+{
+	char	*data;
+	char	*value;
+	char	*old_value;
+
+	data = ft_strdup(node->data);
+	value = ft_strchr(data, '=');
+	value[0] = '\0';
+	value = &value[1];
+	old_value = ft_strdup(get_env(g_set, data));
+	restore_env(data, old_value);
+	free(old_value);
+	free(data);
+}
+
 void		assign_var(char *data, char *value, int mod)
 {
 	char	*item;

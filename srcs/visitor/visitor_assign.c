@@ -63,7 +63,7 @@ static void		visit_assign_temp(t_node *node, t_job **job)
 	free(data);
 }
 
-static void		visit_assign_std(t_node *node)
+static void		visit_assign_std(t_node *node, int mod)
 {
 	char *data;
 	char *value;
@@ -75,7 +75,7 @@ static void		visit_assign_std(t_node *node)
 		{
 			value[0] = '\0';
 			value = &value[1];
-			assign_var(data, value, 0);
+			assign_var(data, value, mod);
 		}
 	}
 	free(data);
@@ -91,7 +91,7 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 		exec_subshell(node, &io, job);
 		return (0);
 	}
-	if (node->left)
+	if (node->left && (!io.piped && !io.redir))
 	{
 		if (!is_only_assign(node))
 			visit_assign_temp(node, job);
@@ -101,7 +101,10 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 	}
 	else
 	{
-		visit_assign_std(node);
+		if (io.piped || io.redir)
+			visit_assign_std(node, 1);
+		else
+			visit_assign_std(node, 0);
 		return (0);
 	}
 	return (1);
