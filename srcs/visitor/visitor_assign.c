@@ -19,51 +19,33 @@
 #include "expansions.h"
 #include "ft_printf.h"
 
-static int		visitor_assign_exec(t_sh *sh, char *item, char *old_value,
-					char *data)
+static void		visit_assign_multi(t_node *node)
 {
-	t_job	*tmp;
-	char	*cmd;
+	char *value;
+	char *data;
 
-	cmd = ft_strdup(sh->input);
-	lifo_empty(sh->stack.errors) ? sh->node = parse_program(sh) : 0;
-	visit(sh->node, &tmp, cmd);
-	if (!old_value[0])
+	data = ft_strdup(node->data);
+	if ((value = ft_strchr(data, '=')))
 	{
-		g_set = del_var(g_set, item);
-		g_env = del_var(g_env, item);
+		if (ft_strlen(data) > 1)
+		{
+			value[0] = '\0';
+			value = &value[1];
+			assign_var(data, value, 0);
+		}
 	}
-	else
-	{
-		if (ft_strcmp(get_env(g_env, item), old_value))
-			g_env = del_var(g_env, item);
-		else if (!ft_edit_env(g_env, item, old_value))
-			g_env = add_env(g_env, item, old_value);
-		add_set(item, old_value);
-	}
-	free(old_value);
+	if (node->left)
+		visit_assign_multi(node->left);
 	free(data);
-	free(cmd);
-	free_sh(sh);
-	return (1);
 }
 
-static int		visit_assign_temp(char *data, char **args, t_io_lists *io)
+static void		visit_assign_temp(t_node *node, t_job **job)
 {
-	t_sh	sh;
-	char	*value;
-	char	*old_value;
+	char *data;
+	char *value;
+	char *old_value;
 
-	sh.f.ast_draw = 0;
-	if (!(sh.stack.errors = lifo_creator(20, sizeof(t_staterror))))
-		return (0);
-	if (!(sh.stack.here_docs = fifo_creator(20, sizeof(t_node*))))
-		return (0);
-	if (!io->piped && !io->redir)
-		sh.input = get_temp_input(args);
-	else
-		sh.input = get_io_input(io->cmd);
-	sh.tok = get_next_token(sh.input, sh.stack.errors);
+	data = ft_strdup(node->data);
 	if ((value = ft_strchr(data, '=')))
 	{
 		if (ft_strlen(data) > 1)
@@ -74,61 +56,33 @@ static int		visit_assign_temp(char *data, char **args, t_io_lists *io)
 			assign_var(data, value, 1);
 		}
 	}
-	return (visitor_assign_exec(&sh, data, old_value, data));
-}
-
-int				visit_assign_multi(char *data, char **args)
-{
-	int		i;
-	char	*value;
-	char	*item;
-	char	*expand;
-
-	i = 0;
-	while (args[i])
-	{
-		if ((value = ft_strchr(args[i], '=')))
-		{
-			if (ft_strlen(args[i]) > 1)
-			{
-				value[0] = '\0';
-				value = &value[1];
-				assign_var(args[i], value, 0);
-			}
-		}
-		i++;
-	}
+	if (node->left)
+		visit(node->left, job, node->left->data);
+	restore_env(data, old_value);
+	free(old_value);
 	free(data);
-	return (0);
 }
 
-int				visit_assign_is_valid(t_node *node, t_io_lists *io, char *data)
+static void		visit_assign_std(t_node *node)
 {
-	char	*value;
+	char *data;
+	char *value;
 
-	if (node->args[1] && is_only_assign(data, node->args))
-		return (visit_assign_multi(data, node->args));
-	else if (node->args[1] && visit_assign_temp(data, node->args, io))
-		return (0);
-	else if ((value = ft_strchr(data, '=')))
+	data = ft_strdup(node->data);
+	if ((value = ft_strchr(data, '=')))
 	{
 		if (ft_strlen(data) > 1)
 		{
 			value[0] = '\0';
 			value = &value[1];
 			assign_var(data, value, 0);
-			set_used_fd(io->piped);
-			free(data);
-			return (0);
 		}
 	}
-	return (1);
+	free(data);
 }
 
 int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 {
-	char	*data;
-
 	dl_append_node((t_dl_node **)&(*job)->list,
 						(t_dl_node *)create_process(UNUSED_JOB));
 	if (node->state == 2)
@@ -137,10 +91,18 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 		exec_subshell(node, &io, job);
 		return (0);
 	}
-	data = ft_strdup(node->data);
-	if (!visit_assign_is_valid(node, &io, data))
+	if (node->left)
+	{
+		if (!is_only_assign(node))
+			visit_assign_temp(node, job);
+		else
+			visit_assign_multi(node);
 		return (0);
-	ft_dprintf(2, SHELL_NAME": Assignement word error: %s\n", node->data);
-	free(data);
+	}
+	else
+	{
+		visit_assign_std(node);
+		return (0);
+	}
 	return (1);
 }
