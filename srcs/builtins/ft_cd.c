@@ -73,12 +73,18 @@ int		form_path(char *add_to_path, char ***tenv, char flags)
 	}
 	if (add_to_path[0] == '/')
 	{
+//		ft_printf("ICI\n");
 		if (flags == 3 || flags == 4)
 			add_to_path = ft_strjoinf("/", ft_get_link(add_to_path), 2);
+//		ft_printf("add_to_path : %s\n", add_to_path);
 		concat_pwd(add_to_path, '/');
 	}
 	else
+	{
+//		ft_printf("la\n");
 		add_to_path = new_path(add_to_path, pwd, flags);
+//		ft_printf("add_to_path : %s\n", add_to_path);
+	}
 	if ((flags = check_dir(add_to_path, flags)) != 0)
 		return (flags);
 	update_env(tenv, pwd, old_pwd, add_to_path);
@@ -106,6 +112,18 @@ int		new_dir(char **args, char ***tenv, int flags, int start)
 	return (error);
 }
 
+void	home_env(char ***tenv)
+{
+	char *home;
+	char *pwd;
+	char *old_pwd;
+
+	pwd = get_env(*tenv, "PWD");
+	old_pwd = get_env(*tenv, "OLDPWD");
+	home = get_env(*tenv, "HOME");
+	update_env(tenv, pwd, old_pwd, home);
+}
+
 int		ft_cd(char **args, char ***tenv)
 {
 	int		i;
@@ -118,7 +136,10 @@ int		ft_cd(char **args, char ***tenv)
 		return (-1);
 	}
 	else if (i == 1)
+	{
 		chdir(get_env(*tenv, "HOME"));
+		home_env(tenv);
+	}
 	else
 		return (new_dir(args, tenv, i, start));
 	return (0);

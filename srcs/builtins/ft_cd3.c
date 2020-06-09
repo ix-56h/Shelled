@@ -72,8 +72,10 @@ char	*ft_get_link(char *pathname)
 	int			nbytes;
 	char		buff[255];
 
+//	ft_printf("pathname : %s\n", pathname);
 	nbytes = readlink(pathname, buff, sizeof(buff));
 	buff[nbytes] = '\0';
+//	ft_printf("buff : %s\n", buff);
 	return (ft_strdup(buff));
 }
 
