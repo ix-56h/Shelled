@@ -73,18 +73,12 @@ int		form_path(char *add_to_path, char ***tenv, char flags)
 	}
 	if (add_to_path[0] == '/')
 	{
-//		ft_printf("ICI\n");
 		if (flags == 3 || flags == 4)
 			add_to_path = ft_strjoinf("/", ft_get_link(add_to_path), 2);
-//		ft_printf("add_to_path : %s\n", add_to_path);
 		concat_pwd(add_to_path, '/');
 	}
 	else
-	{
-//		ft_printf("la\n");
 		add_to_path = new_path(add_to_path, pwd, flags);
-//		ft_printf("add_to_path : %s\n", add_to_path);
-	}
 	if ((flags = check_dir(add_to_path, flags)) != 0)
 		return (flags);
 	update_env(tenv, pwd, old_pwd, add_to_path);

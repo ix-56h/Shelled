@@ -90,6 +90,9 @@ int		ft_type(char **args, char ***tenv)
 	char	**path_s;
 	char	*path;
 
+
+	if (fcntl(1, F_GETFD) != 0)
+		return (0);
 	path = get_env(*tenv, "PATH");
 	path_s = ft_strsplit(path, ':');
 	if (ft_strcmp(args[1], "--") == 0)
