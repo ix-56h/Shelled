@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/22 15:18:19 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/06/08 15:47:16 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/11 01:12:21 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	child_handler(int useless, siginfo_t *info, void *context)
 	{
 		if (signal == SIGKILL)
 			job->is_notified = 0;
+		else if (signal == SIGINT)
+			ft_dprintf(2, "\n");
 		else
 		{
 			job->is_notified = 1;
