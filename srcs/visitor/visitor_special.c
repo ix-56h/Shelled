@@ -110,7 +110,7 @@ int		visit_pipe(t_node *node, t_io_lists io, t_job **job)
 
 /* *** */
 
-		/*else*/ if ((*g_visit_rules[node->left->tok])(node->left, io, job))
+		else if ((*g_visit_rules[node->left->tok])(node->left, io, job))
 		{
 			close(pipefd[WRITE_END]);
 			set_used_fd(io.piped);
