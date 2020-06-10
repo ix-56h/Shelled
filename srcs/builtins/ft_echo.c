@@ -41,15 +41,20 @@ int		ft_echo(char **argv, char ***tenv)
 	int		arg_n;
 
 	(void)tenv;
+	if (fcntl(1, F_GETFD) != 0)
+	{
+		ft_putstr_fd("42sh: echo: write error: bad file descriptor\n", 2);
+		return (1);
+	}
 	arg_n = 0;
 	argv = echo_arg(argv, &arg_n);
 	while (*argv)
 	{
-		ft_putstr(*argv);
+		ft_putstr_fd(*argv, 1);
 		if (*(++argv))
-			ft_putchar(' ');
+			ft_putchar_fd(' ', 1);
 	}
 	if (!arg_n)
-		ft_putchar('\n');
+		ft_putchar_fd('\n', 1);
 	return (0);
 }

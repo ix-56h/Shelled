@@ -38,7 +38,7 @@ int		check_dir(char *add_to_path, int flags)
 {
 	DIR *dir;
 
-	if ((flags = ft_is_dir(add_to_path)) != 1)
+	if ((flags = ft_is_dir(add_to_path)) > 0)
 		return (flags);
 	dir = opendir(add_to_path);
 	if (dir == NULL)
@@ -60,9 +60,9 @@ int		ft_is_dir(char *s)
 		return (3);
 	}
 	if (S_ISDIR(st.st_mode))
-		return (1);
+		return (-1);
 	if (S_ISLNK(st.st_mode))
-		return (1);
+		return (-2);
 	free(s);
 	return (5);
 }
@@ -72,6 +72,8 @@ char	*ft_get_link(char *pathname)
 	int			nbytes;
 	char		buff[255];
 
+	if (ft_is_dir(pathname) != -2)
+		return (pathname);
 	nbytes = readlink(pathname, buff, sizeof(buff));
 	buff[nbytes] = '\0';
 	return (ft_strdup(buff));

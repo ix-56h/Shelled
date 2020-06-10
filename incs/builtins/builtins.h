@@ -16,6 +16,7 @@
 # include <sys/stat.h>
 # include <dirent.h>
 # include <unistd.h>
+# include <fcntl.h>
 
 # define ERR_IS_FOLDER			1
 # define ERR_PATH_ACCES			2

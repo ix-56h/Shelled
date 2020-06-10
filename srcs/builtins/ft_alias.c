@@ -107,6 +107,8 @@ int			ft_alias(char **args, char ***env)
 	int			cpt;
 
 	(void)env;
+	if (fcntl(1, F_GETFD) != 0)
+		return (1);
 	if (!g_alias)
 	{
 		i = 0;
