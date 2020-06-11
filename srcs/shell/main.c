@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 12:45:42 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/08 21:29:32 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/11 19:54:34 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void		process_sh(t_sh *sh)
 			if (sh->f.ast_draw)
 				tree_draw(sh->node);
 			cmd = ft_strdup(sh->input);
-			visit(sh->node, &g_job_head, cmd, NULL);
+			visit(sh->node, cmd, NULL);
 			free(cmd);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/20 18:52:04 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/07 00:50:55 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/11 19:55:03 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ static void		substitution_fork(char *str, int *pipefd, int *stdout_save)
 {
 	int		pid;
 	t_sh	sh;
-	t_job	*tmp;
 
-	tmp = NULL;
 	if ((pid = fork()) == -1)
 	{
 		close(pipefd[READ_END]);
@@ -41,7 +39,7 @@ static void		substitution_fork(char *str, int *pipefd, int *stdout_save)
 		if (!lifo_empty(sh.stack.errors))
 			exit(1);
 		close(pipefd[READ_END]);
-		visit(sh.node, &tmp, NULL, NULL);
+		visit(sh.node, NULL, NULL);
 		exit(0);
 	}
 }
