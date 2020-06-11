@@ -12,7 +12,7 @@
 
 #include "parser.h"
 
-t_node	*push_node_left(t_node *to_push, t_node *branch)
+t_node		*push_node_left(t_node *to_push, t_node *branch)
 {
 	t_node *root;
 
