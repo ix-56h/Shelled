@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/20 18:24:42 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/11 19:24:41 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/11 20:12:50 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,13 @@ static int		get_next_semi_col(char *cmd)
 		if (cmd[i] == '\\')
 			i += 2;
 		else if (cmd[i] == '\'')
-			i = get_next_cote(cmd, ++i) + 1;
+			i = get_next_cote(cmd, i + 1) + 1;
 		else if (cmd[i] == '"')
-			i = get_next_double_cote(cmd, ++i) + 1;
+			i = get_next_double_cote(cmd, i + 1) + 1;
 		else if (cmd[i] == '(')
-			i = get_end_subshell(cmd, ++i) + 1;
+			i = get_end_subshell(cmd, i + 1) + 1;
 		else if (cmd[i] == '{')
-			i = get_end_grouped_cmd(cmd, ++i) + 1;
+			i = get_end_grouped_cmd(cmd, i + 1) + 1;
 		else if (cmd[i] == ';')
 			break ;
 		else
@@ -129,13 +129,13 @@ static int		get_next_and(char *cmd)
 		if (cmd[i] == '\\')
 			i += 2;
 		else if (cmd[i] == '\'')
-			i = get_next_cote(cmd, ++i) + 1;
+			i = get_next_cote(cmd, i + 1) + 1;
 		else if (cmd[i] == '"')
-			i = get_next_double_cote(cmd, ++i) + 1;
+			i = get_next_double_cote(cmd, i + 1) + 1;
 		else if (cmd[i] == '(')
-			i = get_end_subshell(cmd, ++i) + 1;
+			i = get_end_subshell(cmd, i + 1) + 1;
 		else if (cmd[i] == '{')
-			i = get_end_grouped_cmd(cmd, ++i) + 1;
+			i = get_end_grouped_cmd(cmd, i + 1) + 1;
 		else if (i > 0 && cmd[i] == '&' 
 						&& (cmd[i - 1] == '>' || cmd[i - 1] == '<'))
 			++i;
