@@ -89,6 +89,9 @@ static int				g_token_chr_rules[TOK_MAX][CHR_MAX] =
 		[CHR_DQUOTE] = 1,
 		[CHR_BQUOTE] = 1,
 		[CHR_LPAREN] = 1,
+		[CHR_RPAREN] = 0,
+		[CHR_LBRACE] = 1,
+		[CHR_RBRACE] = 0,
 		[CHR_DOL] = 1,
 		[CHR_DASH] = 1
 	},

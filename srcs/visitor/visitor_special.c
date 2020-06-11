@@ -67,6 +67,32 @@ int		visit_or_if(t_node *node, t_io_lists io, t_job **job)
 	return (1);
 }
 
+int		visit_exec_pipe(t_node *node, t_io_lists io, t_job **job, int *pipefd)
+{
+	if (pipe(pipefd) == -1)
+		return (1);
+	dl_push_node((t_dl_node **)&io.piped, ft_calloc(sizeof(t_pipe_list)));
+	io.piped->fd[0] = pipefd[0];
+	io.piped->fd[1] = pipefd[1];
+	io.piped->used = 0;
+	if (node->left->tok == TOK_ASSIGNMENT_WORD)
+		visit_assign_pipe(node, &io, job, pipefd);
+	else if ((*g_visit_rules[node->left->tok])(node->left, io, job))
+	{
+		close(pipefd[WRITE_END]);
+		set_used_fd(io.piped);
+	}
+	if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
+	{
+		if (node->left->tok == TOK_ASSIGNMENT_WORD)
+			restore_env_back(node->left);
+		dl_del_one((t_dl_node *)io.piped);
+		return (0);
+	}
+	dl_del_one((t_dl_node *)io.piped);
+	return (1);
+}
+
 int		visit_pipe(t_node *node, t_io_lists io, t_job **job)
 {
 	int	pipefd[2];
@@ -79,23 +105,8 @@ int		visit_pipe(t_node *node, t_io_lists io, t_job **job)
 	}
 	if (node->left && node->right)
 	{
-		if (pipe(pipefd) == -1)
-			return (1);
-		dl_push_node((t_dl_node **)&io.piped, ft_calloc(sizeof(t_pipe_list)));
-		io.piped->fd[0] = pipefd[0];
-		io.piped->fd[1] = pipefd[1];
-		io.piped->used = 0;
-		if ((*g_visit_rules[node->left->tok])(node->left, io, job))
-		{
-			close(pipefd[WRITE_END]);
-			set_used_fd(io.piped);
-		}
-		if (!(*g_visit_rules[node->right->tok])(node->right, io, job))
-		{
-			dl_del_one((t_dl_node *)io.piped);
+		if (!visit_exec_pipe(node, io, job, pipefd))
 			return (0);
-		}
-		dl_del_one((t_dl_node *)io.piped);
 	}
 	return (1);
 }

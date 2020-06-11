@@ -12,26 +12,6 @@
 
 #include "parser.h"
 
-void	parse_simple_command_misc_prefix_one(t_sh *sh, t_node **node, \
-		t_node **args, t_node **nod2)
-{
-	t_node *first;
-
-	first = NULL;
-	if ((*nod2 = parse_cmd_suffix(sh)))
-	{
-		first = *nod2;
-		*node = binnode(*node, *nod2, (*nod2)->right);
-		while ((*nod2 = parse_cmd_prefix(sh)))
-			*node = binnode(*node, *nod2, (*nod2)->right);
-	}
-	while (sh->tok.tok == TOK_WORD)
-	{
-		push_args(*args, sh->tok.data);
-		sh->tok = get_next_token(sh->input, sh->stack.errors);
-	}
-}
-
 void	parse_simple_command_misc_prefix(t_sh *sh, t_node **node, \
 		t_node **args, t_node **nod2)
 {
@@ -39,7 +19,7 @@ void	parse_simple_command_misc_prefix(t_sh *sh, t_node **node, \
 
 	first = *node;
 	while ((*nod2 = parse_cmd_prefix(sh)))
-		*node = binnode(*node, *nod2, (*nod2)->right);
+		*node = push_node_left(*nod2, *node);
 	if ((*nod2 = parse_cmd_word(sh)))
 	{
 		*args = *nod2;
@@ -49,8 +29,9 @@ void	parse_simple_command_misc_prefix(t_sh *sh, t_node **node, \
 			push_args(*args, sh->tok.data);
 			sh->tok = get_next_token(sh->input, sh->stack.errors);
 		}
-		binnode(*nod2, first, first->right);
-		parse_simple_command_misc_prefix_one(sh, node, args, nod2);
+		push_node_left(*nod2, *node);
+		while ((*nod2 = parse_cmd_suffix(sh)))
+			*node = binnode(*node, *nod2, (*nod2)->right);
 	}
 }
 
@@ -62,7 +43,7 @@ void	parse_simple_command_cmd_name_misc(t_sh *sh, t_node **node, \
 	first = NULL;
 	*args = *node;
 	push_args(*args, ft_strdup((*args)->data));
-	while (sh->tok.tok == TOK_WORD)
+	while (sh->tok.tok == TOK_WORD || sh->tok.tok == TOK_ASSIGNMENT_WORD)
 	{
 		push_args(*args, sh->tok.data);
 		sh->tok = get_next_token(sh->input, sh->stack.errors);
@@ -71,13 +52,8 @@ void	parse_simple_command_cmd_name_misc(t_sh *sh, t_node **node, \
 	{
 		first = *nod2;
 		*node = binnode(*node, *nod2, (*nod2)->right);
-		while ((*nod2 = parse_cmd_prefix(sh)))
+		while ((*nod2 = parse_cmd_suffix(sh)))
 			*node = binnode(*node, *nod2, (*nod2)->right);
-	}
-	while (sh->tok.tok == TOK_WORD)
-	{
-		push_args(*args, sh->tok.data);
-		sh->tok = get_next_token(sh->input, sh->stack.errors);
 	}
 }
 

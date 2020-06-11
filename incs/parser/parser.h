@@ -95,6 +95,7 @@ t_node		*parse_wordlist(t_sh *sh);
 /*
 **	misc.c
 */
+t_node		*push_node_left(t_node *to_push, t_node *branch);
 t_node		*binnode(t_node *left, t_node *mom, t_node *right);
 t_node		*save_node(t_node *left, t_tokens tok, t_node *right, int id);
 void		applie_rule_one(char *s, t_tokens *cur);
