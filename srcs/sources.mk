@@ -139,6 +139,7 @@ C_FILES_builtins = \
 					 ft_test_tools.c \
 					 ft_alias.c \
 					 ft_unalias.c \
+					 ft_tools.c \
 					 alias_tools.c \
 					 alias_print.c \
 					 alias_form.c \

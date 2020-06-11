@@ -70,9 +70,11 @@ void		show_alias(void)
 		ft_putendl_fd(g_alias[ind], 1);
 }
 
-void		dispatch_show(int cpt)
+int			dispatch_show(int cpt, char ***env)
 {
+	(void)env;
 	if (cpt == 1)
 		show_alias();
 	sort_alias();
+	return (0);
 }

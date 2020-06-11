@@ -106,7 +106,6 @@ int			ft_alias(char **args, char ***env)
 	static int	i;
 	int			cpt;
 
-	(void)env;
 	if (fcntl(1, F_GETFD) != 0)
 		return (1);
 	if (!g_alias)
@@ -128,6 +127,5 @@ int			ft_alias(char **args, char ***env)
 			realloc_alias(args[cpt]);
 		show_this_alias(args[cpt]);
 	}
-	dispatch_show(cpt);
-	return (0);
+	return (dispatch_show(cpt, env));
 }

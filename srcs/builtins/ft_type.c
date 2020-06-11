@@ -90,7 +90,6 @@ int		ft_type(char **args, char ***tenv)
 	char	**path_s;
 	char	*path;
 
-
 	if (fcntl(1, F_GETFD) != 0)
 		return (0);
 	path = get_env(*tenv, "PATH");
@@ -102,13 +101,9 @@ int		ft_type(char **args, char ***tenv)
 	while (args[++cpt])
 	{
 		if ((error = alias_type(args[cpt])) == 0)
-			if ((error = builtin_type(args[cpt])) == 0)
+			if ((error = builtin_type(args[cpt])) == 0 && path)
 				error = binaire_type(args[cpt], path_s);
 		error_type(error, args[cpt]);
 	}
-	cpt = -1;
-	while (path_s[++cpt])
-		free(path_s[cpt]);
-	free(path_s);
-	return (0);
+	return (free_type(path_s));
 }
