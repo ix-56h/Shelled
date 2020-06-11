@@ -39,7 +39,7 @@ static void		visit_assign_multi(t_node *node)
 	free(data);
 }
 
-static void		visit_assign_temp(t_node *node, t_job **job)
+static void		visit_assign_temp(t_node *node, t_job **job, t_io_lists *io)
 {
 	char *data;
 	char *value;
@@ -57,7 +57,7 @@ static void		visit_assign_temp(t_node *node, t_job **job)
 		}
 	}
 	if (node->left)
-		visit(node->left, job, node->left->data, NULL); //ici
+		(*g_visit_rules[node->left->tok])(node->left, *io, job);
 	restore_env(data, old_value);
 	free(old_value);
 	free(data);
@@ -90,7 +90,7 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 	if (node->left && (!io.piped && !io.redir))
 	{
 		if (!is_only_assign(node))
-			visit_assign_temp(node, job);
+			visit_assign_temp(node, job, &io);
 		else
 			visit_assign_multi(node);
 		return (0);
