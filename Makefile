@@ -6,7 +6,7 @@
 #    By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/07 04:11:46 by ezonda            #+#    #+#              #
-#    Updated: 2020/06/11 15:41:00 by mguerrea         ###   ########.fr        #
+#    Updated: 2020/06/11 19:12:27 by mguerrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ FT_LNK = -L$(FT_DIR) -l$(FT) -L$(PRINTF_DIR) -lprintf
 ###  CC && FLAGS ###
 CC = gcc -g #-fsanitize=address 
 DEBUG_FLAGS = -g3
-NO_WARNING ?= true
+NO_WARNING ?= false
 ifeq ($(NO_WARNING), false)
 CFLAGS = \
 		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR) $(PRINTF_INC_DIR))\
