@@ -45,13 +45,11 @@ int			check_error_name(char *arg, int mod)
 
 int			init_alias(char **args)
 {
-	int		opt;
 	int		cpt;
 	char	*n_alias;
 	char	*v_alias;
 
 	cpt = 1;
-	opt = 0;
 	while ((v_alias = get_value(args[cpt])) == NULL
 						|| check_error_name(get_name(args[cpt]), 0) == 0)
 	{
@@ -106,7 +104,6 @@ int			ft_alias(char **args, char ***env)
 	static int	i;
 	int			cpt;
 
-	(void)env;
 	if (fcntl(1, F_GETFD) != 0)
 		return (1);
 	if (!g_alias)
@@ -128,6 +125,5 @@ int			ft_alias(char **args, char ***env)
 			realloc_alias(args[cpt]);
 		show_this_alias(args[cpt]);
 	}
-	dispatch_show(cpt);
-	return (0);
+	return (dispatch_show(cpt, env));
 }

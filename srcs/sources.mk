@@ -71,6 +71,7 @@ C_FILES_visitor = \
 				  exec_misc.c \
 				  misc_cut_cmd.c \
 				  misc_assign.c \
+				  misc_assign2.c \
 				  test_and_find.c \
 				  visitor_cmd.c \
 				  visitor_greatand.c \
@@ -140,6 +141,7 @@ C_FILES_builtins = \
 					 ft_test_tools.c \
 					 ft_alias.c \
 					 ft_unalias.c \
+					 ft_tools.c \
 					 alias_tools.c \
 					 alias_print.c \
 					 alias_form.c \

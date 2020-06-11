@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:35:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/11 17:12:57 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/11 17:53:28 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,33 @@ int		visit_or_if(t_node *node, t_io_lists io, t_job **job)
 	return (err);
 }
 
+int		visit_exec_pipe(t_node *node, t_io_lists io, t_job **job, int *pipefd)
+{
+	int		ret;
+
+	if (pipe(pipefd) == -1)
+		return (1);
+	dl_push_node((t_dl_node **)&io.piped, ft_calloc(sizeof(t_pipe_list)));
+	io.piped->fd[0] = pipefd[0];
+	io.piped->fd[1] = pipefd[1];
+	if (node->left->tok == TOK_ASSIGNMENT_WORD)
+		visit_assign_pipe(node, &io, job, pipefd);
+	else if (ret = ((*g_visit_rules[node->left->tok])(node->left, io, job)))
+	{
+		close(pipefd[WRITE_END]);
+		set_used_fd(io.piped);
+	}
+	ret = (*g_visit_rules[node->right->tok])(node->right, io, job);
+	if (node->left->tok == TOK_ASSIGNMENT_WORD)
+		restore_env_back(node->left);
+	dl_del_one((t_dl_node *)io.piped);
+	return (ret);
+}
+
 int		visit_pipe(t_node *node, t_io_lists io, t_job **job)
 {
-	int	pipefd[2];
-	int	ret;
+	int		pipefd[2];
+	int		ret;
 
 	ret = 1;
 	if (node->state == 2)
@@ -70,22 +93,13 @@ int		visit_pipe(t_node *node, t_io_lists io, t_job **job)
 	{
 		if (node->state == 3)
 			grp_cmd_wrapper(&io);
-		if (pipe(pipefd) == -1)
-			return (1);
-		dl_push_node((t_dl_node **)&io.piped, ft_calloc(sizeof(t_pipe_list)));
-		io.piped->fd[0] = pipefd[0];
-		io.piped->fd[1] = pipefd[1];
-		if ((ret = (*g_visit_rules[node->left->tok])(node->left, io, job)))
-		{
-			close(pipefd[WRITE_END]);
-			set_used_fd(io.piped);
-		}
-		ret = (*g_visit_rules[node->right->tok])(node->right, io, job);
-		dl_del_one((t_dl_node *)io.piped);
-		(node->state == 3) ? dl_del_one_with_data(io.grp_io, free) : 0;
+		ret = visit_exec_pipe(node, io, job, pipefd);
+		if (node->state == 3)
+			dl_del_one_with_data(io.grp_io, free);
 	}
 	return (ret);
 }
+
 
 int		visit_semi(t_node *node, t_io_lists io, t_job **job)
 {

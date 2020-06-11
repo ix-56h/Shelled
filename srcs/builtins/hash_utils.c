@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/07 22:18:08 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/06/08 12:54:39 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/11 15:38:14 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 #include "expansions.h"
 #include "hash.h"
 
-unsigned long	hash_func(unsigned char *str)
+unsigned long	hash_func(char *str)
 {
 	unsigned long	hash;
 	int				c;
 
 	hash = 5381;
-	while (c = *str++)
+	while ((c = *str++))
 		hash = ((hash << 5) + hash) + c;
 	return (hash);
 }

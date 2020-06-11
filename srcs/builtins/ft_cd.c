@@ -106,7 +106,7 @@ int		new_dir(char **args, char ***tenv, int flags, int start)
 	return (error);
 }
 
-void	home_env(char ***tenv)
+void	h_env(char ***tenv)
 {
 	char *home;
 	char *pwd;
@@ -132,7 +132,7 @@ int		ft_cd(char **args, char ***tenv)
 	else if (i == 1)
 	{
 		chdir(get_env(*tenv, "HOME"));
-		home_env(tenv);
+		h_env(tenv);
 	}
 	else
 		return (new_dir(args, tenv, i, start));

@@ -83,13 +83,25 @@ void	error_type(int error, char *arg)
 	}
 }
 
+int		f_type(char **path_s)
+{
+	int cpt;
+
+	cpt = -1;
+	if (!path_s)
+		return (0);
+	while (path_s[++cpt])
+		free(path_s[cpt]);
+	free(path_s);
+	return (0);
+}
+
 int		ft_type(char **args, char ***tenv)
 {
 	int		cpt;
 	int		error;
 	char	**path_s;
 	char	*path;
-
 
 	if (fcntl(1, F_GETFD) != 0)
 		return (0);
@@ -102,13 +114,9 @@ int		ft_type(char **args, char ***tenv)
 	while (args[++cpt])
 	{
 		if ((error = alias_type(args[cpt])) == 0)
-			if ((error = builtin_type(args[cpt])) == 0)
+			if ((error = builtin_type(args[cpt])) == 0 && path)
 				error = binaire_type(args[cpt], path_s);
 		error_type(error, args[cpt]);
 	}
-	cpt = -1;
-	while (path_s[++cpt])
-		free(path_s[cpt]);
-	free(path_s);
-	return (0);
+	return (f_type(path_s));
 }

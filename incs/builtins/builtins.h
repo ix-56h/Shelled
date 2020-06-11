@@ -80,7 +80,7 @@ char		*get_name(char *arg);
 char		*get_value(char *arg);
 void		sort_alias(void);
 void		show_this_alias(char *arg);
-void		dispatch_show(int cpt);
+int			dispatch_show(int cpt, char ***env);
 int			error_alias(char *arg, int mod);
 void		free_realloc_alias(char *name_g, char *name, char *value);
 char		*form_algo(char c, char *arg);
@@ -92,5 +92,9 @@ int			error_test(char *arg_err, int mod);
 char		*apply_path(char *arg);
 int			init_integer(char **args, size_t p_size);
 int			simple_operand(char **args);
+
+/*
+** tools
+*/
 
 #endif

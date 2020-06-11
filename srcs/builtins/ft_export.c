@@ -64,7 +64,8 @@ static void		export_and_set(char *str, int opt)
 			value = &value[1];
 			name = ft_strdup(str);
 			add_set(name, value);
-			g_env = add_env(g_env, name, value);
+			if (!ft_edit_env(g_env, name, value))
+				g_env = add_env(g_env, name, value);
 			if (opt == 1)
 			{
 				ft_putstr("export ");
@@ -84,7 +85,8 @@ static void		export_to_env(char *str, int opt)
 	name = ft_strdup(str);
 	if ((value = get_env(g_set, name)))
 	{
-		g_env = add_env(g_env, name, value);
+		if (!ft_edit_env(g_env, name, value))
+			g_env = add_env(g_env, name, value);
 		if (opt == 1)
 		{
 			ft_putstr("export ");

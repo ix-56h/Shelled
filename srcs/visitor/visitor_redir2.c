@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:33:17 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/11 17:12:57 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/11 17:57:43 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ int		visit_dless(t_node *node, t_io_lists io, t_job **job)
 		if (node->state == 3)
 			grp_cmd_wrapper(&io);
 		exec_dless(node, &io, job);
+		if (!visit_assign_redir(node, &io, job))
+		{
+			if (node->state == 3)
+				dl_del_one_with_data(io.grp_io, free);
+			return (0);
+		}
 		ret = (*g_visit_rules[node->left->tok])(node->left, io, job);
 		if (node->state == 3)
 			dl_del_one_with_data(io.grp_io, free);
@@ -57,6 +63,12 @@ int		visit_dgreat(t_node *node, t_io_lists io, t_job **job)
 		if (node->state == 3)
 			grp_cmd_wrapper(&io);
 		exec_dgreat(node, &io, job);
+		if (!visit_assign_redir(node, &io, job))
+		{
+			if (node->state == 3)
+				dl_del_one_with_data(io.grp_io, free);
+			return (0);
+		}
 		ret = (*g_visit_rules[node->left->tok])(node->left, io, job);
 		if (node->state == 3)
 			dl_del_one_with_data(io.grp_io, free);

@@ -12,6 +12,17 @@
 
 #include "parser.h"
 
+t_node	*push_node_left(t_node *to_push, t_node *branch)
+{
+	t_node *root;
+
+	root = branch;
+	while (branch->left)
+		branch = branch->left;
+	binnode(to_push, branch, branch->right);
+	return (root);
+}
+
 t_node		*binnode(t_node *left, t_node *mom, t_node *right)
 {
 	mom->left = left;

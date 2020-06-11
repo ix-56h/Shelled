@@ -19,7 +19,7 @@ static int		get_end_grouped_cmd(char *cmd, int i)
 	count = 0;
 	while (cmd[i])
 	{
-		if (cmd[i] == '\\')
+		if (cmd[i] == '\\' || (cmd[i] == '$' && cmd[i + 1] == '{'))
 			i += 2;
 		else if (cmd[i] == '{')
 		{
