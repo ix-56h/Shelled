@@ -13,7 +13,7 @@
 #ifndef TOKENIZER_RULES_H
 # define TOKENIZER_RULES_H
 
-static t_chr_class		g_get_chr_class[255] =
+static const t_chr_class		g_get_chr_class[255] =
 {
 	[' '] = CHR_SP,
 	['\t'] = CHR_SP,
@@ -54,7 +54,7 @@ static t_chr_class		g_get_chr_class[255] =
 	['?'] = CHR_WORD
 };
 
-static int				g_abstract_token[TOK_MAX] =
+static const int				g_abstract_token[TOK_MAX] =
 {
 	[TOK_REDIRECTION] = 1,
 	[TOK_PIPE] = 1,
@@ -62,7 +62,7 @@ static int				g_abstract_token[TOK_MAX] =
 	[TOK_SEMI] = 1
 };
 
-static int				g_token_chr_rules[TOK_MAX][CHR_MAX] =
+static const int				g_token_chr_rules[TOK_MAX][CHR_MAX] =
 {
 	[TOK_SP] = {
 		[CHR_SP] = 0
@@ -118,7 +118,7 @@ static int				g_token_chr_rules[TOK_MAX][CHR_MAX] =
 	}
 };
 
-static t_toktype		g_get_tok_type[CHR_MAX] = {
+static const t_toktype		g_get_tok_type[CHR_MAX] = {
 	[CHR_SP] = TOK_SP,
 	[CHR_WORD] = TOK_WORD,
 	[CHR_ESCAPE] = TOK_WORD,
