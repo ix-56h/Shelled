@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:35:19 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/07 23:58:11 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/11 03:08:06 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ int		apply_fd(t_io_lists io)
 	ret = 0;
 	set_pipe_fd(io.piped);
 	close_all_pipe(io);
-	if (io.grp_redir)
+	if (io.grp_io)
 	{
-		nav = io.grp_redir;
+		nav = io.grp_io;
 		while (nav)
 		{
-			redir = (t_redir_list *)nav->data;
+			redir = ((t_io_lists *)nav->data)->redir;
 			ret += set_redir_fd(redir);
 			nav = nav->next;
 		}

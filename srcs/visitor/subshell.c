@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/07 00:52:16 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/11 03:08:06 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void		child_exec_subshell_forked(t_node *node, t_io_lists io, t_job *job)
 	signal(SIGINT, SIG_DFL);
 	apply_fd(io);
 	tmp = NULL;
-	visit(node, &tmp, NULL, io.grp_redir);
+	visit(node, &tmp, NULL, io.grp_io);
 	exit(ft_atoi(get_env(g_set, "?")));
 }
 

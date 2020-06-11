@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:59:58 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/09 00:01:34 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/11 03:08:06 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		visit_left_redi(t_node *node, t_io_lists io, t_job **job)
 		ret = (*g_visit_rules[node->left->tok])(node->left, io, job);
 		dl_del_one((t_dl_node *)io.redir);
 		if (node->state == 3)
-			dl_del_one(io.grp_redir);
+			dl_del_one(io.grp_io);
 	}
 	return (ret);
 }
@@ -56,7 +56,7 @@ int		visit_right_redi(t_node *node, t_io_lists io, t_job **job)
 		ret = (*g_visit_rules[node->left->tok])(node->left, io, job);
 		dl_del_one((t_dl_node *)io.redir);
 		if (node->state == 3)
-			dl_del_one(io.grp_redir);
+			dl_del_one(io.grp_io);
 	}
 	return (ret);
 }
@@ -80,7 +80,7 @@ int		visit_lessand(t_node *node, t_io_lists io, t_job **job)
 		ret = (*g_visit_rules[node->left->tok])(node->left, io, job);
 		dl_del_one((t_dl_node *)io.redir);
 		if (node->state == 3)
-			dl_del_one(io.grp_redir);
+			dl_del_one(io.grp_io);
 	}
 	return (ret);
 }

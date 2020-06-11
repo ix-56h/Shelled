@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/08 21:28:45 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/11 02:51:02 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void			after_fork_routine(pid_t pid, t_io_lists io, t_job *job)
 		setpgid(pid, job->pgid);
 }
 
-static void		child_exec_forked(t_io_lists io,
+void			child_exec_forked(t_io_lists io,
 						char **env, t_job *job, t_node *cmd)
 {
 	int			ret;
@@ -102,34 +102,4 @@ static void		child_exec_forked(t_io_lists io,
 		else
 			exit(127);
 	}
-}
-
-int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
-{
-	pid_t		pid;
-	t_process	*process;
-	int			ret;
-	int			i;
-
-	i = 0;
-	ret = 0;
-	while (cmd->args[i])
-	{
-		cmd->args[i] = expand_word(cmd->args[i]);
-		i++;
-	}
-	if (g_exp_error)
-		return (1);
-	if (!io.grp_redir && !io.piped && !io.redir && !io.background && lookforbuiltin(cmd->data))
-		ret = exec_builtin_no_fork(cmd, env, io, job);
-	else
-	{
-		if ((pid = fork()) == -1)
-			return (-1);
-		else if (pid == 0)
-			child_exec_forked(io, g_env, job, cmd);
-		add_to_table(cmd->data, 1);
-		after_fork_routine(pid, io, job);
-	}
-	return (ret);
 }

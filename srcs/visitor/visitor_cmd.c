@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/08 22:31:57 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/11 16:45:40 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,36 @@
 #include "exec.h"
 #include "ft_printf.h"
 #include "job.h"
+#include "sh.h"
+#include "builtins.h"
+#include "exec.h"
+#include "expansions.h"
+#include "hash.h"
 
 static void		ctrl_c_handler(int lel)
 {
 	(void)lel;
 	ft_putchar('\n');
+}
+
+static int		need_background(t_io_lists *io)
+{
+	t_dl_node	*nav;
+	t_io_lists	*grp_io;
+	int			back;
+
+	back = io->background;
+	nav = io->grp_io;
+	while (nav)
+	{
+		grp_io = ((t_io_lists *)nav->data);
+		if (grp_io->background)
+			back = 1;
+		if (back == 1)
+			break;
+		nav = nav->next;
+	}
+	return (back);
 }
 
 static void		process_job_after_exec(t_io_lists *io, t_job **job)
@@ -34,7 +59,7 @@ static void		process_job_after_exec(t_io_lists *io, t_job **job)
 		last_process = ((t_process *)dl_get_last((t_dl_node *)(*job)->list));
 		if (last_process->pid != BUILTIN_JOB)
 		{
-			if (io->background)
+			if (need_background(io))
 				put_job_in_background(*job, 0);
 			else
 				put_job_in_foreground(*job, 0);
@@ -42,6 +67,60 @@ static void		process_job_after_exec(t_io_lists *io, t_job **job)
 		if (!(*job)->line)
 			(*job)->line = cut_command(io->cmd, 0);
 	}
+}
+
+static int		need_fork(t_io_lists io, t_node *cmd)
+{
+	t_io_lists	*grp_io;
+	t_dl_node	*node;
+	int			grp_fork;
+
+	grp_fork = 0;
+	node = io.grp_io;
+	while (node)
+	{
+		grp_io = node->data;
+		if (grp_io->piped || grp_io->redir || grp_io->background)
+		{
+			grp_fork = 1;
+			break ;
+		}
+		node = node->next;
+	}
+	if (!io.piped && !io.redir && !io.background && lookforbuiltin(cmd->data)
+			&& !grp_fork)
+		return (0);
+	return (1);
+}
+
+int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
+{
+	pid_t		pid;
+	t_process	*process;
+	int			ret;
+	int			i;
+
+	i = 0;
+	ret = 0;
+	while (cmd->args[i])
+	{
+		cmd->args[i] = expand_word(cmd->args[i]);
+		i++;
+	}
+	if (g_exp_error)
+		return (1);
+	if (!need_fork(io, cmd))
+		ret = exec_builtin_no_fork(cmd, env, io, job);
+	else
+	{
+		if ((pid = fork()) == -1)
+			return (-1);
+		else if (pid == 0)
+			child_exec_forked(io, g_env, job, cmd);
+		add_to_table(cmd->data, 1);
+		after_fork_routine(pid, io, job);
+	}
+	return (ret);
 }
 
 int				exec_command(t_node *node, t_io_lists *io, t_job **job)

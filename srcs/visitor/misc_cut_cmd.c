@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/20 18:24:42 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/07 23:01:17 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/11 16:13:51 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,8 @@ char			*cut_command(char *cmd, char act)
 	char	*res;
 	int		len;
 
+	if (!cmd)
+		return (NULL);
 	index = get_next_semi_col(cmd);
 	if (get_next_and(cmd) < index)
 	{
