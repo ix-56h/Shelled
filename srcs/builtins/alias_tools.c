@@ -38,11 +38,9 @@ char		*get_name(char *arg)
 char		*form_value(char *arg)
 {
 	int		cpt;
-	int		new;
 	char	*new_arg;
 
 	cpt = 0;
-	new = 0;
 	if (arg[cpt] == '\'')
 		arg = form_algo('\'', arg);
 	else if (arg[cpt] == '\"')

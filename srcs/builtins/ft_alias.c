@@ -45,13 +45,11 @@ int			check_error_name(char *arg, int mod)
 
 int			init_alias(char **args)
 {
-	int		opt;
 	int		cpt;
 	char	*n_alias;
 	char	*v_alias;
 
 	cpt = 1;
-	opt = 0;
 	while ((v_alias = get_value(args[cpt])) == NULL
 						|| check_error_name(get_name(args[cpt]), 0) == 0)
 	{

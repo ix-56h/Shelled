@@ -135,6 +135,7 @@ C_FILES_builtins = \
 				   ft_unset.c \
 				   ft_export.c \
 					 ft_type.c \
+					 ft_tools.c \
 					 ft_test.c \
 					 ft_test_tools.c \
 					 ft_alias.c \
