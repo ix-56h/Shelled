@@ -15,12 +15,10 @@
 t_node	*parse_program(t_sh *sh)
 {
 	t_node		*node;
-	t_node		*nod2;
 
 	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
 	node = NULL;
-	nod2 = NULL;
 	if ((parse_linebreak(sh) == 1) && (node = parse_complete_commands(sh)))
 	{
 		if (!lifo_empty(sh->stack.errors))
