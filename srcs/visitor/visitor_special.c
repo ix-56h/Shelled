@@ -67,7 +67,7 @@ int		visit_or_if(t_node *node, t_io_lists io, t_job **job)
 	return (1);
 }
 
-int		visit_pipe2(t_node *node, t_io_lists io, t_job **job, int *pipefd)
+int		visit_exec_pipe(t_node *node, t_io_lists io, t_job **job, int *pipefd)
 {
 	if (pipe(pipefd) == -1)
 		return (1);
@@ -105,7 +105,7 @@ int		visit_pipe(t_node *node, t_io_lists io, t_job **job)
 	}
 	if (node->left && node->right)
 	{
-		if (!visit_pipe2(node, io, job, pipefd))
+		if (!visit_exec_pipe(node, io, job, pipefd))
 			return (0);
 	}
 	return (1);
