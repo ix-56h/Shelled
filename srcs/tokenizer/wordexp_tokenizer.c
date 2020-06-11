@@ -24,6 +24,7 @@ int	lex_match_parameter(char *s, int *anchor, t_lifo *stack)
 		{
 			if (!lex_sequence(s, anchor, stack))
 				return (0);
+			*anchor += 1;
 			continue;
 		}
 		*anchor += 1;
@@ -39,7 +40,6 @@ int	lex_match_parameter(char *s, int *anchor, t_lifo *stack)
 
 int	lex_match_squote(char *s, int *anchor, t_lifo *stack)
 {
-	*anchor += 1;
 	while (s[*anchor] && s[*anchor] != '\'')
 		*anchor += 1;
 	if (s[*anchor] != '\'')
@@ -55,7 +55,6 @@ int	lex_match_dquote(char *s, int *anchor, t_lifo *stack)
 	unsigned int esc;
 
 	esc = 0;
-	*anchor += 1;
 	while (s[*anchor] && (s[*anchor] != '"' || esc))
 	{
 		if (s[*anchor] == '\\' && !esc)
@@ -89,6 +88,7 @@ int	lex_match_command_sub(char *s, int *anchor, t_lifo *stack)
 		{
 			if (!lex_sequence(s, anchor, stack))
 				return (0);
+			*anchor += 1;
 			continue;
 		}
 		*anchor += 1;
