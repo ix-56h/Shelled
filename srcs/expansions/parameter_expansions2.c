@@ -16,9 +16,6 @@
 
 char	*use_default_value(char *param, char *word)
 {
-	char *new_word;
-
-	new_word = NULL;
 	if (get_env(g_set, param))
 	{
 		free(word);

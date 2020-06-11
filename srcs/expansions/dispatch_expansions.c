@@ -31,9 +31,9 @@ static char		*get_word(char *full_word, char *mod)
 {
 	int		i;
 	int		j;
-	int		len;
 	int		index;
 	char	*word;
+	size_t	len;
 
 	i = 0;
 	j = 0;

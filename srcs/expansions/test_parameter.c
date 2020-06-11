@@ -53,7 +53,7 @@ int				digit_error(char *word)
 	return (0);
 }
 
-char			*test_without_modifier(t_exp_data *exp, char *word)
+char			*test_without_modifier(char *word)
 {
 	int		i;
 	char	*new_word;
@@ -81,7 +81,7 @@ char			*test_parameter(t_exp_data *exp, char *word)
 	if (exp->last[0])
 		process_expression(&exp->last);
 	if (!exp->modifier)
-		new_word = test_without_modifier(exp, word);
+		new_word = test_without_modifier(word);
 	else
 	{
 		new_word = dispatch_exp(word, exp->modifier);

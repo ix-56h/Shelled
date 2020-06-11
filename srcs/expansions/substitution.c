@@ -33,7 +33,7 @@ static size_t	get_first_pos(size_t *i, char *word, char occur)
 	while (word[y] && word[y] != occur)
 		y++;
 	if (!word[y])
-		return (-1);
+		return (0);
 	return (y);
 }
 
@@ -45,6 +45,7 @@ static size_t	get_new_pos(size_t *i, char *tmp, char *word)
 	*i += x;
 	free(tmp);
 	free(word);
+	return (*i);
 }
 
 char			*process_substitution(size_t *i, char *word, char occur)
@@ -55,7 +56,7 @@ char			*process_substitution(size_t *i, char *word, char occur)
 
 	(*i)++;
 	y = get_first_pos(i, word, occur);
-	if (y == -1)
+	if (y == 0)
 		return (word);
 	if (word[y] == occur && y > (*i))
 	{

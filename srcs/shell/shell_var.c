@@ -15,7 +15,7 @@
 #include "expansions.h"
 #include "libft.h"
 
-static char		*look_for_param(char *word, int index)
+static char		*look_for_param(int index)
 {
 	int		i;
 	char	*str;
@@ -46,7 +46,7 @@ static char		*get_positional_param(char *word)
 	param[0] = word[1];
 	param[1] = '\0';
 	if (word[1] != '0')
-		str = look_for_param(word, ft_atoi(param));
+		str = look_for_param(ft_atoi(param));
 	else
 		str = ft_strdup(get_env(g_set, param));
 	free(word);
