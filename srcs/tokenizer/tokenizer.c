@@ -67,7 +67,7 @@ g_get_chr_class[(unsigned char)s[anchor]])] || prev_class == CHR_ESCAPE))
 		if (g->toktype == TOK_WORD && s[anchor] == '=')
 			g->toktype = TOK_ASSIGNMENT_WORD;
 		else if (is_special_char(g->chr_class, prev_class)
-			&& !lex_sequence(s, &anchor, stack))
+			&& (s[anchor + 1] && !lex_sequence(s, &anchor, stack)))
 			return (anchor);
 		prev_class = g->chr_class;
 		anchor++;
