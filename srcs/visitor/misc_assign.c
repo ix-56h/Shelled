@@ -49,11 +49,10 @@ void		restore_env(char *data, char *old_value)
 	else
 	{
 		if (ft_strcmp(get_env(g_env, data), old_value) != 0)
-		{
-			if (!ft_edit_env(g_env, data, old_value))
-				g_env = add_env(g_env, data, old_value);
-		}
-		add_set(data, old_value);
+			g_env = del_var(g_env, data);
+		else if (!ft_edit_env(g_env, data, old_value))
+			g_env = add_env(g_env, data, old_value);
+		assign_var(data, old_value, 0);
 	}
 }
 
