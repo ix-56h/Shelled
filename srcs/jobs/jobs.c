@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:31:50 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/06/08 15:22:18 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/11 15:35:20 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ void	get_last_process(int *last0, int *last1)
 int		ft_jobs(char **argv, char ***tenv)
 {
 	t_job		*job;
-	int			i;
 	int			last_jobs[2];
 
+	(void)tenv;
 	job = g_job_head;
 	update_status();
 	get_last_process(&last_jobs[0], &last_jobs[1]);
