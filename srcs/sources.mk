@@ -71,6 +71,7 @@ C_FILES_visitor = \
 				  exec_misc.c \
 				  misc_cut_cmd.c \
 				  misc_assign.c \
+				  misc_assign2.c \
 				  test_and_find.c \
 				  visitor_cmd.c \
 				  visitor_greatand.c \

@@ -57,6 +57,8 @@ int		visit_dgreat(t_node *node, t_io_lists io, t_job **job)
 	if (node->left && node->right && node->right->tok == TOK_WORD)
 	{
 		exec_dgreat(node, &io, job);
+		if (!visit_assign_redir(node, &io, job))
+			return (0);
 		if (!(*g_visit_rules[node->left->tok])(node->left, io, job))
 		{
 			dl_del_one((t_dl_node *)io.redir);

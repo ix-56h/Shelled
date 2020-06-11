@@ -1,0 +1,39 @@
+srcs/visitor/fd.c:			if (redir->file)
+srcs/visitor/fd.c:				if ((fd = open(redir->file, redir->flag, 0644)) == -1)
+srcs/visitor/fd.c:					return (err_exec(redir->file, ERR_PATH_ACCES));
+srcs/visitor/fd.c:				if (redir->in == -10)
+srcs/visitor/fd.c:					redir->in = fd;
+srcs/visitor/fd.c:				else if (redir->out == -10)
+srcs/visitor/fd.c:					redir->out = fd;
+srcs/visitor/fd.c:			redir = redir->next;
+srcs/visitor/fd.c:			if (redir->out == -1)
+srcs/visitor/fd.c:				close(redir->in);
+srcs/visitor/fd.c:				redir->in = -2;
+srcs/visitor/fd.c:			else if (fcntl(redir->out, F_GETFD) == 0)
+srcs/visitor/fd.c:				if (dup2(redir->out, redir->in) == -1)
+srcs/visitor/fd.c:				ft_dprintf(2, "42sh: %i: Bad fd\n", redir->out);
+srcs/visitor/fd.c:			redir = redir->next;
+srcs/visitor/visitor_dgreat.c:	io->redir->file = node->right->data;
+srcs/visitor/visitor_dgreat.c:	io->redir->flag = (O_CREAT | O_WRONLY | O_APPEND);
+srcs/visitor/visitor_dgreat.c:		io->redir->in = node->io;
+srcs/visitor/visitor_dgreat.c:		io->redir->in = STDOUT_FILENO;
+srcs/visitor/visitor_dgreat.c:	io->redir->out = fd;
+srcs/visitor/visitor_dless.c:	io->redir->in = (node->io != -1 ? node->io : STDIN_FILENO);
+srcs/visitor/visitor_dless.c:	io->redir->out = pipefd[READ_END];
+srcs/visitor/visitor_greatand.c:		io->redir->in = node->io;
+srcs/visitor/visitor_greatand.c:		io->redir->in = STDOUT_FILENO;
+srcs/visitor/visitor_greatand.c:		io->redir->out = -1;
+srcs/visitor/visitor_greatand.c:		io->redir->out = ft_atoi(node->right->data);
+srcs/visitor/visitor_leftredi.c:	io->redir->file = node->right->data;
+srcs/visitor/visitor_leftredi.c:	io->redir->flag = O_RDONLY;
+srcs/visitor/visitor_leftredi.c:	io->redir->in = (node->io != -1 ? node->io : STDIN_FILENO);
+srcs/visitor/visitor_leftredi.c:	io->redir->out = fd;
+srcs/visitor/visitor_lessand.c:		io->redir->in = node->io;
+srcs/visitor/visitor_lessand.c:		io->redir->in = STDIN_FILENO;
+srcs/visitor/visitor_lessand.c:		io->redir->out = -1;
+srcs/visitor/visitor_lessand.c:		io->redir->out = ft_atoi(node->right->data);
+srcs/visitor/visitor_rightredi.c:	io->redir->file = node->right->data;
+srcs/visitor/visitor_rightredi.c:	io->redir->flag = (O_CREAT | O_WRONLY | O_TRUNC);
+srcs/visitor/visitor_rightredi.c:		io->redir->in = node->io;
+srcs/visitor/visitor_rightredi.c:		io->redir->in = STDOUT_FILENO;
+srcs/visitor/visitor_rightredi.c:	io->redir->out = fd;

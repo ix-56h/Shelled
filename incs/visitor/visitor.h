@@ -48,4 +48,6 @@ void		restore_env_back(t_node *node);
 void		restore_env(char *data, char *old_value);
 void		assign_var(char *data, char *value, int mod);
 
+int			visit_assign_redir(t_node *node, t_io_lists *io, t_job **job);
+
 #endif

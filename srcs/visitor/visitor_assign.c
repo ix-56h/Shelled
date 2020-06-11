@@ -105,7 +105,7 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 			visit_assign_std(node, 1);
 		else
 			visit_assign_std(node, 0);
-		return (0);
+		return (!io.redir ? 0 : 1);
 	}
 	return (1);
 }
