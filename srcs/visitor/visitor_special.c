@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:35:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/11 16:21:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/11 17:12:57 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		visit_and_if(t_node *node, t_io_lists io, t_job **job)
 		if (err == 0)
 			err = (*g_visit_rules[node->right->tok])(node->right, io, job);
 	if (node->state == 3)
-		dl_del_one(io.grp_io);
+		dl_del_one_with_data(io.grp_io, free);
 	return (err);
 }
 
@@ -54,7 +54,7 @@ int		visit_or_if(t_node *node, t_io_lists io, t_job **job)
 	else if (process && err == 0 && process->ret == 0)
 		err = 0;
 	if (node->state == 3)
-		dl_del_one(io.grp_io);
+		dl_del_one_with_data(io.grp_io, free);
 	return (err);
 }
 
@@ -82,7 +82,7 @@ int		visit_pipe(t_node *node, t_io_lists io, t_job **job)
 		}
 		ret = (*g_visit_rules[node->right->tok])(node->right, io, job);
 		dl_del_one((t_dl_node *)io.piped);
-		(node->state == 3) ? dl_del_one(io.grp_io) : 0;
+		(node->state == 3) ? dl_del_one_with_data(io.grp_io, free) : 0;
 	}
 	return (ret);
 }
@@ -102,6 +102,6 @@ int		visit_semi(t_node *node, t_io_lists io, t_job **job)
 		free(tmp);
 	ret += visit(node->right, job, io.cmd, io.grp_io);
 	if (node->state == 3)
-				dl_del_one(io.grp_io);
+				dl_del_one_with_data(io.grp_io, free);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/11 16:11:17 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/11 17:12:57 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int				visit_cmd(t_node *node, t_io_lists io, t_job **job)
 		grp_cmd_wrapper(&io);
 	exec_command(node, &io, job);
 	if (node->state == 3)
-		dl_del_one(io.grp_io);
+		dl_del_one_with_data(io.grp_io, free);
 	return (0);
 }
 
