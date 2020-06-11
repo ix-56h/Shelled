@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/07 20:38:33 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/06/08 12:56:57 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/11 15:37:06 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_table				*g_hash;
 char				*search_in_table(char *cmd);
 void				add_to_table(char *cmd, int nb);
 char				*search_table(char *cmd);
-unsigned long		hash_func(unsigned char *str);
+unsigned long		hash_func(char *str);
 char				*get_path(char *cmd);
 void				empty_table(void);
 

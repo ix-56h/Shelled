@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:10:01 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/05/11 15:47:38 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/11 15:33:24 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_job	*find_job_fg(t_job *job)
 int		ft_fg(char **argv, char ***tenv)
 {
 	t_job	*job;
-	int		number;
 
 	(void)tenv;
 	job = g_job_head;

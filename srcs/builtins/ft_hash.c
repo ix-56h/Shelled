@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/07 20:37:53 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/06/08 12:51:33 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/11 15:38:35 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int		ft_hash(char **argv, char ***env)
 {
 	int i;
 
+	(void)env;
 	i = 1;
 	if (argv[1] && ft_strcmp(argv[1], "-r") == 0)
 		empty_table();

@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 17:45:12 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/05/11 15:47:29 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/11 15:36:10 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	continue_job(t_job *j, int foreground)
 		put_job_in_background(j, 1);
 }
 
-t_job	*find_job_bg(t_job *job)
+t_job	*find_job_bg()
 {
 	t_jobnb	*jobnb;
 	t_job	*tmp;
@@ -65,12 +65,11 @@ t_job	*find_job_by_number(int nb)
 int		ft_bg(char **argv, char ***tenv)
 {
 	t_job	*job;
-	int		number;
 
 	(void)tenv;
 	job = g_job_head;
 	if (argv[1] == NULL)
-		job = find_job_bg(job);
+		job = find_job_bg();
 	else
 		job = find_job_by_number(ft_atoi(argv[1]));
 	if (!job || !job->pgid)

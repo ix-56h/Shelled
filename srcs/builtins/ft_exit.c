@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 06:57:57 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/08 16:07:22 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/11 15:38:57 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int		ft_exit(char **argv, char ***tenv)
 {
 	int value;
 
+	(void)tenv;
 	ft_putstr_fd("exit\n", 1);
 	if (argv[1] && argv[2])
 	{
