@@ -83,6 +83,19 @@ void	error_type(int error, char *arg)
 	}
 }
 
+int		f_type(char **path_s)
+{
+	int cpt;
+
+	cpt = -1;
+	if (!path_s)
+		return (0);
+	while (path_s[++cpt])
+		free(path_s[cpt]);
+	free(path_s);
+	return (0);
+}
+
 int		ft_type(char **args, char ***tenv)
 {
 	int		cpt;
@@ -105,5 +118,5 @@ int		ft_type(char **args, char ***tenv)
 				error = binaire_type(args[cpt], path_s);
 		error_type(error, args[cpt]);
 	}
-	return (free_type(path_s));
+	return (f_type(path_s));
 }

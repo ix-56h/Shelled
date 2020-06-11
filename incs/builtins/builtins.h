@@ -67,7 +67,6 @@ char		*ft_get_link(char *pathname);
 int			ft_is_dir(char *s);
 char		*new_path(char *add_to_path, char *pwd, int flags);
 void		concat_pwd(char *str, char c);
-void		home_env(char ***tenv);
 int			add_old_pwd(char ***tenv, int flags, char *pwd, char *old_pwd);
 int			check_dir(char *add_to_path, int flags);
 void		update_env(char ***tenv, char *pwd, char *old_pwd, \
@@ -97,7 +96,5 @@ int			simple_operand(char **args);
 /*
 ** tools
 */
-
-int		free_type(char **path_s);
 
 #endif

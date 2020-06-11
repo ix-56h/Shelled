@@ -72,7 +72,7 @@ FT_LNK = -L$(FT_DIR) -l$(FT) -L$(PRINTF_DIR) -lprintf
 ###  CC && FLAGS ###
 CC = gcc -g #-fsanitize=address 
 DEBUG_FLAGS = -g3
-NO_WARNING ?= false
+NO_WARNING ?= true
 ifeq ($(NO_WARNING), false)
 CFLAGS = \
 		 $(addprefix -I ,$(INC_DIR) $(INC_SUB_DIRS) $(FT_INC_DIR) $(PRINTF_INC_DIR))\
