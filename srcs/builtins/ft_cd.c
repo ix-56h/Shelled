@@ -106,18 +106,6 @@ int		new_dir(char **args, char ***tenv, int flags, int start)
 	return (error);
 }
 
-void	h_env(char ***tenv)
-{
-	char *home;
-	char *pwd;
-	char *old_pwd;
-
-	pwd = get_env(*tenv, "PWD");
-	old_pwd = get_env(*tenv, "OLDPWD");
-	home = get_env(*tenv, "HOME");
-	update_env(tenv, pwd, old_pwd, home);
-}
-
 int		ft_cd(char **args, char ***tenv)
 {
 	int		i;
