@@ -206,6 +206,7 @@ C_FILES_expansions = \
 					 expansions_utils2.c \
 					 dispatch_expansions.c \
 					 manage_brace.c \
+					 pattern_misc.c \
 
 C_FILES_jobs = \
 				bg.c \

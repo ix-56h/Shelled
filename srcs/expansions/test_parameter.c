@@ -40,7 +40,7 @@ int				digit_error(char *word)
 	int i;
 
 	i = 0;
-	while (word[i] == '$')
+	if (word[i] == '$')
 		i++;
 	if ((ft_isdigit(word[i]) && !ft_isalldigit(&word[i]))
 		|| (!ft_isalnum(word[i])))
@@ -64,12 +64,12 @@ char			*test_without_modifier(char *word)
 		get_multi_pos_param(&new_word);
 	if (!new_word[0])
 		return (new_word);
-	if (ft_isdigit(new_word[1]) && digit_error(new_word))
+	if (digit_error(new_word))
 		ft_bzero(new_word, ft_strlen(new_word));
 	while (new_word[i++])
 		if (parameter_error(new_word, i, 1))
 			return (ft_strdup(""));
-	process_expression(&new_word);
+	new_word = expand_word(new_word);
 	return (new_word);
 }
 
@@ -79,7 +79,7 @@ char			*test_parameter(t_exp_data *exp, char *word)
 
 	new_word = NULL;
 	if (exp->last[0])
-		process_expression(&exp->last);
+		exp->last = expand_word(exp->last);
 	if (!exp->modifier)
 		new_word = test_without_modifier(word);
 	else

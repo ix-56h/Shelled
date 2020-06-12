@@ -104,6 +104,7 @@ void			orphaned_jobs(void);
 
 void			get_special_param(char ***w);
 char			*show_positional_param(char *word);
+char			*look_for_param(int index);
 
 /*
 **	alias.c

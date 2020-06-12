@@ -20,12 +20,12 @@ char	*use_default_value(char *param, char *word)
 	{
 		free(word);
 		param = ft_strjoinf("$", param, 2);
-		process_expression(&param);
+		param = expand_word(param);
 		return (param);
 	}
 	else
 	{
-		process_expression(&word);
+		word = expand_word(word);
 		free(param);
 		return (word);
 	}
@@ -37,12 +37,12 @@ char	*assign_default_value(char *param, char *word)
 	{
 		free(word);
 		param = ft_strjoinf("$", param, 2);
-		process_expression(&param);
+		param = expand_word(param);
 		return (param);
 	}
 	else
 	{
-		process_expression(&word);
+		word = expand_word(word);
 		add_set(param, word);
 	}
 	free(param);
@@ -55,7 +55,7 @@ char	*indicate_error(char *param, char *word)
 	{
 		free(word);
 		param = ft_strjoinf("$", param, 2);
-		process_expression(&param);
+		param = expand_word(param);
 		return (param);
 	}
 	ft_putstr_fd("42sh: ", 2);
@@ -68,7 +68,7 @@ char	*indicate_error(char *param, char *word)
 		add_set("?", "1");
 		return (word);
 	}
-	process_expression(&word);
+	word = expand_word(word);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(word, 2);
 	add_set("?", "1");
@@ -89,7 +89,7 @@ char	*use_alternative_value(char *param, char *word)
 	{
 		if (word[0] == '$' && word[1] == '{')
 			word = ft_strjoinf(word, "}", 1);
-		process_expression(&word);
+		word = expand_word(word);
 		free(param);
 		return (word);
 	}

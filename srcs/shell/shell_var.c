@@ -15,7 +15,7 @@
 #include "expansions.h"
 #include "libft.h"
 
-static char		*look_for_param(int index)
+char			*look_for_param(int index)
 {
 	int		i;
 	char	*str;

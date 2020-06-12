@@ -21,11 +21,34 @@ t_exp_param		g_dispatch_string[MOD_MAX] =
 	{ MOD_INDICATE_ERROR, ":?", indicate_error },
 	{ MOD_USE_ALTERNATIVE, ":+", use_alternative_value },
 	{ MOD_RM_SMALL_SUFFIX, "%", remove_small_suffix },
-	{ MOD_RM_LARGE_SUFFIX, "%%", remove_small_suffix },
+	{ MOD_RM_LARGE_SUFFIX, "%%", remove_large_suffix },
 	{ MOD_RM_SMALL_PREFIX, "#", remove_small_prefix },
-	{ MOD_RM_LARGE_PREFIX, "##", remove_small_prefix },
+	{ MOD_RM_LARGE_PREFIX, "##", remove_large_prefix },
 	{ MOD_ERROR, ":", error_modifier }
 };
+
+static char		*get_word_end(char *word, char *full_word)
+{
+	int		i;
+	int		j;
+	char	last[256];
+
+	i = 0;
+	j = 0;
+	ft_bzero(last, 256);
+	while (full_word[i] && full_word[i] != '}')
+		i++;
+	if (!full_word[i + 1])
+		return (word);
+	while (full_word[i])
+	{
+		last[j] = full_word[i];
+		i++;
+		j++;
+	}
+	word = ft_strjoinf(word, last, 1);
+	return (word);
+}
 
 static char		*get_word(char *full_word, char *mod)
 {
@@ -53,7 +76,7 @@ static char		*get_word(char *full_word, char *mod)
 	word = ft_strnew(len);
 	while (full_word[i] && full_word[i] != '}')
 		word[j++] = full_word[i++];
-	return (word);
+	return (get_word_end(word, full_word));
 }
 
 static char		*get_param(char *full_word, char *mod)
@@ -84,6 +107,7 @@ static char		*get_param(char *full_word, char *mod)
 char			*dispatch_exp(char *full_word, char *mod)
 {
 	int		i;
+	char	*var;
 	char	*parameter;
 	char	*word;
 	char	*new_word;
@@ -92,6 +116,10 @@ char			*dispatch_exp(char *full_word, char *mod)
 	new_word = NULL;
 	parameter = get_param(full_word, mod);
 	word = parameter[0] ? get_word(full_word, mod) : ft_strdup("");
+	word = expand_word(word);
+	var = ft_strdup(parameter);
+	if (ft_isalldigit(var))
+		add_set(var, look_for_param(ft_atoi(var)));
 	while (++i < MOD_MAX)
 	{
 		if (ft_strcmp(mod, g_dispatch_string[i].s) == 0)
@@ -99,5 +127,8 @@ char			*dispatch_exp(char *full_word, char *mod)
 	}
 	if (!new_word)
 		new_word = error_modifier(NULL, NULL);
+	if (ft_isalldigit(var))
+		g_set = del_var(g_set, var);
+	free(var);
 	return (new_word);
 }
