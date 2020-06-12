@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/11 20:14:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/12 21:36:23 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static void		ctrl_c_handler(int lel)
 	ft_putchar('\n');
 }
 
-static void		child_exec_subshell_forked(t_node *node, t_io_lists io, t_job *job)
+static void		child_exec_subshell_forked(t_node *node, t_io_lists io,
+											t_job *job)
 {
 	pid_t	pid;
 

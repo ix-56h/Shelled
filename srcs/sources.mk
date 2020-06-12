@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/06/08 21:29:13 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/06/12 19:25:57 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ C_FILES_visitor = \
 				  exec.c \
 				  exec_misc.c \
 				  misc_cut_cmd.c \
+				  misc_cut_cmd2.c \
 				  misc_assign.c \
 				  misc_assign2.c \
 				  test_and_find.c \

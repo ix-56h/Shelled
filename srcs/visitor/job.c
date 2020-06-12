@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 19:26:28 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/06 17:46:10 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/12 21:35:39 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ void		wait_for_job(t_job *job)
 	char	*exit_status;
 	pid_t	pid;
 
-	if(job_is_completed(job) || (pid = waitpid(WAIT_ANY, &status, WUNTRACED)) == -1)
+	if (job_is_completed(job) || (pid = waitpid(WAIT_ANY, &status, WUNTRACED)) == -1)
 		return ;
 	if (WIFEXITED(status))
 	{

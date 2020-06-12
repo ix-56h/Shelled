@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:35:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/11 19:56:40 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/12 19:05:07 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ int		visit_pipe(t_node *node, t_io_lists io, t_job **job)
 	return (ret);
 }
 
-
 int		visit_semi(t_node *node, t_io_lists io, t_job **job)
 {
 	int				ret;
@@ -115,6 +114,6 @@ int		visit_semi(t_node *node, t_io_lists io, t_job **job)
 		free(tmp);
 	ret += visit(node->right, io.cmd, io.grp_io);
 	if (node->state == 3)
-				dl_del_one_with_data(io.grp_io, free);
+		dl_del_one_with_data(io.grp_io, free);
 	return (ret);
 }

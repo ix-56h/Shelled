@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/11 20:14:10 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/12 21:36:03 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int		need_background(t_io_lists *io)
 		if (grp_io->background)
 			back = 1;
 		if (back == 1)
-			break;
+			break ;
 		nav = nav->next;
 	}
 	return (back);
