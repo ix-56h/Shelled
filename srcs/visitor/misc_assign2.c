@@ -46,7 +46,8 @@ void	visit_assign_pipe(t_node *node, t_io_lists *io, t_job **job, int *pipe)
 		close(pipe[WRITE_END]);
 		set_used_fd(io->piped);
 	}
-	if ((*g_visit_rules[node->left->left->tok])(node->left->left, *io, job))
+	if (node->left->left
+		&& (*g_visit_rules[node->left->left->tok])(node->left->left, *io, job))
 	{
 		close(pipe[WRITE_END]);
 		set_used_fd(io->piped);

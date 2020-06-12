@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/11 02:51:02 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/11 19:57:05 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 #include "expansions.h"
 #include "hash.h"
 
-int				exec_builtin_no_fork(t_node *cmd, char **env,
-										t_io_lists io, t_job *job)
+int				exec_builtin_no_fork(t_node *cmd, char **env, t_job *job)
 {
 	t_builtin	exec_builtin;
 	int			ret;

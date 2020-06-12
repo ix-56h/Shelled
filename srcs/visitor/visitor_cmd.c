@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/11 16:45:40 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/11 20:14:10 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ static int		need_fork(t_io_lists io, t_node *cmd)
 int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 {
 	pid_t		pid;
-	t_process	*process;
 	int			ret;
 	int			i;
 
@@ -110,7 +109,7 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	if (g_exp_error)
 		return (1);
 	if (!need_fork(io, cmd))
-		ret = exec_builtin_no_fork(cmd, env, io, job);
+		ret = exec_builtin_no_fork(cmd, env, job);
 	else
 	{
 		if ((pid = fork()) == -1)
