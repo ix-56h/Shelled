@@ -100,10 +100,20 @@ char			*show_string_length(char *param, char *word);
 **	parameter_expansions2.c
 */
 
+char			*remove_pattern(char *param, char *word, size_t index, int act);
 char			*remove_small_suffix(char *param, char *word);
 char			*remove_large_suffix(char *param, char *word);
 char			*remove_small_prefix(char *param, char *word);
 char			*remove_large_prefix(char *param, char *word);
+
+/*
+**	pattern_misc.c
+*/
+
+char			*remove_suffix_pattern(char *param, char *word, int index);
+char			*remove_prefix_pattern(char *param, char *word, int index);
+int				look_for_pattern(char *param, char *word,
+				size_t index, int act);
 
 /*
 **	expansions_utils.c

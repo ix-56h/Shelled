@@ -23,7 +23,7 @@ int				is_special_param(char c)
 
 int				is_blank(char *last)
 {
-	int i;
+	size_t i;
 
 	i = 0;
 	while (last[i] == ' ' || last[i] == '\n' || last[i] == '\t')
