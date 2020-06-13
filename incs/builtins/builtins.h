@@ -97,8 +97,8 @@ int			simple_operand(char **args);
 ** tools
 */
 
-int		ft_len(char **args);
-int		f_type(char **path_s);
-void	h_env(char ***tenv);
+int			ft_len(char **args);
+int			f_type(char **path_s);
+void		h_env(char ***tenv);
 
 #endif

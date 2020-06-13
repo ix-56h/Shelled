@@ -37,7 +37,7 @@ char	**get_env_path(void);
 int		need_background(t_io_lists *io);
 
 int		exec_builtin_no_fork(t_node *cmd, char **env, t_job *job);
-void	child_exec_forked(t_io_lists io,char **env, t_job *job, t_node *cmd);
+void	child_exec_forked(t_io_lists io, char **env, t_job *job, t_node *cmd);
 void	after_fork_routine(pid_t pid, t_io_lists io, t_job *job);
 int		exec_subshell(t_node *node, t_io_lists *io, t_job **job);
 int		subshell_wrapper(t_node *node, t_io_lists *io, t_job **job);
