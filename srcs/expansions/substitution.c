@@ -28,10 +28,20 @@ static char		*exec_substitution(char *tmp)
 static size_t	get_first_pos(size_t *i, char *word, char occur)
 {
 	size_t	y;
+	int	t;
 
+	t = 0;
 	y = *i;
-	while (word[y] && word[y] != occur)
+	while (word[y] && word[y] != occur && t == 0)
+	{
+		if (occur == ')' && word[y] == '(')
+			t += 1;
+		else  if (word[y] == occur && t > 0)
+			t--;
+		else if (word[y] == occur && t == 0)
+			break;
 		y++;
+	}
 	if (!word[y])
 		return (0);
 	return (y);

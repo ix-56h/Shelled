@@ -89,7 +89,6 @@ int	lex_match_command_sub(char *s, int *anchor, t_lifo *stack)
 		{
 			if (!lex_sequence(s, anchor, stack))
 				return (0);
-			*anchor += 1;
 			continue;
 		}
 		*anchor += 1;
