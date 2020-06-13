@@ -34,15 +34,23 @@ void			get_multi_pos_param(char **word)
 	i = ft_atoi(param);
 	look_multi_pos_param(split, word, i);
 }
-#include <stdio.h>
+
 int				digit_error(char *word)
 {
-	int i;
+	size_t i;
 
 	i = 0;
+	while (ft_isalpha(word[i]))
+		i++;
+	if (i == ft_strlen(word))
+		return (0);
 	while (word[i] != '$')
 		i++;
-	i += 1;
+	i = word[i] == '{' ? i + 2 : i + 1;
+	if (word[i + 1] == '\0' && (word[i] == '?' || word[i] == '-'
+	|| word[i] == '@' || word[i] == '!' || word[i] == '*' || word[i] == '$'
+	|| word[i] == '#'))
+		return (0);
 	if ((ft_isdigit(word[i]) && !ft_isalldigit(&word[i]))
 		|| (!ft_isalnum(word[i])))
 	{
