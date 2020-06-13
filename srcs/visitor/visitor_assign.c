@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/13 02:41:19 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/13 02:52:26 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,20 +81,14 @@ static void		visit_assign_std(t_node *node, int mod)
 	free(data);
 }
 
-int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
+static int		exec_visit_asign(t_node *node, t_io_lists io, t_job **job)
 {
-	if (node->state == 2)
-		return (subshell_wrapper(node, &io, job));
-	if (node->state == 3)
-		grp_cmd_wrapper(&io);
 	if (node->left && (!io.piped && !io.redir))
 	{
 		if (!is_only_assign(node))
 			visit_assign_temp(node, job, &io);
 		else
 			visit_assign_multi(node);
-		if (node->state == 3)
-			dl_del_one_with_data(io.grp_io, free);
 		return (0);
 	}
 	else
@@ -103,11 +97,21 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 			visit_assign_std(node, 1);
 		else
 			visit_assign_std(node, 0);
-		if (node->state == 3)
-			dl_del_one_with_data(io.grp_io, free);
 		return (!io.redir ? 0 : 1);
 	}
+}
+
+int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
+{
+	int	ret;
+
+	ret = 1;
+	if (node->state == 2)
+		return (subshell_wrapper(node, &io, job));
 	if (node->state == 3)
-			dl_del_one_with_data(io.grp_io, free);
-	return (1);
+		grp_cmd_wrapper(&io);
+	ret = exec_visit_asign(node, io, job);
+	if (node->state == 3)
+		dl_del_one_with_data(io.grp_io, free);
+	return (ret);
 }
