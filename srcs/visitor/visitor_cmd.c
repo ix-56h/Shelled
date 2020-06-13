@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/13 01:39:36 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/13 23:34:59 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 
 	i = 0;
 	ret = 0;
+	cmd->data = expand_word(cmd->data);
 	while (cmd->args[i])
 	{
 		cmd->args[i] = expand_word(cmd->args[i]);
