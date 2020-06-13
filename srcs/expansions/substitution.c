@@ -32,7 +32,7 @@ static size_t	get_first_pos(size_t *i, char *word, char occur)
 
 	t = 0;
 	y = *i;
-	while (word[y] && word[y] != occur && t == 0)
+	while (word[y] && (word[y] != occur || t > 0))
 	{
 		if (occur == ')' && word[y] == '(')
 			t += 1;
