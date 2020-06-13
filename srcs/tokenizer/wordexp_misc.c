@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "tokenizer_rules.h"
 
 int		ignore_arithmetic(char *s, int *a)
 {
@@ -42,4 +43,12 @@ void	skip_whitespaces(char *s, int *a)
 {
 	while (s[*a] && is_whitespace(s[*a]))
 		(*a)++;
+}
+
+void	token_inits(int *a, t_chr_class *prev_class, t_gnt *g)
+{
+	*a = 0;
+	*prev_class = g->chr_class;
+	g->toktype = g_get_tok_type[*prev_class];
+	g->toktype == TOK_NEWLINE ? (*a)++ : 0;
 }

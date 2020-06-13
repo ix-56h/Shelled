@@ -47,6 +47,7 @@ int	lex_match_squote(char *s, int *anchor, t_lifo *stack)
 		error_push(stack, MATCH_LEX, "'");
 		return (0);
 	}
+	*anchor += 1;
 	return (1);
 }
 
@@ -75,6 +76,7 @@ int	lex_match_dquote(char *s, int *anchor, t_lifo *stack)
 		error_push(stack, MATCH_LEX, "\"");
 		return (0);
 	}
+	*anchor += 1;
 	return (1);
 }
 
