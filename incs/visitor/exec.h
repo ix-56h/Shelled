@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:38:41 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/11 19:57:17 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/13 01:40:20 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		is_path(char *buff);
 void	free_tab(char **tab);
 int		err_exec(char *buff, int err);
 char	**get_env_path(void);
+int		need_background(t_io_lists *io);
 
 int		exec_builtin_no_fork(t_node *cmd, char **env, t_job *job);
 void	child_exec_forked(t_io_lists io,char **env, t_job *job, t_node *cmd);

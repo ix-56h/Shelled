@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/20 18:52:04 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/13 01:06:54 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/13 01:35:30 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char			*substitution_wrapper(char *str)
 	int		pipefd[2];
 	char	*ret;
 	char	buff[BUFFSIZE + 1];
-	
 
 	if (pipe(pipefd) != -1 && (ret = NULL) == NULL)
 	{

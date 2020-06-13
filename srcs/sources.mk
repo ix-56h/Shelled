@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/06/12 19:25:57 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/06/13 02:06:08 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,8 @@ C_FILES_visitor = \
 				  visitor_dless.c \
 				  visitor_dgreat.c \
 				  job.c \
+				  job_misc.c \
+				  job_misc2.c \
 				  substitution.c \
 				  subshell.c \
 				  grouped_cmd.c \
