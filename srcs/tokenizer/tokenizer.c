@@ -55,9 +55,6 @@ int			get_token(char *s, t_gnt *g, t_lifo *stack)
 	int			a;
 
 	token_inits(&a, &prev_class, g);
-	if (is_special_char(g->chr_class, prev_class) \
-		&& lex_sequence(s, &a, stack) == 0)
-		return (a);
 	while (s[a] && (g_token_chr_rules[g->toktype][(g->chr_class = \
 g_get_chr_class[(unsigned char)s[a]])] || prev_class == CHR_ESCAPE))
 	{
@@ -70,6 +67,8 @@ g_get_chr_class[(unsigned char)s[a]])] || prev_class == CHR_ESCAPE))
 			else
 				return (a);
 		}
+		if (a > 0 && prev_class == CHR_ESCAPE && g->chr_class == prev_class)
+			g->chr_class = CHR_WORD;
 		prev_class = g->chr_class;
 		a++;
 	}
