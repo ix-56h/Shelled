@@ -17,7 +17,7 @@ void	parse_simple_command_misc_prefix(t_sh *sh, t_node **node, \
 {
 	while ((*nod2 = parse_cmd_prefix(sh)))
 		*node = push_node_left(*nod2, *node);
-	if ((*nod2 = parse_cmd_word(sh)))
+	while ((*nod2 = parse_cmd_word(sh)))
 	{
 		*args = *nod2;
 		push_args(*args, ft_strdup((*args)->data));
@@ -42,11 +42,12 @@ void	parse_simple_command_cmd_name_misc(t_sh *sh, t_node **node, \
 		push_args(*args, sh->tok.data);
 		sh->tok = get_next_token(sh->input, sh->stack.errors);
 	}
-	if ((*nod2 = parse_cmd_suffix(sh)))
-	{
+	while ((*nod2 = parse_io_redirect(sh)))
 		*node = binnode(*node, *nod2, (*nod2)->right);
-		while ((*nod2 = parse_cmd_suffix(sh)))
-			*node = binnode(*node, *nod2, (*nod2)->right);
+	while (sh->tok.tok == TOK_WORD || sh->tok.tok == TOK_ASSIGNMENT_WORD)
+	{
+		push_args(*args, sh->tok.data);
+		sh->tok = get_next_token(sh->input, sh->stack.errors);
 	}
 }
 
