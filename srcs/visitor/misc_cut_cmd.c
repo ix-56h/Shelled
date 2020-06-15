@@ -6,19 +6,19 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/20 18:24:42 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/12 21:34:33 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/15 20:49:30 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "visitor.h"
 
-int		get_next_semi_col(char *cmd)
+size_t		get_next_semi_col(char *cmd)
 {
-	int		i;
+	size_t		i;
 
 	i = 0;
-	while (cmd[i])
+	while (i < ft_strlen(cmd) && cmd[i])
 	{
 		if (cmd[i] == '\\')
 			i += 2;
@@ -38,12 +38,12 @@ int		get_next_semi_col(char *cmd)
 	return (i);
 }
 
-int		get_next_and(char *cmd)
+size_t		get_next_and(char *cmd)
 {
-	int		i;
+	size_t		i;
 
 	i = 0;
-	while (cmd[i])
+	while (i < ft_strlen(cmd) && cmd[i])
 	{
 		if (cmd[i] == '\\')
 			i += 2;
@@ -66,12 +66,12 @@ int		get_next_and(char *cmd)
 	return (i);
 }
 
-char	*cut_command(char *cmd, char act)
+char		*cut_command(char *cmd, char act)
 {
-	int		index;
+	size_t		index;
 	char	find;
 	char	*res;
-	int		len;
+	size_t		len;
 
 	if (!cmd)
 		return (NULL);
