@@ -81,7 +81,6 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 
 	i = 0;
 	ret = 0;
-	cmd->data = expand_word(cmd->data);
 	while (cmd->args[i])
 	{
 		cmd->args[i] = expand_word(cmd->args[i]);
