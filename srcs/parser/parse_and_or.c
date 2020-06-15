@@ -20,7 +20,7 @@ t_node	*parse_and_or(t_sh *sh)
 
 	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
-	if ((node = parse_pipeline(sh)))
+	if ((node = parse_pipeline(sh)) && lifo_empty(sh->stack.errors))
 	{
 		tok = sh->tok;
 		while (tok.tok == TOK_AND_IF || tok.tok == TOK_OR_IF)
@@ -31,7 +31,8 @@ t_node	*parse_and_or(t_sh *sh)
 			else
 			{
 				node = save_node(node, tok, nod2, 0);
-				error_push(sh->stack.errors, PARSE_ERROR, sh->tok.data);
+				if (lifo_empty(sh->stack.errors))
+					error_push(sh->stack.errors, PARSE_ERROR, sh->tok.data);
 				return (node);
 			}
 			tok = sh->tok;

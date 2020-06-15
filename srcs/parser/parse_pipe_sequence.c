@@ -20,8 +20,6 @@ t_node	*parse_pipe_sequence(t_sh *sh)
 
 	if (!lifo_empty(sh->stack.errors))
 		return (NULL);
-	node = NULL;
-	nod2 = NULL;
 	if ((node = parse_command(sh)))
 	{
 		tok = sh->tok;
@@ -32,7 +30,8 @@ t_node	*parse_pipe_sequence(t_sh *sh)
 				node = save_node(node, tok, nod2, 3);
 			else
 			{
-				error_push(sh->stack.errors, PARSE_ERROR, tok.data);
+				free(tok.data);
+				error_push(sh->stack.errors, PARSE_ERROR, sh->tok.data);
 				return (node);
 			}
 			tok = sh->tok;
