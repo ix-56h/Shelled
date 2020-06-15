@@ -13,6 +13,7 @@
 #include "libft.h"
 #include "sh.h"
 #include "builtins.h"
+#include "ft_printf.h"
 
 char	**echo_arg(char **argv, int *arg_n)
 {
@@ -25,7 +26,9 @@ char	**echo_arg(char **argv, int *arg_n)
 			continue ;
 		if (*arg && *arg != '-')
 			break ;
-		while (*(++arg))
+		if (!ft_strcmp(arg, "-"))
+			break ;
+		while (*(arg++))
 			if (*arg != 'n')
 				break ;
 		if (*(arg))
