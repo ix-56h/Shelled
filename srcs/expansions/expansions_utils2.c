@@ -37,6 +37,11 @@ void			look_multi_pos_param(char **split, char **word, int i)
 
 	j = 0;
 	ft_strdel(word);
+	if (!split)
+	{
+		*word = ft_strdup("");
+		return ;
+	}
 	while (split[j])
 		j++;
 	if (i < j && i > 0)
