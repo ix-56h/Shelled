@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 16:10:41 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/06/06 16:31:42 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/16 15:33:13 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	add_jobnb(int nb)
 	t_jobnb *new;
 
 	jobnb = g_jobnb;
-	new = (t_jobnb *)malloc(sizeof(t_jobnb));
+	if (!(new = (t_jobnb *)malloc(sizeof(t_jobnb))))
+		return ;
 	new->next = NULL;
 	new->prev = NULL;
 	new->number = nb;
@@ -74,7 +75,8 @@ void	push_front(int nb)
 	t_jobnb *new;
 
 	del_jobnb(nb);
-	new = (t_jobnb *)malloc(sizeof(t_jobnb));
+	if (!(new = (t_jobnb *)malloc(sizeof(t_jobnb))))
+		return ;
 	new->number = nb;
 	g_jobnb->prev = new;
 	new->prev = NULL;
