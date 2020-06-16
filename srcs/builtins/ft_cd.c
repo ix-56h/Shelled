@@ -81,7 +81,7 @@ int		form_path(char *add_to_path, char ***tenv, char flags)
 	while (pwd[++cpt])
 	{
 		if (!ft_strcmp(pwd[cpt], ".") || !ft_strcmp(pwd[cpt], ".."))
-			pwd[cpt] = follow_path(tenv, 256, pwd[cpt]);
+			pwd[cpt] = follow_cd_path(tenv, 256, pwd[cpt]);
 		if (add_to_path[0] == '/')
 		{
 			if (flags == 3 || flags == 4)
@@ -92,21 +92,24 @@ int		form_path(char *add_to_path, char ***tenv, char flags)
 			add_to_path = new_path(add_to_path, pwd[cpt], flags);
 		if ((error = check_dir(add_to_path, flags)) == 0)
 			break ;
-		free(pwd[cpt]);
 		add_to_path = ft_strdup(save_path);
 	}
 	free(save_path);
 	if (error != 0)
 	{
-		free(pwd[cpt]);
+		free(add_to_path);
+		cpt = -1;
+		while (pwd[++cpt])
+			free(pwd[cpt]);
 		free(pwd);
 		return (error);
 	}
 	update_env(tenv, pwd[cpt], old_pwd, add_to_path);
 	chdir(add_to_path);
 	free(add_to_path);
-	while (pwd[cpt])
-		free(pwd[cpt++]);
+	cpt = -1;
+	while (pwd[++cpt])
+		free(pwd[cpt]);
 	free(pwd);
 	return (0);
 }
@@ -145,9 +148,10 @@ int		ft_cd(char **args, char ***tenv)
 	}
 	else if (i == 1)
 	{
-		if (!(home_dir = get_env(*tenv, "HOME")))
+		if (!(home_dir = ft_strdup(get_env(*tenv, "HOME"))))
 			home_dir = getpwuid(getuid())->pw_dir;
 		chdir(home_dir);
+		free(home_dir);
 		h_env(tenv);
 	}
 	else

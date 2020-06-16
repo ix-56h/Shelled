@@ -24,6 +24,7 @@ int		add_old_pwd(char ***tenv, int flags, char *pwd, char *old_pwd)
 		return (1);
 	new_old = ft_strdup(old_pwd);
 	new_pwd = ft_strdup(pwd);
+	free(pwd);
 	if (flags == 3 || flags == 4)
 		new_old = ft_strjoinf("/", ft_get_link(new_old), 2);
 	ft_edit_env(*tenv, "PWD", new_old);
