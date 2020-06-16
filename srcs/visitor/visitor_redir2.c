@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 00:33:17 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/16 02:35:41 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/16 03:09:07 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "parser.h"
 #include "exec.h"
 #include "visitor.h"
+#include "expansions.h"
 
 /*
 **	<<
@@ -32,6 +33,7 @@ int		visit_dless(t_node *node, t_io_lists io, t_job **job)
 	{
 		if (node->state == 3)
 			grp_cmd_wrapper(&io);
+		node->right->data = expand_word(node->right->data);
 		exec_dless(node, &io, job);
 		if (!visit_assign_redir(node, &io, job))
 		{
@@ -62,6 +64,7 @@ int		visit_dgreat(t_node *node, t_io_lists io, t_job **job)
 	{
 		if (node->state == 3)
 			grp_cmd_wrapper(&io);
+		node->right->data = expand_word(node->right->data);
 		exec_dgreat(node, &io, job);
 		if (!visit_assign_redir(node, &io, job))
 		{
