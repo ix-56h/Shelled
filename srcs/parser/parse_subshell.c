@@ -26,13 +26,13 @@ t_node	*parse_subshell(t_sh *sh)
 		sh->tok = get_next_token(sh->input, sh->stack.errors);
 		if ((node = parse_compound_list(sh)))
 		{
-			if (sh->tok.tok == TOK_RPAREN)
+			if (sh->tok.tok == TOK_RPAREN && lifo_empty(sh->stack.errors))
 			{
 				free(sh->tok.data);
 				node->state = SUBSH;
 				sh->tok = get_next_token(sh->input, sh->stack.errors);
 			}
-			else
+			else if (sh->tok.tok != TOK_RPAREN && lifo_empty(sh->stack.errors))
 				error_push(sh->stack.errors, PARSE_ERROR, sh->tok.data);
 		}
 		free(tok.data);

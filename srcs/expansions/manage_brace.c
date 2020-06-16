@@ -77,7 +77,7 @@ int		get_open_brace(char *word)
 
 char	*get_closing(char *word, size_t *i, char **last)
 {
-	int		j;
+	size_t	j;
 	size_t	a;
 	char	*new_word;
 

@@ -157,6 +157,7 @@ int					lex_sequence(char *s, int *anchor, t_lifo *stack);
 int					is_whitespace(char c);
 void				skip_whitespaces(char *s, int *a);
 int					ignore_arithmetic(char *s, int *a);
+void				token_inits(int *a, t_chr_class *prev_class, t_gnt *g);
 
 /*
 **	gnt_standalone.c

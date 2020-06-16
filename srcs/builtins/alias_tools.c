@@ -35,23 +35,6 @@ char		*get_name(char *arg)
 	return (name);
 }
 
-char		*form_value(char *arg)
-{
-	int		cpt;
-	char	*new_arg;
-
-	cpt = 0;
-	if (arg[cpt] == '\'')
-		arg = form_algo('\'', arg);
-	else if (arg[cpt] == '\"')
-		arg = form_algo('\"', arg);
-	else
-		return (arg);
-	new_arg = ft_strdup(arg);
-	free(arg);
-	return (new_arg);
-}
-
 char		*get_value(char *arg)
 {
 	int		cpt;
@@ -78,7 +61,7 @@ char		*get_value(char *arg)
 		cpt++;
 	}
 	value[i] = '\0';
-	return (form_value(value));
+	return (value);
 }
 
 void		ft_swap(char **a, char **b)

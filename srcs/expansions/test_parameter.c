@@ -37,11 +37,20 @@ void			get_multi_pos_param(char **word)
 
 int				digit_error(char *word)
 {
-	int i;
+	size_t i;
 
 	i = 0;
-	while (word[i] == '$')
+	while (ft_isalpha(word[i]))
 		i++;
+	if (i == ft_strlen(word))
+		return (0);
+	while (word[i] != '$')
+		i++;
+	i = word[i] == '{' ? i + 2 : i + 1;
+	if (word[i + 1] == '\0' && (word[i] == '?' || word[i] == '-'
+	|| word[i] == '@' || word[i] == '!' || word[i] == '*' || word[i] == '$'
+	|| word[i] == '#'))
+		return (0);
 	if ((ft_isdigit(word[i]) && !ft_isalldigit(&word[i]))
 		|| (!ft_isalnum(word[i])))
 	{
@@ -53,7 +62,7 @@ int				digit_error(char *word)
 	return (0);
 }
 
-char			*test_without_modifier(t_exp_data *exp, char *word)
+char			*test_without_modifier(char *word)
 {
 	int		i;
 	char	*new_word;
@@ -64,12 +73,12 @@ char			*test_without_modifier(t_exp_data *exp, char *word)
 		get_multi_pos_param(&new_word);
 	if (!new_word[0])
 		return (new_word);
-	if (ft_isdigit(new_word[1]) && digit_error(new_word))
+	if (digit_error(new_word))
 		ft_bzero(new_word, ft_strlen(new_word));
 	while (new_word[i++])
 		if (parameter_error(new_word, i, 1))
 			return (ft_strdup(""));
-	process_expression(&new_word);
+	new_word = expand_word(new_word);
 	return (new_word);
 }
 
@@ -79,9 +88,9 @@ char			*test_parameter(t_exp_data *exp, char *word)
 
 	new_word = NULL;
 	if (exp->last[0])
-		process_expression(&exp->last);
+		exp->last = expand_word(exp->last);
 	if (!exp->modifier)
-		new_word = test_without_modifier(exp, word);
+		new_word = test_without_modifier(word);
 	else
 	{
 		new_word = dispatch_exp(word, exp->modifier);

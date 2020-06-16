@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:12:51 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/11 16:45:40 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/13 23:34:59 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,6 @@ static void		ctrl_c_handler(int lel)
 {
 	(void)lel;
 	ft_putchar('\n');
-}
-
-static int		need_background(t_io_lists *io)
-{
-	t_dl_node	*nav;
-	t_io_lists	*grp_io;
-	int			back;
-
-	back = io->background;
-	nav = io->grp_io;
-	while (nav)
-	{
-		grp_io = ((t_io_lists *)nav->data);
-		if (grp_io->background)
-			back = 1;
-		if (back == 1)
-			break;
-		nav = nav->next;
-	}
-	return (back);
 }
 
 static void		process_job_after_exec(t_io_lists *io, t_job **job)
@@ -96,7 +76,6 @@ static int		need_fork(t_io_lists io, t_node *cmd)
 int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 {
 	pid_t		pid;
-	t_process	*process;
 	int			ret;
 	int			i;
 
@@ -110,7 +89,7 @@ int				exec_cmd(t_node *cmd, char **env, t_io_lists io, t_job *job)
 	if (g_exp_error)
 		return (1);
 	if (!need_fork(io, cmd))
-		ret = exec_builtin_no_fork(cmd, env, io, job);
+		ret = exec_builtin_no_fork(cmd, env, job);
 	else
 	{
 		if ((pid = fork()) == -1)

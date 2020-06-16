@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:24 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/11 03:08:06 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/12 21:36:23 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ static void		ctrl_c_handler(int lel)
 	ft_putchar('\n');
 }
 
-static void		child_exec_subshell_forked(t_node *node, t_io_lists io, t_job *job)
+static void		child_exec_subshell_forked(t_node *node, t_io_lists io,
+											t_job *job)
 {
 	pid_t	pid;
-	t_job	*tmp;
 
 	pid = getpid();
 	if (!io.piped || (io.piped && !io.piped->prev && io.piped->used == 0))
@@ -40,15 +40,13 @@ static void		child_exec_subshell_forked(t_node *node, t_io_lists io, t_job *job)
 		setpgid(pid, job->pgid);
 	signal(SIGINT, SIG_DFL);
 	apply_fd(io);
-	tmp = NULL;
-	visit(node, &tmp, NULL, io.grp_io);
+	visit(node, NULL, io.grp_io);
 	exit(ft_atoi(get_env(g_set, "?")));
 }
 
 static int		exec_subshell_as_cmd(t_node *node, t_io_lists io, t_job *job)
 {
 	pid_t		pid;
-	t_process	*process;
 
 	if ((pid = fork()) == -1)
 		return (-1);
@@ -60,15 +58,13 @@ static int		exec_subshell_as_cmd(t_node *node, t_io_lists io, t_job *job)
 
 int				exec_subshell(t_node *node, t_io_lists *io, t_job **job)
 {
-	int	err;
-
 	signal(SIGINT, ctrl_c_handler);
 	restore_term(1);
 	add_jobnb((*job)->number);
 	dl_append_node((t_dl_node **)&(*job)->list,
 						(t_dl_node *)create_process(UNUSED_JOB));
 	find_process_by_pid((*job)->list, -10)->command = ft_strdup(node->data);
-	err = exec_subshell_as_cmd(node, *io, *job);
+	exec_subshell_as_cmd(node, *io, *job);
 	if ((io->piped && !io->piped->next && io->piped->used == 1) || !io->piped)
 	{
 		if ((*job)->list->pid != BUILTIN_JOB)

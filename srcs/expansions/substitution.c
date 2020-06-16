@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:14:52 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/05 02:04:24 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/06/15 20:50:15 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,22 @@ static char		*exec_substitution(char *tmp)
 static size_t	get_first_pos(size_t *i, char *word, char occur)
 {
 	size_t	y;
+	int		t;
 
+	t = 0;
 	y = *i;
-	while (word[y] && word[y] != occur)
+	while (word[y] && (word[y] != occur || t > 0))
+	{
+		if (occur == ')' && word[y] == '(')
+			t += 1;
+		else if (word[y] == occur && t > 0)
+			t--;
+		else if (word[y] == occur && t == 0)
+			break ;
 		y++;
+	}
 	if (!word[y])
-		return (-1);
+		return (0);
 	return (y);
 }
 
@@ -45,6 +55,7 @@ static size_t	get_new_pos(size_t *i, char *tmp, char *word)
 	*i += x;
 	free(tmp);
 	free(word);
+	return (*i);
 }
 
 char			*process_substitution(size_t *i, char *word, char occur)
@@ -55,7 +66,7 @@ char			*process_substitution(size_t *i, char *word, char occur)
 
 	(*i)++;
 	y = get_first_pos(i, word, occur);
-	if (y == -1)
+	if (y == 0)
 		return (word);
 	if (word[y] == occur && y > (*i))
 	{

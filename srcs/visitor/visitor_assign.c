@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 20:29:55 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/11 18:00:18 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/13 02:52:26 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,8 @@ static void		visit_assign_std(t_node *node, int mod)
 	free(data);
 }
 
-int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
+static int		exec_visit_asign(t_node *node, t_io_lists io, t_job **job)
 {
-	dl_append_node((t_dl_node **)&(*job)->list,
-						(t_dl_node *)create_process(UNUSED_JOB));
-	if (node->state == 2)
-		return (subshell_wrapper(node, &io, job));
 	if (node->left && (!io.piped && !io.redir))
 	{
 		if (!is_only_assign(node))
@@ -103,5 +99,19 @@ int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 			visit_assign_std(node, 0);
 		return (!io.redir ? 0 : 1);
 	}
-	return (1);
+}
+
+int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
+{
+	int	ret;
+
+	ret = 1;
+	if (node->state == 2)
+		return (subshell_wrapper(node, &io, job));
+	if (node->state == 3)
+		grp_cmd_wrapper(&io);
+	ret = exec_visit_asign(node, io, job);
+	if (node->state == 3)
+		dl_del_one_with_data(io.grp_io, free);
+	return (ret);
 }

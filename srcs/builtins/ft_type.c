@@ -23,7 +23,7 @@ int		binaire_type(char *arg, char **path_s)
 	while (path_s[++cpt])
 	{
 		dir = opendir(path_s[cpt]);
-		while ((diread = readdir(dir)) != NULL)
+		while (dir && (diread = readdir(dir)) != NULL)
 		{
 			if (ft_strcmp(arg, diread->d_name) == 0)
 			{
@@ -83,19 +83,6 @@ void	error_type(int error, char *arg)
 	}
 }
 
-int		f_type(char **path_s)
-{
-	int cpt;
-
-	cpt = -1;
-	if (!path_s)
-		return (0);
-	while (path_s[++cpt])
-		free(path_s[cpt]);
-	free(path_s);
-	return (0);
-}
-
 int		ft_type(char **args, char ***tenv)
 {
 	int		cpt;
@@ -103,7 +90,7 @@ int		ft_type(char **args, char ***tenv)
 	char	**path_s;
 	char	*path;
 
-	if (fcntl(1, F_GETFD) != 0)
+	if (fcntl(1, F_GETFD) != 0 || ft_len(args) < 2)
 		return (0);
 	path = get_env(*tenv, "PATH");
 	path_s = ft_strsplit(path, ':');

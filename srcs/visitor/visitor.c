@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 08:46:02 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/11 17:12:57 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/16 03:06:52 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ int				visit_cmd(t_node *node, t_io_lists io, t_job **job)
 	return (0);
 }
 
-
-
 int				visit_background(t_node *node, t_io_lists io, t_job **job)
 {
 	int	ret;
@@ -81,7 +79,7 @@ int				visit_background(t_node *node, t_io_lists io, t_job **job)
 	return (ret);
 }
 
-int				visit(t_node *root, t_job **job, char *cmd, t_dl_node *redir)
+int				visit(t_node *root, char *cmd, t_dl_node *redir)
 {
 	t_io_lists	io;
 	t_job		*last_job;

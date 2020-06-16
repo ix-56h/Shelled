@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:46:14 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/08 23:49:16 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/15 20:48:21 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			visit_greatand(t_node *node, t_io_lists io, t_job **job);
 int			visit_left_redi(t_node *node, t_io_lists io, t_job **job);
 int			visit_right_redi(t_node *node, t_io_lists io, t_job **job);
 int			visit_semi(t_node *node, t_io_lists io, t_job **job);
-int			visit(t_node *root, t_job **job, char *cmd, t_dl_node *redir);
+int			visit(t_node *root, char *cmd, t_dl_node *redir);
 int			visit_background(t_node *node, t_io_lists io, t_job **job);
 
 char		*substitution_wrapper(char *tmp);
@@ -50,5 +50,12 @@ void		assign_var(char *data, char *value, int mod);
 int			visit_assign_redir(t_node *node, t_io_lists *io, t_job **job);
 void		visit_assign_pipe(t_node *node, t_io_lists *io, t_job **job,
 			int *pipe);
+
+size_t		get_end_grouped_cmd(char *cmd, size_t i);
+size_t		get_end_subshell(char *cmd, size_t i);
+size_t		get_next_double_cote(char *cmd, size_t i);
+size_t		get_next_cote(char *cmd, size_t i);
+size_t		get_next_semi_col(char *cmd);
+size_t		get_next_and(char *cmd);
 
 #endif

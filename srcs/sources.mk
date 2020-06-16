@@ -6,7 +6,7 @@
 #    By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 19:40:02 by thdelmas          #+#    #+#              #
-#    Updated: 2020/06/08 21:29:13 by akeiflin         ###   ########.fr        #
+#    Updated: 2020/06/13 02:06:08 by akeiflin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ C_FILES_visitor = \
 				  exec.c \
 				  exec_misc.c \
 				  misc_cut_cmd.c \
+				  misc_cut_cmd2.c \
 				  misc_assign.c \
 				  misc_assign2.c \
 				  test_and_find.c \
@@ -81,6 +82,8 @@ C_FILES_visitor = \
 				  visitor_dless.c \
 				  visitor_dgreat.c \
 				  job.c \
+				  job_misc.c \
+				  job_misc2.c \
 				  substitution.c \
 				  subshell.c \
 				  grouped_cmd.c \
@@ -129,6 +132,7 @@ C_FILES_builtins = \
 				   		ft_cd.c \
 				   		ft_cd2.c \
 				   		ft_cd3.c \
+						ft_cdpath.c \
 				   ft_echo.c \
 				   ft_exit.c \
 				   builtin_misc.c \
@@ -205,6 +209,7 @@ C_FILES_expansions = \
 					 expansions_utils2.c \
 					 dispatch_expansions.c \
 					 manage_brace.c \
+					 pattern_misc.c \
 
 C_FILES_jobs = \
 				bg.c \

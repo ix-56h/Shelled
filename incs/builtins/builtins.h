@@ -14,9 +14,11 @@
 # define BUILTINS_H
 # include <stdlib.h>
 # include <sys/stat.h>
+# include <sys/types.h>
 # include <dirent.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <pwd.h>
 
 # define ERR_IS_FOLDER			1
 # define ERR_PATH_ACCES			2
@@ -71,6 +73,7 @@ int			add_old_pwd(char ***tenv, int flags, char *pwd, char *old_pwd);
 int			check_dir(char *add_to_path, int flags);
 void		update_env(char ***tenv, char *pwd, char *old_pwd, \
 						char *add_to_path);
+char	**get_path_or_pwd(char ***tenv);
 
 /*
 ** alias functions
@@ -83,7 +86,6 @@ void		show_this_alias(char *arg);
 int			dispatch_show(int cpt, char ***env);
 int			error_alias(char *arg, int mod);
 void		free_realloc_alias(char *name_g, char *name, char *value);
-char		*form_algo(char c, char *arg);
 
 /*
 ** test functions
@@ -96,5 +98,9 @@ int			simple_operand(char **args);
 /*
 ** tools
 */
+
+int			ft_len(char **args);
+int			f_type(char **path_s);
+void		h_env(char ***tenv);
 
 #endif

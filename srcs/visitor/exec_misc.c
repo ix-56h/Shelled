@@ -6,13 +6,14 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 23:49:31 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/05/20 18:31:06 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/13 01:40:06 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "sh.h"
 #include "builtins.h"
+#include "visitor.h"
 
 void	free_tab(char **tab)
 {
@@ -69,4 +70,24 @@ char	**get_env_path(void)
 	}
 	else
 		return (NULL);
+}
+
+int		need_background(t_io_lists *io)
+{
+	t_dl_node	*nav;
+	t_io_lists	*grp_io;
+	int			back;
+
+	back = io->background;
+	nav = io->grp_io;
+	while (nav)
+	{
+		grp_io = ((t_io_lists *)nav->data);
+		if (grp_io->background)
+			back = 1;
+		if (back == 1)
+			break ;
+		nav = nav->next;
+	}
+	return (back);
 }

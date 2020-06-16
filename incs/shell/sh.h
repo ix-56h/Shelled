@@ -13,6 +13,7 @@
 #ifndef SH_H
 # define SH_H
 # include <sys/types.h>
+# include <unistd.h>
 # include <pwd.h>
 # include "ast.h"
 # define FT_PATH_MAX 256
@@ -75,6 +76,7 @@ void			add_set(char *var, char *value);
 int				init_shell(t_sh *sh, int ac, char **av, char **envp);
 void			re_init_sh(t_sh *sh);
 void			init_set(char **av);
+void			add_necessary_env(char ***env, size_t size);
 
 /*
 **	utils
@@ -104,6 +106,7 @@ void			orphaned_jobs(void);
 
 void			get_special_param(char ***w);
 char			*show_positional_param(char *word);
+char			*look_for_param(int index);
 
 /*
 **	alias.c

@@ -50,6 +50,7 @@ static char		*process_parameter(size_t *i, char *word)
 	char		*new_word;
 
 	new_word = NULL;
+	quote_removal(&word);
 	word = get_closing(word, i, &exp.last);
 	if (!word)
 		return (ft_strdup(""));
