@@ -132,6 +132,7 @@ C_FILES_builtins = \
 				   		ft_cd.c \
 				   		ft_cd2.c \
 				   		ft_cd3.c \
+						ft_cdpath.c \
 				   ft_echo.c \
 				   ft_exit.c \
 				   builtin_misc.c \

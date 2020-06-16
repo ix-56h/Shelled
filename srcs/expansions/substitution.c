@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 16:14:52 by niguinti          #+#    #+#             */
-/*   Updated: 2020/03/05 02:04:24 by niguinti         ###   ########.fr       */
+/*   Updated: 2020/06/15 20:50:15 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char		*exec_substitution(char *tmp)
 static size_t	get_first_pos(size_t *i, char *word, char occur)
 {
 	size_t	y;
-	int	t;
+	int		t;
 
 	t = 0;
 	y = *i;
@@ -36,10 +36,10 @@ static size_t	get_first_pos(size_t *i, char *word, char occur)
 	{
 		if (occur == ')' && word[y] == '(')
 			t += 1;
-		else  if (word[y] == occur && t > 0)
+		else if (word[y] == occur && t > 0)
 			t--;
 		else if (word[y] == occur && t == 0)
-			break;
+			break ;
 		y++;
 	}
 	if (!word[y])

@@ -42,8 +42,13 @@ void	h_env(char ***tenv)
 	char *pwd;
 	char *old_pwd;
 
-	pwd = get_env(*tenv, "PWD");
+	if (!(pwd = get_env(*tenv, "PWD")))
+	{
+		add_necessary_env(tenv, 256);
+		pwd = get_env(*tenv, "PWD");
+	}
 	old_pwd = get_env(*tenv, "OLDPWD");
-	home = get_env(*tenv, "HOME");
+	if (!(home = get_env(*tenv, "HOME")))
+		home = getpwuid(getuid())->pw_dir;
 	update_env(tenv, pwd, old_pwd, home);
 }

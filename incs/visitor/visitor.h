@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 03:46:14 by niguinti          #+#    #+#             */
-/*   Updated: 2020/06/12 19:24:25 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/15 20:48:21 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ int			visit_assign_redir(t_node *node, t_io_lists *io, t_job **job);
 void		visit_assign_pipe(t_node *node, t_io_lists *io, t_job **job,
 			int *pipe);
 
-int			get_end_grouped_cmd(char *cmd, int i);
-int			get_end_subshell(char *cmd, int i);
-int			get_next_double_cote(char *cmd, int i);
-int			get_next_cote(char *cmd, int i);
-int			get_next_semi_col(char *cmd);
-int			get_next_and(char *cmd);
+size_t		get_end_grouped_cmd(char *cmd, size_t i);
+size_t		get_end_subshell(char *cmd, size_t i);
+size_t		get_next_double_cote(char *cmd, size_t i);
+size_t		get_next_cote(char *cmd, size_t i);
+size_t		get_next_semi_col(char *cmd);
+size_t		get_next_and(char *cmd);
 
 #endif
