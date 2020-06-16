@@ -51,6 +51,17 @@ static void	test_fd(void)
 	}
 }
 
+void		add_necessary_env(char ***env, size_t size)
+{
+	char	pwd[size];
+	char	*error;
+
+	error = getcwd(pwd, size);
+	if (!error)
+		add_necessary_env(env, size + size);
+	*env = add_env(*env, "PWD", pwd);
+}
+
 int			init_shell(t_sh *sh, int ac, char **av, char **envp)
 {
 	test_fd();
@@ -66,6 +77,8 @@ int			init_shell(t_sh *sh, int ac, char **av, char **envp)
 	{
 		g_env = cpy_env(envp);
 		add_shlvl(&g_env);
+		if (!get_env(g_env, "PWD"))
+			add_necessary_env(&g_env, 256);
 	}
 	if (!g_env)
 		return (0);

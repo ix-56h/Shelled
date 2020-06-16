@@ -24,6 +24,8 @@ int		step_arg(char **args, int *start)
 	flags = 0;
 	while (args[++cpt])
 	{
+		if (!ft_strcmp(args[cpt], ""))
+			return (1);
 		if (ft_strcmp(args[cpt], "--") == 0 || (ft_strcmp(args[cpt], "-L") != 0
 					&& ft_strcmp(args[cpt], "-P") != 0))
 			break ;
@@ -61,27 +63,34 @@ int		step_to_do(char **args, char ***tenv, int *start)
 
 int		form_path(char *add_to_path, char ***tenv, char flags)
 {
-	char *old_pwd;
-	char *pwd;
+	char	*old_pwd;
+	char	**pwd;
+	int		cpt;
 
+	cpt = -1;
 	old_pwd = get_env(*tenv, "OLDPWD");
-	pwd = get_env(*tenv, "PWD");
+	pwd = get_path_or_pwd(tenv);
 	if (ft_strcmp(add_to_path, "-") == 0)
 	{
 		free(add_to_path);
-		return (add_old_pwd(tenv, flags, pwd, old_pwd));
+		return (add_old_pwd(tenv, flags, get_env(*tenv, "PWD"), old_pwd));
 	}
-	if (add_to_path[0] == '/')
+	while (pwd[++cpt])
 	{
-		if (flags == 3 || flags == 4)
-			add_to_path = ft_strjoinf("/", ft_get_link(add_to_path), 2);
-		concat_pwd(add_to_path, '/');
+		if (add_to_path[0] == '/')
+		{
+			if (flags == 3 || flags == 4)
+				add_to_path = ft_strjoinf("/", ft_get_link(add_to_path), 2);
+			concat_pwd(add_to_path, '/');
+		}
+		else
+			add_to_path = new_path(add_to_path, pwd[cpt], flags);
+		if ((flags = check_dir(add_to_path, flags)) == 0)
+			break ;
 	}
-	else
-		add_to_path = new_path(add_to_path, pwd, flags);
-	if ((flags = check_dir(add_to_path, flags)) != 0)
+	if (flags != 0)
 		return (flags);
-	update_env(tenv, pwd, old_pwd, add_to_path);
+	update_env(tenv, pwd[cpt], old_pwd, add_to_path);
 	chdir(add_to_path);
 	free(add_to_path);
 	return (0);
@@ -110,16 +119,20 @@ int		ft_cd(char **args, char ***tenv)
 {
 	int		i;
 	int		start;
+	char	*home_dir;
 
+	start = 0;
 	i = step_to_do(args, tenv, &start);
 	if (i == 0)
 	{
-		ft_printf("42sh: cd: HOME not set");
+		ft_putstr_fd("42sh: cd: HOME not set\n", 2);
 		return (-1);
 	}
 	else if (i == 1)
 	{
-		chdir(get_env(*tenv, "HOME"));
+		if (!(home_dir = get_env(*tenv, "HOME")))
+			home_dir = getpwuid(getuid())->pw_dir;
+		chdir(home_dir);
 		h_env(tenv);
 	}
 	else
