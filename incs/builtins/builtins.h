@@ -73,7 +73,8 @@ int			add_old_pwd(char ***tenv, int flags, char *pwd, char *old_pwd);
 int			check_dir(char *add_to_path, int flags);
 void		update_env(char ***tenv, char *pwd, char *old_pwd, \
 						char *add_to_path);
-char	**get_path_or_pwd(char ***tenv);
+char		**get_path_or_pwd(char ***tenv);
+char		*follow_path(char ***tenv, size_t size, char *path);
 
 /*
 ** alias functions
