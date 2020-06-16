@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 17:45:12 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/06/15 20:56:14 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/16 13:54:57 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int		ft_bg(char **argv, char ***tenv)
 	job = g_job_head;
 	if (argv[1] == NULL)
 		job = find_job_bg();
+	else if (argv[1][0] == '%')
+		job = find_job_by_number(ft_atoi(argv[1] + 1));
 	else
 		job = find_job_by_number(ft_atoi(argv[1]));
 	if (!job || !job->pgid)
