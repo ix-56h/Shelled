@@ -20,7 +20,7 @@ int			look_for_pattern(char *param, char *word, size_t index, int act)
 	size_t	i;
 
 	i = 0;
-	ft_bzero(pattern, 50);
+	ft_bzero(pattern, FT_PATH_MAX);
 	if (act == 1)
 	{
 		while (param[index])
@@ -45,7 +45,7 @@ static int	look_for_prefix_pattern(char *param, char *word, int index)
 	char	pattern[FT_PATH_MAX];
 
 	i = 0;
-	ft_bzero(pattern, 50);
+	ft_bzero(pattern, FT_PATH_MAX);
 	while (param[index])
 	{
 		pattern[i] = param[index];
@@ -71,7 +71,7 @@ static int	look_for_suffix_pattern(char *param, char *word, int index)
 	char	pattern[FT_PATH_MAX];
 
 	i = 0;
-	ft_bzero(pattern, 50);
+	ft_bzero(pattern, FT_PATH_MAX);
 	while (param[index])
 	{
 		pattern[i] = param[index];
@@ -96,13 +96,13 @@ char		*remove_prefix_pattern(char *param, char *word, int index)
 	char	*new_word;
 
 	i = 0;
-	new_word = ft_strnew(FT_PATH_MAX);
+	new_word = ft_strnew(ft_strlen(param));
 	while (index >= 0)
 	{
 		if (param[index] == word[1]
 		&& look_for_prefix_pattern(param, &word[1], index))
 		{
-			index++;
+			index += ft_strlen(word) - 1;
 			while (param[index])
 				new_word[i++] = param[index++];
 			free(word);
@@ -122,7 +122,7 @@ char		*remove_suffix_pattern(char *param, char *word, int i)
 	char	*new_word;
 
 	word[i] = '\0';
-	new_word = ft_strnew(FT_PATH_MAX);
+	new_word = ft_strnew(ft_strlen(param));
 	i = 0;
 	while (param[i])
 	{

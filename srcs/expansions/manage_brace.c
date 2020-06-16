@@ -83,7 +83,7 @@ char	*get_closing(char *word, size_t *i, char **last)
 
 	a = *i;
 	j = 0;
-	new_word = ft_strnew(FT_PATH_MAX);
+	new_word = ft_strnew(ft_strlen(word));
 	look_braces_error(word, &a);
 	while (word[j] && j < a)
 	{
