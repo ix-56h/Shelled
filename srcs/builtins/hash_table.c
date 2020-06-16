@@ -6,7 +6,7 @@
 /*   By: mguerrea <mguerrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/08 12:17:41 by mguerrea          #+#    #+#             */
-/*   Updated: 2020/06/08 12:53:31 by mguerrea         ###   ########.fr       */
+/*   Updated: 2020/06/16 15:36:02 by mguerrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@ t_table	*new_entry(char *cmd, char *cmdpath, int nb)
 {
 	t_table *new;
 
-	new = (t_table *)malloc(sizeof(t_table));
+	if (!(new = (t_table *)malloc(sizeof(t_table))))
+		return (NULL);
 	new->key = hash_func(cmd);
-	new->value = (t_entry *)malloc(sizeof(t_entry));
+	if (!(new->value = (t_entry *)malloc(sizeof(t_entry))))
+	{
+		free(new);
+		return (NULL);
+	}
 	new->value->count = nb;
 	new->value->cmd = ft_strdup(cmd);
 	new->value->cmdpath = cmdpath;
@@ -45,7 +50,8 @@ void	add_to_entry(t_entry *entry, int nb, char *cmd, char *cmdpath)
 	}
 	else
 	{
-		tmp->next = (t_entry *)malloc(sizeof(t_entry));
+		if (!(tmp->next = (t_entry *)malloc(sizeof(t_entry))))
+			return ;
 		tmp->next->count = nb;
 		tmp->next->cmd = ft_strdup(cmd);
 		tmp->next->cmdpath = cmdpath;
@@ -75,7 +81,8 @@ void	add_to_table(char *cmd, int nb)
 		add_to_entry(tmp->value, nb, cmd, cmdpath);
 	else
 	{
-		tmp->next = new_entry(cmd, cmdpath, nb);
+		if (!(tmp->next = new_entry(cmd, cmdpath, nb)))
+			return ;
 		tmp->next->prev = tmp;
 	}
 }
