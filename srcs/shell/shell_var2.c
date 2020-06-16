@@ -38,6 +38,12 @@ static char		*show_with_field_split(char *param, char *str, \
 	return (str);
 }
 
+static char		*show_missing_param(char *word)
+{
+	free(word);
+	return (ft_strdup(""));
+}
+
 char			*show_positional_param(char *word)
 {
 	int		i;
@@ -48,13 +54,13 @@ char			*show_positional_param(char *word)
 	i = 0;
 	j = 0;
 	param = get_env(g_set, "@");
-	str = ft_strnew(FT_PATH_MAX);
+	if (!param)
+		return (show_missing_param(word));
 	while (!ft_isalnum(param[i]) && param[i] != ')')
 		i++;
 	if (param[i] == ')')
-		free(word);
-	if (param[i] == ')')
-		return (str);
+		return (show_missing_param(word));
+	str = ft_strnew(FT_PATH_MAX);
 	if (word[1] == '*')
 		return (show_with_field_split(param, str, i, word));
 	while (param[i] && param[i + 1] != ')')

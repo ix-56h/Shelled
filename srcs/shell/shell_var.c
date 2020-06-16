@@ -22,7 +22,11 @@ char			*look_for_param(int index)
 	char	**split;
 
 	i = 0;
-	split = ft_strsplit(get_env(g_set, "@"), ' ');
+	split = NULL;
+	if (!get_env(g_set, "@"))
+		return (ft_strdup(""));
+	else
+		split = ft_strsplit(get_env(g_set, "@"), ' ');
 	while (split[i])
 		i++;
 	if (index > i)
@@ -79,6 +83,11 @@ void			get_special_param(char ***w)
 	else if ((**w)[1] == '$' || (**w)[1] == '#'
 	|| (**w)[1] == '?' || (**w)[1] == '!' || (**w)[1] == '-')
 		**w = show_special_param(**w);
+	if (!(**w)[0])
+	{
+		free(last);
+		return ;
+	}
 	if (last[0])
 		**w = ft_strjoinf(**w, last, 1);
 	free(last);

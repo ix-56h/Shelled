@@ -22,7 +22,7 @@ int		ft_unset(char **argv, char ***set)
 	(void)set;
 	if (!argv[1])
 	{
-		ft_putendl_fd("42sh: unset: Too few arguments.", 2);
+		ft_putendl_fd("42sh: unset: not enough arguments", 2);
 		return (1);
 	}
 	else
