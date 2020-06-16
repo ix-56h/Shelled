@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/20 18:24:42 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/15 20:49:30 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/16 03:10:48 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ size_t		get_next_and(char *cmd)
 
 char		*cut_command(char *cmd, char act)
 {
-	size_t		index;
+	size_t	index;
 	char	find;
 	char	*res;
-	size_t		len;
+	size_t	len;
 
 	if (!cmd)
 		return (NULL);
