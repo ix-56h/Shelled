@@ -35,7 +35,7 @@ char	**get_path_or_pwd(char ***tenv)
 	return (pwd);
 }
 
-char		*follow_cd_path(char ***env, size_t size, char *path)
+char	*follow_cd_path(char ***env, size_t size, char *path)
 {
 	char	pwd[size];
 	char	*error;
@@ -59,7 +59,8 @@ char		*follow_cd_path(char ***env, size_t size, char *path)
 	free(path);
 	return (ft_strdup(pwd));
 }
-char		*follow_path(char ***env, size_t size, char *path)
+
+char	*follow_path(char ***env, size_t size, char *path)
 {
 	char	pwd[size];
 	char	*error;
@@ -80,4 +81,28 @@ char		*follow_path(char ***env, size_t size, char *path)
 	return (ft_strdup(pwd));
 }
 
+char	*form_algo(char *add_to_path, char *pwd, int flags)
+{
+	if (add_to_path[0] == '/')
+	{
+		if (flags == 3 || flags == 4)
+			add_to_path = ft_strjoinf("/", ft_get_link(add_to_path), 2);
+		concat_pwd(add_to_path, '/');
+	}
+	else
+		add_to_path = new_path(add_to_path, pwd, flags);
+	return (add_to_path);
+}
 
+int		un_split(char **pwd, char *add_to_path, int flags, char *save_path)
+{
+	int cpt;
+
+	cpt = -1;
+	free(save_path);
+	free(add_to_path);
+	while (pwd[++cpt])
+		free(pwd[cpt]);
+	free(pwd);
+	return (flags);
+}

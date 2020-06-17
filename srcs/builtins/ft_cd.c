@@ -61,57 +61,32 @@ int		step_to_do(char **args, char ***tenv, int *start)
 		return (step_arg(args, start));
 }
 
-int		form_path(char *add_to_path, char ***tenv, char flags)
+int		form_path(char *add_to_path, char ***tenv, char flags, char *old_pwd)
 {
-	char	*old_pwd;
 	char	**pwd;
 	int		cpt;
 	char	*save_path;
 	int		error;
 
 	cpt = -1;
-	old_pwd = get_env(*tenv, "OLDPWD");
-	if (ft_strcmp(add_to_path, "-") == 0)
-	{
-		free(add_to_path);
+	if (ft_str_free(add_to_path, "-") == 0)
 		return (add_old_pwd(tenv, flags, follow_path(tenv, 256, "."), old_pwd));
-	}
 	pwd = get_path_or_pwd(tenv);
 	save_path = ft_strdup(add_to_path);
 	while (pwd[++cpt])
 	{
 		if (!ft_strcmp(pwd[cpt], ".") || !ft_strcmp(pwd[cpt], ".."))
 			pwd[cpt] = follow_cd_path(tenv, 256, pwd[cpt]);
-		if (add_to_path[0] == '/')
-		{
-			if (flags == 3 || flags == 4)
-				add_to_path = ft_strjoinf("/", ft_get_link(add_to_path), 2);
-			concat_pwd(add_to_path, '/');
-		}
-		else
-			add_to_path = new_path(add_to_path, pwd[cpt], flags);
+		add_to_path = form_algo(add_to_path, pwd[cpt], flags);
 		if ((error = check_dir(add_to_path, flags)) == 0)
 			break ;
 		add_to_path = ft_strdup(save_path);
 	}
-	free(save_path);
 	if (error != 0)
-	{
-		free(add_to_path);
-		cpt = -1;
-		while (pwd[++cpt])
-			free(pwd[cpt]);
-		free(pwd);
-		return (error);
-	}
+		return (un_split(pwd, add_to_path, error, save_path));
 	update_env(tenv, pwd[cpt], old_pwd, add_to_path);
 	chdir(add_to_path);
-	free(add_to_path);
-	cpt = -1;
-	while (pwd[++cpt])
-		free(pwd[cpt]);
-	free(pwd);
-	return (0);
+	return (un_split(pwd, add_to_path, 0, save_path));
 }
 
 int		new_dir(char **args, char ***tenv, int flags, int start)
@@ -119,7 +94,9 @@ int		new_dir(char **args, char ***tenv, int flags, int start)
 	char	*add_to_path;
 	char	*save;
 	int		error;
+	char	*old_pwd;
 
+	old_pwd = get_env(*tenv, "OLDPWD");
 	if (ft_strcmp(args[start], "--") == 0)
 		add_to_path = ft_strdup(args[++start]);
 	else
@@ -128,7 +105,7 @@ int		new_dir(char **args, char ***tenv, int flags, int start)
 	start++;
 	if (args[start])
 		return (error_cd(2, add_to_path));
-	error = error_cd(form_path(add_to_path, tenv, flags), save);
+	error = error_cd(form_path(add_to_path, tenv, flags, old_pwd), save);
 	free(save);
 	return (error);
 }

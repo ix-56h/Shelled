@@ -74,8 +74,16 @@ int			check_dir(char *add_to_path, int flags);
 void		update_env(char ***tenv, char *pwd, char *old_pwd, \
 						char *add_to_path);
 char		**get_path_or_pwd(char ***tenv);
+
+/*
+** cdpath functions
+*/
+
 char		*follow_path(char ***tenv, size_t size, char *path);
 char		*follow_cd_path(char ***env, size_t size, char *path);
+int			ft_str_free(char *s1, char *s2);
+char		*form_algo(char *add_to_path, char *pwd, int flags);
+int			un_split(char **pwd, char *add_to_path, int flags, char *save_path);
 
 /*
 ** alias functions

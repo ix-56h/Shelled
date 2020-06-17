@@ -52,3 +52,21 @@ void	h_env(char ***tenv)
 		home = getpwuid(getuid())->pw_dir;
 	update_env(tenv, pwd, old_pwd, home);
 }
+
+int		ft_str_free(char *s1, char *s2)
+{
+	int ret;
+	int cpt;
+
+	cpt = 0;
+	while (s1[cpt] && s2[cpt])
+	{
+		if (s1[cpt] != s2[cpt])
+			return (s1[cpt] - s2[cpt]);
+		cpt++;
+	}
+	ret = s1[cpt] - s2[cpt];
+	if (ret == 0)
+		free(s1);
+	return (ret);
+}
