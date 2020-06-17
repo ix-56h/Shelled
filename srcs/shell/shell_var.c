@@ -75,7 +75,7 @@ void			get_special_param(char ***w)
 	size_t	i;
 
 	i = 2;
-	last = get_last_part(**w, &i);
+	last = expand_word(get_last_part(**w, &i));
 	if (ft_isdigit((**w)[1]))
 		**w = get_positional_param(**w);
 	else if ((**w)[1] == '@' || (**w)[1] == '*')
