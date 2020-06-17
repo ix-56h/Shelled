@@ -76,19 +76,19 @@ static int		check_dol(size_t *i, char **w)
 	if ((*w)[*i] == '{')
 	{
 		*w = process_parameter(i, *w);
-//		*i = ft_strlen(*w);
+		*i = ft_strlen(*w);
 		return (1);
 	}
 	else if (ft_isalpha((*w)[*i]) || (*w)[*i] == '_')
 	{
 		*w = process_simple_parameter(i, *w);
-//		*i = ft_strlen(*w);
+		*i = ft_strlen(*w);
 		return (1);
 	}
 	else if ((*w)[*i] == '(' && !is_arithmetic((*w) + *i))
 	{
 		*w = process_substitution(i, *w, ')');
-//		*i = ft_strlen(*w);
+		*i = ft_strlen(*w);
 		return (1);
 	}
 	return (0);
@@ -118,10 +118,7 @@ static void		expression_loop(char ***w)
 			break ;
 		}
 		else if (((**w)[i] == '$' && check_dol(&i, *w) == 1) || (!(**w)[i]))
-		{
-			i = ft_strlen(**w);
 			continue ;
-		}
 		i++;
 	}
 }
