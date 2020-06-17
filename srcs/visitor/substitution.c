@@ -36,7 +36,6 @@ static void		substitution_fork(char *str, int *pipefd, int *stdout_save)
 		sh.input = str;
 		sh.tok = get_next_token(sh.input, sh.stack.errors);
 		lifo_empty(sh.stack.errors) ? sh.node = parse_complete_command(&sh) : 0;
-		tree_draw(sh.node);
 		if (!lifo_empty(sh.stack.errors))
 			exit(1);
 		close(pipefd[READ_END]);
