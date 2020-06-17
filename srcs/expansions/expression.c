@@ -24,7 +24,7 @@ char			*process_simple_parameter(size_t *i, char *word)
 
 	tmp = NULL;
 	a = *i;
-	while (word[a] && word[a] != '=')
+	while (word[a] && (ft_isalnum(word[a]) || word[a] == '_'))
 		a++;
 	ft_bzero(expression, 128);
 	ft_strncpy(expression, word + *i, (a - *i));
@@ -111,7 +111,7 @@ static void		expression_loop(char ***w)
 			break ;
 		}
 		else if (((**w)[i] == '$' && check_dol(&i, *w) == 1) || (!(**w)[i]))
-			break ;
+			continue ;
 		i++;
 	}
 }
