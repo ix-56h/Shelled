@@ -71,6 +71,7 @@ void		process_sh(t_sh *sh)
 	if (!lifo_empty(sh->stack.errors))
 	{
 		print_stack_errors(sh->stack.errors, &(sh->tok));
+		add_set("?", "1");
 		gnt_standalone(0);
 	}
 	else

@@ -24,7 +24,7 @@ char			*process_simple_parameter(size_t *i, char *word)
 
 	tmp = NULL;
 	a = *i;
-	while (word[a] && word[a] != '=')
+	while (word[a] && (ft_isalnum(word[a]) || word[a] == '_'))
 		a++;
 	ft_bzero(expression, 128);
 	ft_strncpy(expression, word + *i, (a - *i));
@@ -52,8 +52,12 @@ static char		*process_parameter(size_t *i, char *word)
 	new_word = NULL;
 	quote_removal(&word);
 	word = get_closing(word, i, &exp.last);
-	if (!word)
+	if (!word || (word[0] == '$' && !word[1]))
+	{
+		free(word);
+		free(exp.last);
 		return (ft_strdup(""));
+	}
 	exp.modifier = get_expansion_format(word);
 	exp.first = get_first_part(word);
 	new_word = test_parameter(&exp, word);
@@ -72,16 +76,19 @@ static int		check_dol(size_t *i, char **w)
 	if ((*w)[*i] == '{')
 	{
 		*w = process_parameter(i, *w);
+//		*i = ft_strlen(*w);
 		return (1);
 	}
 	else if (ft_isalpha((*w)[*i]) || (*w)[*i] == '_')
 	{
 		*w = process_simple_parameter(i, *w);
+//		*i = ft_strlen(*w);
 		return (1);
 	}
 	else if ((*w)[*i] == '(' && !is_arithmetic((*w) + *i))
 	{
 		*w = process_substitution(i, *w, ')');
+//		*i = ft_strlen(*w);
 		return (1);
 	}
 	return (0);
@@ -111,7 +118,10 @@ static void		expression_loop(char ***w)
 			break ;
 		}
 		else if (((**w)[i] == '$' && check_dol(&i, *w) == 1) || (!(**w)[i]))
-			break ;
+		{
+			i = ft_strlen(**w);
+			continue ;
+		}
 		i++;
 	}
 }
@@ -120,6 +130,8 @@ void			process_expression(char **w)
 {
 	if (!w || !*w)
 		exit(1);
+	if (ft_strlen(*w) == 0)
+		return ;
 	if (ft_strlen(*w) == 1 && (*w)[0] == '$')
 		return ;
 	else if (is_special_param((*w)[1]) && (*w)[0] == '$')

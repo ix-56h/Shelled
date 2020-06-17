@@ -13,28 +13,33 @@
 #include "libft.h"
 #include "expansions.h"
 
-char	*remove_brace(char *word)
+int		brace_error(char *word)
 {
 	int		i;
-	int		j;
-	char	tmp[FT_PATH_MAX];
-	char	*new_word;
 
 	i = 0;
-	j = 0;
+	while (word[i] != '{')
+		i++;
+	i += 1;
 	while (word[i] && word[i] != '}')
 	{
-		if (word[i] == '{')
+		if (word[i] == ' ' || word[i] == '\t' || word[i] == '\n')
+		{
+			ft_putstr_fd("42sh: bad substitution\n", 2);
+			g_exp_error = 1;
+			add_set("?", "1");
+			return (1);
+		}
+		if ((word[i] == '?' || word[i] == '!' || word[i] == '@'
+		|| word[i] == '-' || word[i] == '$') && i == 2)
 			i++;
-		if (word[i] == '#' && i == 2)
+		else if (word[i] == '#')
 			i++;
-		tmp[j] = word[i];
+		else if (!ft_isalnum(word[i]) && word[i] != '$' && word[i] != '_')
+			return (1);
 		i++;
-		j++;
 	}
-	tmp[j] = '\0';
-	new_word = ft_strdup(tmp);
-	return (new_word);
+	return (0);
 }
 
 int		parameter_error(char *word, int index, int act)

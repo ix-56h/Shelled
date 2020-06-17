@@ -36,10 +36,9 @@ void			look_multi_pos_param(char **split, char **word, int i)
 	int j;
 
 	j = 0;
-	ft_strdel(word);
 	if (!split)
 	{
-		*word = ft_strdup("");
+		ft_bzero(*word, ft_strlen(*word));
 		return ;
 	}
 	while (split[j])
@@ -47,12 +46,12 @@ void			look_multi_pos_param(char **split, char **word, int i)
 	if (i < j && i > 0)
 	{
 		if (ft_strcmp(split[i], ")"))
-			*word = ft_strdup(split[i]);
+			ft_bzero(*word, ft_strlen(*word));
 		else
-			*word = ft_strdup("");
+			ft_bzero(*word, ft_strlen(*word));
 	}
 	else
-		*word = ft_strdup("");
+		ft_bzero(*word, ft_strlen(*word));
 	i = 0;
 	while (split[i])
 		free(split[i++]);

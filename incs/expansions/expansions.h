@@ -119,8 +119,8 @@ int				look_for_pattern(char *param, char *word,
 **	expansions_utils.c
 */
 
-char			*remove_brace(char *word);
 char			*get_expansion_format(char *word);
+int				brace_error(char *word);
 char			*error_modifier(char *param, char *word);
 int				parameter_error(char *word, int index, int act);
 
@@ -137,6 +137,7 @@ void			look_braces_error(char *word, size_t *i);
 **	manage_brace.c
 */
 
+char			*remove_brace(char *word);
 char			*get_closing(char *word, size_t *i, char **last);
 char			*get_first_part(char *word);
 char			*get_last_part(char *word, size_t *a);

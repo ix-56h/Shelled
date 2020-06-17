@@ -60,15 +60,15 @@ char			*show_positional_param(char *word)
 		i++;
 	if (param[i] == ')')
 		return (show_missing_param(word));
-	str = ft_strnew(ft_strlen(word));
+	str = ft_strnew(FT_PATH_MAX);
 	if (word[1] == '*')
 		return (show_with_field_split(param, str, i, word));
 	while (param[i] && param[i + 1] != ')')
 	{
-		str[j] = param[i];
-		j++;
+		str[j++] = param[i];
 		i++;
 	}
+	str[j] = '\0';
 	free(word);
 	return (str);
 }

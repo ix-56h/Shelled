@@ -23,6 +23,8 @@ void			get_multi_pos_param(char **word)
 
 	j = 0;
 	i = 1;
+	if (!get_env(g_set, "@"))
+		return ;
 	split = ft_strsplit(get_env(g_set, "@"), ' ');
 	while ((*word)[i])
 	{
@@ -69,7 +71,12 @@ char			*test_without_modifier(char *word)
 
 	i = 1;
 	new_word = remove_brace(word);
-	if (ft_isalldigit(&new_word[1]))
+	if (!new_word[0])
+	{
+		free(new_word);
+		return (ft_strdup(""));
+	}
+	if (ft_isalldigit(&new_word[1]) && new_word[1] != '0')
 		get_multi_pos_param(&new_word);
 	if (!new_word[0])
 		return (new_word);

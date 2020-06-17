@@ -75,6 +75,33 @@ int		get_open_brace(char *word)
 	return (obrace);
 }
 
+char	*remove_brace(char *word)
+{
+	int		i;
+	int		j;
+	char	tmp[FT_PATH_MAX];
+	char	*new_word;
+
+	i = 0;
+	j = 0;
+	ft_bzero(tmp, FT_PATH_MAX);
+	if (brace_error(word))
+		return (ft_strdup(""));
+	while (word[i] && word[i] != '}')
+	{
+		if (word[i] == '{')
+			i++;
+		if (word[i] == '#' && i == 2)
+			i++;
+		tmp[j] = word[i];
+		i++;
+		j++;
+	}
+	tmp[j] = '\0';
+	new_word = ft_strdup(tmp);
+	return (new_word);
+}
+
 char	*get_closing(char *word, size_t *i, char **last)
 {
 	size_t	j;

@@ -38,7 +38,7 @@ static char		*get_word_end(char *word, char *full_word)
 	ft_bzero(last, 256);
 	while (full_word[i] && full_word[i] != '}')
 		i++;
-	if (!full_word[i + 1])
+	if (full_word[i] && !full_word[i + 1])
 		return (word);
 	while (full_word[i])
 	{
