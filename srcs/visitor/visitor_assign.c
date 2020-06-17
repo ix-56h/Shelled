@@ -100,6 +100,7 @@ static int		exec_visit_asign(t_node *node, t_io_lists io, t_job **job)
 		return (!io.redir ? 0 : 1);
 	}
 }
+
 int				visit_assign_word(t_node *node, t_io_lists io, t_job **job)
 {
 	int	ret;
