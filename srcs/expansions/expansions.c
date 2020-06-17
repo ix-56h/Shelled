@@ -66,7 +66,6 @@ char	*expand_word(char *word)
 	if (word[0] == '~')
 		word = expand_tilde(word);
 	get_recur_end(0);
-	get_length_mod(0);
 	process_expression(&word);
 	if (get_length_mod(2) == 1)
 	{
