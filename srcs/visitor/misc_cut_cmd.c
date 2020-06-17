@@ -6,7 +6,7 @@
 /*   By: akeiflin <akeiflin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/20 18:24:42 by akeiflin          #+#    #+#             */
-/*   Updated: 2020/06/16 03:10:48 by akeiflin         ###   ########.fr       */
+/*   Updated: 2020/06/18 01:12:35 by akeiflin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,17 @@ char		*cut_command(char *cmd, char act)
 		return (NULL);
 	index = get_next_semi_col(cmd);
 	if (get_next_and(cmd) < index)
-	{
 		index = get_next_and(cmd);
-		find = '&';
-	}
-	else
-		find = ';';
+	find = cmd[index];
 	cmd[index] = '\0';
 	res = ft_strdup(cmd);
 	cmd[index] = find;
 	if (act == 1)
 	{
-		len = ft_strlen(&(cmd[index + 1]));
+		if (index < ft_strlen(cmd))
+			len = ft_strlen(&(cmd[index + 1]));
+		else
+			len = ft_strlen(&(cmd[index]));
 		ft_memcpy(cmd, &(cmd[index + 1]), len);
 		cmd[len] = '\0';
 	}
