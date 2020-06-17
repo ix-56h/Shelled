@@ -121,10 +121,7 @@ void			process_expression(char **w)
 	if (!w || !*w)
 		exit(1);
 	if (ft_strlen(*w) == 1 && (*w)[0] == '$')
-	{
-		ft_bzero(*w, ft_strlen(*w));
 		return ;
-	}
 	else if (is_special_param((*w)[1]) && (*w)[0] == '$')
 		get_special_param(&w);
 	expression_loop(&w);
