@@ -70,7 +70,7 @@ FT_INC_DIR = $(FT_DIR)/incs
 FT_LNK = -L$(FT_DIR) -l$(FT) -L$(PRINTF_DIR) -lprintf
 
 ###  CC && FLAGS ###
-CC = gcc -g #-fsanitize=address 
+CC = gcc #-fsanitize=address 
 DEBUG_FLAGS = -g3
 NO_WARNING ?= false
 ifeq ($(NO_WARNING), false)
