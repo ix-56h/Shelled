@@ -29,9 +29,14 @@ int		visit_and_if(t_node *node, t_io_lists io, t_job **job)
 		grp_cmd_wrapper(&io);
 	err = (*g_visit_rules[node->left->tok])(node->left, io, job);
 	process = (t_process *)dl_get_last((t_dl_node *)(*job)->list);
-	if (process && process->pid != ERR_JOB && process->ret == 0)
+	if (process && process->pid != ERR_JOB && process->ret == 0
+	&& node->left->tok != TOK_ASSIGNMENT_WORD)
+	{
 		if (err == 0)
 			err = (*g_visit_rules[node->right->tok])(node->right, io, job);
+	}
+	else if (node->left->tok == TOK_ASSIGNMENT_WORD)
+		err = (*g_visit_rules[node->right->tok])(node->right, io, job);
 	if (node->state == 3)
 		dl_del_one_with_data(io.grp_io, free);
 	return (err);
@@ -49,7 +54,7 @@ int		visit_or_if(t_node *node, t_io_lists io, t_job **job)
 	err = (*g_visit_rules[node->left->tok])(node->left, io, job);
 	process = (t_process *)dl_get_last((t_dl_node *)(*job)->list);
 	if ((process && (process->pid == ERR_JOB || process->ret != 0 || err != 0))
-			|| !process)
+			|| (!process && node->left->tok != TOK_ASSIGNMENT_WORD))
 		err = (*g_visit_rules[node->right->tok])(node->right, io, job);
 	else if (process && err == 0 && process->ret == 0)
 		err = 0;

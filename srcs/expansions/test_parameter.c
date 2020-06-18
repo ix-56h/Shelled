@@ -95,7 +95,7 @@ char			*test_parameter(t_exp_data *exp, char *word)
 
 	new_word = NULL;
 	if (exp->last[0])
-		exp->last = expand_word(exp->last);
+		process_expression(&exp->last);
 	if (!exp->modifier)
 		new_word = test_without_modifier(word);
 	else
