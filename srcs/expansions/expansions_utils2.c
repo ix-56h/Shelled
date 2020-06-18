@@ -10,8 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "sh.h"
 #include "libft.h"
 #include "expansions.h"
+#include "exec.h"
+#include "visitor.h"
 
 int				is_special_param(char c)
 {
@@ -46,16 +49,16 @@ void			look_multi_pos_param(char **split, char **word, int i)
 	if (i < j && i > 0)
 	{
 		if (ft_strcmp(split[i], ")"))
-			ft_bzero(*word, ft_strlen(*word));
+		{
+			free(*word);
+			*word = ft_strdup(split[i]);
+		}
 		else
 			ft_bzero(*word, ft_strlen(*word));
 	}
 	else
 		ft_bzero(*word, ft_strlen(*word));
-	i = 0;
-	while (split[i])
-		free(split[i++]);
-	free(split);
+	free_tab(split);
 }
 
 int				braces_error(char c)
